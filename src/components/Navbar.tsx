@@ -1,5 +1,9 @@
+import styles from "../styles/navbar.module.scss";
+
 function Navbar() {
-  return <div>Navbar</div>;
+  return (
+    <div className={styles.navbar}>Navbar</div>
+  );
 }
 
 export default Navbar;
