@@ -1,0 +1,24 @@
+.navigation__block {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.navigation__block_item {
+    width: 295px;
+    height: 60px;
+    border-radius: 20px;
+    border: 1px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-left: 30px;
+    border: 1px solid #ffffff;
+    box-shadow: -4px -2px 16px 0px #FFFFFF;
+    box-shadow: 16px 16px 64px 0px #6f88a07a;
+}
+
