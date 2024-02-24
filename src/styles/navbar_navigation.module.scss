@@ -16,9 +16,10 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    padding-left: 30px;
-    border: 1px solid #ffffff;
+    padding-left: 20px;
+    border: 1px solid #fff;
+    border-image-source: linear-gradient(123.5deg, #FFFFFF 38.36%, rgba(219, 230, 242, 0) 69.31%, #8F9FAE 131.91%);
     box-shadow: -4px -2px 16px 0px #FFFFFF;
-    box-shadow: 16px 16px 64px 0px #6f88a07a;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
 }
 
