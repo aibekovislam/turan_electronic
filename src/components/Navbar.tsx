@@ -8,9 +8,9 @@ import border__img from "../assets/Frame 87.png";
 import { useState } from "react";
 
 function Navbar() {
-  const [activeItem, setActiveItem] = useState(null);
+  const [activeItem, setActiveItem] = useState<string>("home");
 
-  const handleItemClick = (item: any) => {
+  const handleItemClick = (item: string) => {
     setActiveItem(item);
   };
 
@@ -27,7 +27,7 @@ function Navbar() {
           <ul className={styles.navigation}>
             <li
               className={`${styles.navigation__item} ${
-                activeItem === "home" ? styles.active_navbar : ""
+                activeItem === "home" ? "active__navbar" : ""
               }`}
             >
               <a href="#" onClick={() => handleItemClick("home")}>
@@ -36,7 +36,7 @@ function Navbar() {
             </li>
             <li
               className={`${styles.navigation__item} ${
-                activeItem === "categories" ? styles.active_navbar : ""
+                activeItem === "categories" ? "active__navbar" : ""
               }`}
             >
               <a href="#" onClick={() => handleItemClick("categories")}>
@@ -45,7 +45,7 @@ function Navbar() {
             </li>
             <li
               className={`${styles.navigation__item} ${
-                activeItem === "news" ? styles.active_navbar : ""
+                activeItem === "news" ? "active__navbar" : ""
               }`}
             >
               <a href="#" onClick={() => handleItemClick("news")}>
@@ -54,7 +54,7 @@ function Navbar() {
             </li>
             <li
               className={`${styles.navigation__item} ${
-                activeItem === "about" ? styles.active_navbar : ""
+                activeItem === "about" ? "active__navbar" : ""
               }`}
             >
               <a href="#" onClick={() => handleItemClick("about")}>
@@ -65,17 +65,17 @@ function Navbar() {
         </div>
         <div className={styles.block_3}>
           <div className={styles.tools__navbar}>
-            <div className={`${styles.favorite} ${activeItem === "favorite" ? styles.active_navbar : ""}`} onClick={() => handleItemClick("favorite")}>
+            <div className={`${styles.favorite} ${activeItem === "favorite" ? "active__navbar" : ""}`} onClick={() => handleItemClick("favorite")}>
               <img src={favorite_svg} alt="Favorite svg" />
             </div>
-            <div className={`${styles.cart} ${activeItem === "cart" ? styles.active_navbar : ""}`} onClick={() => handleItemClick("cart")}>
+            <div className={`${styles.cart} ${activeItem === "cart" ? "active__navbar" : ""}`} onClick={() => handleItemClick("cart")}>
               <img src={cart_svg} alt="Cart svg" />
             </div>
-            <div className={`${styles.personal_office} ${activeItem === "personal_office" ? styles.active_navbar : ""}`} onClick={() => handleItemClick("personal_office")}>
+            <div className={`${styles.personal_office} ${activeItem === "personal_office" ? "active__navbar" : ""}`} onClick={() => handleItemClick("personal_office")}>
               <img src={personal__office_svg} alt="Personal svg" />
             </div>
           </div>
-          <div className={`${styles.search__block} ${activeItem === "search__block" ? styles.active_navbar : ""}`} onClick={() => handleItemClick("search__block")}>
+          <div className={`${styles.search__block} ${activeItem === "search__block" ? "active__navbar" : ""}`} onClick={() => handleItemClick("search__block")}>
             <input type="text" placeholder="Поиск..." name="search" />
             <img src={search_svg} alt="search_svg" className={styles.search__svg} />
           </div>
