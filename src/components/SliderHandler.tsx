@@ -27,6 +27,8 @@ export default function SimpleSlider() {
         nextArrow: JSX.Element;
         prevArrow: JSX.Element;
         dotsClass: string;
+        autoplay: boolean,
+        autoplaySpeed: number
     } = {
         dots: true,
         infinite: true,
@@ -35,7 +37,9 @@ export default function SimpleSlider() {
         slidesToScroll: 1,
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
-        dotsClass: `slick-dots ${styles.dots_c}`
+        dotsClass: `slick-dots ${styles.dots_c}`,
+        autoplay: true,
+        autoplaySpeed: 3500
     };    
   return (
     <div className={styles.carousel} >
