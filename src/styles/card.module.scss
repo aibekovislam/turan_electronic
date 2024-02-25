@@ -1,0 +1,139 @@
+@font-face {
+    font-family: "Monsterrat_500";
+    src: url("../assets/fonts/Montserrat/Montserrat-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Monsterrat_400";
+    src: url("../assets/fonts/Montserrat/Montserrat-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Roboto_400";
+    src: url("../assets/fonts/Roboto/Roboto-Light.ttf") format("truetype");
+}
+
+.card_main{
+    width: 275px;
+    height: 552px;
+    border-radius: 24px;
+    border: 1px;
+    border: 1px solid #fff;
+    border-image-source: linear-gradient(123.5deg, #FFFFFF 38.36%, rgba(219, 230, 242, 0) 69.31%, #8F9FAE 131.91%);
+    box-shadow: -4px -2px 16px 0px #FFFFFF;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+    margin-top: 40px;
+}
+
+.card_container{
+    padding: 15px;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+}
+.star_container{
+    display: flex;
+    justify-content: flex-end;
+}
+.img_container{
+    display: flex;
+    justify-content: center;
+    margin-top: 1.2rem;
+}
+.heart_container{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 0.3rem;
+}
+
+.price{
+    display: flex;
+    align-items: center;
+}
+
+.price > h2{
+    font-family: "Monsterrat_500";
+    font-size: 18px;
+}
+
+.price > h3 {
+    font-family: "Monsterrat_500";
+    font-size: 13px;
+    color: #888888;
+    text-decoration-line: line-through;
+    margin-left: 1.5rem;
+}
+
+.discount{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.discount > div{
+    background-color: #fff;
+    border-radius: 5px;
+    border: none;
+    width: auto;
+    font-size: 11px;
+    padding: 7px 2px 7px 2px;
+}
+
+.discount div:first-child{
+    background-color: rgba(255, 115, 0, 0.848) ;
+    font-size: 13px;
+}
+
+.title > h2{
+    font-family: "Monsterrat_400";
+    color: rgba(0, 0, 0, 1);
+    font-size: 14px;
+}
+
+.title > p{
+    font-family: "Monsterrat_400";
+    color: rgba(136, 136, 136, 1);
+    font-size: 14px;
+}
+
+.btn_container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn {
+    list-style-type: none;
+    border: 1px solid #FFFFFF;
+    box-shadow: 16px 16px 64px 0px #6f88a07a;
+    box-shadow: -4px -2px 16px 0px #FFFFFF;
+    width: 100%;
+    height: 30px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn a {
+    text-decoration: none;
+    color: black;
+}
+
+.btn_container img {
+    width: auto;
+    height: 30px;
+    margin-left: 1.3rem;
+}
+
+.options_container{
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.options_container h2 {
+    font-family: "Roboto_400";
+    font-size: 14px;
+}
