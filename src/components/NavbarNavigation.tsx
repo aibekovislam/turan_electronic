@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from "../styles/navbar_navigation.module.scss";
 import police_car from "../assets/svgs/ri_police-car-fill.svg";
 import service from "../assets/svgs/Vector (4).svg";
