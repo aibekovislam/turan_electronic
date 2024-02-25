@@ -34,8 +34,30 @@
     z-index: 2;
 }
 
-// :global {
-//      {
-//         background-color: #FF7300;
-//     }
-// }
+.dots_c {
+    position: absolute;
+    bottom: 10px;
+}
+
+.dots_c {
+    li {
+        margin: 0 !important;
+    }
+    button::before {
+        font-size: 12px !important;
+        color: #D9D9D9 !important;
+        opacity: 1 !important;
+    }
+}
+
+.carousel__item {
+    position: relative;
+}
+
+.text__carousel {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    color: white;
+    font-weight: 500;
+}
