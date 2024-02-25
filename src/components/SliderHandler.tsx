@@ -42,15 +42,15 @@ export default function SimpleSlider() {
         <Slider {...settings}>
             <div className={styles.carousel__item}>
                 <img src="https://s3-alpha-sig.figma.com/img/a168/6110/47f9cdb61d3cfea251c8edf680705f72?Expires=1709510400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PFwuEdogxXr9Hk7BjKvnomoPFEYjfR0tjfKPTSVanFibJo9VADi8kgv4GP6Wogab4fU~5cUF35Xy0D1i1E3gSclqawtkLLmJOlLve33uzK1BDDfD3n-~bTRkGSe67P4~ER845g92dnwAGq-4RUYoee1gH23ifMpDcJCGsoETG0M2gm6LADQZF9~39Hu6XsXKxykCf68LHAW3xhMAtwRzNjMJ6qph4Y~q9CiGMLvn~mcGNWsiz7sq4AgoZO24nF~LnaSQ3Gqq9xqG7rlSM9OIIWniAlxn4XeYHfMk8Hgv7xT5uYznwF8wD1hi5SwxJEiXZh8EcrH522DY6LBdeD15OA__" className={styles.carousel__img} />
-                <div className={styles.text__carousel}>Some text 1</div>
+                <div className={styles.text__carousel}>Квадракоптеры, Стабилизаторы, Микрофоны и многое другое</div>
             </div>
             <div className={styles.carousel__item}>
                 <img src="https://s3-alpha-sig.figma.com/img/a168/6110/47f9cdb61d3cfea251c8edf680705f72?Expires=1709510400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PFwuEdogxXr9Hk7BjKvnomoPFEYjfR0tjfKPTSVanFibJo9VADi8kgv4GP6Wogab4fU~5cUF35Xy0D1i1E3gSclqawtkLLmJOlLve33uzK1BDDfD3n-~bTRkGSe67P4~ER845g92dnwAGq-4RUYoee1gH23ifMpDcJCGsoETG0M2gm6LADQZF9~39Hu6XsXKxykCf68LHAW3xhMAtwRzNjMJ6qph4Y~q9CiGMLvn~mcGNWsiz7sq4AgoZO24nF~LnaSQ3Gqq9xqG7rlSM9OIIWniAlxn4XeYHfMk8Hgv7xT5uYznwF8wD1hi5SwxJEiXZh8EcrH522DY6LBdeD15OA__" className={styles.carousel__img} />
-                <div className={styles.text__carousel}>Some text 2</div>
+                <div className={styles.text__carousel}>Квадракоптеры, Стабилизаторы, Микрофоны и многое другое</div>
             </div>
             <div className={styles.carousel__item}>
                 <img src="https://s3-alpha-sig.figma.com/img/a168/6110/47f9cdb61d3cfea251c8edf680705f72?Expires=1709510400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=PFwuEdogxXr9Hk7BjKvnomoPFEYjfR0tjfKPTSVanFibJo9VADi8kgv4GP6Wogab4fU~5cUF35Xy0D1i1E3gSclqawtkLLmJOlLve33uzK1BDDfD3n-~bTRkGSe67P4~ER845g92dnwAGq-4RUYoee1gH23ifMpDcJCGsoETG0M2gm6LADQZF9~39Hu6XsXKxykCf68LHAW3xhMAtwRzNjMJ6qph4Y~q9CiGMLvn~mcGNWsiz7sq4AgoZO24nF~LnaSQ3Gqq9xqG7rlSM9OIIWniAlxn4XeYHfMk8Hgv7xT5uYznwF8wD1hi5SwxJEiXZh8EcrH522DY6LBdeD15OA__" className={styles.carousel__img} />
-                <div className={styles.text__carousel}>Some text 3</div>
+                <div className={styles.text__carousel}>Квадракоптеры, Стабилизаторы, Микрофоны и многое другое</div>
             </div>
         </Slider>
     </div>
