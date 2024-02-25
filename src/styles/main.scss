@@ -12,3 +12,9 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
+
+/* Это стили для карусели, точнее для активной карусели */
+.slick-dots li.slick-active button:before {
+    color: #FF7300 !important;
+}
+/* Конец этих стилей остальные файле slider.module.scss  */
