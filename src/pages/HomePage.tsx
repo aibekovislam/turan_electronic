@@ -1,3 +1,4 @@
+import CategoryList from "../components/CategoryList";
 import NavbarNavigation from "../components/NavbarNavigation";
 import SimpleSlider from "../components/SliderHandler";
 
@@ -6,6 +7,7 @@ function HomePage() {
     <div>
       <NavbarNavigation/>
       <SimpleSlider/>
+      <CategoryList/>
     </div>
   );
 }
