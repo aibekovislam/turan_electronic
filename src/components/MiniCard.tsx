@@ -2,9 +2,9 @@ import styles from "../styles/card.module.scss";
 import star2 from "../assets/svgs/card/star2:5.svg"
 import shop from "../assets/svgs/card/shop.svg"
 
-function MiniCard() {
+function MiniCard({ style }: any) {
   return (
-    <div className={styles.card_main}>
+    <div className={styles.card_main} style={style}>
         <div className={styles.card_container}>
             <div className={styles.card}>
                 <div className={styles.star_container}>

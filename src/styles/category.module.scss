@@ -11,13 +11,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    row-gap: 15px;
 }
 
 .category {
-    width: 380px;
+    width: 515px;
     height: 315px;
     border-radius: 24px;
-    border: 1px;
     background: linear-gradient(210.55deg, #EBF2F9 19.14%, #C6D7EB 154.68%);
     border: 1px solid #FFFFFF;
     box-shadow: 16px 4px 64px 0px #123D6533;
@@ -25,10 +25,17 @@
     flex-direction: column;
     justify-content: space-evenly;
     cursor: pointer;
+    overflow: hidden;
+}
+
+.category:hover .brand__img {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 .big_category {
     max-width: 400px;
+    width: 400px;
     height: 650px;
     border-radius: 24px;
     border: 1px solid #FFFFFF;
@@ -42,6 +49,7 @@
     width: 100%;
     height: 225px;
     object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
 .category__item {

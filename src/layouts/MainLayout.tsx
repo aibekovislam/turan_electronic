@@ -4,10 +4,12 @@ import "../styles/main.scss"
 
 function MainLayout() {
   return (
-    <div className="container">
-      <Navbar />
-      <Outlet />
-    </div>
+    <>
+      <div className="container">
+        <Navbar />
+        <Outlet />
+      </div>
+    </>
   );
 }
 
