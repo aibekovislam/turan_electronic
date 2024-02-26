@@ -23,6 +23,7 @@
     justify-content: center;
     margin-top: 1.2rem;
 }
+
 .heart_container{
     display: flex;
     justify-content: flex-end;
@@ -118,4 +119,14 @@
 .options_container h2 {
     font-size: 14px;
     font-weight: 400;
+}
+
+.mini_card_list {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 100px;
+}
+
+.mini_card_block {
+    margin-right: 20px;
 }
