@@ -1,8 +1,6 @@
 import CategoryList from "../components/CategoryList";
 import NavbarNavigation from "../components/NavbarNavigation";
 import SimpleSlider from "../components/SliderHandler";
-import nextArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
-import prevArrow from "../assets/svgs/Vector (7).svg";
 import "../styles/homepage.scss";
 import MiniCardList from "../components/MiniCardList";
 
@@ -12,7 +10,7 @@ function HomePage() {
       <NavbarNavigation/>
       <SimpleSlider/>
       <CategoryList/>
-      <div className={"accessories"}>
+      {/* <div className={"accessories"}>
         <div className="accessories__item">
           Аксессуары
         </div>
@@ -24,7 +22,7 @@ function HomePage() {
             <img src={prevArrow} />
           </div>
         </div>
-      </div>
+      </div> */}
       <MiniCardList/>
     </div>
   );

@@ -3,6 +3,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    position: relative;
 }
 
 .accessories__item {
@@ -19,8 +20,18 @@
     background: #E3EDF7;
     border: 1px solid #FFFFFF;
     box-shadow: 4px 2px 16px 0px #88A5BF7A;
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    position: absolute;
+    top: -45px;
+}
+
+.slick-next:before, [dir=rtl] .slick-prev:before {
+    content: none;
+}
+
+.slick-prev:before, [dir=rtl] .slick-prev:before {
+    content: none;
 }
