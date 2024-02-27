@@ -4,6 +4,7 @@ import SimpleSlider from "../components/SliderHandler";
 import "../styles/homepage.scss";
 import MiniCardList from "../components/MiniCardList";
 import NewProductsList from "../components/NewProductsList";
+import RecommendationList from "../components/RecommendationList";
 
 function HomePage() {
   return (
@@ -13,6 +14,7 @@ function HomePage() {
       <CategoryList/>
       <MiniCardList/>
       <NewProductsList/>
+      <RecommendationList/>
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import Card from "./Card";
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import "../styles/homepage.scss";
 import NewProductsCard from "./NewProductCard";
