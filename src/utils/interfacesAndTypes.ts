@@ -3,4 +3,7 @@ export interface CategoryProps {
     img__url: string;
     brand: string;
 }
-  
+
+export interface CardProps {
+    type?: string
+}
