@@ -16,8 +16,21 @@
 }
 .star_container{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.new_productCard_label {
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    background: #FF7300;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .img_container{
     display: flex;
     justify-content: center;
@@ -129,4 +142,12 @@
 
 .mini_card_block {
     margin-right: 20px;
+}
+
+.isAvilableProduct {
+    display: flex;
+    width: 100%;
+    height: auto;
+    align-items: center;
+    gap: 5px;
 }

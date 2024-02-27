@@ -3,6 +3,7 @@ import NavbarNavigation from "../components/NavbarNavigation";
 import SimpleSlider from "../components/SliderHandler";
 import "../styles/homepage.scss";
 import MiniCardList from "../components/MiniCardList";
+import NewProductsList from "../components/NewProductsList";
 
 function HomePage() {
   return (
@@ -10,20 +11,8 @@ function HomePage() {
       <NavbarNavigation/>
       <SimpleSlider/>
       <CategoryList/>
-      {/* <div className={"accessories"}>
-        <div className="accessories__item">
-          Аксессуары
-        </div>
-        <div className="accessories__item">
-          <div className="accessories__item_img">
-            <img src={nextArrow} />
-          </div>
-          <div className="accessories__item_img">
-            <img src={prevArrow} />
-          </div>
-        </div>
-      </div> */}
       <MiniCardList/>
+      <NewProductsList/>
     </div>
   );
 }
