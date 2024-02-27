@@ -4,7 +4,6 @@ import SimpleSlider from "../components/SliderHandler";
 import nextArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import prevArrow from "../assets/svgs/Vector (7).svg";
 import "../styles/homepage.scss";
-import MiniCard from "../components/MiniCard";
 import MiniCardList from "../components/MiniCardList";
 
 function HomePage() {
