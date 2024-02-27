@@ -5,5 +5,5 @@ export interface CategoryProps {
 }
 
 export interface CardProps {
-    type: string
+    type?: string
 }
