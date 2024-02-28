@@ -4,7 +4,7 @@ import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import Card from "./Card";
 
 function RecommendationList() {
-    const itemsPerPage = 15;
+    const itemsPerPage = 16;
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -31,7 +31,7 @@ function RecommendationList() {
         setCurrentPage(page);
     };
 
-  const visiblePages = () => {
+    const visiblePages = () => {
     const totalVisiblePages = Math.min(totalPages, maxVisiblePages);
     const start = Math.max(currentPage - Math.floor(totalVisiblePages / 2), 1);
     const end = Math.min(start + totalVisiblePages - 1, totalPages);
