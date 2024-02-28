@@ -131,3 +131,28 @@
         flex-wrap: wrap;
     }
 }
+
+@media only screen and (max-width: 500px) {
+    .accessories__item_img, .accessories__item_img_prev {
+        top: -25px;
+        width: 30px;
+        height: 30px;
+    }
+    .accessories__item_img_prev {
+        left: 83% !important;
+    }
+    .accessories__item {
+        font-size: 18px;
+    }
+    .accessories__item span {
+        margin: 0 !important;
+        font-size: 14px !important;
+    }
+    .accessories {
+        align-items: center;
+        margin-bottom: 10px !important;
+    }
+    .d-f__rec-product {
+        column-gap: 10px;
+    }
+}

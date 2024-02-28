@@ -10,7 +10,7 @@ import checked from "../assets/svgs/card/Vector (9).svg";
 
 function NewProductsCard() {
   return (
-    <div className={styles.card_main}>
+    <div className={`${styles.card_main} ${styles.card_main_mobile}`}>
         <div className={styles.card_container}>
             <div className={styles.card}>
                 <div className={styles.star_container}>

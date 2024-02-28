@@ -4,7 +4,7 @@ import shop from "../assets/svgs/card/shop.svg"
 
 function MiniCard({ style }: any) {
   return (
-    <div className={styles.card_main} style={style}>
+    <div className={styles.card_mini} style={style}>
         <div className={styles.card_container}>
             <div className={styles.card}>
                 <div className={styles.star_container}>
@@ -17,8 +17,8 @@ function MiniCard({ style }: any) {
                     <div className={styles.title}>
                         <h2 style={{ fontSize: "14px", fontWeight: "400", textAlign: "center" }}>Адаптер</h2>
                     </div>
-                    <div className={styles.price} style={{ display: 'block' }}>
-                        <h2 style={{ fontSize: "17px", fontWeight: "500", textAlign: "center" }}>5700 сом</h2>
+                    <div className={styles.price_access} style={{ display: 'block' }}>
+                        <h2>5700 сом</h2>
                     </div>
                 </div>
                 <div className={styles.btn_container}>

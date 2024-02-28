@@ -7,6 +7,15 @@
     box-shadow: 16px 36px 64px 0px #6f88a07a;
 }
 
+.card_mini{
+    width: 275px;
+    height: auto;
+    border-radius: 24px;
+    border: 1px solid #fff;
+    box-shadow: -4px -2px 16px 0px #FFFFFF;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+}
+
 .card_container{
     padding: 15px;
 }
@@ -165,5 +174,64 @@
     }
     .title h2 {
         margin-top: 0px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .card_mini {
+        width: 165px;
+    }
+    .price_access > h2 {
+        font-size: 13px;
+        text-align: center;
+        font-weight: 400;
+    }
+    .btn {
+        font-size: 11px;
+    }
+    .mini_card_list {
+        margin-top: 15px;
+    }
+    .btn_container img {
+        margin-left: 5px;
+    }
+    .card_main_mobile, .card_main {
+        width: 215px;
+    }
+    .d-f__new-product {
+        column-gap: 0;
+    }
+    .new_productCard_label {
+        width: 50px;
+        height: 25px;
+        font-size: 14px;
+    }
+    .heart_container img {
+        width: 25px;
+        height: 25px;
+    }
+    .isAvilableProduct span {
+        font-size: 14px;
+    }
+    .img_container img {
+        width: 130px;
+        height: 120px;
+    }
+    .price > h2 {
+        margin-top: 10px;
+        margin-bottom: 5px !important;
+    }
+    .title h2 {
+        margin-bottom: 0;
+    }
+    .title p {
+        margin-top: 0;
+    }
+    .price > h3 {
+        margin-left: 10px;
+        margin-top: 20px;
+    }
+    .discount {
+        display: none;
     }
 }

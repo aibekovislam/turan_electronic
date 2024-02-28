@@ -110,3 +110,23 @@
         margin-bottom: 20px;
     }
 }
+
+@media only screen and (max-width: 500px) {
+    .big_category {
+        border-radius: 14px;
+        height: 230px;
+    }
+    .category {
+        border-radius: 14px;
+        width: 100%;
+    }
+    .category__container {
+        margin-top: 15px;
+        gap: 0px;
+        justify-content: flex-start;
+        column-gap: 5px;
+    }
+    .category_small {
+        column-gap: 5px;
+    }
+}
