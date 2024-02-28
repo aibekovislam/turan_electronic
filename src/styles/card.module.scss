@@ -179,7 +179,7 @@
 
 @media only screen and (max-width: 500px) {
     .card_mini {
-        width: 165px;
+        width: 38vw;
     }
     .price_access > h2 {
         font-size: 13px;
@@ -196,7 +196,7 @@
         margin-left: 5px;
     }
     .card_main_mobile, .card_main {
-        width: 185px;
+        width: 43vw;
     }
     .d-f__new-product {
         column-gap: 0;
@@ -233,5 +233,12 @@
     }
     .discount {
         display: none;
+    }
+    .options_container {
+        width: 100%;
+        gap: 5px;
+    }
+    .options_container h2 {
+        font-size: 3vw;
     }
 }
