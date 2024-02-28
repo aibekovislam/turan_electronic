@@ -13,10 +13,14 @@ function CategoryList() {
         <Category type={"big"} img__url={img1} brand={"Dyson"} />
       </div>
       <div className={styles.category_small}>
-        <Category type={"small"} img__url={img2} brand={"Apple"} />
-        <Category type={"small"} img__url={img4} brand={"Samsung"} />
-        <Category type={"small"} img__url={img3} brand={"Xiaomi"} />
-        <Category type={"small"} img__url={img5} brand={"Sony Playstation"} />
+        <div className={styles.category_block}>
+          <Category type={"small"} img__url={img2} brand={"Apple"} />
+          <Category type={"small"} img__url={img4} brand={"Samsung"} />
+        </div>
+        <div className={styles.category_block}>
+          <Category type={"small"} img__url={img3} brand={"Xiaomi"} />
+          <Category type={"small"} img__url={img5} brand={"Sony Playstation"} />
+        </div>
       </div>
     </div>
   )
