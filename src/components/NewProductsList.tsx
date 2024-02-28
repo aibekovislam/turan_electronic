@@ -10,7 +10,7 @@ function NewProductsList() {
             Новое поступление
             </div>
             <div className="accessories__item">
-            <span style={{ fontSize: "25px", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
+            <span style={{ fontSize: "2vw", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
             <div className="accessories__item_img" style={{ position: "initial" }}>
                 <img src={nextArrow} />
             </div>

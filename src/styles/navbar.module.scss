@@ -1,3 +1,7 @@
+.block_1_mobile, .block_3_mobile {
+    display: none;
+}
+
 .navbar{
     background-color: aliceblue;
     width: 100%;
@@ -183,5 +187,33 @@
     }
     .logo {
         margin-top: 1vw;
+    }
+}
+
+
+@media only screen and (max-width: 500px) {
+    .navbar {
+        background: linear-gradient(210.55deg, #EBF2F9 19.14%, #C6D7EB 154.68%);
+        width: 100%;
+        height: 50px;
+        border-radius: 10px;
+        box-shadow: 16px 4px 64px 0px #123D6533;
+        box-shadow: -8px -6px 80px 0px #FFFFFF2E inset;
+    }
+    .navbar__items {
+        align-items: center;
+        justify-content: space-around;
+    }
+    .block_1, .navigation, .block_3 {
+        display: none;
+    }
+    .block_2 {
+        width: 50%;
+        height: 10vw;
+    }
+    .block_1_mobile, .block_3_mobile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 }
