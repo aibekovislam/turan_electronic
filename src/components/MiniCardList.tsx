@@ -50,7 +50,7 @@ function MiniCardList() {
           {
             breakpoint: 480,
             settings: {
-              slidesToShow: 1.5,
+              slidesToShow: 2.2,
               slidesToScroll: 1
             }
           }
