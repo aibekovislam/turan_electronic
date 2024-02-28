@@ -1,5 +1,5 @@
 import styles from "../styles/brands_and_footer.module.scss";
-import logo from "../assets/svgs/Logo.svg";
+import logo from "../assets/svgs/logo.svg";
 import facebook from "../assets/svgs/social_media/Footer → List → Link.svg";
 import twitter from "../assets/svgs/social_media/Vector (10).svg";
 import instagram from "../assets/svgs/social_media/Vector (11).svg";
