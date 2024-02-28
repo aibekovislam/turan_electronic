@@ -7,7 +7,7 @@ import nextArrow from "../assets/svgs/Vector (7).svg";
 function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
   return (
-    <div className={`accessories__item_img ${className}`} style={{...style, left: "92%"}} onClick={onClick}>
+    <div className={`accessories__item_img_prev ${className}`} style={{...style, left: "92%"}} onClick={onClick}>
       <img src={prevArrow} />
      </div>
   );
@@ -31,6 +31,30 @@ function MiniCardList() {
         slidesToScroll: 1,
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
+        initialSlide: 0,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3.5,
+              slidesToScroll: 1,
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
       };
       return (
         <>

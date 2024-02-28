@@ -150,3 +150,20 @@
     align-items: center;
     gap: 5px;
 }
+
+@media only screen and (max-width: 1300px) {
+    .card_main {
+        width: 24vw;
+        height: 32vw;
+    }
+    .img_container {
+        margin-top: 0px;
+    }
+    .img_container img {
+        width: 15vw;
+        height: 15vw;
+    }
+    .title h2 {
+        margin-top: 0px;
+    }
+}
