@@ -48,10 +48,11 @@
     display: flex;
     width: 100%;
     height: auto;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     row-gap: 30px;
+    column-gap: 62px;
 }
 
 .pagination {

@@ -21,7 +21,6 @@ function NewProductsList() {
             <NewProductsCard/>
             <NewProductsCard/>
             <NewProductsCard/>
-            <NewProductsCard/>
         </div>
     </>
   )
