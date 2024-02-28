@@ -109,3 +109,36 @@
 .list__item_text {
     max-width: 235px;
 }
+
+@media only screen and (max-width: 1300px) {
+    .brands__img {
+        width: 15vw;
+    }
+    .brands__img img {
+        width: 13vw;
+    }
+    .brands__item {
+        flex-wrap: wrap;
+    }
+    .footer__logo_and_info {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        row-gap: 20px;
+    }
+    .footer__logo_and_info img {
+        width: 33vw;
+    }
+    .info {
+        width: 50%;
+        text-align: center;
+    }
+    .footer__social_media {
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .list__item {
+        width: 15vw !important;
+    }
+}
