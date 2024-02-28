@@ -9,8 +9,8 @@
 }
 
 .navigation__block_item {
-    width: 295px;
-    height: 60px;
+    width: 20vw;
+    height: 4.5vw;
     border-radius: 20px;
     border: 1px;
     display: flex;
@@ -23,3 +23,12 @@
     cursor: pointer;
 }
 
+@media only screen and (max-width: 1300px) {
+    .navigation__block_item {
+        font-size: 1.3vw;
+    }
+    .navigation__block_item img {
+        width: 2.5vw;
+        height: 2.5vw;
+    }
+}
