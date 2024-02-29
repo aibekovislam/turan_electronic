@@ -119,12 +119,14 @@
     .category {
         border-radius: 14px;
         width: 100%;
+        justify-content: flex-start;
     }
     .category__container {
         margin-top: 15px;
         gap: 0px;
         justify-content: flex-start;
         column-gap: 5px;
+        align-items: center;
     }
     .category_small {
         column-gap: 5px;

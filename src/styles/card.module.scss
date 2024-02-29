@@ -70,6 +70,25 @@
     font-weight: 400;
 }
 
+.price_access{
+    display: flex;
+    align-items: center;
+}
+
+.price_access > h2{
+    font-size: 18px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.price_access > h3 {
+    font-size: 13px;
+    color: #888888;
+    text-decoration-line: line-through;
+    margin-left: 1rem;
+    font-weight: 400;
+}
+
 .discount{
     display: flex;
     gap: 15px;
