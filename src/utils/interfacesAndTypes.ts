@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface CategoryProps {
     type: string;
     img__url: string;
@@ -6,4 +8,13 @@ export interface CategoryProps {
 
 export interface CardProps {
     type?: string
+}
+
+export interface BrandsProps {
+    brandTitle: string,
+    brandImg: string
+}
+
+export interface ArrowProps {
+    isUp: boolean
 }
