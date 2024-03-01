@@ -9,10 +9,9 @@ function BrandFilterNavbar({ brandTitle, brandImg }: BrandsProps) {
     const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
 
     const handleDropdownList = (index: number) => {
-        const newDropdownStates = [...dropdownStates];
-        newDropdownStates[index] = !newDropdownStates[index];
+        const newDropdownStates = dropdownStates.map((state, i) => (i === index ? !state : false));
         setDropdownStates(newDropdownStates);
-    };
+    };    
 
     return (
         <div className={styles.brands_navbar}>
@@ -35,7 +34,7 @@ function BrandFilterNavbar({ brandTitle, brandImg }: BrandsProps) {
                             <div className={styles.brands__block_arrow_down}>
                                 <ArrowDown isUp={dropdownStates[index]} />
                             </div>
-                            <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : ""}`}>
+                            <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>
                                 {dropdownStates[index] && renderDropdownContent(index)}
                             </div>
                         </div>

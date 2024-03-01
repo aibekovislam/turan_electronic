@@ -198,9 +198,9 @@
 
 .dropdownContent {
     display: block;
-    height: 0;
+    max-height: 0;
     overflow: hidden;
-    transition: opacity 0.3s ease, height 0.3s ease;
+    transition: max-height 0.3s ease;
     position: absolute;
     top: 100%;
     left: 0;
@@ -208,10 +208,8 @@
     z-index: 1;
 
     &.active {
-        height: auto;
-        max-height: 350px;
-        transition: opacity 0.2s ease, height 0.2s ease;
-        padding: 20px 10px 20px 10px;
+        max-height: 350px; 
+        transition: max-height 1s ease;
     }
 
     &::before {
@@ -235,6 +233,10 @@
     border-bottom-left-radius: 20px;
 }
 
+.notActive {
+    max-height: 0;
+    transition: max-height 0.3s ease;
+}
 
 .dropdown__list {
     padding: 20px 10px 20px 10px;
