@@ -16,3 +16,4 @@ export interface BrandsProps {
 export interface ArrowProps {
     isUp: boolean
 }
+
