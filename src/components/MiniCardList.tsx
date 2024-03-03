@@ -7,7 +7,7 @@ import nextArrow from "../assets/svgs/Vector (7).svg";
 function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
   return (
-    <div className={`accessories__item_img_prev ${className}`} style={{...style, left: "92%"}} onClick={onClick}>
+    <div className={`accessories__item_img_prev ${className}`} style={{...style, left: "10px", zIndex: 2}} onClick={onClick}>
       <img src={prevArrow} />
      </div>
   );
@@ -66,7 +66,7 @@ function MiniCardList() {
           <div className={`slider-container ${styles.mini_card_list}`}>
             <Slider {...settings}>
               <div className={styles.mini_card_block}>
-                <MiniCard style={{ "boxShadow": "none" }}/>
+                  <MiniCard style={{ "boxShadow": "none" }}/>
               </div>
               <div className={styles.mini_card_block}>
                   <MiniCard style={{ "boxShadow": "none" }}/>
