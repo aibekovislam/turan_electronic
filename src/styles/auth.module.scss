@@ -1,3 +1,14 @@
+.auth__hero {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.auth__hero_title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 30px;
+}
+
 .auth_main{
     display: flex;
     justify-content: center;
@@ -22,7 +33,7 @@
 
 .auth_text{
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .auth_form{
@@ -33,7 +44,6 @@
 
 .auth_input {
     margin-top: 20px;
-    // box-shadow: 3px 3px 10px 0px #88A5BF7A inset;
     position: relative;
    
 }
@@ -84,8 +94,8 @@
 .button a {
     color: black;
     text-decoration: none;
-    font-size: 18px;
-    font-weight: 500;
+    // font-size: 18px;
+    font-weight: 300;
 }
 
 .auth_title{
@@ -140,8 +150,8 @@
 .reg_button > a {
     color: black;
     text-decoration: none;
-    font-size: 18px;
-    font-weight: 500;
+    // font-size: 18px;
+    font-weight: 100;
 }
 
 .reg_sign{

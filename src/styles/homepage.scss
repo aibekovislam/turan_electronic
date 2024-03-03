@@ -25,7 +25,7 @@
     align-items: center;
     cursor: pointer;
     position: absolute;
-    top: -45px;
+    top: -45px !important;
 }
 
 .slick-next:before, [dir=rtl] .slick-prev:before {
@@ -134,9 +134,9 @@
 
 @media only screen and (max-width: 500px) {
     .accessories__item_img, .accessories__item_img_prev {
-        top: -25px;
-        width: 30px;
-        height: 30px;
+        top: -25px !important;
+        width: 30px !important;
+        height: 30px !important;
     }
     .accessories__item_img_prev {
         left: 71vw !important;

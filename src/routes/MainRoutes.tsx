@@ -3,6 +3,7 @@ import MainLayout from "../layouts/MainLayout";
 import HomePage from "../pages/HomePage";
 import FavoritesPage from "../pages/FavoritesPage";
 import DetailPage from "../pages/DetailPage";
+import RegistrationAndAuthorization from "../pages/RegistrationAndAuthorization";
 
 function MainRoutes() {
   return (
@@ -11,7 +12,7 @@ function MainRoutes() {
         <Route element={<HomePage />} path="/" />
         <Route element={<FavoritesPage />} path="/favorite" />
         <Route element={<DetailPage />} path="/detail" />
-
+        <Route element={<RegistrationAndAuthorization/>} path="/auth" />
       </Route>
     </Routes>
   )
