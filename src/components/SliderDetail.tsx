@@ -5,6 +5,7 @@ import img3 from "../assets/sliderDetail/img03.png";
 import img4 from "../assets/sliderDetail/img04.png";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "../styles/detailSlider.scss";
 
 
 function SliderDetail() {

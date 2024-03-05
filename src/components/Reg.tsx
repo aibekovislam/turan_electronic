@@ -2,8 +2,9 @@ import styles from "../styles/auth.module.scss"
 import pattern from "../assets/svgs/auth/pattern.svg"
 import google from "../assets/svgs/auth/google.svg"
 import eye from "../assets/svgs/auth/eye.svg"
+import { AuthAndRegProps } from "../utils/interfacesAndTypes"
 
-function Reg() {
+function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
   return (
     <div className={styles.auth_main}>     
         <div className={styles.auth_container}>
@@ -43,7 +44,7 @@ function Reg() {
                 </div>
                 <div className={styles.auth_title}>
                     <span>Уже регистрировались?</span>
-                    <a href="#">Войти</a>
+                    <a href="#" onClick={() => handleRegisterOrAuth(true)}>Войти</a>
                 </div>
                 <div className={styles.reg_sign}>
                     <span>Войти через</span>

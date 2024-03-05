@@ -6,13 +6,23 @@ import personal__office_svg from "../assets/svgs/Frame 52.svg";
 import search_svg from "../assets/svgs/Button - Search → SVG.svg";
 import border__img from "../assets/Frame 87.png";
 import burger__menu from "../assets/svgs/Vector (16).svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
-  const [activeItem, setActiveItem] = useState<string>("home");
+  const [activeItem, setActiveItem] = useState<string>(() => {
+    return localStorage.getItem("activeItem") || "home";
+  });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem("activeItem", activeItem);
+  }, [activeItem]);
 
   const handleItemClick = (item: string) => {
     setActiveItem(item);
+    navigate(`/${item}`)
   };
 
   return (
@@ -35,38 +45,42 @@ function Navbar() {
           </div>
           <ul className={styles.navigation}>
             <li
+              onClick={() => handleItemClick("home")}
               className={`${styles.navigation__item} ${
                 activeItem === "home" ? "active__navbar" : ""
               }`}
             >
-              <a href="#" onClick={() => handleItemClick("home")}>
+              <a href="#">
                 Главная
               </a>
             </li>
             <li
+              onClick={() => handleItemClick("categories")}
               className={`${styles.navigation__item} ${
                 activeItem === "categories" ? "active__navbar" : ""
               }`}
             >
-              <a href="#" onClick={() => handleItemClick("categories")}>
+              <a href="#">
                 Категории
               </a>
             </li>
             <li
+              onClick={() => handleItemClick("news")}
               className={`${styles.navigation__item} ${
                 activeItem === "news" ? "active__navbar" : ""
               }`}
             >
-              <a href="#" onClick={() => handleItemClick("news")}>
+              <a href="#">
                 Новости
               </a>
             </li>
             <li
+              onClick={() => handleItemClick("about")}
               className={`${styles.navigation__item} ${
                 activeItem === "about" ? "active__navbar" : ""
               }`}
             >
-              <a href="#" onClick={() => handleItemClick("about")}>
+              <a href="#">
                 О нас
               </a>
             </li>
@@ -88,7 +102,7 @@ function Navbar() {
             <div className={`${styles.cart} ${activeItem === "cart" ? "active__navbar" : ""}`} onClick={() => handleItemClick("cart")}>
               <img src={cart_svg} alt="Cart svg" />
             </div>
-            <div className={`${styles.personal_office} ${activeItem === "personal_office" ? "active__navbar" : ""}`} onClick={() => handleItemClick("personal_office")}>
+            <div className={`${styles.personal_office} ${activeItem === "auth" ? "active__navbar" : ""}`} onClick={() => handleItemClick("auth")}>
               <img src={personal__office_svg} alt="Personal svg" />
             </div>
           </div>
