@@ -17,3 +17,11 @@ export interface ArrowProps {
     isUp: boolean
 }
 
+export interface AuthAndRegProps {
+    registered?: boolean,
+    handleRegisterOrAuth: (e: boolean, data?: any) => void
+}
+
+export interface AuthState {
+    isAuthenticated: boolean
+}

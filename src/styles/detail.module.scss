@@ -224,17 +224,12 @@ td::after {
     content: "";
     display: block;
     position: absolute;
-    // right: -100%; /* Измените на -100%, если хотите, чтобы линия шла к следующему td */
-    // top: 50%; /* Центрирует линию по вертикали */
     bottom: 8px;
-    width: 96.5%; /* Ширина линии, можете адаптировать под свои нужды */
-    border-bottom: 1px dashed #000; /* Ваш пунктир */
+    width: 96.5%;
+    border-bottom: 1px dashed #000;
 }
 
-
-
 td:nth-child(2)::after {
-    /* Обнуляем для второго td, чтобы избежать дублирования линии */
     content: none;
 }
 

@@ -1,8 +1,10 @@
+
 import { useState } from 'react';
 import styles from "../styles/slider.module.scss"
 import ArrowLeft from "../assets/svgs/detail/leftArrow.svg"
 import ArrowRight from "../assets/svgs/detail/rightArrow.svg"
 import example from '../assets/sliderDetail/img01.png'
+
 
 
 

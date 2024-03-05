@@ -1,45 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-body {
-    background-color: #E3EDF7;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
-    overflow-x: hidden;
-}
-
-.container {
-    max-width: 90vw;
-    margin: 0 auto;
-}
-
-.slick-dots li.slick-active button:before {
-    color: #FF7300 !important;
-}
-
-
-.active__navbar {
-    border: 1px solid #FFFFFF;
-    background: #E3EDF7;
-    box-shadow: 3px 3px 7px 0px #88A5BF7A inset;
-}
-
-//! sliderDetail
-
-// .slider-container{
-//     width: 100% !important;
-//     height: 386px !important;
-//     margin-bottom: 120px !important;
-// }
-
-// .slick-list{
-//     border-radius: 24px;
-//     border: 1px solid #fff;
-//     box-shadow: -4px -2px 16px 0px #FFFFFF;
-//     box-shadow: 16px 36px 64px 0px #6f88a07a;
-// }
-
 // .slick-slide > div > div {
 //     display: flex !important;
 //     justify-content: center !important;
@@ -81,5 +39,3 @@ body {
 //     height: 100% !important;
 //     object-fit: contain !important;
 // }
-
-
