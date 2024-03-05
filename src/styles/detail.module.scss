@@ -236,3 +236,87 @@ td:nth-child(2)::after {
 .сharacteristics{
     margin-top: 80px;
 }
+
+.reviews_container{
+    margin-top: 60px;
+}
+
+.reviews_button {
+    display: flex;
+    align-items: center; 
+    margin-top: 20px;
+    width: 295px;
+    height: 3vw;
+    border-radius: 16px;
+    position: relative;
+    border: 1px solid;
+    padding: 8px 0px 8px 10px;
+    border-image-source: linear-gradient(123.5deg, #FFFFFF 38.36%, rgba(219, 230, 242, 0) 69.31%, #8F9FAE 131.91%);
+    box-shadow: 16px 16px 64px 0px #6f88a07a;
+    cursor: pointer;
+}
+
+.reviews_button input {
+    background-color: initial;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+}
+
+.reviews_button input:focus {
+    outline: none;
+}
+
+.reviews_button img {
+    flex-shrink: 0;
+}
+
+
+.search__svg {
+    position: absolute;
+    top: 15%;
+    right: 10px;
+}
+
+.reviews{
+    border: 1px solid;
+    border-image-source: linear-gradient(123.5deg, #FFFFFF 38.36%, rgba(219, 230, 242, 0) 69.31%, #8F9FAE 131.91%);
+    box-shadow: 16px 16px 64px 0px #6f88a07a;
+    background-color: initial;
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 25px;
+}
+
+.reviews_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reviews_name{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.reviews_name > img {
+    width: 100px;
+
+}
+
+.reviews_name > div {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.reviews_date > span {
+    font-weight: 500;
+    font-size: 16px;
+    color: rgba(136, 136, 136, 1);
+}
+
+.reviews_description > p {
+    width: 1100px;
+}
