@@ -19,7 +19,7 @@ export interface ArrowProps {
 
 export interface AuthAndRegProps {
     registered?: boolean,
-    handleRegisterOrAuth: (e: boolean, data: any) => void
+    handleRegisterOrAuth: (e: boolean, data?: any) => void
 }
 
 export interface AuthState {

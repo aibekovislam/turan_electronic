@@ -63,7 +63,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
                     </div>
                     <div className={styles.auth_title}>
                         <span>Впервые у нас?</span>
-                        <a href="#" onClick={handleLogin}>Регистрация</a>
+                        <a href="#" onClick={() => handleRegisterOrAuth(false)}>Регистрация</a>
                     </div>
                     <div className={styles.auth_pattern}>
                         <img src={pattern}  />
