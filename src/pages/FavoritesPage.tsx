@@ -1,6 +1,5 @@
 import Brands from "../components/Brands"
 import FavoriteList from "../components/FavoriteList"
-import Footer from "../components/Footer"
 import SimpleSlider from "../components/SliderHandler"
 
 function FavoritesPage() {
@@ -10,7 +9,6 @@ function FavoritesPage() {
         <SimpleSlider/>
         <FavoriteList/>
         <Brands/>
-        <Footer/>
     </div>
   )
 }
