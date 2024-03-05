@@ -1,8 +1,23 @@
+import { useEffect } from "react";
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import "../styles/homepage.scss";
 import NewProductsCard from "./NewProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { RootStates } from "../store/store";
+import { fetchProducts } from "../store/features/products/productSlice";
+import { ProductsType } from "../utils/interfacesAndTypes";
 
 function NewProductsList() {
+
+  const dispatch = useDispatch<any>();
+  const products = useSelector((state: RootStates) => state.products.products);
+
+  useEffect(() => {
+    dispatch(fetchProducts())
+  }, [dispatch])
+
+  console.log(products)
+
   return (
     <>
         <div className={"accessories"} style={{ marginBottom: "30px" }}>
@@ -17,10 +32,9 @@ function NewProductsList() {
             </div>
         </div>
         <div className="d-f__new-product">
-            <NewProductsCard/>
-            <NewProductsCard/>
-            <NewProductsCard/>
-            <NewProductsCard/>
+          {products?.map((product: ProductsType, index: number) => (
+            <NewProductsCard product={product} key={index} />
+          ))}
         </div>
     </>
   )

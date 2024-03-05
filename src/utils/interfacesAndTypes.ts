@@ -25,3 +25,26 @@ export interface AuthAndRegProps {
 export interface AuthState {
     isAuthenticated: boolean
 }
+
+export interface ProductsI {
+    products: ProductsType[]
+}
+
+export type ProductsType = {
+    id?: number;
+    name: string;
+    description: string;
+    price: number;
+    default_image?: string;
+    is_arrived?: boolean;
+    rating: number;
+    in_stock?: boolean;
+    discount: number;
+    characteristics: {
+        [key: string]: string
+    };
+    category: number;
+    brand: number;
+    brand_category: number;
+    color: number[];
+}
