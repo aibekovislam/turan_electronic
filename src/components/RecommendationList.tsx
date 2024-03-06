@@ -5,9 +5,10 @@ import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRecProducts } from "../store/features/products/productRecommenededSlice";
 import { RootStates } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 function RecommendationList() {
-
+    const navigate = useNavigate();
     const dispatch = useDispatch<any>();
     const recProducts = useSelector((state: RootStates) => state.productRec.rec_products);
 
@@ -37,6 +38,10 @@ function RecommendationList() {
         setCurrentPage(page);
     };
 
+    const handleNavigate = (id: number) => {
+        navigate(`/product/${id}`)
+    }
+
     const visiblePages = () => {
     const totalVisiblePages = Math.min(totalPages, maxVisiblePages);
     const start = Math.max(currentPage - Math.floor(totalVisiblePages / 2), 1);
@@ -59,7 +64,7 @@ function RecommendationList() {
         </div>
         <div className="d-f__rec-product">
             { recProducts.map((product) => (
-                <Card key={product.id} product={product} type={"recommedation_card"} />
+                <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
             ) ) }
         </div>
         <div className="pagination">

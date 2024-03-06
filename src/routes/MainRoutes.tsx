@@ -11,7 +11,7 @@ function MainRoutes() {
       <Route element={<MainLayout />}>
         <Route element={<HomePage />} path="/" />
         <Route element={<FavoritesPage />} path="/favorite" />
-        <Route element={<DetailPage />} path="/detail" />
+        <Route element={<DetailPage />} path="/product/:id" />
         <Route element={<RegistrationAndAuthorization/>} path="/auth" />
       </Route>
     </Routes>
