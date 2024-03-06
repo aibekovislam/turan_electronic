@@ -1,17 +1,19 @@
 import SldierDetail from "../components/SliderDetail"
 import styles from "../styles/detail.module.scss"
-import white from "../assets/svgs/detail/white.svg"
-import black from "../assets/svgs/detail/black.svg"
-import lighBrown from "../assets/svgs/detail/lightBrown.svg"
-import star2 from "../assets/svgs/card/star2:5.svg"
+// import white from "../assets/svgs/detail/white.svg"
+// import black from "../assets/svgs/detail/black.svg"
+// import lighBrown from "../assets/svgs/detail/lightBrown.svg"
+// import star2 from "../assets/svgs/card/star2:5.svg"
 import heart from "../assets/svgs/card/Vector (8).svg"
 import reviews from '../assets/svgs/detail/Rates.svg'
 import star4 from '../assets/svgs/detail/star4:5.svg'
-
-
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Brands from "../components/Brands"
-
+import { useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { RootStates } from "../store/store"
+import { calculateDiscountedPrice } from "../functions/calculateDiscounte"
+import { fetchOneProducts } from "../store/features/products/oneProductSlice"
 
 
 function DetailPage() {
@@ -20,6 +22,16 @@ function DetailPage() {
     const handleItemClick = (item: string) => {
       setActiveItem(item);
     };
+
+    const { id } = useParams();
+    const dispatch = useDispatch<any>();
+    const product = useSelector((state: RootStates) => state.oneProduct.product);
+
+    if (id) {
+        useEffect(() => {
+          dispatch(fetchOneProducts(+id))
+        }, [dispatch, id])
+    }
 
   return (
     <div>
@@ -30,63 +42,65 @@ function DetailPage() {
             <div className={styles.detail_container}>
                 <div className={styles.detail_wrapper__left}>
                     <div className={styles.slider_main}>
-                        <SldierDetail/>
+                        <SldierDetail img_array={[]} default_image={product?.default_image} />
                     </div>
                     <div className={styles.options}>
                         <div>Выбрать цвет</div>
-                        <img src={white}  />
-                        <img src={black}  />
-                        <img src={lighBrown}  />
+                        { product?.color ? (
+                            product?.color.map((item: any, index) => (
+                                <div key={index} className={styles.color_block} style={{ background: item }}></div>
+                            )) 
+                        ) : (
+                            <div>Loading...</div>
+                        ) }
                     </div> 
                     <div className={styles.description}>
                         <div>Описание</div>
-                        <p>Смартфон iPhone 14 в корпусе цвета Gold со встроенной памятью 128 Гб оснащен экраном диагональю 6,1 дюйма, выполненным по технологии OLED. Дисплей типа Super Retina XDR обладает разрешением 2532x1170 пикселей. В этой модели установлен шестиядерный процессор А15 Bionic. В девайсе</p>
+                        <p>{ product?.description }</p>
                     </div>
                 </div>
                 <div className={styles.detail_wrapper__right}>
                     <div className={styles.stars}>
-                        <img src={star2} alt="" />
+                        {product?.rating != undefined ? (
+                            [1, 2, 3, 4, 5].map((star) => (
+                                <span
+                                key={star}
+                                style={{
+                                    cursor: 'pointer',
+                                    color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
+                                    marginRight: '5px',
+                                }}
+                                >
+                                &#9733;
+                                </span>
+                            ))
+                        ) : (
+                            <div>Loading...</div>
+                        )}
                     </div>
                     <div className={styles.title}>
-                        <div>Apple IPhone 14 Pro Max </div>
+                        <div>{ product?.name }</div>
                     </div>
                     <div className={styles.storage}>
                         <div>Память</div>
                         <ul className={styles.navigation}>
-                            <li
-                            className={`${styles.navigation__item} ${
-                                activeItem === "256gb" ? styles.active__navbar : ""
-                            }`}
-                            onClick={() => handleItemClick("256gb")}
-                            >
-                            <a href="#" >
-                                256gb
-                            </a>
-                            </li>
-                            <li
-                            className={`${styles.navigation__item} ${
-                                activeItem === "512gb" ? styles.active__navbar : ""
-                            }`}
-                            onClick={() => handleItemClick("512gb")}
-                            >
-                            <a href="#" >
-                                512gb
-                            </a>
-                            </li>
-                            <li
-                            className={`${styles.navigation__item} ${
-                                activeItem === "1tb" ? styles.active__navbar : ""
-                            }`}
-                            onClick={() => handleItemClick("1tb")}
-                            >
-                            <a href="#" >
-                                1tb
-                            </a>
-                            </li>
+                            { product?.memory.map((item: string, index: number) => (
+                                <li
+                                    key={index}
+                                    className={`${styles.navigation__item} ${
+                                        activeItem === "256gb" ? styles.active__navbar : ""
+                                    }`}
+                                    onClick={() => handleItemClick("256gb")}
+                                    >
+                                    <a href="#" >
+                                        { item }gb
+                                    </a>
+                                </li>
+                            )) } 
                         </ul>
                     </div>
                     <div className={styles.price}>
-                        <div>74500 сом</div>
+                        {<div>{ calculateDiscountedPrice(product?.price, product?.discount) } сом</div>}
                     </div>
                     <div className={styles.utils}>
                         <button className={styles.btn}>

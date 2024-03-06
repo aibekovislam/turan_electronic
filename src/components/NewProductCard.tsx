@@ -8,7 +8,6 @@ import checked from "../assets/svgs/card/Vector (9).svg";
 import { ProductsType } from "../utils/interfacesAndTypes"
 
 function NewProductsCard({ product }: { product: ProductsType }) {
-    console.log(product)
   return (
     <div className={`${styles.card_main} ${styles.card_main_mobile}`}>
         <div className={styles.card_container}>
