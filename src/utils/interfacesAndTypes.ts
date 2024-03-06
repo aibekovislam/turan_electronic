@@ -40,6 +40,10 @@ export interface ProductI {
     product?: null | ProductsType
 }
 
+export interface AccessoriesI {
+    accessories: AccessoriesType[]
+}
+
 export interface RecProductsI {
     rec_products: ProductsType[]
 }
@@ -70,6 +74,25 @@ export type ProductsType = {
     brand_category: number;
     color: number[];
     memory: string[]
+}
+
+export type AccessoriesType = {
+    id?: number;
+    name: string;
+    description: string;
+    price: number;
+    default_image?: string;
+    is_arrived?: boolean;
+    rating: number;
+    in_stock?: boolean;
+    discount: number;
+    characteristics: {
+        [key: string]: string
+    };
+    category: number;
+    brand: number;
+    brand_category: number;
+    color: number[];
 }
 
 export type BrandsType = {

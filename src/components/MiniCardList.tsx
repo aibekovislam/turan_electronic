@@ -3,6 +3,11 @@ import styles from "../styles/card.module.scss";
 import MiniCard from "./MiniCard";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import nextArrow from "../assets/svgs/Vector (7).svg";
+import { useDispatch, useSelector } from "react-redux";
+import { RootStates } from "../store/store";
+import { useEffect } from "react";
+import { fetchAccessories } from "../store/features/accessories/accessoriesSlice";
+import { AccessoriesType } from "../utils/interfacesAndTypes";
 
 function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
@@ -23,6 +28,16 @@ function SampleNextArrow(props: any) {
 } 
 
 function MiniCardList() {
+  const dispatch = useDispatch<any>()
+  const accessories = useSelector((state: RootStates) => state.accessories.accessories)
+
+  useEffect(() => {
+      dispatch(fetchAccessories())
+  }, [dispatch])
+
+  console.log(accessories, "Accessories");
+
+
     const settings = {
         dots: false,
         infinite: false,
@@ -65,30 +80,11 @@ function MiniCardList() {
           </div>
           <div className={`slider-container ${styles.mini_card_list}`}>
             <Slider {...settings}>
-              <div className={styles.mini_card_block}>
-                <MiniCard style={{ "boxShadow": "none" }}/>
-              </div>
-              <div className={styles.mini_card_block}>
-                  <MiniCard style={{ "boxShadow": "none" }}/>
-              </div>
-              <div className={styles.mini_card_block}>
-                  <MiniCard style={{ "boxShadow": "none" }}/>
-              </div>
-              <div className={styles.mini_card_block}>
-                  <MiniCard style={{ "boxShadow": "none" }}/>
-              </div>
-              <div className={styles.mini_card_block}>
-                  <MiniCard style={{ "boxShadow": "none" }}/>
-              </div>
-              <div className={styles.mini_card_block}>
-                  <MiniCard style={{ "boxShadow": "none" }}/>
-              </div>
-              <div className={styles.mini_card_block}>
-                  <MiniCard style={{ "boxShadow": "none" }}/>
-              </div>
-              <div className={styles.mini_card_block}>
-                  <MiniCard style={{ "boxShadow": "none" }}/>
-              </div>
+              {accessories?.map((accessories: AccessoriesType, index: number) => (
+                <div key={ index } className={styles.mini_card_block}>
+                  <MiniCard accessories={accessories}/>
+                </div>
+              ))}
             </Slider>
           </div>
         </>
