@@ -1,7 +1,7 @@
 import styles from "../styles/card.module.scss"
-import black from "../assets/svgs/card/black.svg"
-import white from "../assets/svgs/card/white.svg"
-import lightBrown from "../assets/svgs/card/lightBrrown.svg"
+// import black from "../assets/svgs/card/black.svg"
+// import white from "../assets/svgs/card/white.svg"
+// import lightBrown from "../assets/svgs/card/lightBrrown.svg"
 import shop from "../assets/svgs/card/shop.svg"
 import heart from "../assets/svgs/card/Vector (8).svg"
 import checked from "../assets/svgs/card/Vector (9).svg";
@@ -19,12 +19,11 @@ function NewProductsCard({ product }: { product: ProductsType }) {
                             Новое
                         </div>
                     ) : null}
-                    {/* <img src={star2} className={styles.star} /> */}
                     <div>
                         {[1, 2, 3, 4, 5].map((star) => (
                             <span
                                 key={star}
-                                style={{ cursor: 'pointer', color: star <= product.rating ? 'gold' : 'gray', marginRight: "5px" }}
+                                style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
                                 >
                             &#9733;
                             </span>
@@ -62,9 +61,9 @@ function NewProductsCard({ product }: { product: ProductsType }) {
                 </div>
                 <div className={styles.options_container}>
                     <h2>Цвет</h2>
-                    <img src={black} alt="" />
-                    <img src={white} alt="" />
-                    <img src={lightBrown} alt="" />
+                    { product.color.map((item: any, index) => (
+                        <div key={index} className={styles.color_block} style={{ background: item }}></div>
+                    )) }
                 </div>
             </div>
         </div>

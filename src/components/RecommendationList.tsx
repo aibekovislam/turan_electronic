@@ -1,23 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import Card from "./Card";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRecProducts } from "../store/features/products/productRecommenededSlice";
+import { RootStates } from "../store/store";
 
 function RecommendationList() {
+
+    const dispatch = useDispatch<any>();
+    const recProducts = useSelector((state: RootStates) => state.productRec.rec_products);
+
+    useEffect(() => {
+        dispatch(fetchRecProducts())
+    }, [dispatch])
+
     const itemsPerPage = 16;
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
 
-    const cardsData = Array.from({ length: 50 }, (_, index) => ({
-        type: "recommendation_card",
-        id: index + 1,
-    }));
-
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentCards = cardsData.slice(startIndex, endIndex);
+    const currentCards = recProducts.slice(startIndex, endIndex);
 
-    const totalPages = Math.ceil(cardsData.length / itemsPerPage);
+    const totalPages = Math.ceil(recProducts.length / itemsPerPage);
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -52,8 +58,8 @@ function RecommendationList() {
             </div>
         </div>
         <div className="d-f__rec-product">
-            { currentCards.map((cardItem) => (
-                <Card key={cardItem.id} type={cardItem.type} />
+            { recProducts.map((product) => (
+                <Card key={product.id} product={product} type={"recommedation_card"} />
             ) ) }
         </div>
         <div className="pagination">

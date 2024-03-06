@@ -4,7 +4,8 @@ export interface CategoryProps {
 }
 
 export interface CardProps {
-    type?: string
+    type?: string,
+    product: ProductsType
 }
 
 export interface BrandsProps {
@@ -27,6 +28,10 @@ export interface AuthState {
 
 export interface ProductsI {
     products: ProductsType[]
+}
+
+export interface RecProductsI {
+    rec_products: ProductsType[]
 }
 
 export interface BrandsI {
