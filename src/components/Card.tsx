@@ -21,7 +21,7 @@ const Card: React.FC<CardProps> = ({ type, product }) => {
                             {[1, 2, 3, 4, 5].map((star) => (
                                 <span
                                     key={star}
-                                    style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
+                                    style={{ color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
                                     >
                                 &#9733;
                                 </span>

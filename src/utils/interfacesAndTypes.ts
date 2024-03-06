@@ -30,6 +30,10 @@ export interface ProductsI {
     products: ProductsType[]
 }
 
+export interface AccessoriesI {
+    accessories: AccessoriesType[]
+}
+
 export interface RecProductsI {
     rec_products: ProductsType[]
 }
@@ -43,6 +47,25 @@ export interface CarouselI {
 }
 
 export type ProductsType = {
+    id?: number;
+    name: string;
+    description: string;
+    price: number;
+    default_image?: string;
+    is_arrived?: boolean;
+    rating: number;
+    in_stock?: boolean;
+    discount: number;
+    characteristics: {
+        [key: string]: string
+    };
+    category: number;
+    brand: number;
+    brand_category: number;
+    color: number[];
+}
+
+export type AccessoriesType = {
     id?: number;
     name: string;
     description: string;

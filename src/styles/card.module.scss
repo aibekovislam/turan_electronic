@@ -12,7 +12,6 @@
     height: auto;
     border-radius: 24px;
     border: 1px solid #fff;
-    box-shadow: 16px 36px 64px 0px #6f88a07a;
 }
 
 .card_container{
@@ -25,6 +24,12 @@
 .star_container{
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.star_container__mini{
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
 }
 

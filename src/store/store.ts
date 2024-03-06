@@ -4,6 +4,7 @@ import productsReducer from "./features/products/productSlice";
 import productRecReducer from "./features/products/productRecommenededSlice";
 import brandReducer from "./features/brands/brandsSlice";
 import carouselReducer from "./features/carousel/carouselSlice";
+import accessoriesReducer from "./features/accessories/accessoriesSlice"
 
 
 export const store = configureStore({
@@ -12,7 +13,8 @@ export const store = configureStore({
         products: productsReducer,
         productRec: productRecReducer,
         brands: brandReducer,
-        carousel: carouselReducer
+        carousel: carouselReducer,
+        accessories: accessoriesReducer
     }
 })
 

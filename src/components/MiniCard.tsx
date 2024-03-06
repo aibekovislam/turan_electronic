@@ -1,24 +1,34 @@
 import styles from "../styles/card.module.scss";
-import star2 from "../assets/svgs/card/star2:5.svg"
 import shop from "../assets/svgs/card/shop.svg"
 
-function MiniCard({ style }: any) {
+function MiniCard({ accessories }: any) {
   return (
-    <div className={styles.card_mini} style={style}>
+    <div className={styles.card_mini} >
         <div className={styles.card_container}>
             <div className={styles.card}>
-                <div className={styles.star_container}>
-                    <img src={star2} className={styles.star} />
+                <div className={styles.star_container__mini}>
+                    <div>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                            <>
+                                <span
+                                    key={star}
+                                    style={{ color: star <= accessories.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
+                                        >
+                                    &#9733;
+                                </span>
+                            </>
+                            ))}
+                    </div>
                 </div>
                 <div className={styles.img_container}>
-                    <img style={{ maxWidth: "133px", maxHeight: "133px", objectFit: "contain" }} src={"https://molla.al/wp-content/uploads/2020/09/18W-charger.png"}  />
+                    <img style={{ maxWidth: "133px", maxHeight: "133px", objectFit: "contain" }} src={accessories.default_image}  />
                 </div>
                 <div className={styles.title_container}>
                     <div className={styles.title}>
-                        <h2 style={{ fontSize: "14px", fontWeight: "400", textAlign: "center" }}>Адаптер</h2>
+                        <h2 style={{ fontSize: "14px", fontWeight: "400", textAlign: "center" }}>{accessories.name}</h2>
                     </div>
                     <div className={styles.price_access} style={{ display: 'block' }}>
-                        <h2>5700 сом</h2>
+                        <h2>{accessories.price} сом</h2>
                     </div>
                 </div>
                 <div className={styles.btn_container}>
