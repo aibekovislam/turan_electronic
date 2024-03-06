@@ -10,7 +10,7 @@ export const store = configureStore({
     reducer: {
         auth: authReducer,
         products: productsReducer,
-        productRec: productRecReducer
+        productRec: productRecReducer,
         brands: brandReducer,
         carousel: carouselReducer
     }
