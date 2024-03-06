@@ -16,7 +16,9 @@ function NewProductsList() {
     dispatch(fetchProducts())
   }, [dispatch])
 
-  console.log(products)
+  const displayedProducts = products.slice(0, 4);
+
+  const filteredNewProducts = displayedProducts.filter((item) => item.is_arrived === true);
 
   return (
     <>
@@ -32,7 +34,7 @@ function NewProductsList() {
             </div>
         </div>
         <div className="d-f__new-product">
-          {products?.map((product: ProductsType, index: number) => (
+          {filteredNewProducts?.map((product: ProductsType, index: number) => (
             <NewProductsCard product={product} key={index} />
           ))}
         </div>

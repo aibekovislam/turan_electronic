@@ -5,7 +5,7 @@ import { API_URL } from "../../../utils/consts";
 import { ProductsI } from "../../../utils/interfacesAndTypes";
 
 const initialState: ProductsI = {
-    products: []
+    products: [],
 }
 
 const productSlice = createSlice({
@@ -20,7 +20,7 @@ const productSlice = createSlice({
 
 export const fetchProducts = (): AppThunk => async (dispatch) => {
     try {
-        const response = await axios.get(`${API_URL}/products`);
+        const response = await axios.get(`${API_URL}/products/`);
         const data: ProductsI = { products: response.data.results };
         // console.log(data)
         dispatch(productSlice.actions.setProducts(data))
