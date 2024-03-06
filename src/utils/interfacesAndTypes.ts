@@ -3,9 +3,15 @@ export interface CategoryProps {
     brand: BrandsType;
 }
 
+export interface SliderDetailProps {
+    img_array: [],
+    default_image: string | undefined
+}
+
 export interface CardProps {
     type?: string,
-    product: ProductsType
+    product: ProductsType,
+    onClick: (id: number) => void
 }
 
 export interface BrandsProps {
@@ -27,7 +33,11 @@ export interface AuthState {
 }
 
 export interface ProductsI {
-    products: ProductsType[]
+    products: ProductsType[],
+}
+
+export interface ProductI {
+    product?: null | ProductsType
 }
 
 export interface AccessoriesI {
@@ -47,7 +57,7 @@ export interface CarouselI {
 }
 
 export type ProductsType = {
-    id?: number;
+    id: number;
     name: string;
     description: string;
     price: number;
@@ -63,6 +73,7 @@ export type ProductsType = {
     brand: number;
     brand_category: number;
     color: number[];
+    memory: string[]
 }
 
 export type AccessoriesType = {

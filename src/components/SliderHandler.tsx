@@ -29,8 +29,6 @@ export default function SimpleSlider() {
     useEffect(() => {
         dispatch(fetchCarousel())
     }, [dispatch])
-
-    console.log(carousel, "Carousel");
     
     var settings: {
         dots: boolean;

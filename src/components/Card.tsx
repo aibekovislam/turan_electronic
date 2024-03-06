@@ -11,9 +11,9 @@ import React from "react"
 import { CardProps } from "../utils/interfacesAndTypes"
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte"
 
-const Card: React.FC<CardProps> = ({ type, product }) => {      
+const Card: React.FC<CardProps> = ({ type, product, onClick }) => {      
     return (
-        <div className={styles.card_main}>
+        <div className={styles.card_main} onClick={() => onClick(product.id)}>
             <div className={styles.card_container}>
                 <div className={styles.card}>
                     <div className={styles.star_container}>

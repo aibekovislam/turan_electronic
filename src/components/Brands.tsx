@@ -16,10 +16,7 @@ function Brands() {
 
     useEffect(() => {
         dispatch(fetchBrands())
-    }, [dispatch])
-
-    console.log(brands, "Brands");
-    
+    }, [dispatch])    
 
   return (
     <div className={styles.brands}>

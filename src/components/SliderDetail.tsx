@@ -4,12 +4,10 @@ import styles from "../styles/slider.module.scss"
 import ArrowLeft from "../assets/svgs/detail/leftArrow.svg"
 import ArrowRight from "../assets/svgs/detail/rightArrow.svg"
 import example from '../assets/sliderDetail/img01.png'
+import { SliderDetailProps } from '../utils/interfacesAndTypes';
 
-
-
-
-function SliderDetail() {
-  
+function SliderDetail({ img_array, default_image }: SliderDetailProps) {
+  console.log(img_array, default_image)
   const imgs: any =[
     {id:0,value:{example}},
     {id:1,value:{example}},
@@ -36,7 +34,7 @@ function SliderDetail() {
     const wordSlider=imgs[index];
     setWordData(wordSlider)
   }
-  console.log(wordData)
+  
   return (
     <div className={styles.main}>
       <div className={styles.carousel_detail}>

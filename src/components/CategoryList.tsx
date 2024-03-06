@@ -19,8 +19,6 @@ function CategoryList() {
         dispatch(fetchBrands())
     }, [dispatch])
 
-    console.log(brands, "Category Up");
-
   return (
     <div className={styles.category__container}>
       <div className={styles.category_big}>
