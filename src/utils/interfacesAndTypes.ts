@@ -1,7 +1,6 @@
 export interface CategoryProps {
     type: string;
-    img__url: string;
-    brand: string;
+    brand: BrandsType;
 }
 
 export interface CardProps {
@@ -30,6 +29,14 @@ export interface ProductsI {
     products: ProductsType[]
 }
 
+export interface BrandsI {
+    brands: BrandsType[]
+}
+
+export interface CarouselI {
+    carousel: CarouselType[]
+}
+
 export type ProductsType = {
     id?: number;
     name: string;
@@ -47,4 +54,17 @@ export type ProductsType = {
     brand: number;
     brand_category: number;
     color: number[];
+}
+
+export type BrandsType = {
+    id? : number;
+    title: string;
+    logo_field: string;
+    image: string;
+}
+
+export type CarouselType = {
+    id? : number;
+    images: string;
+    description: string
 }

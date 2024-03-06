@@ -38,6 +38,9 @@
 
 .brands__img img {
     transition: transform 0.3s ease;
+    width: 20vw;
+    height: 5vw;
+    object-fit: contain;
 }
 
 .brands__img:hover img {
