@@ -7,12 +7,18 @@ import shop from "../assets/svgs/card/shop.svg"
 import fillHeart from "../assets/svgs/card/fillHeart.svg"
 import heart from "../assets/svgs/card/Vector (8).svg"
 // import phone from "../assets/card/Phone.png"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { CardProps } from "../utils/interfacesAndTypes"
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte"
 
-const Card: React.FC<CardProps> = ({ type, product, onClick }) => {      
-    if(product !== undefined) {
+const Card: React.FC<CardProps> = ({ type, product, onClick }) => {     
+    const [ loaded, setLoaded ] = useState(false);
+
+    useEffect(() => {
+        setLoaded(true);
+    }, [product])
+    
+    if(loaded) {
         return (
             <div className={styles.card_main} onClick={() => onClick(product.id)}>
                 <div className={styles.card_container}>
@@ -50,7 +56,7 @@ const Card: React.FC<CardProps> = ({ type, product, onClick }) => {
                             </div>
                             <div className={styles.title}>
                                 <h2>{ product.name }</h2>
-                                <p>{ product.description.slice(0, 130) }</p>
+                                <p>{ product?.description !== undefined ? product?.description.slice(0, 130) : "" }</p>
                             </div>
                         </div>
                         <div className={styles.btn_container}>
@@ -61,9 +67,11 @@ const Card: React.FC<CardProps> = ({ type, product, onClick }) => {
                         </div>
                         <div className={styles.options_container}>
                             <h2>Цвет</h2>
-                            { product.color.map((item: any, index) => (
+                            { product?.color !== undefined ? product.color.map((item: any, index) => (
                                 <div key={index} className={styles.color_block} style={{ background: item }}></div>
-                            )) }
+                            )) : (
+                                <div>Loading...</div>
+                            ) }
                         </div>
                     </div>
                 </div>

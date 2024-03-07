@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import Card from "./Card";
 import "../styles/favorite.scss"
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootStates } from "../store/store";
+import { fetchProducts } from "../store/features/products/productSlice";
 
 function FavoriteList() {
-    const itemsPerPage = 15;
+    const navigate = useNavigate();
+    const dispatch = useDispatch<any>();
+    const products = useSelector((state: RootStates) => state.products.products);
+
+    useEffect(() => {
+        dispatch(fetchProducts())
+    }, [dispatch])
+
+    const itemsPerPage = 16;
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
 
-    const cardsData = Array.from({ length: 50 }, (_, index) => ({
-        type: "recommendation_card",
-        id: index + 1,
-    }));
-
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentCards = cardsData.slice(startIndex, endIndex);
+    const currentCards = products.slice(startIndex, endIndex);
 
-    const totalPages = Math.ceil(cardsData.length / itemsPerPage);
+    const totalPages = Math.ceil(products.length / itemsPerPage);
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
@@ -32,13 +39,18 @@ function FavoriteList() {
         setCurrentPage(page);
     };
 
-  const visiblePages = () => {
-    const totalVisiblePages = Math.min(totalPages, maxVisiblePages);
-    const start = Math.max(currentPage - Math.floor(totalVisiblePages / 2), 1);
-    const end = Math.min(start + totalVisiblePages - 1, totalPages);
+    const handleNavigate = (id: number) => {
+        navigate(`/product/${id}`)
+    }
 
-    return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-  };
+    const visiblePages = () => {
+        const totalVisiblePages = Math.min(totalPages, maxVisiblePages);
+        const start = Math.max(currentPage - Math.floor(totalVisiblePages / 2), 1);
+        const end = Math.min(start + totalVisiblePages - 1, totalPages);
+
+        return Array.from({ length: end - start + 1 }, (_, index) => start + index);
+    };
+
   return (
     <>
        
@@ -51,8 +63,8 @@ function FavoriteList() {
             </div>
         </div>
         <div className="d-f__rec-product">
-            { currentCards.map((cardItem) => (
-                <Card key={cardItem.id} type={cardItem.type} />
+            { currentCards.map((cardItem: any) => (
+                <Card key={cardItem.id} product={cardItem} onClick={handleNavigate} />
             ) ) }
         </div>
         <div className="pagination">
