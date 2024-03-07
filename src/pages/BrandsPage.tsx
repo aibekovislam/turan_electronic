@@ -22,16 +22,16 @@ function BrandsPage() {
         }
     }, [dispatch, brand])
 
-    const filteredData = products?.filter((item) => item.brand_title === oneBrand?.title)
+    // const filteredData = products?.filter((item) => item.brand_title === oneBrand?.title)
     const navigate = useNavigate();
 
     const itemsPerPage = 16;
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentCards = products.slice(startIndex, endIndex);
+    // const startIndex = (currentPage - 1) * itemsPerPage;
+    // const endIndex = startIndex + itemsPerPage;
+    // const currentCards = products.slice(startIndex, endIndex);
 
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
