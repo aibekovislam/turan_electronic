@@ -20,9 +20,9 @@ function RecommendationList() {
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentCards = recProducts.slice(startIndex, endIndex);
+    // const startIndex = (currentPage - 1) * itemsPerPage;
+    // const endIndex = startIndex + itemsPerPage;
+    // const currentCards = recProducts.slice(startIndex, endIndex);
 
     const totalPages = Math.ceil(recProducts.length / itemsPerPage);
 
