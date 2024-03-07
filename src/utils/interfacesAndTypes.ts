@@ -82,6 +82,7 @@ export type ProductsType = {
     product_images: {
         [key: string]: string[];
     };
+    brand_title: string
 }
 
 export type AccessoriesType = {
