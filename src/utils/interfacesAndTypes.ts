@@ -4,9 +4,10 @@ export interface CategoryProps {
 }
 
 export interface SliderDetailProps {
-    img_array: [],
-    default_image: string | undefined
-}
+    img_array?: any;
+    default_image?: any;
+    selectedColor: any;
+}  
 
 export interface CardProps {
     type?: string,
@@ -69,7 +70,10 @@ export type ProductsType = {
     brand: number;
     brand_category: number;
     color: number[];
-    memory: string[]
+    memory: string[];
+    product_images: {
+        [key: string]: string[];
+    };
 }
 
 export type BrandsType = {

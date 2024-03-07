@@ -17,21 +17,43 @@ import { fetchOneProducts } from "../store/features/products/oneProductSlice"
 
 
 function DetailPage() {
-    const [activeItem, setActiveItem] = useState<string>("256");
-
-    const handleItemClick = (item: string) => {
-      setActiveItem(item);
-    };
-
     const { id } = useParams();
     const dispatch = useDispatch<any>();
     const product = useSelector((state: RootStates) => state.oneProduct.product);
+    const firstImage = Object.values(product?.product_images || {})[0]?.[0]?.[0] || null;
+
+    const [activeItem, setActiveItem] = useState<string | undefined>(product?.memory[0]);
+    const [expanded, setExpanded] = useState(false);
+
+    useEffect(() => {
+        setActiveItem(product?.memory[0]);
+    }, [product]);
+
+    const handleItemClick = (item: string) => {
+        setActiveItem(item);
+    };    
+    const [colorPicked, setColorPicked] = useState(firstImage);
 
     if (id) {
         useEffect(() => {
           dispatch(fetchOneProducts(+id))
         }, [dispatch, id])
     }
+
+    const handleColorPick = (color: any) => {
+        setColorPicked(color);
+    }
+
+    useEffect(() => {
+        const defaultColor: any = product?.color?.[0]; 
+        if (defaultColor) {
+          setColorPicked(defaultColor);
+        }
+      }, [product]);
+    
+    const toggleDescription = () => {
+        setExpanded(!expanded);
+    };
 
   return (
     <div>
@@ -42,21 +64,31 @@ function DetailPage() {
             <div className={styles.detail_container}>
                 <div className={styles.detail_wrapper__left}>
                     <div className={styles.slider_main}>
-                        <SldierDetail img_array={[]} default_image={product?.default_image} />
+                        <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
                     </div>
                     <div className={styles.options}>
                         <div>Выбрать цвет</div>
-                        { product?.color ? (
+                        {product?.color ? (
                             product?.color.map((item: any, index) => (
-                                <div key={index} className={styles.color_block} style={{ background: item }}></div>
-                            )) 
+                                <div
+                                    key={index}
+                                    className={`${styles.color_block} ${colorPicked === item ? styles.selectedColor : ""}`}
+                                    style={{ background: item }}
+                                    onClick={() => handleColorPick(item)}
+                                ></div>
+                            ))
                         ) : (
                             <div>Loading...</div>
-                        ) }
+                        )}
                     </div> 
                     <div className={styles.description}>
                         <div>Описание</div>
-                        <p>{ product?.description }</p>
+                        <p>
+                            {expanded ? product?.description : `${product?.description?.slice(0, 100)}...`}
+                            <span className={styles.open_des_func} onClick={toggleDescription}>
+                                {expanded ? "Свернуть" : "Развернуть"}
+                            </span>
+                        </p>
                     </div>
                 </div>
                 <div className={styles.detail_wrapper__right}>
@@ -88,9 +120,9 @@ function DetailPage() {
                                 <li
                                     key={index}
                                     className={`${styles.navigation__item} ${
-                                        activeItem === "256gb" ? styles.active__navbar : ""
+                                        activeItem === "256" ? styles.active__navbar : ""
                                     }`}
-                                    onClick={() => handleItemClick("256gb")}
+                                    onClick={() => handleItemClick("256")}
                                     >
                                     <a href="#" >
                                         { item }gb
@@ -113,62 +145,22 @@ function DetailPage() {
                             <div>Характеристики:</div>
                         </div>
                         <table>
-                            <tr>
-                                <th>
-                                    <span className={styles.dots__details_span}>
-                                        <span>Состав</span>
-                                    </span>
-                                </th>
-                                <td>Contact</td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span className={styles.dots__details_span}>
-                                        <span>Состав</span>
-                                    </span>
-                                </th>
-                                <td>Contact</td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span className={styles.dots__details_span}>
-                                        <span>Состав</span>
-                                    </span>
-                                </th>
-                                <td>Contact</td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span className={styles.dots__details_span}>
-                                        <span>Состав</span>
-                                    </span>
-                                </th>
-                                <td>Contact</td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span className={styles.dots__details_span}>
-                                        <span>Состав</span>
-                                    </span>
-                                </th>
-                                <td>Contact</td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span className={styles.dots__details_span}>
-                                        <span>Состав</span>
-                                    </span>
-                                </th>
-                                <td>Contact</td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span className={styles.dots__details_span}>
-                                        <span>Состав</span>
-                                    </span>
-                                </th>
-                                <td>Contact</td>
-                            </tr>
+                            {product?.characteristics ?  (
+                                Object.entries(product.characteristics).map(([key, value], index) => (
+                                    <tr key={index}>
+                                        <th>
+                                            <span className={styles.dots__details_span}>
+                                                <span>{key}</span>
+                                            </span>
+                                        </th>
+                                        <td>{value}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td>Loading...</td>
+                                </tr>
+                            )}
                         </table>
                     </div>
                 </div>
