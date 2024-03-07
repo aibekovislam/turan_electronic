@@ -10,7 +10,7 @@ function Category({ type, brand }: CategoryProps) {
         </div>
         <div className={`${type === "big" ? styles.big_category_item_btn : styles.category__item_btn}`}>
           <div className={styles.brand__category}>
-            { brand.title }
+            { brand?.title } 
           </div>
         </div>
       </div>

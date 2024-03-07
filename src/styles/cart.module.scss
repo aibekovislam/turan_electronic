@@ -1,0 +1,132 @@
+.cart_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart_main{
+    margin-top: 40px;
+}
+
+.cart_header{
+    margin-top: 60px;
+}
+
+.cart_header > div {
+    font-weight: 400;
+    font-size: 22px;
+}
+
+.cart_header > span {
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(1, 30, 184, 1);
+    cursor: pointer;
+}
+
+.cart_path > span {
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(136, 136, 136, 1);
+}
+
+.cart_container{
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    border: 2px solid #fff;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+    margin-top: 40px;
+}
+
+.cart{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 15px 15px 0px;
+}
+
+.cart_image{
+    width: 245px;
+    height: 224px;
+}
+
+.cart_image > img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.cart_content{
+    display: flex;
+    flex-direction: column;
+}
+
+.cart_content > p {
+    width: 500px;
+    font-size: 26px;
+    font-weight: 400;
+}
+
+.cart_counter{
+    display: flex;
+    gap: 10px;
+}
+
+.cart_counter > button{
+    border-image-source: linear-gradient(123.5deg, #FFFFFF 38.36%, rgba(219, 230, 242, 0) 69.31%, #8F9FAE 131.91%);
+    border: 1px solid #fff;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    width: 22px;
+    height: 18px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart_price{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin-top: 20px;
+}
+
+.discount_price{
+    font-size: 26px;
+    font-weight: 600;
+}
+.default_price {
+    font-size: 14px;
+    color: rgba(82, 82, 82, 1);
+    text-decoration-line: line-through;
+    font-weight: 400;
+}
+
+.cart_rate{
+    margin-top: 20px;
+}
+
+.cart_button{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px;
+    margin-bottom: 100px;
+}
+
+.btn{
+    width: 225px;
+    height: 46px;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+    margin-top: 40px;
+    background-color: transparent;
+    font-weight: 300;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 1);
+    cursor: pointer;
+}
