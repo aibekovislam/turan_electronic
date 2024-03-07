@@ -9,6 +9,7 @@ import { RootStates } from "../store/store";
 import { useEffect } from "react";
 import { fetchBrands } from "../store/features/brands/brandsSlice";
 import { BrandsType } from "../utils/interfacesAndTypes";
+import { useNavigate } from "react-router-dom";
 
 function Brands() {
     const dispatch = useDispatch<any>()
@@ -16,7 +17,13 @@ function Brands() {
 
     useEffect(() => {
         dispatch(fetchBrands())
-    }, [dispatch])    
+    }, [dispatch])
+
+    const navigate = useNavigate();
+
+    const handleNavigate = (brand: number | undefined) => {
+        navigate(`/products/brands/${brand}`)
+    }
 
   return (
     <div className={styles.brands}>
@@ -25,8 +32,8 @@ function Brands() {
         </div>
         <div className={styles.brands__item}>
             {brands?.map((brand: BrandsType, index : number) => (
-                <div key={index}  className={styles.brands__img}>
-                    <img  src={brand.logo_field} />
+                <div onClick={() => handleNavigate(brand?.id)} key={index} className={styles.brands__img}>
+                    <img src={brand.logo_field} />
                 </div>
             ))}
         </div>

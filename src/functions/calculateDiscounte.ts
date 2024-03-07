@@ -1,5 +1,5 @@
-export function calculateDiscountedPrice(originalPrice: number | undefined, discountPercentage: number | undefined): number | undefined {
-    if(originalPrice != undefined && discountPercentage != undefined) {
+export function calculateDiscountedPrice(originalPrice: any, discountPercentage: any): any {
+    if(originalPrice !== undefined && discountPercentage !== undefined) {
       if (originalPrice >= 0 && discountPercentage >= 0 && discountPercentage <= 100) {
         const discountAmount = (originalPrice * discountPercentage) / 100;
         const discountedPrice = originalPrice - discountAmount;
