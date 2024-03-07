@@ -50,7 +50,7 @@ function Navbar() {
                 activeItem === "home" ? "active__navbar" : ""
               }`}
             >
-              <a href="#">
+              <a href="home">
                 Главная
               </a>
             </li>
