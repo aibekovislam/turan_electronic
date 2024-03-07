@@ -41,6 +41,10 @@ export interface ProductI {
     product?: null | ProductsType
 }
 
+export interface BrandI {
+    brand?: null | BrandsType
+}
+
 export interface AccessoriesI {
     accessories: AccessoriesType[]
 }

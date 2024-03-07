@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { fetchProducts } from "../store/features/products/productSlice";
 import { ProductsType } from "../utils/interfacesAndTypes";
+import { useNavigate } from "react-router-dom";
 
 function NewProductsList() {
 
@@ -19,6 +20,12 @@ function NewProductsList() {
   const displayedProducts = products.slice(0, 4);
 
   const filteredNewProducts = displayedProducts.filter((item) => item.is_arrived === true);
+
+  const navigate = useNavigate();
+
+  const handleNavigate = (id: number) => {
+    navigate(`/product/${id}`)
+  }
 
   return (
     <>
@@ -35,7 +42,7 @@ function NewProductsList() {
         </div>
         <div className="d-f__new-product">
           {filteredNewProducts?.map((product: ProductsType, index: number) => (
-            <NewProductsCard product={product} key={index} />
+            <NewProductsCard product={product} key={index} onClick={handleNavigate} />
           ))}
         </div>
     </>
