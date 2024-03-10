@@ -17,7 +17,9 @@ export interface CardProps {
 
 export interface BrandsProps {
     brandTitle: string,
-    brandImg: string
+    brandImg: string,
+    products?: ProductsType[] | undefined,
+    colors?: string[] | undefined
 }
 
 export interface ArrowProps {
@@ -35,6 +37,7 @@ export interface AuthState {
 
 export interface ProductsI {
     products: ProductsType[],
+    colors?: string[]
 }
 
 export interface ProductI {
@@ -82,7 +85,8 @@ export type ProductsType = {
     product_images: {
         [key: string]: string[];
     };
-    brand_title: string
+    brand_title: string,
+    brand_category_title: string
 }
 
 export type AccessoriesType = {

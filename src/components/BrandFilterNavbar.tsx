@@ -3,9 +3,10 @@ import { BrandsProps } from "../utils/interfacesAndTypes";
 import FilterSVG from "../assets/svgs/Vector (18).svg";
 import { useState } from "react";
 import ArrowDown from "../assets/svgs/ArrowDown";
-import { renderDropdownContent } from "../functions/renderDropdown";
+import { renderDropdownContent } from "../functions/renderDropdown.tsx";
 
-function BrandFilterNavbar({ brandTitle, brandImg }: BrandsProps) {
+function BrandFilterNavbar({ brandTitle, brandImg, products, colors }: BrandsProps) {
+    const [pickedColor, setPickedColor] = useState<string | null>(null);
     const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
 
     const handleDropdownList = (index: number) => {
@@ -35,7 +36,7 @@ function BrandFilterNavbar({ brandTitle, brandImg }: BrandsProps) {
                                 <ArrowDown isUp={dropdownStates[index]} />
                             </div>
                             <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>
-                                {dropdownStates[index] && renderDropdownContent(index)}
+                                { dropdownStates[index] && renderDropdownContent(index, products, colors, pickedColor, setPickedColor) }
                             </div>
                         </div>
                     ))}
