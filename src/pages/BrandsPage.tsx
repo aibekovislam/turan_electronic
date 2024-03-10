@@ -8,6 +8,7 @@ import { fetchProducts } from '../store/features/products/productSlice';
 import Card from '../components/Card';
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
+import SidebarMenu from '../components/SidebarMenu';
 
 function BrandsPage() {
     const { brand } = useParams();
@@ -84,6 +85,7 @@ function BrandsPage() {
                         <img src={nextArrow} />
                     </div>
                 </div>
+                <SidebarMenu/>
             </>
         )
     } else {
