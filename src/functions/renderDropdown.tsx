@@ -1,11 +1,10 @@
-import { filterBrandsTitle } from "../store/features/products/productSlice";
 import styles from "../styles/brands_and_footer.module.scss";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
 import { extractPropertyArray } from "./filterFunction";
+import { filterProductsByBrand } from "../store/features/products/productSlice";
 
-export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any) {
-
+export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, dispatch: any) {
     const handleColorClick = (color: string) => {
         setPickedColor(color === pickedColor ? null : color);
     };
@@ -33,6 +32,9 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                         className={styles.dropdown_radio}
                         name={groupName}
                         defaultChecked={true}
+                        onChange={() => {
+                            dispatch(filterProductsByBrand("all"));
+                        }}
                         />
                     <span className={styles.dropdown_text}>Все</span>
                     {brandTitles.map((item: any, index: number) => (
@@ -42,7 +44,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 className={styles.dropdown_radio}
                                 name={groupName}
                                 onChange={() => {
-                                    let res = filterBrandsTitle(item, products);
+                                    let res = dispatch(filterProductsByBrand(item));;
                                     console.log(res)
                                 }}
                             />

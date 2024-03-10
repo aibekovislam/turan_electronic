@@ -4,6 +4,7 @@ import FilterSVG from "../assets/svgs/Vector (18).svg";
 import { useState } from "react";
 import ArrowDown from "../assets/svgs/ArrowDown";
 import { renderDropdownContent } from "../functions/renderDropdown.tsx";
+import { useDispatch } from "react-redux";
 
 function BrandFilterNavbar({ brandTitle, brandImg, products, colors }: BrandsProps) {
     const [pickedColor, setPickedColor] = useState<string | null>(null);
@@ -12,7 +13,9 @@ function BrandFilterNavbar({ brandTitle, brandImg, products, colors }: BrandsPro
     const handleDropdownList = (index: number) => {
         const newDropdownStates = dropdownStates.map((state, i) => (i === index ? !state : false));
         setDropdownStates(newDropdownStates);
-    };    
+    };
+
+    const dispatch = useDispatch<any>();
 
     return (
         <div className={styles.brands_navbar}>
@@ -36,7 +39,7 @@ function BrandFilterNavbar({ brandTitle, brandImg, products, colors }: BrandsPro
                                 <ArrowDown isUp={dropdownStates[index]} />
                             </div>
                             <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>
-                                { dropdownStates[index] && renderDropdownContent(index, products, colors, pickedColor, setPickedColor) }
+                                { dropdownStates[index] && renderDropdownContent(index, products, colors, pickedColor, setPickedColor, dispatch) }
                             </div>
                         </div>
                     ))}

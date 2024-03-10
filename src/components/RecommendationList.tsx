@@ -20,10 +20,6 @@ function RecommendationList() {
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
 
-    // const startIndex = (currentPage - 1) * itemsPerPage;
-    // const endIndex = startIndex + itemsPerPage;
-    // const currentCards = recProducts.slice(startIndex, endIndex);
-
     const totalPages = Math.ceil(recProducts.length / itemsPerPage);
 
     const handleNextPage = () => {
@@ -57,7 +53,7 @@ function RecommendationList() {
             </div>
             <div className="accessories__item">
             <span style={{ fontSize: "25px", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
-            <div className="accessories__item_img" style={{ position: "initial" }}>
+            <div onClick={() => navigate("/recommendation/products")} className="accessories__item_img" style={{ position: "initial" }}>
                 <img src={nextArrow} />
             </div>
             </div>
