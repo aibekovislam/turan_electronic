@@ -20,10 +20,13 @@ function BrandsPage() {
     useEffect(() => {
         if(brand != undefined) {
             dispatch(fetchOneBrand(+brand))
-            dispatch(fetchProducts());
         }
+        dispatch(fetchProducts());
     }, [dispatch, brand])
     
+    const filteredProducts = useSelector((state: RootStates) => state.products.filteredProducts);
+    const filteredProductsToFilter = filteredProducts?.filter((item) => item.brand_title === oneBrand?.title)
+
     const navigate = useNavigate();
     const filteredData = products?.filter((item) => item.brand_title === oneBrand?.title)
     const itemsPerPage = 16;
@@ -61,9 +64,15 @@ function BrandsPage() {
             <>
                 <BrandFilterNavbar brandImg={oneBrand?.logo_field} brandTitle={oneBrand?.title} products={filteredData} colors={colors} />
                 <div className="d-f__rec-product" style={{ marginTop: "30px" }}>
-                    { filteredData?.map((product) => (
+                {filteredProducts && filteredProducts.length === 0 ? (
+                    filteredData?.map((product: any) => (
                         <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
-                    ) ) }
+                    ))
+                ) : (
+                    filteredProductsToFilter?.map((product: any) => (
+                        <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
+                    ))
+                )}
                 </div>
                 <div className="pagination">
                     <div onClick={handlePrevPage} className={`prev__btn-pagination ${currentPage === 1 ? "disabled_pagination" : ""}`}>

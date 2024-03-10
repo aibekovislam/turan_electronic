@@ -8,6 +8,8 @@ import BrandsPage from "../pages/BrandsPage";
 import CartPage from "../pages/CartPage";
 import { useEffect } from "react";
 import ConfirmPage from "../pages/ConfirmPage";
+import NewProductsPage from "../pages/NewProductsPage";
+import RecommendationProductsPage from "../pages/RecommendationProductsPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -37,6 +39,8 @@ function MainRoutes() {
         <Route element={<BrandsPage/>} path="/products/brands/:brand" />
         <Route element={<CartPage/>} path="/cart" />
         <Route element={<ConfirmPage/>} path="/activate" />
+        <Route element={<NewProductsPage/>} path="/new/products" />
+        <Route element={<RecommendationProductsPage/>} path="/recommendation/products" />
       </Route>
     </Routes>
   )
