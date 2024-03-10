@@ -7,6 +7,7 @@ import RegistrationAndAuthorization from "../pages/RegistrationAndAuthorization"
 import BrandsPage from "../pages/BrandsPage";
 import CartPage from "../pages/CartPage";
 import { useEffect } from "react";
+import ConfirmPage from "../pages/ConfirmPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -35,7 +36,7 @@ function MainRoutes() {
         <Route element={<RegistrationAndAuthorization/>} path="/auth" />
         <Route element={<BrandsPage/>} path="/products/brands/:brand" />
         <Route element={<CartPage/>} path="/cart" />
-
+        <Route element={<ConfirmPage/>} path="/activate" />
       </Route>
     </Routes>
   )

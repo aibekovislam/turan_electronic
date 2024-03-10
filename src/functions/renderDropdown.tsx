@@ -1,3 +1,4 @@
+import { filterBrandsTitle } from "../store/features/products/productSlice";
 import styles from "../styles/brands_and_footer.module.scss";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
@@ -40,6 +41,10 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 type="radio"
                                 className={styles.dropdown_radio}
                                 name={groupName}
+                                onChange={() => {
+                                    let res = filterBrandsTitle(item, products);
+                                    console.log(res)
+                                }}
                             />
                             <span className={styles.dropdown_text}>{item}</span>
                         </div>

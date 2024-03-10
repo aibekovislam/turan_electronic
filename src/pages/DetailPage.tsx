@@ -22,11 +22,11 @@ function DetailPage() {
     const product = useSelector((state: RootStates) => state.oneProduct.product);
     const firstImage = Object.values(product?.product_images || {})[0]?.[0]?.[0] || null;
 
-    const [activeItem, setActiveItem] = useState<string | undefined>(product?.memory[0]);
+    const [activeItem, setActiveItem] = useState<string | undefined>(product?.memory?.[0])
     const [expanded, setExpanded] = useState(false);
 
     useEffect(() => {
-        setActiveItem(product?.memory[0]);
+        setActiveItem(product?.memory?.[0]);
     }, [product]);
 
     const handleItemClick = (item: string) => {
@@ -116,7 +116,7 @@ function DetailPage() {
                     <div className={styles.storage}>
                         <div>Память</div>
                         <ul className={styles.navigation}>
-                            { product?.memory.map((item: string, index: number) => (
+                            { product?.memory?.map((item: string, index: number) => (
                                 <li
                                     key={index}
                                     className={`${styles.navigation__item} ${

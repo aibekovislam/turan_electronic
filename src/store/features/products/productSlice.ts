@@ -6,8 +6,13 @@ import { ProductsI } from "../../../utils/interfacesAndTypes";
 
 const initialState: ProductsI = {
     products: [],
-    colors: []
-}
+    colors: [],
+    filters: {
+      brand: null,
+      memory: null,
+    },
+    filteredProducts: [],
+};  
 
 const productSlice = createSlice({
     name: "products",
@@ -18,7 +23,7 @@ const productSlice = createSlice({
         },
         setColors: (state, action: PayloadAction<{ colors: any }>) => {
             state.colors = action.payload.colors || [];
-        }
+        },      
     }
 });
 
@@ -33,6 +38,12 @@ export const fetchProducts = (): AppThunk => async (dispatch) => {
     } catch (error) {
         console.log(error);
     }
+}
+
+
+export function filterBrandsTitle(nameForFilter: string | null, items: any): any[] {
+    const res = items.filter((item: any) => item.brand_category_title === nameForFilter);
+    return res;
 }
 
 export const { setProducts, setColors } = productSlice.actions;

@@ -19,7 +19,7 @@ export interface BrandsProps {
     brandTitle: string,
     brandImg: string,
     products?: ProductsType[] | undefined,
-    colors?: string[] | undefined
+    colors?: string[] | undefined,
 }
 
 export interface ArrowProps {
@@ -37,7 +37,12 @@ export interface AuthState {
 
 export interface ProductsI {
     products: ProductsType[],
-    colors?: string[]
+    colors?: string[],
+    filters?: {
+        brand: string | null;
+        memory: any;
+    };
+    filteredProducts?: ProductsType[];
 }
 
 export interface ProductI {
@@ -80,7 +85,7 @@ export type ProductsType = {
     category: number;
     brand: number;
     brand_category: number;
-    color: number[];
+    color: string[];
     memory: string[] | undefined;
     product_images: {
         [key: string]: string[];
