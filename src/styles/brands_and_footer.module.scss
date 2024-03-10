@@ -21,6 +21,30 @@
     align-items: center;
 }
 
+.color_block {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: 1px 1px 4px 0px #00000059;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.d_f_colors {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 10px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+.color_picked {
+    border: 2px solid #FF7300;
+}
+
 .brands__img {
     width: 230px;
     height: 105px;
