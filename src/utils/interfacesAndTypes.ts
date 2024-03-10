@@ -81,7 +81,7 @@ export type ProductsType = {
     brand: number;
     brand_category: number;
     color: number[];
-    memory: string[];
+    memory: string[] | undefined;
     product_images: {
         [key: string]: string[];
     };
