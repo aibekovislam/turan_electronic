@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchOneBrand } from '../store/features/brands/oneBrandSlice';
 import { RootStates } from '../store/store';
 import BrandFilterNavbar from '../components/BrandFilterNavbar';
-import { fetchProducts } from '../store/features/products/productSlice';
+import { fetchProducts, setProducts } from '../store/features/products/productSlice';
 import Card from '../components/Card';
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
@@ -15,17 +15,16 @@ function BrandsPage() {
     const oneBrand = useSelector((state: RootStates) => state.oneBrand.brand);
     const products = useSelector((state: RootStates) => state.products.products);
     const colors = useSelector((state: RootStates) => state.products.colors);
-
+    
     useEffect(() => {
         if(brand != undefined) {
             dispatch(fetchOneBrand(+brand))
-            dispatch(fetchProducts())
+            dispatch(fetchProducts());
         }
     }, [dispatch, brand])
-
-    const filteredData = products?.filter((item) => item.brand_title === oneBrand?.title)
+    
     const navigate = useNavigate();
-
+    const filteredData = products?.filter((item) => item.brand_title === oneBrand?.title)
     const itemsPerPage = 16;
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
@@ -61,7 +60,7 @@ function BrandsPage() {
             <>
                 <BrandFilterNavbar brandImg={oneBrand?.logo_field} brandTitle={oneBrand?.title} products={filteredData} colors={colors} />
                 <div className="d-f__rec-product" style={{ marginTop: "30px" }}>
-                    { filteredData.map((product) => (
+                    { filteredData?.map((product) => (
                         <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
                     ) ) }
                 </div>
