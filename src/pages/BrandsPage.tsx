@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchOneBrand } from '../store/features/brands/oneBrandSlice';
 import { RootStates } from '../store/store';
 import BrandFilterNavbar from '../components/BrandFilterNavbar';
-import { fetchProducts, setProducts } from '../store/features/products/productSlice';
+import { fetchProducts } from '../store/features/products/productSlice';
 import Card from '../components/Card';
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";

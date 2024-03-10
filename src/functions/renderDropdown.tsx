@@ -4,7 +4,7 @@ import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
 import { extractPropertyArray } from "./filterFunction";
 
-export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, dispatch: any) {
+export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any) {
 
     const handleColorClick = (color: string) => {
         setPickedColor(color === pickedColor ? null : color);
