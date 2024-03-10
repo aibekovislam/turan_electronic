@@ -54,7 +54,7 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
               src={`${default_image}`}
               onClick={() => {
                 handleClick(-1);
-                console.log(wordData);
+                // console.log(wordData);
               }}
             />
           )}
