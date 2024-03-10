@@ -22,7 +22,7 @@ export const fetchOneProducts = (id: number): AppThunk => async (dispatch) => {
     try {
         const response = await axios.get(`${API_URL}/products/${id}`);
         const data: ProductI = { product: response.data };
-        console.log(data)
+        // console.log(data)
         dispatch(productOneSlice.actions.setProduct(data))
     } catch (error) {
         console.log(error);
