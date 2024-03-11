@@ -22,7 +22,6 @@ export const fetchAccessories = (): AppThunk => async (dispatch) => {
     try {
         const response = await axios.get(`${API_URL}/products/get_accessories/`);
         const data: AccessoriesI = { accessories: response.data["Аксессуары"] };
-        console.log(data)
         dispatch(accessoriesSlice.actions.setAccessories(data))
     } catch (error) {
         console.log(error);

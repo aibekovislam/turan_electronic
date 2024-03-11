@@ -35,7 +35,6 @@ function MiniCardList() {
       dispatch(fetchAccessories())
   }, [dispatch])
 
-  console.log(accessories, "Accessories");
 
 
     const settings = {

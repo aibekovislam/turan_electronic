@@ -29,10 +29,6 @@ const RangeSlider: React.FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <header className={styles.header}>
-        <h2>Price Range</h2>
-        <p>Use the slider or enter min and max prices</p>
-      </header>
       <div className={styles.price_input}>
         <div className={styles.field}>
           <span>Min</span>

@@ -7,18 +7,16 @@ function MiniCard({ accessories }: any) {
         <div className={styles.card_container}>
             <div className={styles.card}>
                 <div className={styles.star_container__mini}>
-                    <div>
-                        {[1, 2, 3, 4, 5].map((star) => (
-                            <>
-                                <span
-                                    key={star}
-                                    style={{ color: star <= accessories.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
-                                        >
-                                    &#9733;
-                                </span>
-                            </>
-                            ))}
-                    </div>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <div key={star}>
+                            <span
+                                key={star}
+                                style={{ color: star <= accessories.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
+                                >
+                                &#9733;
+                            </span>
+                        </div>
+                    ))}
                 </div>
                 <div className={styles.img_container}>
                     <img style={{ maxWidth: "133px", maxHeight: "133px", objectFit: "contain" }} src={accessories.default_image}  />

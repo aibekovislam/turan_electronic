@@ -23,7 +23,7 @@ function RegistrationAndAuthorization() {
         } else {
             setRegistered(false);
         }
-        console.log("Form Data:", authFormData);
+        // console.log("Form Data:", authFormData);
     }
     return (
         <>
