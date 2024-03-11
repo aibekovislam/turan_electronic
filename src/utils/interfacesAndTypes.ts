@@ -32,7 +32,16 @@ export interface AuthAndRegProps {
 }
 
 export interface AuthState {
-    isAuthenticated: boolean
+    isAuthenticated: boolean,
+    userActive: {
+        uid: string,
+        token: string
+    },
+    user: null | UserT
+}
+
+export interface ReviewI {
+    reviews: any[]
 }
 
 export interface ProductsI {
@@ -43,6 +52,10 @@ export interface ProductsI {
         memory: any;
     };
     filteredProducts?: ProductsType[];
+}
+
+export interface ActiveUserI {
+    user: UserType,
 }
 
 export interface ProductI {
@@ -92,6 +105,16 @@ export type ProductsType = {
     };
     brand_title: string,
     brand_category_title: string
+}
+
+export type UserT = {
+    email: string;
+    password: string;
+}
+
+export type UserType = {
+    uid: string | null;
+    token: string | null;
 }
 
 export type AccessoriesType = {

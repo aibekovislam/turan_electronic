@@ -1,36 +1,93 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AuthState } from "../../../utils/interfacesAndTypes";
+import { AuthState, UserT, UserType } from "../../../utils/interfacesAndTypes";
 import axios from "axios";
 import { API_URL } from "../../../utils/consts";
 import { AppThunk } from "../../store";
+import $axios from "../../../utils/axios";
 
 const initialState: AuthState = {
-    isAuthenticated: false
+    isAuthenticated: false,
+    userActive: {
+        uid: "",
+        token: ""
+    },
+    user: null
 }
 
-const authSlice = createSlice({
+export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        setAuthenticated: (state, action: PayloadAction<boolean>) => {
-            state.isAuthenticated = action.payload
-        },
-    }
-})
+      setAuthenticated: (state, action: PayloadAction<boolean>) => {
+        state.isAuthenticated = action.payload;
+      },
+      setActivate: (state, action: PayloadAction<{ uid: string; token: string }>) => {
+        state.userActive = action.payload;
+      },
+      setUser: (state, action: PayloadAction<{ email: string, password: string }>) => {
+        state.user = action.payload;
+        console.log(action.payload)
+      },
+    },
+});  
 
-// authSlice.ts
+
 export const signUp = (obj: any): AppThunk => async (dispatch) => {
     try {
         const response = await axios.post(`${API_URL}/users/`, obj);
         dispatch(authSlice.actions.setAuthenticated(response.data));
         console.log(response.data);
-        return response.data; // Возвращаем данные, чтобы получить их в компоненте
+        return response.data;
     } catch (error) {
         console.log(error);
-        throw error; // Мы можем выбросить ошибку, чтобы обработать ее в компоненте, если необходимо
+        throw error;
     }
 }
 
-export const { setAuthenticated } = authSlice.actions;
+export const activateUser = (obj: UserType): AppThunk => async (dispatch) => {
+    try {
+        const response = await axios.post(`${API_URL}/users/activation/`, obj);
+        dispatch(authSlice.actions.setActivate(response.data));
+        console.log(response.data, obj);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+
+export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
+    try {
+        const { data: tokens } = await axios.post(`${API_URL}/auth/jwt/create/`, obj);
+        localStorage.setItem("tokens", JSON.stringify({ access: tokens.access, refresh: tokens.refresh }));
+        
+        const { data } = await $axios.get(`${API_URL}/users/me/`);
+        console.log(data)
+        dispatch(authSlice.actions.setUser(data));
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export const usersMe = (): AppThunk => async (dispatch) => {
+    try {
+        const response = await axios.get(`http://167.99.248.105/users/me/`, {
+            headers: {
+                "token": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwMTYyOTQ2LCJpYXQiOjE3MTAxNDQ5NDYsImp0aSI6IjQxZDQ0NzE3MTU5NzQ5ZjM5YzM1ZDM0NDY0NzAwYTUyIiwidXNlcl9pZCI6MTZ9.rpfOWLCiivMwqFgR1VWLBsLCprk2PGW3oMcKj5xXVRQ`,
+                "Content-Type": 'application/json',
+                "Accept": 'application/json'
+            },
+        });
+        console.log(response)
+        dispatch(authSlice.actions.setUser(response.data))
+    } catch (error) {
+        console.log("eRORR", error);
+    }
+}
+
+export const { setAuthenticated, setUser } = authSlice.actions;
 
 export default authSlice.reducer

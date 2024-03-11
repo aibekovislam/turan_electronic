@@ -7,6 +7,7 @@ import carouselReducer from "./features/carousel/carouselSlice";
 import accessoriesReducer from "./features/accessories/accessoriesSlice"
 import productOneSliceReducer from "./features/products/oneProductSlice";
 import oneBrandSliceReducer from "./features/brands/oneBrandSlice";
+import reviewsSliceReducer from "./features/reviews/reviewSlice";
 
 export const store = configureStore({
     reducer: {
@@ -17,7 +18,8 @@ export const store = configureStore({
         carousel: carouselReducer,
         accessories: accessoriesReducer,
         oneProduct: productOneSliceReducer,
-        oneBrand: oneBrandSliceReducer
+        oneBrand: oneBrandSliceReducer,
+        reviews: reviewsSliceReducer
     }
 })
 

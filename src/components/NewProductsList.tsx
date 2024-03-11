@@ -42,7 +42,7 @@ function NewProductsList() {
         </div>
         <div className="d-f__new-product">
           {filteredNewProducts?.map((product: ProductsType, index: number) => (
-            <NewProductsCard product={product} key={index} onClick={handleNavigate} />
+            <NewProductsCard product={product} key={index} onClick={() => handleNavigate(product.id)} />
           ))}
         </div>
     </>
