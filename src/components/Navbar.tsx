@@ -22,8 +22,13 @@ function Navbar() {
 
   const handleItemClick = (item: string) => {
     setActiveItem(item);
-    navigate(`/${item}`)
-  };
+  
+    if (item === "home") {
+      navigate("/");
+    } else {
+      navigate(`/${item}`);
+    }
+  };  
 
   return (
     <div className={styles.navbar}>
@@ -50,7 +55,7 @@ function Navbar() {
                 activeItem === "home" ? "active__navbar" : ""
               }`}
             >
-              <a href="home">
+              <a href="#">
                 Главная
               </a>
             </li>
