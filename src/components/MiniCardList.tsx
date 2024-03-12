@@ -8,6 +8,7 @@ import { RootStates } from "../store/store";
 import { useEffect } from "react";
 import { fetchAccessories } from "../store/features/accessories/accessoriesSlice";
 import { AccessoriesType } from "../utils/interfacesAndTypes";
+import { useNavigate } from "react-router-dom";
 
 function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
@@ -70,6 +71,13 @@ function MiniCardList() {
           }
         ]
       };
+
+      const navigate = useNavigate();
+
+      const handleNavigate = (id: number) => {
+        navigate(`/product/${id}`)
+      }
+
       return (
         <>
           <div className={"accessories"}>
@@ -79,9 +87,9 @@ function MiniCardList() {
           </div>
           <div className={`slider-container ${styles.mini_card_list}`}>
             <Slider {...settings}>
-              {accessories?.map((accessories: AccessoriesType, index: number) => (
-                <div key={ index } className={styles.mini_card_block}>
-                  <MiniCard accessories={accessories}/>
+              {accessories?.map((accessory: AccessoriesType | undefined, index: number) => (
+                <div key={index} className={styles.mini_card_block}>
+                  <MiniCard accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} style={{ cursor: "pointer" }} />
                 </div>
               ))}
             </Slider>

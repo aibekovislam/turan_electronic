@@ -1,9 +1,9 @@
 import styles from "../styles/card.module.scss";
 import shop from "../assets/svgs/card/shop.svg"
 
-function MiniCard({ accessories }: any) {
+function MiniCard({ accessories, onClick, style }: any) {
   return (
-    <div className={styles.card_mini} >
+    <div className={styles.card_mini} style={style} onClick={onClick}>
         <div className={styles.card_container}>
             <div className={styles.card}>
                 <div className={styles.star_container__mini}>

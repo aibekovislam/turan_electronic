@@ -1,3 +1,5 @@
+import { ProductsType } from "../utils/interfacesAndTypes";
+
 export function extractPropertyArray<T>(items: T[] | undefined, propertyName: keyof T): any[] {
     const uniqueSet = new Set<string | string[]>();
 
@@ -19,3 +21,26 @@ export function extractPropertyArray<T>(items: T[] | undefined, propertyName: ke
 
     return Array.from(uniqueSet);
 }
+
+
+export const extractBrandCategoryAndTitle = (products: ProductsType[] | undefined): { id: any, title: any }[] => {
+    if (!products) {
+        return [];
+    }
+
+    const uniqueBrandCategories = new Set();
+
+    return products.reduce((acc, product) => {
+        const brandCategory = product.brand_category;
+        if (!uniqueBrandCategories.has(brandCategory)) {
+            uniqueBrandCategories.add(brandCategory);
+
+            acc.push({
+                id: brandCategory,
+                title: product.brand_category_title,
+            });
+        }
+
+        return acc;
+    }, [] as { id: any, title: any }[]);
+};

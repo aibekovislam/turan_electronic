@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { fetchProducts } from "../store/features/products/productSlice";
+import { default_filters } from "../utils/interfacesAndTypes";
 
 function FavoriteList() {
     const navigate = useNavigate();
@@ -14,7 +15,7 @@ function FavoriteList() {
     const products = useSelector((state: RootStates) => state.products.products);
 
     useEffect(() => {
-        dispatch(fetchProducts())
+        dispatch(fetchProducts(default_filters))
     }, [dispatch])
 
     const itemsPerPage = 16;

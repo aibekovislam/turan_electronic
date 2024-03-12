@@ -1,14 +1,11 @@
+import { fetchProducts } from "../store/features/products/productSlice";
 import styles from "../styles/brands_and_footer.module.scss";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
-import { extractPropertyArray } from "./filterFunction";
-import { filterProductsByBrand } from "../store/features/products/productSlice";
+import { extractBrandCategoryAndTitle, extractPropertyArray } from "./filterFunction";
 
-export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, dispatch: any) {
-    const handleColorClick = (color: string) => {
-        setPickedColor(color === pickedColor ? null : color);
-    };
-    
+export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, dispatch: any, brand: any, fetchProductsAndLog: any, filters: any) {
+
     const isColorPicked = (color: string) => {
         return color === pickedColor;
     };
@@ -19,9 +16,20 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
         return extractPropertyArray(products, propertyName);
     };
 
-    const brandTitles = brandCategoryArray('brand_category_title');
+    const brandTitles = extractBrandCategoryAndTitle(products);
     const brandModels = brandCategoryArray('name');
     const productMemory = brandCategoryArray('memory');  
+
+    const handleColorClick = (color: string) => {
+        setPickedColor(color === pickedColor ? null : color);
+      
+        const updatedFilters = {
+          ...filters,
+          product_color: color === pickedColor ? [] : [color],
+        };
+      
+        fetchProductsAndLog(updatedFilters);
+      };      
 
     switch (index) {
         case 0:
@@ -33,22 +41,35 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                         name={groupName}
                         defaultChecked={true}
                         onChange={() => {
-                            dispatch(filterProductsByBrand("all"));
+                            let obj = {
+                                limit: 10,
+                                offset: 0,
+                                min_price: undefined,
+                                max_price: undefined,
+                                brand: brand.id,
+                                product_color: [],
+                                memory: [],
+                            }
+                            fetchProductsAndLog(obj);
                         }}
                         />
                     <span className={styles.dropdown_text}>Все</span>
-                    {brandTitles.map((item: any, index: number) => (
-                        <div key={index} className={styles.dropdown__item}>
+                    {brandTitles.map((item: any, innerIndex: number) => (
+                        <div key={innerIndex} className={styles.dropdown__item}>
                             <input
                                 type="radio"
                                 className={styles.dropdown_radio}
                                 name={groupName}
                                 onChange={() => {
-                                    let res = dispatch(filterProductsByBrand(item));;
-                                    console.log(res)
-                                }}
+                                    const updatedFilters = {
+                                      ...filters,
+                                      brand: brand.id,
+                                      brand_category: item.id
+                                    };
+                                    fetchProductsAndLog(updatedFilters);
+                                  }}                                
                             />
-                            <span className={styles.dropdown_text}>{item}</span>
+                            <span className={styles.dropdown_text}>{item.title}</span>
                         </div>
                     ))}
                 </div>
@@ -69,6 +90,19 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 type="radio"
                                 className={styles.dropdown_radio}
                                 name={groupName}
+                                onChange={async () => {
+                                    let obj = {
+                                        limit: 10,
+                                        offset: 0,
+                                        min_price: undefined,
+                                        max_price: undefined,
+                                        brand: [],
+                                        product_color: [],
+                                        memory: [],
+                                    }
+                                    const res = await dispatch(fetchProducts(obj))
+                                    console.log(res)
+                                }}
                             />
                             <span className={styles.dropdown_text}>{item}</span>
                         </div>
@@ -83,6 +117,18 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                         className={styles.dropdown_radio}
                         name={groupName}
                         defaultChecked={true}
+                        onChange={() => {
+                            let obj = {
+                                limit: 10,
+                                offset: 0,
+                                min_price: undefined,
+                                max_price: undefined,
+                                brand: brand.id,
+                                product_color: [],
+                                memory: [],
+                            }
+                            fetchProductsAndLog(obj)
+                        }}
                         />
                     <span className={styles.dropdown_text}>Все</span>
                     {productMemory.map((item: any, index: number) => (
@@ -91,6 +137,14 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 type="radio"
                                 className={styles.dropdown_radio}
                                 name={groupName}
+                                onChange={() => {
+                                    const updatedFilters = {
+                                      ...filters,
+                                      brand: brand.id,
+                                      memory: +item
+                                    };
+                                    fetchProductsAndLog(updatedFilters);
+                                  }}  
                             />
                             <span className={styles.dropdown_text}>{item} ГБ</span>
                         </div>
@@ -98,7 +152,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                 </div>
             );
         case 3:
-            return <RangeSlider />;
+            return <RangeSlider fetchProductsAndLog={fetchProductsAndLog} brand={brand} products={products} />;
         case 4:
             return (
                 <div className={`${styles.dropdown__list}`}>
@@ -113,7 +167,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                     <div className={`${styles.d_f_colors}`}>
                         {colors?.map((item: any, index: number) => (
                             <div key={index} className={`${styles.dropdown__item}`}>
-                                <div onClick={() => handleColorClick(item)} className={`${styles.color_block} ${isColorPicked(item) ? styles.color_picked : ''}`} style={{ background: item }}></div>
+                                <div onClick={() => {handleColorClick(item)}} className={`${styles.color_block} ${isColorPicked(item) ? styles.color_picked : ''}`} style={{ background: item }}></div>
                             </div>
                         ))}
                     </div>
