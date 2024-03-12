@@ -16,8 +16,7 @@ export interface CardProps {
 }
 
 export interface BrandsProps {
-    brandTitle: string,
-    brandImg: string,
+    brand: BrandsType,
     products?: ProductsType[] | undefined,
     colors?: string[] | undefined,
 }
@@ -47,11 +46,7 @@ export interface ReviewI {
 export interface ProductsI {
     products: ProductsType[],
     colors?: string[],
-    filters?: {
-        brand: string | null;
-        memory: any;
-    };
-    filteredProducts?: ProductsType[];
+    filteredProducts?: ProductsType[]
 }
 
 export interface ActiveUserI {
@@ -80,6 +75,16 @@ export interface BrandsI {
 
 export interface CarouselI {
     carousel: CarouselType[]
+}
+
+export const default_filters = {
+    limit: 10,
+    offset: 0,
+    min_price: undefined,
+    max_price: undefined,
+    brand: [],
+    product_color: [],
+    memory: [],
 }
 
 export type ProductsType = {

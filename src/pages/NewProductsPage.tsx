@@ -5,14 +5,14 @@ import { fetchProducts } from "../store/features/products/productSlice";
 import { useNavigate } from "react-router-dom";
 import "../styles/homepage.scss";
 import NewProductsCard from "../components/NewProductCard";
-import { ProductsType } from "../utils/interfacesAndTypes";
+import { ProductsType, default_filters } from "../utils/interfacesAndTypes";
 
 function NewProductsPage() {
     const dispatch = useDispatch<any>();
     const products = useSelector((state: RootStates) => state.products.products);
 
     useEffect(() => {
-        dispatch(fetchProducts())
+        dispatch(fetchProducts(default_filters))
     }, [dispatch])
 
     const displayedProducts = products.slice(0, 4);

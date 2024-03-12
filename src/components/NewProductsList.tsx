@@ -5,7 +5,7 @@ import NewProductsCard from "./NewProductCard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { fetchProducts } from "../store/features/products/productSlice";
-import { ProductsType } from "../utils/interfacesAndTypes";
+import { ProductsType, default_filters } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
 
 function NewProductsList() {
@@ -14,7 +14,7 @@ function NewProductsList() {
   const products = useSelector((state: RootStates) => state.products.products);
 
   useEffect(() => {
-    dispatch(fetchProducts())
+    dispatch(fetchProducts(default_filters))
   }, [dispatch])
 
   const displayedProducts = products.slice(0, 4);

@@ -4,11 +4,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchOneBrand } from '../store/features/brands/oneBrandSlice';
 import { RootStates } from '../store/store';
 import BrandFilterNavbar from '../components/BrandFilterNavbar';
-import { fetchProducts } from '../store/features/products/productSlice';
+import { fetchFilterProducts, fetchProducts } from '../store/features/products/productSlice';
 import Card from '../components/Card';
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
-import SidebarMenu from '../components/SidebarMenu';
+import { default_filters } from '../utils/interfacesAndTypes';
 
 function BrandsPage() {
     const { brand } = useParams();
@@ -16,19 +16,33 @@ function BrandsPage() {
     const oneBrand = useSelector((state: RootStates) => state.oneBrand.brand);
     const products = useSelector((state: RootStates) => state.products.products);
     const colors = useSelector((state: RootStates) => state.products.colors);
-    
+    const filteredProducts = useSelector((state: RootStates) => state.products.filteredProducts);
+
     useEffect(() => {
         if(brand != undefined) {
             dispatch(fetchOneBrand(+brand))
         }
-        dispatch(fetchProducts());
-    }, [dispatch, brand])
-    
-    const filteredProducts = useSelector((state: RootStates) => state.products.filteredProducts);
-    const filteredProductsToFilter = filteredProducts?.filter((item) => item.brand_title === oneBrand?.title)
+        dispatch(fetchProducts(default_filters));
+    }, [dispatch, brand]) 
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        if(oneBrand !== null) {
+            dispatch(fetchFilterProducts({
+                limit: 10,
+                offset: 0,
+                min_price: undefined,
+                max_price: undefined,
+                brand: oneBrand?.id,
+                product_color: [],
+                memory: [],
+            }))
+        }
+    }, [dispatch])
+    
     const filteredData = products?.filter((item) => item.brand_title === oneBrand?.title)
+
+    console.log(filteredProducts)
+    const navigate = useNavigate();
     const itemsPerPage = 16;
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
@@ -62,17 +76,17 @@ function BrandsPage() {
     if(oneBrand != undefined) {
         return (
             <>
-                <BrandFilterNavbar brandImg={oneBrand?.logo_field} brandTitle={oneBrand?.title} products={filteredData} colors={colors} />
+                <BrandFilterNavbar brand={oneBrand} products={filteredData} colors={colors} />
                 <div className="d-f__rec-product" style={{ marginTop: "30px" }}>
-                {filteredProducts && filteredProducts.length === 0 ? (
-                    filteredData?.map((product: any) => (
+                { filteredProducts?.length !== 0 ? (
+                    filteredProducts?.map((product: any) => (
                         <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
                     ))
                 ) : (
-                    filteredProductsToFilter?.map((product: any) => (
+                    filteredData?.map((product: any) => (
                         <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
                     ))
-                )}
+                ) }
                 </div>
                 <div className="pagination">
                     <div onClick={handlePrevPage} className={`prev__btn-pagination ${currentPage === 1 ? "disabled_pagination" : ""}`}>
@@ -93,7 +107,6 @@ function BrandsPage() {
                         <img src={nextArrow} />
                     </div>
                 </div>
-                <SidebarMenu/>
             </>
         )
     } else {
