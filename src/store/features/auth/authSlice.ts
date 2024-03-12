@@ -59,15 +59,20 @@ export const activateUser = (obj: UserType): AppThunk => async (dispatch) => {
 
 export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
     try {
-        const { data: tokens } = await axios.post(`${API_URL}/auth/jwt/create/`, obj);
+        const { data: tokens } = await axios.post(`${API_URL}/login/jwt/create/`, obj);
         localStorage.setItem("tokens", JSON.stringify({ access: tokens.access, refresh: tokens.refresh }));
         
-        const { data } = await $axios.get(`${API_URL}/users/me/`);
+        const data: any = await axios.get(`${API_URL}/users/me/`, {
+            headers: {
+                token: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwMjM3NzY4LCJpYXQiOjE3MTAyMTk3NjgsImp0aSI6IjVkNjg4MDZiMWZhNjRmNjVhZDI5YjU4MTFjMGI5YWRkIiwidXNlcl9pZCI6MTl9.91RsYmBlwcsCtylfCY-JuUJoFhXVA8CgAyL8AhG5rB0`
+            }
+        });
         console.log(data)
         dispatch(authSlice.actions.setUser(data));
         return data;
-    } catch (error) {
-        console.log(error);
+    } catch (error: any) {
+        console.error("Error during fetch:", error);
+        console.log("Error response:", error.response); // log the response for more details
         throw error;
     }
 }

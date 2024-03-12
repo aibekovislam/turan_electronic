@@ -22,7 +22,7 @@ const productSlice = createSlice({
             state.colors = action.payload.colors || [];
         },
         setFilterProducts: (state, action: PayloadAction<ProductsI>) => {
-            state.filteredProducts = action.payload.products; // Исправлено здесь
+            state.filteredProducts = action.payload.products;
         }
     }
 });
@@ -35,7 +35,7 @@ export const fetchProducts = (filters: any): AppThunk => async (dispatch) => {
             min_price: filters.min_price || undefined,
             max_price: filters.max_price || undefined,
             brand: filters.brand || [],
-            product_color: filters.product_color || [],
+            color: filters.color || [],
             memory: filters.memory || [],
         };
 
@@ -60,18 +60,15 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
             max_price: filters.max_price || undefined,
             brand: filters.brand || [],
             brand_category: filters.brand_category || undefined,
-            product_color: filters.product_color || [],
+            color: filters.color || [],
             memory: filters.memory || [],
         };
 
         const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
 
         const data: ProductsI = { products: response.data.results };
-        const colors = { colors: response.data.colors };
 
         dispatch(productSlice.actions.setFilterProducts(data));
-        
-        dispatch(productSlice.actions.setColors(colors));
     } catch (error) {
         console.log(error);
     }

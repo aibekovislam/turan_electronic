@@ -28,7 +28,7 @@ function BrandFilterNavbar({ brand, products, colors }: BrandsProps) {
         min_price: undefined,
         max_price: undefined,
         brand: undefined,
-        product_color: [],
+        color: [] || "",
         memory: [],
       });
 

@@ -8,7 +8,7 @@ import axios from "axios";
 import { API_URL } from "../utils/consts";
 import $axios from "../utils/axios";
 import { useDispatch } from "react-redux";
-import { setUser, usersMe } from "../store/features/auth/authSlice";
+import { setUser, signIn, usersMe } from "../store/features/auth/authSlice";
 
 function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
   const dispatch = useDispatch<any>();
@@ -31,25 +31,13 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
     console.log(authFormData);
     
     try {
-      const response = await axios.post(`${API_URL}/login/jwt/create/`, authFormData);
+      const response = await dispatch(signIn(authFormData));
       console.log(response);
-  
-      const responseData = response.data;
-  
-      if (responseData && responseData.access && responseData.refresh) {
-        localStorage.setItem("tokens", JSON.stringify({ access: responseData.access, refresh: responseData.refresh }));
-      } else {
-        console.error("Unexpected response structure:", response);
-      }
     } catch (error) {
         console.error("Error during fetch:", error);
-      throw error;
+        throw error;
     }
-  };  
-
-  useEffect(() => {
-    dispatch(usersMe())
-  }, [dispatch])
+  };
 
   return (
     <div className={styles.auth_main}>
