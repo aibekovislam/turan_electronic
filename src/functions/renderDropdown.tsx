@@ -25,7 +25,8 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
       
         const updatedFilters = {
           ...filters,
-          product_color: color === pickedColor ? [] : [color],
+          brand: brand.id,
+          color: color === pickedColor ? [] : color,
         };
       
         fetchProductsAndLog(updatedFilters);
@@ -47,7 +48,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 min_price: undefined,
                                 max_price: undefined,
                                 brand: brand.id,
-                                product_color: [],
+                                color: [],
                                 memory: [],
                             }
                             fetchProductsAndLog(obj);
@@ -97,7 +98,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                         min_price: undefined,
                                         max_price: undefined,
                                         brand: [],
-                                        product_color: [],
+                                        color: [],
                                         memory: [],
                                     }
                                     const res = await dispatch(fetchProducts(obj))
@@ -124,7 +125,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 min_price: undefined,
                                 max_price: undefined,
                                 brand: brand.id,
-                                product_color: [],
+                                color: [],
                                 memory: [],
                             }
                             fetchProductsAndLog(obj)
@@ -160,7 +161,19 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                         type="radio"
                         className={styles.dropdown_radio}
                         name={groupName}
-                        onChange={() => setPickedColor(null)}
+                        onChange={() => {
+                            setPickedColor(null);
+                            let obj = {
+                                limit: 10,
+                                offset: 0,
+                                min_price: undefined,
+                                max_price: undefined,
+                                brand: brand.id,
+                                color: [],
+                                memory: [],
+                            }
+                            fetchProductsAndLog(obj)
+                        }}
                         checked={pickedColor === null}
                         />
                     <span className={styles.dropdown_text}>Все</span>

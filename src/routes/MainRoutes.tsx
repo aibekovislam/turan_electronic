@@ -10,6 +10,9 @@ import { useEffect } from "react";
 import ConfirmPage from "../pages/ConfirmPage";
 import NewProductsPage from "../pages/NewProductsPage";
 import RecommendationProductsPage from "../pages/RecommendationProductsPage";
+import CategoryPage from "../pages/CategoryPage";
+import NewsPage from "../pages/NewsPage";
+import AboutUs from "../pages/AboutUs";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -41,6 +44,9 @@ function MainRoutes() {
         <Route element={<ConfirmPage/>} path="/activate" />
         <Route element={<NewProductsPage/>} path="/new/products" />
         <Route element={<RecommendationProductsPage/>} path="/recommendation/products" />
+        <Route element={<CategoryPage/>} path="/categories" />
+        <Route element={<NewsPage/>} path="/news" />
+        <Route element={<AboutUs/>} path="/about" />
       </Route>
     </Routes>
   )
