@@ -2,6 +2,7 @@ import styles from "../styles/auth.module.scss";
 import pattern from "../assets/svgs/auth/pattern.svg";
 import google from "../assets/svgs/auth/google.svg";
 import eye from "../assets/svgs/auth/eye.svg";
+import showedEye from "../assets/svgs/auth/eye-svgrepo-com.svg";
 import { AuthAndRegProps } from "../utils/interfacesAndTypes";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +10,7 @@ import { signIn } from "../store/features/auth/authSlice";
 import { RootStates } from "../store/store";
 import { useNavigate } from "react-router-dom";
 
-function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
+function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   const user = useSelector((state: RootStates) => state.auth.user);
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
@@ -18,6 +19,9 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
     email: "",
     password: "",
   });
+  const [errorAuth, setErrorAuth] = useState(false);
+  const [loadedAuth, setLoadedAuth] = useState(false);
+  const [ showPassword, setShowPassword ] = useState(false);
 
   useEffect(() => {
     console.log("User changed:", user);
@@ -31,20 +35,24 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
     }));
   };
 
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(authFormData);
-    
+    setLoadedAuth(true);
+
     try {
       await dispatch(signIn(authFormData));
+      setErrorAuth(false);
     } catch (error) {
-      console.error("Error during fetch:", error);
-      throw error;
+      console.error("Error during authentication:", error);
+      setErrorAuth(true);
+    } finally {
+      setLoadedAuth(false);
     }
   };
+  
 
   if(user) {
-    return navigate("/")
+    navigate("/")
   }
 
   return (
@@ -56,12 +64,12 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
               Авторизуйтесь, указав свои контактные данные, или <br /> воспользовавшись перечисленными сервисами
             </p>
           </div>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
             <div className={styles.auth_form}>
               <div className={styles.auth_input}>
                 <input
                   type="text"
-                  placeholder="Email или телефон ..."
+                  placeholder="Ваш email"
                   name="email"
                   value={authFormData.email}
                   onChange={handleInputChange}
@@ -69,23 +77,32 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
               </div>
               <div className={styles.auth_input}>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Пароль"
                   name="password"
                   value={authFormData.password}
                   onChange={handleInputChange}
                 />
-                <img src={eye} className={styles.eye_svg} />
+                <img src={showPassword ? showedEye : eye} onClick={() => setShowPassword(!showPassword)} className={styles.eye_svg} />
               </div>
               <div className={styles.forgotten_password}>
                 <span>Забыли пароль?</span>
               </div>
             </div>
-            <div className={styles.auth_button}>
-              <button className={styles.button}>
-                <a href="#">Войти</a>
-              </button>
-            </div>
+            { errorAuth && (
+              <div className={styles.errors} style={{ marginTop: "10px" }}>
+                Проверьте ваши данные пожалуйста
+              </div>
+            ) }
+              <div className={styles.auth_button}>
+                { loadedAuth ? (
+                  <div>Обработка данных...</div>
+                ) : (
+                  <button className={`${styles.reg_button}`} disabled={loadedAuth}>
+                    Войти
+                  </button>
+                ) }
+              </div>
           </form>
           <div className={styles.auth_title}>
             <span>Впервые у нас?</span>

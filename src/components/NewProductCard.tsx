@@ -16,7 +16,8 @@ import { useNavigate } from "react-router-dom";
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
     const navigate = useNavigate();
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
-    const user = useSelector((state: RootStates) => state.auth.user);
+    const userString = localStorage.getItem("userInfo");
+    const user = userString ? JSON.parse(userString) : null;
 
     const dispatch = useDispatch<any>();
 

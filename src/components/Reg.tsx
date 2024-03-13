@@ -2,6 +2,7 @@ import styles from "../styles/auth.module.scss"
 import pattern from "../assets/svgs/auth/pattern.svg"
 import google from "../assets/svgs/auth/google.svg"
 import eye from "../assets/svgs/auth/eye.svg"
+import showedEye from "../assets/svgs/auth/eye-svgrepo-com.svg";
 import { AuthAndRegProps } from "../utils/interfacesAndTypes"
 import { useState } from "react"
 import axios from "axios"
@@ -11,6 +12,8 @@ import { useNavigate } from "react-router-dom"
 function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
     const [loadedAuth, setLoadedAuth] = useState(false);
     const [errorAuth, setErrorAuth] = useState(false);
+    const [ showPassword, setShowPassword ] = useState(false);
+    const [ showConfirmPassword, setShowConfirmPassword ] = useState(false);
 
     const [authFormData, setAuthFormData] = useState({
         email: "",
@@ -69,15 +72,15 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                             <input onChange={handleInputChange} value={authFormData.name} type="text" name="name" placeholder="Имя"/>
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type="password" value={authFormData.password} name="password"  placeholder="Пароль"/>
-                            <img src={eye}  className={styles.eye_svg} />
+                            <input onChange={handleInputChange} type={showPassword ? "text" : "password"} value={authFormData.password} name="password"  placeholder="Пароль"/>
+                            <img src={showPassword ? showedEye : eye}  className={styles.eye_svg} onClick={() => setShowPassword(!showPassword)} />
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type="password" value={authFormData.confirmPassword} name="confirmPassword" placeholder="Потвердить пароль"/>
-                            <img src={eye}  className={styles.eye_svg} />
+                            <input onChange={handleInputChange} type={showConfirmPassword ? "text" : "password"} value={authFormData.confirmPassword} name="confirmPassword" placeholder="Потвердить пароль"/>
+                            <img src={eye} className={styles.eye_svg} onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type="text" value={authFormData.email} name="email" placeholder="Email или телефон ..."/>
+                            <input onChange={handleInputChange} type="text" value={authFormData.email} name="email" placeholder="Ваш Email"/>
                         </div>
                         <div className={styles.conditions}>
                             <input type="checkbox" className={styles.checkbox_custom} />

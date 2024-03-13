@@ -24,7 +24,8 @@ function DetailPage() {
     const dispatch = useDispatch<any>();
     const product = useSelector((state: RootStates) => state.oneProduct.product);
     const firstImage = Object.values(product?.product_images || {})[0]?.[0]?.[0] || null;
-    const user = useSelector((state: RootStates) => state.auth.user);
+    const userString = localStorage.getItem("userInfo");
+    const user = userString ? JSON.parse(userString) : null;
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
 
     const [activeItem, setActiveItem] = useState<string | undefined>("");
@@ -107,7 +108,7 @@ function DetailPage() {
   };
 
     return (
-        product !== undefined ? (
+        product !== undefined && product?.id === numberedId ? (
             <div>
                 <div className={styles.detail_main}>
                     <div className={styles.section_title}>
