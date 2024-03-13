@@ -28,6 +28,16 @@ export const fetchCarts = (): AppThunk => async (dispatch) => {
     }
 }
 
+export const deleteCart = (id: number): AppThunk => async (dispatch) => {
+    try {
+        const response = await $axios.delete(`${API_URL}/carts/${id}/`)
+        console.log(response.data);
+        dispatch(fetchCarts())
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const addToCart = (product_id: number | undefined): AppThunk => async (dispatch) => {
     try {
         const obj = {

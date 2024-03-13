@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from "../styles/cart.module.scss";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../store/store';
-import { fetchCarts } from '../store/features/favorite_and_cart/cartSlice';
+import { deleteCart, fetchCarts } from '../store/features/favorite_and_cart/cartSlice';
 import { calculateDiscountedPrice } from '../functions/calculateDiscounte';
 import RecommendationList from './RecommendationList';
 import OrderForm from './OrderForm';
@@ -73,7 +73,14 @@ function CartCardList() {
                 <div className={styles.cart_content}>
                     <p>{ cart?.name }</p>
                     <div className={styles.cart_counter}>
-                      <button onClick={() => decrementCount(cart.id)}>−</button>
+                      <button onClick={() => {
+                        if (counts[cart.id] <= 1){
+                          dispatch(deleteCart(cart.id))
+                          console.log(cart.id)
+                        } else {
+                          decrementCount(cart.id)
+                        }
+                      }}>−</button>
                       <span>{counts[cart.id] || 1}</span> {/* Set default value to 1 */}
                       <button onClick={() => incrementCount(cart.id)}>+</button>
                     </div>
