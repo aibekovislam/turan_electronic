@@ -106,7 +106,7 @@ export type favoriteType = {
 export type CartType = {
     price(price: any, discount: any): unknown;
     discount(price: any, discount: any): unknown;
-    id?: number,
+    id?: any,
     user: number,
     product: any,
     created_at: string
