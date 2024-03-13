@@ -37,7 +37,7 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
         setFilters(updatedFilters);
         dispatch(fetchFilterProducts(updatedFilters));
         console.log(updatedFilters);
-    };    
+    };        
 
     return (
         <div className={styles.brands_navbar}>
@@ -69,7 +69,7 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
                         Все фильтры
                         <img src={FilterSVG} className={styles.filter__svg} />
                     </div>
-                    <SidebarMenu isOpen={isOpen} setIsOpen={setIsOpen} />
+                    <SidebarMenu isOpen={isOpen} setIsOpen={setIsOpen} brand={brand} />
                 </div>
             </div>
         </div>

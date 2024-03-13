@@ -32,7 +32,10 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
         };
       
         fetchProductsAndLog(updatedFilters);
-      };      
+      };          
+
+    console.log(brandModels);
+    
 
     switch (index) {
         case 0:
