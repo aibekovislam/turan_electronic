@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from "../styles/cart.module.scss";
-import rate from "../assets/svgs/card/star2:5.svg";
-import phone from "../assets/sliderDetail/img01.png";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../store/store';
 import { fetchCarts } from '../store/features/favorite_and_cart/cartSlice';
 import { calculateDiscountedPrice } from '../functions/calculateDiscounte';
 import RecommendationList from './RecommendationList';
+import OrderForm from './OrderForm';
 
 function CartCardList() {
   const dispatch = useDispatch<any>();
@@ -16,24 +15,34 @@ function CartCardList() {
     dispatch(fetchCarts());
   }, [dispatch])
 
-  console.log(carts)
-
-  const [count, setCount] = useState(() => {
-    const savedCount = localStorage.getItem('cartCount');
-    return savedCount ? Number(savedCount) : 1;
+  const [counts, setCounts] = useState<{[key: string]: number}>(() => {
+    const savedCounts = localStorage.getItem('cartCounts');
+    return savedCounts ? JSON.parse(savedCounts) : {};
   });
 
-  const incrementCount = () => {
-    setCount((prevCount) => prevCount + 1);
+  const incrementCount = (id: string) => {
+    setCounts((prevCounts) => ({
+      ...prevCounts,
+      [id]: (prevCounts[id] || 0) + 1
+    }));
   };
 
-  const decrementCount = () => {
-    setCount((prevCount) => prevCount > 1 ? prevCount - 1 : 1);
+  const decrementCount = (id: string) => {
+    setCounts((prevCounts) => ({
+      ...prevCounts,
+      [id]: Math.max((prevCounts[id] || 0) - 1, 1) // Ensure count never goes below 1
+    }));
   };
 
   useEffect(() => {
-    localStorage.setItem('cartCount', String(count));
-  }, [count]);
+    localStorage.setItem('cartCounts', JSON.stringify(counts));
+  }, [counts]);
+
+  const [showOrderForm, setShowOrderForm] = useState(false);
+
+  const handleOrderButtonClick = () => {
+    setShowOrderForm(true);
+  };
 
   if(carts.length === 0) {
     return (
@@ -64,14 +73,14 @@ function CartCardList() {
                 <div className={styles.cart_content}>
                     <p>{ cart?.name }</p>
                     <div className={styles.cart_counter}>
-                      <button onClick={decrementCount}>-</button>
-                      <span>{count}</span>
-                      <button onClick={incrementCount}>+</button>
+                      <button onClick={() => decrementCount(cart.id)}>−</button>
+                      <span>{counts[cart.id] || 1}</span> {/* Set default value to 1 */}
+                      <button onClick={() => incrementCount(cart.id)}>+</button>
                     </div>
                 </div>
                 <div className={styles.cart_price}>
-                    <div className={styles.discount_price}>{count * calculateDiscountedPrice(cart?.price, cart?.discount)} сом</div>
-                    <div className={styles.default_price}>{count * cart?.price } cом</div>
+                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(cart?.price, cart?.discount)} сом</div> {/* Set default value to 1 */}
+                    <div className={styles.default_price}>{(counts[cart.id] || 1) * cart?.price } сом</div> {/* Set default value to 1 */}
                 </div>
                 <div className={styles.cart_rate}>
                 { 
@@ -94,13 +103,14 @@ function CartCardList() {
         )) }
         <div className={styles.total_block}>
           Итого: {carts
-            .map((cart) => count * calculateDiscountedPrice(cart?.price, cart?.discount))
+            .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart?.price, cart?.discount))
             .reduce((acc, price) => acc + price, 0)
             .toLocaleString("ru-RU")} сом
         </div>
         <div className={styles.cart_button}>
-          <button className={styles.btn}>Оформить заказ</button>
+          <button className={styles.btn} onClick={handleOrderButtonClick}>Оформить заказ</button>
         </div>
+        {showOrderForm && <OrderForm/>}
     </div>
   );
 }
