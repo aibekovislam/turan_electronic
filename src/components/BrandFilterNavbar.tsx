@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { fetchFilterProducts } from "../store/features/products/productSlice.ts";
 import SidebarMenu from "./SidebarMenu.tsx";
 
-function BrandFilterNavbar({ brand, products, colors }: BrandsProps) {
+function BrandFilterNavbar({ brand, products, colors, filteredProducts }: BrandsProps) {
     const [pickedColor, setPickedColor] = useState<string | null>(null);
     const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
     const [ isOpen, setIsOpen ] = useState(false);
@@ -61,7 +61,7 @@ function BrandFilterNavbar({ brand, products, colors }: BrandsProps) {
                                 <ArrowDown isUp={dropdownStates[index]} />
                             </div>
                             <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>
-                                { dropdownStates[index] && renderDropdownContent(index, products, colors, pickedColor, setPickedColor, dispatch, brand, fetchProductsAndLog, filters) }
+                                { dropdownStates[index] && renderDropdownContent(index, products, colors, pickedColor, setPickedColor, dispatch, brand, fetchProductsAndLog, filters, filteredProducts) }
                             </div>
                         </div>
                     ))}

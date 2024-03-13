@@ -25,7 +25,7 @@ import axios, {
       if (tokens) {
         config.headers = {
           ...(config.headers as AxiosRequestHeaders),
-          Authorization: `Bearer ${tokens.access}`,
+          Authorization: `Token ${tokens.access}`,
         };
       }
       return config;

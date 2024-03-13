@@ -13,6 +13,7 @@ import RecommendationProductsPage from "../pages/RecommendationProductsPage";
 import CategoryPage from "../pages/CategoryPage";
 import NewsPage from "../pages/NewsPage";
 import AboutUs from "../pages/AboutUs";
+import UserProfilePage from "../pages/UserProfilePage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -39,6 +40,7 @@ function MainRoutes() {
         <Route element={<FavoritesPage />} path="/favorite" />
         <Route element={<DetailPage />} path="/product/:id" />
         <Route element={<RegistrationAndAuthorization/>} path="/auth" />
+        <Route element={<UserProfilePage/>} path="/profile" />
         <Route element={<BrandsPage/>} path="/products/brands/:brand" />
         <Route element={<CartPage/>} path="/cart" />
         <Route element={<ConfirmPage/>} path="/activate" />

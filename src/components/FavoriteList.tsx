@@ -6,17 +6,26 @@ import "../styles/favorite.scss"
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
-import { fetchProducts } from "../store/features/products/productSlice";
-import { default_filters } from "../utils/interfacesAndTypes";
+import { fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 
 function FavoriteList() {
     const navigate = useNavigate();
     const dispatch = useDispatch<any>();
-    const products = useSelector((state: RootStates) => state.products.products);
+    const favoritesProducts = useSelector((state: RootStates) => state.favorites.favorites);
+    const user = useSelector((state: RootStates) => state.auth.user);
 
     useEffect(() => {
-        dispatch(fetchProducts(default_filters))
+        dispatch(fetchFavorites())
     }, [dispatch])
+
+    if(!user) {
+        return (
+            <div className="not_auth">
+                Вы не авторизованы
+                <button onClick={() => navigate("/auth")}>Авторизоваться</button>
+            </div>
+        )
+    }
 
     const itemsPerPage = 16;
     const maxVisiblePages = 3;
@@ -24,9 +33,9 @@ function FavoriteList() {
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const currentCards = products.slice(startIndex, endIndex);
+    const currentCards = favoritesProducts.slice(startIndex, endIndex);
 
-    const totalPages = Math.ceil(products.length / itemsPerPage);
+    const totalPages = Math.ceil(favoritesProducts.length / itemsPerPage);
 
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));

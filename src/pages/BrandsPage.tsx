@@ -72,10 +72,10 @@ function BrandsPage() {
         return Array.from({ length: end - start + 1 }, (_, index) => start + index);
     };
 
-    if(oneBrand != undefined) {
+    if(oneBrand != undefined && filteredProducts !== undefined) {
         return (
             <>
-                <BrandFilterNavbar brand={oneBrand} products={filteredData} colors={colors} />
+                <BrandFilterNavbar brand={oneBrand} products={filteredData} colors={colors} filteredProducts={filteredProducts} />
                 <div className="d-f__rec-product" style={{ marginTop: "30px" }}>
                 { filteredProducts?.length !== 0 ? (
                     filteredProducts?.map((product: any) => (

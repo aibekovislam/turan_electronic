@@ -3,13 +3,39 @@ import styles from "../styles/card.module.scss"
 // import white from "../assets/svgs/card/white.svg"
 // import lightBrown from "../assets/svgs/card/lightBrrown.svg"
 import shop from "../assets/svgs/card/shop.svg"
+import fillHeart from "../assets/svgs/card/fillHeart.svg"
 import heart from "../assets/svgs/card/Vector (8).svg"
 import checked from "../assets/svgs/card/Vector (9).svg";
 import { ProductsType } from "../utils/interfacesAndTypes"
+import { useDispatch, useSelector } from "react-redux";
+import { RootStates } from "../store/store";
+import { useEffect } from "react";
+import { addFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
+import { useNavigate } from "react-router-dom";
 
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
-  return (
-    <div className={`${styles.card_main} ${styles.card_main_mobile}`} onClick={onClick}>
+    const navigate = useNavigate();
+    const favorites = useSelector((state: RootStates) => state.favorites.favorites);
+    const user = useSelector((state: RootStates) => state.auth.user);
+
+    const dispatch = useDispatch<any>();
+
+    useEffect(() => {
+        dispatch(fetchFavorites())
+    }, [])
+
+    const handleClickFavorite = (product_id: number) => {
+        if(user) {
+            dispatch(addFavorites(product_id))
+        } else if(!user) {
+            navigate("/auth")
+        }
+    }
+
+    const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
+
+    return (
+    <div className={`${styles.card_main} ${styles.card_main_mobile}`}>
         <div className={styles.card_container}>
             <div className={styles.card}>
                 <div className={styles.star_container}>
@@ -29,11 +55,11 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         ))}
                     </div>
                 </div>
-                <div className={styles.img_container}>
+                <div className={styles.img_container} onClick={onClick}>
                     <img src={product.default_image}  />
                 </div>
                 <div className={styles.heart_container}>
-                    <img src={heart}  />
+                    <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
                 </div>
                 <div className={styles.title_container}>
                     { product.in_stock ? (
@@ -53,7 +79,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                     </div>
                 </div>
                 <div className={styles.btn_container}>
-                    <button className={styles.btn}>
+                    <button className={styles.btn} onClick={onClick}>
                         <a href="#">Быстрый заказ</a>
                     </button>
                     <img src={shop} alt="" />

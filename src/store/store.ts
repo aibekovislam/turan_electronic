@@ -8,6 +8,9 @@ import accessoriesReducer from "./features/accessories/accessoriesSlice"
 import productOneSliceReducer from "./features/products/oneProductSlice";
 import oneBrandSliceReducer from "./features/brands/oneBrandSlice";
 import reviewsSliceReducer from "./features/reviews/reviewSlice";
+import userReducer from "./features/auth/authSlice";
+import favoritesReducer from "./features/favorite_and_cart/favoriteSlice";
+import cartReducer from "./features/favorite_and_cart/cartSlice";
 
 export const store = configureStore({
     reducer: {
@@ -19,7 +22,10 @@ export const store = configureStore({
         accessories: accessoriesReducer,
         oneProduct: productOneSliceReducer,
         oneBrand: oneBrandSliceReducer,
-        reviews: reviewsSliceReducer
+        reviews: reviewsSliceReducer,
+        user: userReducer,
+        favorites: favoritesReducer,
+        carts: cartReducer
     }
 })
 

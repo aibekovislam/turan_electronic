@@ -23,3 +23,29 @@
     justify-content: flex-end;
     margin-top: 10px;
 }   
+
+
+.not_auth {
+    margin: 30px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: 500;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.not_auth button {
+    padding: 20px 60px;
+    cursor: pointer;
+    list-style-type: none;
+    border: 1px solid #FFFFFF;
+    box-shadow: 4px 2px 16px 0px rgba(136, 165, 191, 0.4784313725);
+    width: 10vw;
+    height: 3vw;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

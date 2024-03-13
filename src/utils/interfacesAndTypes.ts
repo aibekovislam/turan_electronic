@@ -19,6 +19,7 @@ export interface BrandsProps {
     brand: BrandsType,
     products?: ProductsType[] | undefined,
     colors?: string[] | undefined,
+    filteredProducts: ProductsType[]
 }
 
 export interface ArrowProps {
@@ -37,6 +38,14 @@ export interface AuthState {
         token: string
     },
     user: null | UserT
+}
+
+export interface FavoriteState {
+    favorites: favoriteType[]
+}
+
+export interface CartState {
+    carts: CartType[]
 }
 
 export interface ReviewI {
@@ -87,6 +96,22 @@ export const default_filters = {
     memory: [],
 }
 
+export type favoriteType = {
+    id?: number,
+    created_at: string,
+    user: number,
+    product: ProductsType[]
+}
+
+export type CartType = {
+    price(price: any, discount: any): unknown;
+    discount(price: any, discount: any): unknown;
+    id?: number,
+    user: number,
+    product: any,
+    created_at: string
+}
+
 export type ProductsType = {
     id: number;
     name: string;
@@ -114,7 +139,8 @@ export type ProductsType = {
 
 export type UserT = {
     email: string;
-    password: string;
+    password?: string;
+    name?: string
 }
 
 export type UserType = {
