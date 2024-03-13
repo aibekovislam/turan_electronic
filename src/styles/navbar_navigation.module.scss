@@ -79,6 +79,12 @@
   border: none;
 }
 
+.sidebar_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .sidebar_title > span{
   font-weight: 500;
   font-size: 22px;
@@ -104,7 +110,8 @@
 
 .sidebar_radio{
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  margin-top: 15px;
 }
 
 .main_title_filters {
@@ -117,4 +124,73 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+}
+
+.sidebar_main{
+  display: flex;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+
+.sidebar_all{
+  margin-top: 20px;
+}
+
+.sidebar_all > span {
+  color: rgba(0, 0, 0, 1);
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none; 
+  padding-bottom: 1px; 
+  border-bottom: 1px dashed #000; 
+  cursor: pointer;
+}
+
+.brands__block_arrow_down {
+  width: 2vw;
+  height: 2vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+
+
+.brands__block_arrow_down {
+  img {
+      transition: transform 0.3s ease;
+      width: 1vw;
+      height: 1vw;
+  }
+}
+
+.color_block {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 4px 0px #00000059;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.color_picked {
+  border: 2px solid #FF7300;
+}
+
+.d_f_colors{
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.sidebar_con{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 20px;
 }

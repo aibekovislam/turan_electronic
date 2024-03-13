@@ -1,46 +1,49 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../styles/navbar_navigation.module.scss';
-import RangeSlider from '../functions/RangeSlider';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFilterProducts, fetchProducts } from '../store/features/products/productSlice';
+import { fetchFilterProducts } from '../store/features/products/productSlice';
+import ArrowDown from '../assets/svgs/ArrowDown';
+import { renderDropdownSideBar } from '../functions/renderDropdownSidebar';
 import { RootStates } from '../store/store';
-import { default_filters } from '../utils/interfacesAndTypes';
-import { useParams } from 'react-router-dom';
-import { fetchOneBrand } from '../store/features/brands/oneBrandSlice';
+import { fetchBrands } from '../store/features/brands/brandsSlice';
 
 
-function SidebarMenu({ isOpen, setIsOpen }: any) {
-  const { brand } = useParams();
+function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
+  const [pickedColor, setPickedColor] = useState<string | null>(null);
+  const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
+  const colors = useSelector((state: RootStates) => state.products.colors);
+  const brands = useSelector((state: RootStates) => state.brands.brands)
   const dispatch = useDispatch<any>();
-  const oneBrand = useSelector((state: RootStates) => state.oneBrand.brand);
-  const products = useSelector((state: RootStates) => state.products.products);
-  // const colors = useSelector((state: RootStates) => state.products.colors);
+    useEffect(() => {
+        dispatch(fetchBrands())
+    }, [dispatch])
 
-  useEffect(() => {
-    if(brand != undefined) {
-        dispatch(fetchOneBrand(+brand))
-    }
-    dispatch(fetchProducts(default_filters));
-}, [dispatch, brand]) 
+    const toggleSidebar = () => setIsOpen(!isOpen);
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
+    const handleDropdownList = (index: number) => {
+        const newDropdownStates = dropdownStates.map((state, i) => (i === index ? !state : false));
+        setDropdownStates(newDropdownStates);
+    };
 
-  const [filters, setFilters] = useState({
-      limit: 10,
-      offset: 0,
-      min_price: undefined,
-      max_price: undefined,
-      brand: undefined,
-      product_color: [],
-      memory: [],
-  });
 
-  const fetchProductsAndLog = (obj: any) => {
-    const updatedFilters = { ...filters, ...obj };
-    setFilters(updatedFilters);
-    dispatch(fetchFilterProducts(updatedFilters));
-    console.log(updatedFilters);
-  };
+    const [filters, setFilters] = useState({
+        limit: 10,
+        offset: 0,
+        min_price: undefined,
+        max_price: undefined,
+        brand: undefined,
+        color: [] || "",
+        memory: [],
+      });
+
+      const fetchProductsAndLog = (obj: any) => {
+        const updatedFilters = { ...filters, ...obj };
+        setFilters(updatedFilters);
+        dispatch(fetchFilterProducts(updatedFilters));
+        console.log(updatedFilters);
+    };        
+
+    
 
   return (
     <>
@@ -52,39 +55,23 @@ function SidebarMenu({ isOpen, setIsOpen }: any) {
           </button>
         </div>
         <ul className={styles.sidebarLinks}>
-          <div className={styles.sidebar__items}>
-            <div className={styles.sidebar_title}>
-              <span>Цена, Сом</span>
+
+          <div className={styles.sidebar_main}>
+          {Array(5).fill(null).map((_, index) => (
+            <div key={index} className={styles.sidebar__items}>
+              <div className={styles.sidebar_title}>
+                  <span>
+                    {index === 1 ? 'Цвет' : index === 2 ? 'Бренд' : index === 3 ? 'Модель' : index === 4 ? 'Обьем' : 'Цена Сом'}
+                  </span>
+                  <div className={styles.brands__block_arrow_down} onClick={() => handleDropdownList(index)}>
+                    <ArrowDown isUp={dropdownStates[index]} />
+                  </div>
+              </div>
+                  <div >
+                      { dropdownStates[index] && renderDropdownSideBar(index, products, colors, pickedColor, setPickedColor, dispatch, brand, fetchProductsAndLog, filters, brands) }
+                  </div>
             </div>
-            <RangeSlider fetchProductsAndLog={fetchProductsAndLog} brand={oneBrand} products={products} />
-          </div>
-          <div className={styles.sidebar__items}>
-            <div className={styles.sidebar_title}>
-              <span>Бренд</span>
-            </div>
-            <div className={styles.sidebar_radio}>
-              <input
-                type="radio"
-                className={styles.dropdown_radio}
-                defaultChecked={true}
-              />
-              <span className={styles.dropdown_text}>Все</span>
-            </div>
-          </div>
-          <div className={styles.sidebar__items}>
-            <div className={styles.sidebar_title}>
-              <span>Цвет</span>
-            </div>
-          </div>
-          <div className={styles.sidebar__items}>
-            <div className={styles.sidebar_title}>
-                <span>Модель</span>
-            </div>
-          </div>
-          <div className={styles.sidebar__items}>
-            <div className={styles.sidebar_title}>
-              <span>Обьем</span>
-            </div>
+          ))}
           </div>
         </ul>
       </div>
