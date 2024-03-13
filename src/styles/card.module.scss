@@ -1,6 +1,6 @@
 .card_main{
     width: 275px;
-    height: auto;
+    height: 590px;
     border-radius: 24px;
     border: 1px solid #fff;
     box-shadow: 16px 36px 64px 0px #6f88a07a;
@@ -215,9 +215,17 @@
     }
 }
 
+@media only screen and (max-width: 1000px) {
+    .card_main {
+        width: 24vw;
+        height: 550px;
+    }
+}
+
 @media only screen and (max-width: 500px) {
     .card_mini {
         width: 38vw;
+        height: 500px;
     }
     .price_access > h2 {
         font-size: 13px;

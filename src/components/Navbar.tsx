@@ -13,6 +13,8 @@ function Navbar() {
   const [activeItem, setActiveItem] = useState<string>(() => {
     return localStorage.getItem("activeItem") || "home";
   });
+  const userString = localStorage.getItem("userInfo");
+  const user = userString ? JSON.parse(userString) : null;
 
   const navigate = useNavigate();
 
@@ -107,7 +109,7 @@ function Navbar() {
             <div className={`${styles.cart} ${activeItem === "cart" ? "active__navbar" : ""}`} onClick={() => handleItemClick("cart")}>
               <img src={cart_svg} alt="Cart svg" />
             </div>
-            <div className={`${styles.personal_office} ${activeItem === "profile" || "auth" ? "active__navbar" : ""}`} onClick={() => handleItemClick("profile")}>
+            <div className={`${styles.personal_office} ${activeItem === `${user ? "profile" : "auth"}` ? "active__navbar" : ""}`} onClick={() => handleItemClick("profile")}>
               <img src={personal__office_svg} alt="Personal svg" />
             </div>
           </div>
