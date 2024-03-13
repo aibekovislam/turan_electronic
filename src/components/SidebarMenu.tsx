@@ -14,6 +14,7 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
   const colors = useSelector((state: RootStates) => state.products.colors);
   const brands = useSelector((state: RootStates) => state.brands.brands)
   const dispatch = useDispatch<any>();
+
     useEffect(() => {
         dispatch(fetchBrands())
     }, [dispatch])
@@ -34,6 +35,7 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
         brand: undefined,
         color: [] || "",
         memory: [],
+        product_name: ""
       });
 
       const fetchProductsAndLog = (obj: any) => {
@@ -41,9 +43,7 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
         setFilters(updatedFilters);
         dispatch(fetchFilterProducts(updatedFilters));
         console.log(updatedFilters);
-    };        
-
-    
+    };
 
   return (
     <>
@@ -57,11 +57,11 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
         <ul className={styles.sidebarLinks}>
 
           <div className={styles.sidebar_main}>
-          {Array(5).fill(null).map((_, index) => (
+          {Array(4).fill(null).map((_, index) => (
             <div key={index} className={styles.sidebar__items}>
               <div className={styles.sidebar_title}>
                   <span>
-                    {index === 1 ? 'Цвет' : index === 2 ? 'Бренд' : index === 3 ? 'Модель' : index === 4 ? 'Обьем' : 'Цена Сом'}
+                    {index === 1 ? 'Цвет' : index === 2 ? 'Модель' : index === 3 ? 'Обьем' : 'Цена Сом'}
                   </span>
                   <div className={styles.brands__block_arrow_down} onClick={() => handleDropdownList(index)}>
                     <ArrowDown isUp={dropdownStates[index]} />

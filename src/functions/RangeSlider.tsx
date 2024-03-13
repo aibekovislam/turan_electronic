@@ -3,7 +3,7 @@ import styles from "../styles/brands_and_footer.module.scss";
 
 const RangeSlider = ({ fetchProductsAndLog, brand, products }: any) => {
   const [minValue, setMinValue] = useState<number>(0);
-  const [maxValue, setMaxValue] = useState<number | string>(10000);
+  const [maxValue, setMaxValue] = useState<number | string>(0);
   const progressRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -12,6 +12,8 @@ const RangeSlider = ({ fetchProductsAndLog, brand, products }: any) => {
       setMaxValue(maxPrice);
     }
   }, []);
+
+  console.log(maxValue)
   
   const handlePriceInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);

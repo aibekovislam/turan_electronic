@@ -12,7 +12,7 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
     const [pickedColor, setPickedColor] = useState<string | null>(null);
     const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
     const [ isOpen, setIsOpen ] = useState(false);
-
+    
     const toggleSidebar = () => setIsOpen(!isOpen);
 
     const handleDropdownList = (index: number) => {
@@ -30,13 +30,14 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
         brand: undefined,
         color: [] || "",
         memory: [],
+        product_name: ""
       });
 
       const fetchProductsAndLog = (obj: any) => {
         const updatedFilters = { ...filters, ...obj };
         setFilters(updatedFilters);
-        dispatch(fetchFilterProducts(updatedFilters));
         console.log(updatedFilters);
+        dispatch(fetchFilterProducts(updatedFilters));
     };        
 
     return (
@@ -69,7 +70,7 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
                         Все фильтры
                         <img src={FilterSVG} className={styles.filter__svg} />
                     </div>
-                    <SidebarMenu isOpen={isOpen} setIsOpen={setIsOpen} brand={brand} />
+                    <SidebarMenu isOpen={isOpen} setIsOpen={setIsOpen} brand={brand} products={products} />
                 </div>
             </div>
         </div>
