@@ -1,8 +1,7 @@
-import { fetchProducts } from "../store/features/products/productSlice";
 import styles from "../styles/navbar_navigation.module.scss";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
-import { extractBrandCategoryAndTitle, extractPropertyArray } from "./filterFunction";
+import { extractPropertyArray } from "./filterFunction";
 
 export function renderDropdownSideBar(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, dispatch: any, brand: any, fetchProductsAndLog: any, filters: any, brands: any) {
 
@@ -16,7 +15,6 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
         return extractPropertyArray(products, propertyName);
     };
 
-    const brandTitles = extractBrandCategoryAndTitle(products);
     const brandModels = brandCategoryArray('name');
     const productMemory = brandCategoryArray('memory');  
     
@@ -33,8 +31,6 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
         fetchProductsAndLog(updatedFilters);
       };  
       
-      
-
     switch (index) {
         case 0:
             return(
@@ -80,60 +76,47 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
             )
         case 2: 
             return(
-                <div className={styles.sidebar__items}> 
-                    <div className={styles.sidebar_radio_1}>
-                        <input
-                            type="radio"
-                            className={styles.dropdown_radio}
-                            defaultChecked={true}
-                        />
-                        <span className={styles.dropdown_text}>Все</span>
-                        {brands.map((item: any, innerIndex: number) => (
-                        <div key={innerIndex} className={styles.dropdown__item}>
-                            <input
-                                type="radio"
-                                className={styles.dropdown_radio}
-                                defaultChecked={true}    
-                            />
-                            <span className={styles.dropdown_text}>{item.title}</span>
-                        </div>
-                    ))}
-                    </div>
-                </div>
-            )
-        case 3: 
-            return(
-                <div className={styles.sidebar__items}>  
+                <div className={styles.sidebar__items} style={{ marginTop: "10px" }}>  
                     <div className={styles.sidebar_radio_2}>
                         <input
                             type="radio"
                             className={styles.dropdown_radio}
+                            name={groupName}
                             defaultChecked={true}
+                            onChange={() => {
+                                let obj = {
+                                    limit: 10,
+                                    offset: 0,
+                                    min_price: undefined,
+                                    max_price: undefined,
+                                    brand: brand.id,
+                                    color: [],
+                                    memory: [],
+                                    product_name: "",
+                                }
+                                fetchProductsAndLog(obj);
+                            }}        
                         />
                         <span className={styles.dropdown_text}>Все</span>
                         {brandModels.map((item: any, index: number) => (
-                        <div key={index} className={styles.dropdown__item}>
-                            <input
-                                type="radio"
-                                className={styles.dropdown_radio}
-                                name={groupName}
-                                onChange={async () => {
-                                    let obj = {
-                                        limit: 10,
-                                        offset: 0,
-                                        min_price: undefined,
-                                        max_price: undefined,
-                                        brand: [],
-                                        color: [],
-                                        memory: [],
-                                    }
-                                    const res = await dispatch(fetchProducts(obj))
-                                    console.log(res)
-                                }}
-                            />
-                            <span className={styles.dropdown_text}>{item}</span>
-                        </div>
-                    ))}
+                            <div key={index} className={styles.dropdown__item}>
+                                <input
+                                    type="radio"
+                                    className={styles.dropdown_radio}
+                                    name={groupName}
+                                    onChange={() => {
+                                        const updatedFilters = {
+                                            ...filters,
+                                            brand: brand.id,
+                                            product_name: item
+                                        };
+                                        fetchProductsAndLog(updatedFilters);
+                                        console.log(item)
+                                    }}
+                                />
+                                <span className={styles.dropdown_text}>{item}</span>
+                            </div>
+                        ))}
                     </div>
                     <div className={styles.sidebar_all}>
                         <span>
@@ -142,16 +125,48 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                     </div>
                 </div>
             )
-        case 4: 
+        case 3: 
             return(
                 <div className={styles.sidebar__items}>
                     <div className={styles.sidebar_radio}>
-                    <input
-                        type="radio"
-                        className={styles.dropdown_radio}
-                        defaultChecked={true}
-                    />
-                    <span className={styles.dropdown_text}>Все</span>
+                        <input
+                            type="radio"
+                            className={styles.dropdown_radio}
+                            name={groupName}
+                            defaultChecked={true}
+                            onChange={() => {
+                                let obj = {
+                                    limit: 10,
+                                    offset: 0,
+                                    min_price: undefined,
+                                    max_price: undefined,
+                                    brand: brand.id,
+                                    color: [],
+                                    memory: [],
+                                    product_name: ""
+                                }
+                                fetchProductsAndLog(obj)
+                            }}
+                        />
+                        <span className={styles.dropdown_text}>Все</span>
+                        {productMemory.map((item: any, index: number) => (
+                            <div key={index} className={styles.dropdown__item}>
+                                <input
+                                    type="radio"
+                                    className={styles.dropdown_radio}
+                                    name={groupName}
+                                    onChange={() => {
+                                        const updatedFilters = {
+                                        ...filters,
+                                        brand: brand.id,
+                                        memory: +item
+                                        };
+                                        fetchProductsAndLog(updatedFilters);
+                                    }}  
+                                />
+                                <span className={styles.dropdown_text}>{item} ГБ</span>
+                            </div>
+                        ))}
                     </div>
                     <div className={styles.sidebar_all}>
                     <span>

@@ -1,4 +1,3 @@
-import { fetchProducts } from "../store/features/products/productSlice";
 import styles from "../styles/brands_and_footer.module.scss";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
@@ -32,9 +31,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
         };
       
         fetchProductsAndLog(updatedFilters);
-      };          
-
-    console.log(brandModels);
+      };
     
 
     switch (index) {
@@ -55,6 +52,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 brand: brand.id,
                                 color: [],
                                 memory: [],
+                                product_name: ""
                             }
                             fetchProductsAndLog(obj);
                         }}
@@ -88,6 +86,19 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                         className={styles.dropdown_radio}
                         name={groupName}
                         defaultChecked={true}
+                        onChange={() => {
+                            let obj = {
+                                limit: 10,
+                                offset: 0,
+                                min_price: undefined,
+                                max_price: undefined,
+                                brand: brand.id,
+                                color: [],
+                                memory: [],
+                                product_name: ""
+                            }
+                            fetchProductsAndLog(obj);
+                        }}
                         />
                     <span className={styles.dropdown_text}>Все</span>
                     {brandModels.map((item: any, index: number) => (
@@ -105,9 +116,9 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                         brand: [],
                                         color: [],
                                         memory: [],
+                                        product_name: item
                                     }
-                                    const res = await dispatch(fetchProducts(obj))
-                                    console.log(res)
+                                    fetchProductsAndLog(obj);
                                 }}
                             />
                             <span className={styles.dropdown_text}>{item}</span>
@@ -132,10 +143,11 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 brand: brand.id,
                                 color: [],
                                 memory: [],
+                                product_name: ""
                             }
                             fetchProductsAndLog(obj)
                         }}
-                        />
+                    />
                     <span className={styles.dropdown_text}>Все</span>
                     {productMemory.map((item: any, index: number) => (
                         <div key={index} className={styles.dropdown__item}>
@@ -176,6 +188,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 brand: brand.id,
                                 color: [],
                                 memory: [],
+                                product_name: ""
                             }
                             fetchProductsAndLog(obj)
                         }}

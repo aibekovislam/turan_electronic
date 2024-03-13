@@ -62,6 +62,7 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
             brand_category: filters.brand_category || undefined,
             color: filters.color || [],
             memory: filters.memory || [],
+            product_name: filters.product_name || undefined
         };
 
         const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
