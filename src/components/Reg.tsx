@@ -9,16 +9,19 @@ import { API_URL } from "../utils/consts"
 import { useNavigate } from "react-router-dom"
 
 function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
-    const [ loadedAuth, setLoadedAuth ] = useState(false);
-    const [ authFormData, setAuthFormData ] = useState({
+    const [loadedAuth, setLoadedAuth] = useState(false);
+    const [errorAuth, setErrorAuth] = useState(false);
+
+    const [authFormData, setAuthFormData] = useState({
         email: "",
         password: "",
-        name: ""
-    })
+        name: "",
+        confirmPassword: "",
+    });
 
     const navigate = useNavigate();
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setAuthFormData((prevData) => ({
             ...prevData,
@@ -26,14 +29,23 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
         }));
     };
 
-    const handleRegister = async (e: any) => {
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             setLoadedAuth(true);
-            const response = await axios.post(`${API_URL}/users/`, authFormData);
+
+            if (authFormData.password !== authFormData.confirmPassword) {
+                setErrorAuth(true);
+                return;
+            }
+
+            const { confirmPassword, ...requestData } = authFormData;
+
+            const response = await axios.post(`${API_URL}/users/`, requestData);
             console.log(response.data);
+
             if (response.data) {
-                navigate("/activate")
+                navigate("/activate");
             }
         } catch (error) {
             console.log(error);
@@ -51,7 +63,7 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                         Авторизуйтесь, указав свои контактные данные, или <br/> воспользовавшись перечисленными сервисами
                     </p>
                 </div>
-                <form onSubmit={handleRegister}>
+                <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                     <div className={styles.auth_form}>
                         <div className={styles.auth_input}>
                             <input onChange={handleInputChange} value={authFormData.name} type="text" name="name" placeholder="Имя"/>
@@ -61,7 +73,7 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                             <img src={eye}  className={styles.eye_svg} />
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type="password" value={authFormData.password} name="password"  placeholder="Потвердить пароль"/>
+                            <input onChange={handleInputChange} type="password" value={authFormData.confirmPassword} name="confirmPassword" placeholder="Потвердить пароль"/>
                             <img src={eye}  className={styles.eye_svg} />
                         </div>
                         <div className={styles.auth_input}>
@@ -72,6 +84,11 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                             <p>Я согласен с <a href="#">условиями обработки</a> <br/> персональных данных</p>
                         </div>
                     </div>
+                    { errorAuth && (
+                        <div className={styles.errors}>
+                            Проверьте ваши данные пожалуйста
+                        </div>
+                    ) }
                     <div className={styles.auth_button}>
                         { loadedAuth ? (
                             <div>Обработка данных...</div>

@@ -133,6 +133,18 @@
     cursor: pointer;
 }
 
+.errors {
+    background: red;
+    color: white;
+    width: 300px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 4px;
+}
+
 //! Regsiter
 
 .reg_button{

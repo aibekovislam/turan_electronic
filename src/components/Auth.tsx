@@ -4,19 +4,24 @@ import google from "../assets/svgs/auth/google.svg";
 import eye from "../assets/svgs/auth/eye.svg";
 import { AuthAndRegProps } from "../utils/interfacesAndTypes";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { API_URL } from "../utils/consts";
-import $axios from "../utils/axios";
-import { useDispatch } from "react-redux";
-import { setUser, signIn, usersMe } from "../store/features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../store/features/auth/authSlice";
+import { RootStates } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
+  const user = useSelector((state: RootStates) => state.auth.user);
   const dispatch = useDispatch<any>();
+  const navigate = useNavigate();
 
   const [authFormData, setAuthFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    console.log("User changed:", user);
+  }, [user]);
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -31,13 +36,16 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps) {
     console.log(authFormData);
     
     try {
-      const response = await dispatch(signIn(authFormData));
-      console.log(response);
+      await dispatch(signIn(authFormData));
     } catch (error) {
-        console.error("Error during fetch:", error);
-        throw error;
+      console.error("Error during fetch:", error);
+      throw error;
     }
   };
+
+  if(user) {
+    return navigate("/")
+  }
 
   return (
     <div className={styles.auth_main}>

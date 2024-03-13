@@ -69,6 +69,11 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
         const data: ProductsI = { products: response.data.results };
 
         dispatch(productSlice.actions.setFilterProducts(data));
+
+        if(data.filteredProducts?.length === 0) {
+            return "Такого нету"
+        }
+
     } catch (error) {
         console.log(error);
     }
