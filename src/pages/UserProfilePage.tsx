@@ -1,10 +1,9 @@
-import { useSelector } from "react-redux"
-import { RootStates } from "../store/store"
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function UserProfilePage() {
-    const user = useSelector((state: RootStates) => state.auth.user);
+    const userString = localStorage.getItem("userInfo");
+    const user = userString ? JSON.parse(userString) : null;
     const navigate = useNavigate();
 
     useEffect(() => {

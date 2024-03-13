@@ -51,6 +51,7 @@ export const activateUser = (obj: UserType): AppThunk => async (dispatch) => {
         const response = await axios.post(`${API_URL}/users/activation/`, obj);
         dispatch(authSlice.actions.setActivate(response.data));
         console.log(response.data, obj);
+        localStorage.setItem("userInfo", JSON.stringify(response.data));
         return response.data;
     } catch (error) {
         console.log(error);
@@ -66,6 +67,7 @@ export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
         
         const response: any = await $axios.get(`${API_URL}/users/me/`);
         dispatch(authSlice.actions.setUser(response.data));
+        localStorage.setItem("userInfo", JSON.stringify(response.data));
         return response.data;
     } catch (error: any) {
         console.error("Error during fetch:", error);
