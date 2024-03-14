@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../store/features/auth/authSlice";
 import { RootStates } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import { notify } from "./Toastify";
 
 function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   const user = useSelector((state: RootStates) => state.auth.user);
@@ -53,6 +54,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
 
   if(user) {
     navigate("/")
+    notify('Вы успешно вошли в аккаунт')
   }
 
   return (

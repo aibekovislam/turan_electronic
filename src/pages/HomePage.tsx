@@ -9,7 +9,9 @@ import Brands from "../components/Brands";
 
 
 
+
 function HomePage() {
+
   return (
     <div>
       <NavbarNavigation/>
