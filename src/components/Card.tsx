@@ -14,6 +14,7 @@ import { addFavorites, fetchFavorites } from "../store/features/favorite_and_car
 import { useDispatch, useSelector } from "react-redux"
 import { RootStates } from "../store/store"
 import { useNavigate } from "react-router-dom"
+import { notify } from "./Toastify"
 
 const Card: React.FC<CardProps> = ({ type, product, onClick }) => {  
     const [ loaded, setLoaded ] = useState(false);
