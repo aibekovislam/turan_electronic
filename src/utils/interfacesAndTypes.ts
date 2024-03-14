@@ -86,6 +86,12 @@ export interface CarouselI {
     carousel: CarouselType[]
 }
 
+export interface OrderI {
+    regions: RegionType[],
+    cities: CityType[],
+    order: OrderType[]
+}
+
 export const default_filters = {
     limit: 10,
     offset: 0,
@@ -135,6 +141,29 @@ export type ProductsType = {
     };
     brand_title: string,
     brand_category_title: string
+}
+
+export type CityType = {
+    id: number,
+    name: string,
+    region: number
+}
+
+export type RegionType = {
+    id: number,
+    name: string
+}
+
+export type OrderType = {
+    user: number,
+    product: number | undefined,
+    name: string,
+    email: string,
+    phone: string,
+    region: number,
+    city: number,
+    street: string,
+    house: string
 }
 
 export type UserT = {

@@ -11,6 +11,7 @@ import reviewsSliceReducer from "./features/reviews/reviewSlice";
 import userReducer from "./features/auth/authSlice";
 import favoritesReducer from "./features/favorite_and_cart/favoriteSlice";
 import cartReducer from "./features/favorite_and_cart/cartSlice";
+import orderReducer from "./features/order/orderSlice";
 
 export const store = configureStore({
     reducer: {
@@ -25,7 +26,8 @@ export const store = configureStore({
         reviews: reviewsSliceReducer,
         user: userReducer,
         favorites: favoritesReducer,
-        carts: cartReducer
+        carts: cartReducer,
+        orders: orderReducer
     }
 })
 

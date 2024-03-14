@@ -44,6 +44,7 @@ export const addToCart = (product_id: number | undefined): AppThunk => async (di
             product: product_id
         }
         const response = await $axios.post(`${API_URL}/carts/`, obj);
+        console.log(response)
         dispatch(fetchCarts());
         console.log(response.data);
     } catch (error) {
