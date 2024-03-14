@@ -48,7 +48,7 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
             <div className={styles.brands_navbar__item}>
                 <div className={styles.brands_navigation}>
                     {Array(5).fill(null).map((_, index) => (
-                        <div className={styles.brands_navigation__item} key={index}>
+                        <div className={styles.brands_navigation__item} onClick={() => handleDropdownList(index)} key={index}>
                             <div className={styles.brands_info_block}>
                                 {index === 0 ? (
                                 <img src={brand.logo_field} alt="brand" className={styles.brandLogo} />
@@ -58,7 +58,7 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
                                 </div>
                                 )}
                             </div>
-                            <div className={styles.brands__block_arrow_down} onClick={() => handleDropdownList(index)}>
+                            <div className={styles.brands__block_arrow_down}>
                                 <ArrowDown isUp={dropdownStates[index]} />
                             </div>
                             <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>

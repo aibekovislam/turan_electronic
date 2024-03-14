@@ -10,6 +10,9 @@ import OrderForm from './OrderForm';
 function CartCardList() {
   const dispatch = useDispatch<any>();
   const carts = useSelector((state: RootStates) => state.carts.carts);
+  const userString = localStorage.getItem("userInfo");
+  const user = userString ? JSON.parse(userString) : null;
+  
 
   useEffect(() => {
     dispatch(fetchCarts());
@@ -30,7 +33,7 @@ function CartCardList() {
   const decrementCount = (id: string) => {
     setCounts((prevCounts) => ({
       ...prevCounts,
-      [id]: Math.max((prevCounts[id] || 0) - 1, 1) // Ensure count never goes below 1
+      [id]: Math.max((prevCounts[id] || 0) - 1, 1)
     }));
   };
 
@@ -81,7 +84,7 @@ function CartCardList() {
                           decrementCount(cart.id)
                         }
                       }}>−</button>
-                      <span>{counts[cart.id] || 1}</span> {/* Set default value to 1 */}
+                      <span>{counts[cart.id] || 1}</span> 
                       <button onClick={() => incrementCount(cart.id)}>+</button>
                     </div>
                 </div>
@@ -117,7 +120,7 @@ function CartCardList() {
         <div className={styles.cart_button}>
           <button className={styles.btn} onClick={handleOrderButtonClick}>Оформить заказ</button>
         </div>
-        {showOrderForm && <OrderForm/>}
+        {showOrderForm && <OrderForm user={user} products={carts} />}
     </div>
   );
 }
