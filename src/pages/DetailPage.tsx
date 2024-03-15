@@ -37,7 +37,6 @@ function DetailPage() {
         setActiveItem(item);
     };    
     const [colorPicked, setColorPicked] = useState(firstImage);
-
     const numberedId = Number(id);
 
     if (id) {
@@ -51,8 +50,10 @@ function DetailPage() {
     }
 
     const handleAddToCart = (id: number | undefined) => {
-        if (id !== undefined && user) {
-            dispatch(addToCart(id))
+        // const color = product?.color.filter((item: any) => item === colorPicked);
+        console.log(product)
+        if (id !== undefined && user && activeItem !== undefined) {
+            dispatch(addToCart(id, 1, 1, 1))
             setAddedToCart(true);
         } else if (!user) {
             setAddedToCart(false);
@@ -246,44 +247,48 @@ function DetailPage() {
                                 <input type="button"  value="Написать отзыв"/>
                             </div>
                         ) }
-                        <div className={styles.reviews}>
-                            { reviewsArray?.map((reviewItem, index) => (
-                                <div className={styles.reviews_content} key={index}>
-                                    <div className={styles.reviews_header}>
-                                        <div className={styles.reviews_name} style={{ gap: "5px" }}>
-                                            <div style={{ marginRight: "10px" }}>{ reviewItem.user_name }</div>
-                                                {reviewItem?.rating != undefined ? (
-                                                    [1, 2, 3, 4, 5].map((star) => (
-                                                        <span
-                                                        key={star}
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                            color: star <= reviewItem.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
-                                                        }}
-                                                        >
-                                                        &#9733;
-                                                        </span>
-                                                    ))
-                                                ) : (
-                                                    <div>Loading...</div>
-                                                )}
+                        { reviewsArray.length !== 0 ? (
+                            <div className={styles.reviews}>
+                                { reviewsArray?.map((reviewItem, index) => (
+                                    <div className={styles.reviews_content} key={index}>
+                                        <div className={styles.reviews_header}>
+                                            <div className={styles.reviews_name} style={{ gap: "5px" }}>
+                                                <div style={{ marginRight: "10px" }}>{ reviewItem.user_name }</div>
+                                                    {reviewItem?.rating != undefined ? (
+                                                        [1, 2, 3, 4, 5].map((star) => (
+                                                            <span
+                                                            key={star}
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                                color: star <= reviewItem.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
+                                                            }}
+                                                            >
+                                                            &#9733;
+                                                            </span>
+                                                        ))
+                                                    ) : (
+                                                        <div>Loading...</div>
+                                                    )}
+                                                </div>
+                                            <div className={styles.reviews_date}>
+                                                <span>{ 
+                                                    new Intl.DateTimeFormat("ru-RU", {
+                                                        year: "numeric",
+                                                        month: "numeric",
+                                                        day: "numeric",
+                                                    }).format(new Date(reviewItem.created_at)) }
+                                                </span>
                                             </div>
-                                        <div className={styles.reviews_date}>
-                                            <span>{ 
-                                                new Intl.DateTimeFormat("ru-RU", {
-                                                    year: "numeric",
-                                                    month: "numeric",
-                                                    day: "numeric",
-                                                }).format(new Date(reviewItem.created_at)) }
-                                            </span>
+                                        </div>
+                                        <div className={styles.reviews_description}>
+                                            <p>{ reviewItem.text }</p>
                                         </div>
                                     </div>
-                                    <div className={styles.reviews_description}>
-                                        <p>{ reviewItem.text }</p>
-                                    </div>
-                                </div>
-                            )) }
-                        </div>
+                                )) }
+                            </div>
+                        ) : (
+                            <div className={styles.reviews}>Пока нет отзывов</div>
+                        ) }
                     </div>
                 </div>
                 <Brands/>

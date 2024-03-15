@@ -6,12 +6,12 @@ import { SliderDetailProps } from '../utils/interfacesAndTypes';
 import { API_URL } from '../utils/consts';
 
 function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailProps) {
-  const [wordData, setWordData] = useState<string | undefined>(default_image);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [wordData, setWordData] = useState<string | undefined>(img_array[selectedColor]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    setWordData(default_image);
-  }, [default_image, selectedColor]);
+    setWordData(img_array[selectedColor]);
+  }, [selectedColor]);
 
   const handleClick = (index: number) => {
     setSelectedIndex(index);
@@ -35,30 +35,20 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
     handleChange(index);
   };
 
-  if (selectedColor === null || img_array[selectedColor] === undefined) {
+  if (!selectedColor || img_array[selectedColor] === undefined) {
     return <div>Loading...</div>;
-  }
+  }  
+
+  console.log(wordData)
 
   return (
     <div className={styles.main}>
       <div className={styles.carousel_detail}>
         <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} />
-        <img src={wordData === default_image ? default_image : `${API_URL}${wordData}`} className={styles.detail_img} />
+        <img src={wordData?.length !== 0 ? `${API_URL}${wordData}` : default_image} className={styles.detail_img} />
         <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} />
       </div>
       <div className={styles.flex_row}>
-        <div className={styles.thumbnail} key={-1}>
-          {default_image && (
-            <img
-              className={selectedIndex === -1 ? styles.clicked : styles.detail_img__item}
-              src={`${default_image}`}
-              onClick={() => {
-                handleClick(-1);
-                // console.log(wordData);
-              }}
-            />
-          )}
-        </div>
         {img_array[selectedColor]?.map((image: string, i: number) => (
           <div className={styles.thumbnail} key={i}>
             {image && (

@@ -28,13 +28,12 @@ function ScrollToTop() {
 function MainRoutes() {
   return (
     <Routes>
-            <Route
-        element={
-          <>
-            <ScrollToTop />
-            <MainLayout />
-          </>
-        }
+            <Route element={
+              <>
+                <ScrollToTop />
+                <MainLayout />
+              </>
+            }
       >
         <Route element={<HomePage />} path="/" />
         <Route element={<FavoritesPage />} path="/favorite" />

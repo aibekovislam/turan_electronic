@@ -3,7 +3,7 @@ import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
 import { extractPropertyArray } from "./filterFunction";
 
-export function renderDropdownSideBar(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, dispatch: any, brand: any, fetchProductsAndLog: any, filters: any, brands: any) {
+export function renderDropdownSideBar(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any) {
 
     const isColorPicked = (color: string) => {
         return color === pickedColor;
@@ -159,7 +159,7 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                                         const updatedFilters = {
                                         ...filters,
                                         brand: brand.id,
-                                        memory: +item
+                                        memory: item
                                         };
                                         fetchProductsAndLog(updatedFilters);
                                     }}  

@@ -155,15 +155,14 @@ export type RegionType = {
 }
 
 export type OrderType = {
-    user: number,
-    product: number | undefined,
     name: string,
     email: string,
     phone: string,
     region: number,
     city: number,
     street: string,
-    house: string
+    house: string,
+    items: any[]
 }
 
 export type UserT = {

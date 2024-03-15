@@ -3,7 +3,7 @@ import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
 import { extractBrandCategoryAndTitle, extractPropertyArray } from "./filterFunction";
 
-export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, dispatch: any, brand: any, fetchProductsAndLog: any, filters: any, filteredProducts: any) {
+export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any, filteredProducts: any) {
 
     const isColorPicked = (color: string) => {
         return color === pickedColor;
@@ -50,6 +50,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 min_price: undefined,
                                 max_price: undefined,
                                 brand: brand.id,
+                                brand_category: undefined,
                                 color: [],
                                 memory: [],
                                 product_name: ""
@@ -93,6 +94,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 min_price: undefined,
                                 max_price: undefined,
                                 brand: brand.id,
+                                brand_category: undefined,
                                 color: [],
                                 memory: [],
                                 product_name: ""
@@ -114,6 +116,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                         min_price: undefined,
                                         max_price: undefined,
                                         brand: [],
+                                        brand_category: undefined,
                                         color: [],
                                         memory: [],
                                         product_name: item
@@ -141,6 +144,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 min_price: undefined,
                                 max_price: undefined,
                                 brand: brand.id,
+                                brand_category: undefined,
                                 color: [],
                                 memory: [],
                                 product_name: ""
@@ -159,7 +163,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                     const updatedFilters = {
                                       ...filters,
                                       brand: brand.id,
-                                      memory: +item
+                                      memory: item
                                     };
                                     fetchProductsAndLog(updatedFilters);
                                   }}  
@@ -186,6 +190,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                 min_price: undefined,
                                 max_price: undefined,
                                 brand: brand.id,
+                                brand_category: undefined,
                                 color: [],
                                 memory: [],
                                 product_name: ""
