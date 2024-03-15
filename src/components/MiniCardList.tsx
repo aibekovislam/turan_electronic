@@ -5,10 +5,11 @@ import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchAccessories } from "../store/features/accessories/accessoriesSlice";
 import { AccessoriesType } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
+import MiniCardMobile from "./MiniCardMobile";
 
 function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
@@ -31,10 +32,22 @@ function SampleNextArrow(props: any) {
 function MiniCardList() {
   const dispatch = useDispatch<any>()
   const accessories = useSelector((state: RootStates) => state.accessories.accessories)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+
 
   useEffect(() => {
       dispatch(fetchAccessories())
   }, [dispatch])
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 520);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
 
 
@@ -88,9 +101,14 @@ function MiniCardList() {
           <div className={`slider-container ${styles.mini_card_list}`}>
             <Slider {...settings}>
               {accessories?.map((accessory: AccessoriesType | undefined, index: number) => (
+                isMobile ? (
+                  <MiniCardMobile accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} />
+                ) : (
                 <div key={index} className={styles.mini_card_block}>
                   <MiniCard accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} style={{ cursor: "pointer" }} />
                 </div>
+                )
+
               ))}
             </Slider>
           </div>
