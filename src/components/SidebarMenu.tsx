@@ -12,7 +12,6 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
   const [pickedColor, setPickedColor] = useState<string | null>(null);
   const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
   const colors = useSelector((state: RootStates) => state.products.colors);
-  const brands = useSelector((state: RootStates) => state.brands.brands)
   const dispatch = useDispatch<any>();
 
     useEffect(() => {
@@ -59,16 +58,16 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
           <div className={styles.sidebar_main}>
           {Array(4).fill(null).map((_, index) => (
             <div key={index} className={styles.sidebar__items}>
-              <div className={styles.sidebar_title}>
+              <div className={styles.sidebar_title} onClick={() => handleDropdownList(index)}>
                   <span>
                     {index === 1 ? 'Цвет' : index === 2 ? 'Модель' : index === 3 ? 'Обьем' : 'Цена Сом'}
                   </span>
-                  <div className={styles.brands__block_arrow_down} onClick={() => handleDropdownList(index)}>
+                  <div className={styles.brands__block_arrow_down}>
                     <ArrowDown isUp={dropdownStates[index]} />
                   </div>
               </div>
                   <div >
-                      { dropdownStates[index] && renderDropdownSideBar(index, products, colors, pickedColor, setPickedColor, dispatch, brand, fetchProductsAndLog, filters, brands) }
+                      { dropdownStates[index] && renderDropdownSideBar(index, products, colors, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters) }
                   </div>
             </div>
           ))}

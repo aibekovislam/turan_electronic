@@ -3,13 +3,13 @@ import styles from "../styles/cart.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { addOrder, fetchCities, fetchRegions } from "../store/features/order/orderSlice";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-function OrderForm({ user, products }: any) {
+function OrderForm({ products }: any) {
   const regions = useSelector((state: RootStates) => state.orders.regions);
   const cities = useSelector((state: RootStates) => state.orders.cities);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const dispatch = useDispatch<any>();
   const [loading, setLoading] = useState(true);
@@ -22,18 +22,17 @@ function OrderForm({ user, products }: any) {
   const [ regionsChange, setRegionsChange ] = useState(0);
 
   const [ orderFormValue, setOrderFormValue ] = useState({
-    user: user.id,
-    product: products.map((item: any) => item.id)[0],
     name: "",
     email: "",
     phone: "",
     region: regionsChange,
     city: 0,
     street: "",
-    house: ""
+    house: "",
+    items: [
+      ...products
+    ]
   })
-
-  console.log(products)
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -60,7 +59,8 @@ function OrderForm({ user, products }: any) {
       console.log(orderFormValue);
       await dispatch(addOrder(orderFormValue));
       setSendedForm(true);
-      navigate("/")
+      console.log(orderFormValue.items)
+      // navigate("/")
     } catch (error) {
       console.log(error);
     }

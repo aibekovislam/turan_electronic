@@ -11,6 +11,8 @@
     display: flex;
     justify-content: space-between;
     column-gap: 15px;
+    flex-wrap: wrap;
+    row-gap: 15px;
 }
 
 .category_block {

@@ -12,32 +12,27 @@ import { fetchBrands } from "../store/features/brands/brandsSlice";
 import { BrandsType } from "../utils/interfacesAndTypes";
 
 function CategoryList() {
-  const dispatch = useDispatch<any>()
-    const brands = useSelector((state: RootStates) => state.brands.brands)
+  const dispatch = useDispatch<any>();
+  const brands = useSelector((state: RootStates) => state.brands.brands);
 
-    useEffect(() => {
-        dispatch(fetchBrands())
-    }, [dispatch])
+  useEffect(() => {
+    dispatch(fetchBrands());
+  }, [dispatch]);
 
   return (
     <div className={styles.category__container}>
       <div className={styles.category_big}>
-        <Category type={"big"} brand={brands[0]} />
+        {brands.length > 0 && <Category type={"big"} brand={brands[0]} />}
       </div>
       <div className={styles.category_small}>
-        {brands?.map((brand: BrandsType, index: number) => (
-        <div className={styles.category_block} key={index}>
-          <Category type={"small"} brand={brand}  />
-        </div>
+        {brands.slice(1, 6).map((brand: BrandsType, index: number) => (
+          <div key={index}>
+            <Category type={"small"} brand={brand} />
+          </div>
         ))}
-         {/* <div className={styles.category_block}>
-          <Category type={"small"} img__url={img4} brand={"Samsung"} />
-          <Category type={"small"} img__url={img3} brand={"Xiaomi"} />
-          <Category type={"small"} img__url={img5} brand={"Sony Playstation"} />
-        </div>  */}
       </div>
     </div>
-  )
+  );
 }
 
-export default CategoryList
+export default CategoryList;

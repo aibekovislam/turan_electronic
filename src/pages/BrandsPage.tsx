@@ -35,6 +35,7 @@ function BrandsPage() {
                 brand: oneBrand?.id,
                 product_color: [],
                 memory: [],
+                product_name: ""
             }))
         }
     }, [dispatch])

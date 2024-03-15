@@ -62,7 +62,7 @@
 
 .brands__img img {
     transition: transform 0.3s ease;
-    width: 20vw;
+    width: 10vw;
     height: 5vw;
     object-fit: contain;
 }
@@ -184,9 +184,16 @@
     z-index: 2;
 }
 
+.brands_info_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .brands_info_block img {
-    width: 100%;
+    width: 60%;
     height: 4vw;
+    object-fit: contain;
 }
 
 .brands__block_arrow_down {

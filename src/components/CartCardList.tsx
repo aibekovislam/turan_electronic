@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from "../styles/cart.module.scss";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../store/store';
-import { deleteCart, fetchCarts } from '../store/features/favorite_and_cart/cartSlice';
+import { changeCountCartProduct, deleteCart, fetchCarts } from '../store/features/favorite_and_cart/cartSlice';
 import { calculateDiscountedPrice } from '../functions/calculateDiscounte';
 import RecommendationList from './RecommendationList';
 import OrderForm from './OrderForm';
@@ -24,17 +24,24 @@ function CartCardList() {
   });
 
   const incrementCount = (id: string) => {
-    setCounts((prevCounts) => ({
-      ...prevCounts,
-      [id]: (prevCounts[id] || 0) + 1
-    }));
+      console.log(counts, id)
+      dispatch(changeCountCartProduct(counts[id] + 1, +id));
+      setCounts((prevCounts) => ({
+          ...prevCounts,
+          [id]: (prevCounts[id] || 0) + 1
+      }));
   };
 
   const decrementCount = (id: string) => {
-    setCounts((prevCounts) => ({
-      ...prevCounts,
-      [id]: Math.max((prevCounts[id] || 0) - 1, 1)
-    }));
+    if (counts[id] <= 1) {
+        dispatch(deleteCart(+id));
+    } else {
+        dispatch(changeCountCartProduct(counts[id] - 1, +id));
+        setCounts((prevCounts) => ({
+            ...prevCounts,
+            [id]: Math.max((prevCounts[id] || 0) - 1, 1)
+        }));
+    }
   };
 
   useEffect(() => {
@@ -71,7 +78,7 @@ function CartCardList() {
           <div className={styles.cart_container} key={index}>
             <div className={styles.cart}>
                 <div className={styles.cart_image}>
-                    <img src={cart?.default_image} alt="phone" />
+                    <img src={cart?.product.default_image} alt="phone" />
                 </div>
                 <div className={styles.cart_content}>
                     <p>{ cart?.name }</p>
@@ -89,8 +96,8 @@ function CartCardList() {
                     </div>
                 </div>
                 <div className={styles.cart_price}>
-                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(cart?.price, cart?.discount)} сом</div> {/* Set default value to 1 */}
-                    <div className={styles.default_price}>{(counts[cart.id] || 1) * cart?.price } сом</div> {/* Set default value to 1 */}
+                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(cart?.product.price, cart?.product.discount)} сом</div>
+                    <div className={styles.default_price}>{(counts[cart.id] || 1) * cart?.product.price } сом</div>
                 </div>
                 <div className={styles.cart_rate}>
                 { 
@@ -113,7 +120,7 @@ function CartCardList() {
         )) }
         <div className={styles.total_block}>
           Итого: {carts
-            .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart?.price, cart?.discount))
+            .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart?.product.price, cart?.product.discount))
             .reduce((acc, price) => acc + price, 0)
             .toLocaleString("ru-RU")} сом
         </div>
