@@ -198,6 +198,7 @@
     box-shadow: 1px 1px 4px 0px #00000059;
 }
 
+
 @media only screen and (max-width: 1300px) {
     .card_main {
         width: 24vw;
@@ -286,5 +287,51 @@
     }
     .options_container h2 {
         font-size: 3vw;
+    }
+}
+
+//!  MiniCardMobile
+@media screen and (max-width: 520px) {
+    .mini_mobile__container{
+        border-radius: 15px;
+        border: 1px solid #fff;
+        width: 180px;
+        height: auto;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    .mini_mobile__star{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .mini_mobile__star > span {
+        font-size: 12px;
+    }
+    .mini_mobile__content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .mini_mobile__content > span{
+        font-weight: 400;
+        font-size: 14px;
+    }
+    .mini_mobile__content > img {
+        width: 123px;
+        height: 123px;
+        object-fit: cover;
+    }
+    .mini_mobile__utils{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .mini_mobile__utils > div {
+        border-radius: 5px;
+        border: 1px solid #fff;
+    }
+    .mini_mobile__utils > span {
+        font-weight: 600;
+        font-size: 15px;
     }
 }
