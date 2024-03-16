@@ -5,7 +5,8 @@ import { API_URL } from "../../../utils/consts";
 import { ProductI } from "../../../utils/interfacesAndTypes";
 
 const initialState: ProductI = {
-    product: null
+    product: null,
+    pickedColor: null
 }
 
 const productOneSlice = createSlice({
@@ -14,7 +15,10 @@ const productOneSlice = createSlice({
     reducers: {
       setProduct: (state, action: PayloadAction<ProductI>) => {
         state.product = action.payload.product;
-      },      
+      },
+      setColorPicked: (state, action: PayloadAction<string | null>) => {
+        state.pickedColor = action.payload;
+      }      
     }
 });
   
@@ -29,5 +33,10 @@ export const fetchOneProducts = (id: number): AppThunk => async (dispatch) => {
     }
 }
 
-export const { setProduct } = productOneSlice.actions;
+export const colorPickToAddToCart = (color: string | null): AppThunk => (dispatch) => {
+    localStorage.setItem("colorPicked", JSON.stringify(color));
+    dispatch(productOneSlice.actions.setColorPicked(color));
+}
+
+export const { setProduct, setColorPicked } = productOneSlice.actions;
 export default productOneSlice.reducer;

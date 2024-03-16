@@ -6,13 +6,17 @@ import { changeCountCartProduct, deleteCart, fetchCarts } from '../store/feature
 import { calculateDiscountedPrice } from '../functions/calculateDiscounte';
 import RecommendationList from './RecommendationList';
 import OrderForm from './OrderForm';
+import { API_URL } from '../utils/consts';
 
 function CartCardList() {
   const dispatch = useDispatch<any>();
   const carts = useSelector((state: RootStates) => state.carts.carts);
   const userString = localStorage.getItem("userInfo");
   const user = userString ? JSON.parse(userString) : null;
+  const pickedColorJSON = localStorage.getItem("colorPicked");
+  const colorPicked = pickedColorJSON ? JSON.parse(pickedColorJSON) : null;
   
+  const [ clickedCount, setClickedCount ] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCarts());
@@ -24,25 +28,26 @@ function CartCardList() {
   });
 
   const incrementCount = (id: string) => {
-      console.log(counts, id)
-      dispatch(changeCountCartProduct(counts[id] + 1, +id));
-      setCounts((prevCounts) => ({
-          ...prevCounts,
-          [id]: (prevCounts[id] || 0) + 1
-      }));
-  };
+    dispatch(changeCountCartProduct(counts[id] + 1, +id));
+    setCounts((prevCounts) => ({
+      ...prevCounts,
+      [id]: (prevCounts[id] || 0) + 1
+    }));
+    setClickedCount(true);
+  };  
 
   const decrementCount = (id: string) => {
     if (counts[id] <= 1) {
-        dispatch(deleteCart(+id));
+      dispatch(deleteCart(+id));
     } else {
-        dispatch(changeCountCartProduct(counts[id] - 1, +id));
-        setCounts((prevCounts) => ({
-            ...prevCounts,
-            [id]: Math.max((prevCounts[id] || 0) - 1, 1)
-        }));
+      dispatch(changeCountCartProduct(counts[id] - 1, +id));
+      setCounts((prevCounts) => ({
+        ...prevCounts,
+        [id]: Math.max((prevCounts[id] || 0) - 1, 1)
+      }));
     }
-  };
+    setClickedCount(true);
+  };  
 
   useEffect(() => {
     localStorage.setItem('cartCounts', JSON.stringify(counts));
@@ -65,6 +70,9 @@ function CartCardList() {
     )
   }
 
+  console.log(colorPicked)
+
+
   return (
     <div className={styles.cart_main}>
         <div className={styles.cart_path}>
@@ -78,10 +86,14 @@ function CartCardList() {
           <div className={styles.cart_container} key={index}>
             <div className={styles.cart}>
                 <div className={styles.cart_image}>
-                    <img src={cart?.product.default_image} alt="phone" />
+                  {colorPicked ? (
+                    <img src={cart.product.product_images[colorPicked].length !== 0 ? `${API_URL}${cart.product.product_images[colorPicked]}` : cart.product.default_image} alt="phone" />
+                  ) : (
+                    <div>Loading...</div>
+                  )}
                 </div>
                 <div className={styles.cart_content}>
-                    <p>{ cart?.name }</p>
+                    <p>{ cart?.product.name }</p>
                     <div className={styles.cart_counter}>
                       <button onClick={() => {
                         if (counts[cart.id] <= 1){
@@ -106,7 +118,7 @@ function CartCardList() {
                       key={star}
                       style={{
                         cursor: 'pointer',
-                        color: star <= cart.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
+                        color: star <= cart.product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
                         marginRight: '5px',
                       }}
                   >

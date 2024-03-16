@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootStates } from "../store/store"
 import { useNavigate } from "react-router-dom"
 import { notify } from "./Toastify"
+import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 
 const Card: React.FC<CardProps> = ({ type, product, onClick }) => {  
     const [ loaded, setLoaded ] = useState(false);
@@ -22,7 +23,6 @@ const Card: React.FC<CardProps> = ({ type, product, onClick }) => {
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
-
     const dispatch = useDispatch<any>();
 
     useEffect(() => {
@@ -93,12 +93,15 @@ const Card: React.FC<CardProps> = ({ type, product, onClick }) => {
                             <button className={styles.btn}>
                                 <a href="#">Быстрый заказ</a>
                             </button>
-                            <img src={shop} alt="" />
+                            <img src={shop} alt="" onClick={() => {
+                                dispatch(addToCart(product.id, 1, 1, 1))
+                                notify(`Вы успешно добавили в корзину ${product.name}`)
+                            }} />
                         </div>
                         <div className={styles.options_container}>
                             <h2>Цвет</h2>
-                            { product?.color !== undefined ? product.color.map((item: any, index) => (
-                                <div key={index} className={styles.color_block} style={{ background: item }}></div>
+                            { product?.color !== undefined ? product?.color.map((item: any, index: number) => (
+                                <div key={index} className={styles.color_block} style={{ background: item.hash_code }}></div>
                             )) : (
                                 <div>Loading...</div>
                             ) }

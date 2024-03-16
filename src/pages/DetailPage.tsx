@@ -13,7 +13,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootStates } from "../store/store"
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte"
-import { fetchOneProducts } from "../store/features/products/oneProductSlice"
+import { colorPickToAddToCart, fetchOneProducts } from "../store/features/products/oneProductSlice"
 import { addReview, fetchReviews } from "../store/features/reviews/reviewSlice"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice"
@@ -27,6 +27,7 @@ function DetailPage() {
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
+    const pickedColor = useSelector((state: RootStates) => state.oneProduct.pickedColor);
 
     const [activeItem, setActiveItem] = useState<string | undefined>("");
     const [ openReviewInput, setOpenReviewInput ] = useState(false);
@@ -37,6 +38,9 @@ function DetailPage() {
         setActiveItem(item);
     };    
     const [colorPicked, setColorPicked] = useState(firstImage);
+    const [ colorID, setColorID ] = useState(0);
+    const [ memoryID, setMemoryID ] = useState(0);
+
     const numberedId = Number(id);
 
     if (id) {
@@ -46,14 +50,16 @@ function DetailPage() {
     }
 
     const handleColorPick = (color: any) => {
-        setColorPicked(color);
+        setColorPicked(color.hash_code);
+        dispatch(colorPickToAddToCart(color.hash_code));
+        console.log(pickedColor)
+        setColorID(color.id);
     }
 
     const handleAddToCart = (id: number | undefined) => {
-        // const color = product?.color.filter((item: any) => item === colorPicked);
-        console.log(product)
         if (id !== undefined && user && activeItem !== undefined) {
-            dispatch(addToCart(id, 1, 1, 1))
+            console.log(colorID, memoryID)
+            dispatch(addToCart(id, colorID, 1, memoryID))
             setAddedToCart(true);
         } else if (!user) {
             setAddedToCart(false);
@@ -72,10 +78,12 @@ function DetailPage() {
     const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
 
     useEffect(() => {
-        const defaultColor: any = product?.color?.[0]; 
+        const defaultColor: any = product?.color?.[0].hash_code; 
         if (defaultColor) {
           setColorPicked(defaultColor);
         }
+        setColorID(product?.color?.[0].id);
+        dispatch(colorPickToAddToCart(defaultColor));
       }, [product]);
     
     const toggleDescription = () => {
@@ -104,7 +112,6 @@ function DetailPage() {
     dispatch(addReview({ ...reviewData, product: product?.id }));
 
     setReviewData(reviewData);
-    console.log(reviewData)
     setOpenReviewInput(false);
   };
 
@@ -123,11 +130,11 @@ function DetailPage() {
                             <div className={styles.options}>
                                 <div>Выбрать цвет</div>
                                 {product?.color ? (
-                                    product?.color.map((item: any, index) => (
+                                    product?.color.map((item: any, index: number) => (
                                         <div
                                             key={index}
-                                            className={`${styles.color_block} ${colorPicked === item ? styles.selectedColor : ""}`}
-                                            style={{ background: item }}
+                                            className={`${styles.color_block} ${colorPicked === item.hash_code ? styles.selectedColor : ""}`}
+                                            style={{ background: item.hash_code }}
                                             onClick={() => handleColorPick(item)}
                                         ></div>
                                     ))
@@ -170,15 +177,18 @@ function DetailPage() {
                             <div className={styles.storage}>
                                 <div>Память</div>
                                 <ul className={styles.navigation}>
-                                    { product?.memory?.map((item: string, index: number) => (
+                                    { product?.memory?.map((item: any, index: number) => (
                                         <li
                                             key={index}
                                             className={`${styles.navigation__item} ${activeItem === item ? styles.active__navbar : ""}`}
                                             style={{ marginRight: "10px" }}
-                                            onClick={() => handleItemClick(item)}
+                                            onClick={() => {
+                                                handleItemClick(item);
+                                                setMemoryID(item.id)
+                                            }}
                                         >
-                                        {item}gb
-                                    </li>
+                                            {item.volume}ГБ
+                                        </li>
                                     )) } 
                                 </ul>
                             </div>
@@ -198,22 +208,24 @@ function DetailPage() {
                                     <div>Характеристики:</div>
                                 </div>
                                 <table>
-                                    {product?.characteristics ?  (
-                                        Object.entries(product.characteristics).map(([key, value], index) => (
-                                            <tr key={index}>
-                                                <th>
-                                                    <span className={styles.dots__details_span}>
+                                    <tbody>
+                                        {product?.characteristics ? (
+                                            Object.entries(product.characteristics).map(([key, value], index) => (
+                                                <tr key={index}>
+                                                    <th>
+                                                        <span className={styles.dots__details_span}>
                                                         <span>{key}</span>
-                                                    </span>
-                                                </th>
-                                                <td>{value}</td>
+                                                        </span>
+                                                    </th>
+                                                    <td>{value}</td>
+                                                </tr>
+                                            ))
+                                            ) : (
+                                            <tr>
+                                                <td>Loading...</td>
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td>Loading...</td>
-                                        </tr>
-                                    )}
+                                            )}
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

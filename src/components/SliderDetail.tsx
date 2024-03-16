@@ -39,7 +39,7 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
     return <div>Loading...</div>;
   }  
 
-  console.log(wordData)
+  console.log(img_array, default_image)
 
   return (
     <div className={styles.main}>

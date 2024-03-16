@@ -52,9 +52,9 @@
 }
 
 .cart_image > img {
-    width: 100%;
+    width: 15vw;
     height: auto;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .cart_content{

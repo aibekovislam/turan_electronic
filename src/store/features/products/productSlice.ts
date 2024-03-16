@@ -7,7 +7,7 @@ import { ProductsI } from "../../../utils/interfacesAndTypes";
 const initialState: ProductsI = {
     products: [],
     colors: [],
-    filteredProducts: []
+    filteredProducts: [],
 };  
 
 const productSlice = createSlice({
@@ -23,7 +23,7 @@ const productSlice = createSlice({
         },
         setFilterProducts: (state, action: PayloadAction<ProductsI>) => {
             state.filteredProducts = action.payload.products;
-        }
+        },
     }
 });
 
@@ -43,7 +43,6 @@ export const fetchProducts = (filters: any): AppThunk => async (dispatch) => {
 
         const data: ProductsI = { products: response.data.results };
         const colors = { colors: response.data.colors };
-
         dispatch(productSlice.actions.setProducts(data));
         dispatch(productSlice.actions.setColors(colors));
     } catch (error) {
