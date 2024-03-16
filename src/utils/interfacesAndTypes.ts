@@ -63,7 +63,8 @@ export interface ActiveUserI {
 }
 
 export interface ProductI {
-    product?: null | ProductsType
+    product?: null | ProductsType,
+    pickedColor?: null | string
 }
 
 export interface BrandI {
@@ -129,18 +130,23 @@ export type ProductsType = {
     in_stock?: boolean;
     discount: number;
     characteristics: {
-        [key: string]: string
+        [key: string]: any
     };
     category: number;
     brand: number;
     brand_category: number;
-    color: string[];
-    memory: string[] | undefined;
+    memory: [
+        {
+            id: any,
+            volume: any
+        }
+    ];
     product_images: {
         [key: string]: string[];
     };
     brand_title: string,
-    brand_category_title: string
+    brand_category_title: string;
+    color: any
 }
 
 export type CityType = {

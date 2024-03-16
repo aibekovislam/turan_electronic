@@ -29,9 +29,12 @@ function OrderForm({ products }: any) {
     city: 0,
     street: "",
     house: "",
-    items: [
-      ...products
-    ]
+    items: products.map((item: any) => ({
+      product: item.product.id,
+      color: item.color,
+      memory: item.memory,
+      count: item.count
+    }))  
   })
 
   const handleInputChange = (e: any) => {
@@ -58,6 +61,7 @@ function OrderForm({ products }: any) {
     try {
       console.log(orderFormValue);
       await dispatch(addOrder(orderFormValue));
+      console.log(orderFormValue)
       setSendedForm(true);
       console.log(orderFormValue.items)
       // navigate("/")
