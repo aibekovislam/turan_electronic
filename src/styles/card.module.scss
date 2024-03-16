@@ -223,7 +223,7 @@
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 520px) {
     .card_mini {
         width: 38vw;
         height: 500px;
@@ -291,6 +291,7 @@
 }
 
 //!  MiniCardMobile
+
 @media screen and (max-width: 520px) {
     .mini_mobile__container{
         border-radius: 15px;

@@ -102,7 +102,7 @@ function MiniCardList() {
             <Slider {...settings}>
               {accessories?.map((accessory: AccessoriesType | undefined, index: number) => (
                 isMobile ? (
-                  <MiniCardMobile accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} />
+                  <MiniCardMobile key={index} accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} />
                 ) : (
                 <div key={index} className={styles.mini_card_block}>
                   <MiniCard accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} style={{ cursor: "pointer" }} />
