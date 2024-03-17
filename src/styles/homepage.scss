@@ -58,6 +58,18 @@
     column-gap: 62px;
 }
 
+.d-f__rec-product__mobile{
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.d-f__new-product__mobile{
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
 .pagination {
     display: flex;
     margin-top: 30px;

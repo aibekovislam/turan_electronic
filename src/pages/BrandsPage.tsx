@@ -17,6 +17,17 @@ function BrandsPage() {
     const products = useSelector((state: RootStates) => state.products.products);
     const colors = useSelector((state: RootStates) => state.products.colors);
     const filteredProducts = useSelector((state: RootStates) => state.products.filteredProducts);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+
+    useEffect(() => {
+        const handleResize = () => {
+          setIsMobile(window.innerWidth < 520);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         if(brand != undefined) {
@@ -77,7 +88,7 @@ function BrandsPage() {
         return (
             <>
                 <BrandFilterNavbar brand={oneBrand} products={filteredData} colors={colors} filteredProducts={filteredProducts} />
-                <div className="d-f__rec-product" style={{ marginTop: "30px" }}>
+                <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ marginTop: "30px" }}>
                 { filteredProducts?.length !== 0 ? (
                     filteredProducts?.map((product: any) => (
                         <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
