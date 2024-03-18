@@ -76,21 +76,21 @@ export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
     }
 }
 
-export const usersMe = (): AppThunk => async (dispatch) => {
-    try {
-        const response = await axios.get(`http://167.99.248.105/users/me/`, {
-            headers: {
-                "token": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwMTYyOTQ2LCJpYXQiOjE3MTAxNDQ5NDYsImp0aSI6IjQxZDQ0NzE3MTU5NzQ5ZjM5YzM1ZDM0NDY0NzAwYTUyIiwidXNlcl9pZCI6MTZ9.rpfOWLCiivMwqFgR1VWLBsLCprk2PGW3oMcKj5xXVRQ`,
-                "Content-Type": 'application/json',
-                "Accept": 'application/json'
-            },
-        });
-        console.log(response)
-        dispatch(authSlice.actions.setUser(response.data))
-    } catch (error) {
-        console.log("eRORR", error);
-    }
-}
+// export const usersMe = (): AppThunk => async (dispatch) => {
+//     try {
+//         const response = await axios.get(`http://167.99.248.105/users/me/`, {
+//             headers: {
+//                 "token": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwMTYyOTQ2LCJpYXQiOjE3MTAxNDQ5NDYsImp0aSI6IjQxZDQ0NzE3MTU5NzQ5ZjM5YzM1ZDM0NDY0NzAwYTUyIiwidXNlcl9pZCI6MTZ9.rpfOWLCiivMwqFgR1VWLBsLCprk2PGW3oMcKj5xXVRQ`,
+//                 "Content-Type": 'application/json',
+//                 "Accept": 'application/json'
+//             },
+//         });
+//         console.log(response)
+//         dispatch(authSlice.actions.setUser(response.data))
+//     } catch (error) {
+//         console.log("eRORR", error);
+//     }
+// }
 
 export const { setAuthenticated, setUser } = authSlice.actions;
 

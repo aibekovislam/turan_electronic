@@ -19,6 +19,8 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
     const brandModels = brandCategoryArray('name');
     const productMemory = brandCategoryArray('memory');  
 
+    console.log(productMemory)
+
     console.log(filteredProducts);
 
     const handleColorClick = (color: string) => {
@@ -163,12 +165,12 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                                     const updatedFilters = {
                                       ...filters,
                                       brand: brand.id,
-                                      memory: item
+                                      memory: item.volume
                                     };
                                     fetchProductsAndLog(updatedFilters);
                                   }}  
                             />
-                            <span className={styles.dropdown_text}>{item} ГБ</span>
+                            <span className={styles.dropdown_text}>{item.volume} ГБ</span>
                         </div>
                     ))}
                 </div>

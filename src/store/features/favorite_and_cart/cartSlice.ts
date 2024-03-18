@@ -64,6 +64,16 @@ export const changeCountCartProduct = (count: number, product_id: number): AppTh
     }
 }
 
+export const clearCart = (): AppThunk => async (dispatch) => {
+    try {
+        const response = await $axios.post(`${API_URL}/carts/clear/`);
+        console.log(response);
+        dispatch(fetchCarts())
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const { setCarts } = cartSlice.actions;
 
 export default cartSlice.reducer;

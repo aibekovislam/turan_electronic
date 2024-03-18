@@ -265,8 +265,16 @@
         height: 120px;
     }
     .price > h2 {
-        margin-top: 10px;
-        margin-bottom: 5px !important;
+        // margin-top: 50px;
+        // margin-bottom: 5px !important;
+        position: absolute;
+        bottom: 0;
+        right: 90px;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 24px;
+        letter-spacing: 0em;
+        color: #333333;
     }
     .title h2 {
         margin-bottom: 0;
@@ -287,6 +295,63 @@
     }
     .options_container h2 {
         font-size: 3vw;
+    }
+    .card_main {
+        width: 100%;
+        height: 200px;
+        display: flex;
+        // justify-content: space-between;
+        align-items: center;
+    }
+    .card_container {
+        position: relative;
+        width: 100%;
+    }
+    .card {
+        flex-direction: row;
+    }
+    .star_container {
+        position: absolute;
+        top: -15%;
+        right: 10px;
+    }
+    .new_productCard_label {
+        position: absolute;
+        top: 30px;
+        right: 220%;
+    }
+    .img_container img {
+        width: 115px;
+        height: 115px;
+    }
+    .heart_container {
+        height: 25px;
+        display: none;
+    }
+    .isAvilableProduct {
+        position: absolute;
+        bottom: -5%;
+        left: 5%;
+    }
+    .title > p, .btn {
+        display: none;
+    }
+    .title > h2 {
+        font-size: 20px;
+        max-width: 180px;
+        position: absolute;
+        top: 10px;
+        left: 40%;
+    }
+    .btn_container > img {
+        position: absolute;
+        bottom: -5%;
+        right: 30px;
+        width: 45px;
+        height: 45px;
+    }
+    .options_container {
+        margin-left: 25px;
     }
 }
 

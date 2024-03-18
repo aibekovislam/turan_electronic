@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from "../styles/cart.module.scss";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../store/store';
-import { changeCountCartProduct, deleteCart, fetchCarts } from '../store/features/favorite_and_cart/cartSlice';
+import { changeCountCartProduct, clearCart, deleteCart, fetchCarts } from '../store/features/favorite_and_cart/cartSlice';
 import { calculateDiscountedPrice } from '../functions/calculateDiscounte';
 import RecommendationList from './RecommendationList';
 import OrderForm from './OrderForm';
@@ -70,9 +70,6 @@ function CartCardList() {
     )
   }
 
-  console.log(colorPicked)
-
-
   return (
     <div className={styles.cart_main}>
         <div className={styles.cart_path}>
@@ -80,7 +77,7 @@ function CartCardList() {
         </div>
         <div className={styles.cart_header}>
             <div>Корзина</div>
-            <span>удалить все</span>
+            <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
         </div>
         { carts?.map((cart: any, index: number) => (
           <div className={styles.cart_container} key={index}>
@@ -93,7 +90,15 @@ function CartCardList() {
                   )}
                 </div>
                 <div className={styles.cart_content}>
-                    <p>{ cart?.product.name }</p>
+                    <p>{ `${cart?.product.name} ${cart.memory_name !== "Нету" && cart.memory_name} `}ГБ</p>
+                    <div className={styles.cart_description} >{ cart?.product.description.slice(0, 120) }...</div>
+                    <div className={styles.colors}> Цвета: 
+                      { colorPicked !== null ? (
+                          <div key={index} className={styles.color_block} style={{ background: colorPicked }}></div>
+                        ) : (
+                          <div>Loading...</div>
+                      ) }
+                    </div>
                     <div className={styles.cart_counter}>
                       <button onClick={() => {
                         if (counts[cart.id] <= 1){

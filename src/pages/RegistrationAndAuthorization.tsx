@@ -5,7 +5,7 @@ import Reg from "../components/Reg";
 import styles from "../styles/auth.module.scss";
 
 function RegistrationAndAuthorization() {
-    const [ registered, setRegistered ] = useState(false);
+    const [ registered, setRegistered ] = useState(true);
 
     const handleRegisterOrAuth = async (registeredType: boolean) => {
         if(registeredType === true) {
