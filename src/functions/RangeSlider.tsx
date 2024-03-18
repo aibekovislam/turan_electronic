@@ -1,80 +1,89 @@
 import React, { useState, useEffect } from "react";
-import styles from "../styles/brands_and_footer.module.scss";
 
-const RangeSlider = ({ fetchProductsAndLog, brand, products }: any) => {
-  const [range, setRange] = useState<[number, number]>([0, 1000]);
-
-  useEffect(() => {
-    if (products && products.length > 0) {
-      const maxPrice = Math.max(...products.map((product: any) => product.price));
-      setRange([0, maxPrice]);
-    }
-  }, [products]);
-
-  const handleRangeChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const newValue = parseInt(e.target.value);
-    setRange(prevRange => {
-      const newRange = [...prevRange];
-      newRange[index] = newValue;
-      return newRange;
-    });
-  };
+const RangeSlider = ({ fetchProductsAndLog, brand, products }) => {
+  const [range, setRange] = useState({ min: 0, max: 100000 });
 
   useEffect(() => {
     fetchProductsAndLog({
-      limit: 10,
-      offset: 0,
-      min_price: range[0],
-      max_price: range[1],
-      brand: brand?.id,
-      product_color: [],
-      memory: [],
+      min_price: range.min,
+      max_price: range.max,
+      brand: brand?.id, 
     });
   }, [range, brand, fetchProductsAndLog]);
 
+  const handleInputChange = (e, type) => {
+    const value = parseInt(e.target.value, 10);
+    setRange((prevRange) => ({
+      ...prevRange,
+      [type]: value,
+    }));
+  };
+
+  const handleRangeChange = (e, type) => {
+    const value = parseInt(e.target.value, 10);
+    setRange((prevRange) => ({
+      ...prevRange,
+      [type]: value,
+    }));
+  };
+
+  useEffect(() => {
+    if (range.min > range.max) {
+      setRange((prevRange) => ({
+        min: prevRange.max,
+        max: prevRange.max,
+      }));
+    }
+  }, [range.min, range.max]);
+
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.price_input}>
-        <div className={styles.field}>
-          <span>Min</span>
+    <div className="wrapper">
+      <div className="price-input">
+        <div className="field">
           <input
             type="number"
-            className={styles.input_min}
-            value={range[0]}
-            onChange={(e) => handleRangeChange(e, 0)}
-            style={{ marginRight: "20px" }}
+            className="input-min"
+            value={range.min}
+            onChange={(e) => handleInputChange(e, "min")}
           />
         </div>
-        <div className={styles.field}>
-          <span>Max</span>
+        <div className="seperator">-</div>
+        <div className="field">
           <input
             type="number"
-            className={styles.input_min}
-            placeholder="Max"
-            value={range[1]}
-            onChange={(e) => handleRangeChange(e, 1)}
+            className="input-max"
+            value={range.max}
+            onChange={(e) => handleInputChange(e, "max")}
           />
         </div>
       </div>
-      <div className={styles.slider}>
-        <div className={styles.progress} style={{width: `${(range[0] / 1000) * 100}%`}}></div>
+      <div className="slider">
+        <div
+          className="progress"
+          style={{
+            left: `${(range.min / 10000) * 100}%`,
+            right: `${100 - (range.max / 10000) * 100}%`,
+          }}
+        ></div>
       </div>
-      <div className={styles.range_input}>
+      <div className="range-input">
         <input
           type="range"
-          className={styles.range_min}
-          min={0}
-          max={1000}
-          value={range[0]}
-          onChange={(e) => handleRangeChange(e, 0)}
+          className="range-min"
+          min="0"
+          max="10000"
+          value={range.min}
+          step="100"
+          onChange={(e) => handleRangeChange(e, "min")}
         />
         <input
           type="range"
-          className={styles.range_max}
-          min={0}
-          max={1000}
-          value={range[1]}
-          onChange={(e) => handleRangeChange(e, 1)}
+          className="range-max"
+          min="0"
+          max="10000"
+          value={range.max}
+          step="100"
+          onChange={(e) => handleRangeChange(e, "max")}
         />
       </div>
     </div>
