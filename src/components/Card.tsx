@@ -9,12 +9,14 @@ import { addFavorites, fetchFavorites } from "../store/features/favorite_and_car
 import { useDispatch, useSelector } from "react-redux"
 import { RootStates } from "../store/store"
 import { useNavigate } from "react-router-dom"
-import { notify } from "./Toastify"
+import { notify, notifyError } from "./Toastify"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
+import { API_URL } from "../utils/consts"
 
 const Card: React.FC<CardProps> = ({  product, onClick }) => {  
     const [ loaded, setLoaded ] = useState(false);
     const navigate = useNavigate();
+    const [ colorPicked, setColorPicked ] = useState("");
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
@@ -44,9 +46,24 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
             dispatch(addFavorites(product_id))
         } else if(!user) {
             navigate("/auth")
+            notifyError('Вы не авторизованы')
         }
     }
 
+    console.log(product)
+
+    const handleColorPick = (color: string) => {
+        setColorPicked(color)
+    }
+
+    function filterImagesByColor(images: string[], color: string) {
+        if(color !== "") {
+            return images[0]
+        }
+    }    
+
+    const filteredImages = colorPicked ? filterImagesByColor(product.product_images[colorPicked], colorPicked) : null;
+      
     const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
 
     if(loaded) {
@@ -127,7 +144,11 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
                             </div>
                         </div>
                         <div className={styles.img_container} onClick={() => onClick(product.id)}>
-                            <img src={product.default_image}  />
+                            { filteredImages ? (
+                                <img src={API_URL + filteredImages}  />
+                            ) : (
+                                <img src={product.default_image} />
+                            ) }
                         </div>
                         <div className={styles.heart_container}>
                             <img
@@ -139,16 +160,21 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
                         </div>
                         <div className={styles.title_container}>
                             <div className={styles.price}>
-                                <h2>{ calculateDiscountedPrice(product.price, product.discount) } сом</h2>
-                                <h3>{ product.price } сом</h3>
+                                <h2>{ product.discount ? calculateDiscountedPrice(product.price, product.discount) : product.price } сом</h2>
+                                { product.discount !== 0 && <h3>{ product.price } сом</h3> }
                             </div>
                             <div className={styles.discount}>
-                                <div>
-                                    -{ product.discount }%
-                                </div>
-                                <div>
-                                    экономия { product.price - calculateDiscountedPrice(product.price, product.discount) } сом
-                                </div>
+                                { product?.discount !== 0 && (
+                                    <>
+                                        <div>
+                                        -{ product.discount }%
+                                        </div>
+                                        <div>
+                                            экономия { product.price - calculateDiscountedPrice(product.price, product.discount) } сом
+                                        </div>
+                                    </>
+                                    ) 
+                                }
                             </div>
                             <div className={styles.title}>
                                 <h2>{ product.name }</h2>
@@ -160,14 +186,18 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
                                 <a href="#">Быстрый заказ</a>
                             </button>
                             <img src={shop} alt="" onClick={() => {
-                                dispatch(addToCart(product.id, 1, 1, 1))
-                                notify(`Вы успешно добавили в корзину ${product.name}`)
+                                if(user) {
+                                    dispatch(addToCart(product.id, 1, 1, 1))
+                                    notify(`Вы успешно добавили в корзину ${product.name}`)
+                                } else {
+                                    notifyError('Вы не авторизованы')
+                                }
                             }} />
                         </div>
                         <div className={styles.options_container}>
                             <h2>Цвет</h2>
                             { product?.color !== undefined ? product?.color.map((item: any, index: number) => (
-                                <div key={index} className={styles.color_block} style={{ background: item.hash_code }}></div>
+                                <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
                             )) : (
                                 <div>Loading...</div>
                             ) }

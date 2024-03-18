@@ -77,7 +77,7 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                         </div>
                         <div className={styles.auth_input}>
                             <input onChange={handleInputChange} type={showConfirmPassword ? "text" : "password"} value={authFormData.confirmPassword} name="confirmPassword" placeholder="Потвердить пароль"/>
-                            <img src={showPassword ? showedEye : eye} className={styles.eye_svg} onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
+                            <img src={showConfirmPassword ? showedEye : eye} className={styles.eye_svg} onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
                         </div>
                         <div className={styles.auth_input}>
                             <input onChange={handleInputChange} type="text" value={authFormData.email} name="email" placeholder="Ваш Email"/>

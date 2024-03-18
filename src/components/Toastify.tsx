@@ -1,4 +1,4 @@
-import { ToastContainer, toast } from "react-toastify";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export function notify(msg: any) {
@@ -13,8 +13,19 @@ export function notify(msg: any) {
 		theme: "light",
 	});
 }
-export function notifyError(msg: any) {
-	return toast.error(msg);
+
+export function notifyError(msg: string) {
+	return toast.error(msg, {
+		position: "top-center",
+		autoClose: 5000,
+		hideProgressBar: false,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: true,
+		progress: undefined,
+		theme: "light",
+		transition: Bounce,
+	});
 }
 
 function Toastify() {

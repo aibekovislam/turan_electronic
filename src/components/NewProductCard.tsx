@@ -9,12 +9,15 @@ import { RootStates } from "../store/store";
 import { useEffect, useState } from "react";
 import { addFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 import { useNavigate } from "react-router-dom";
+import { notifyError } from "./Toastify";
+import { API_URL } from "../utils/consts";
 
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
     const navigate = useNavigate();
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
+    const [ colorPicked, setColorPicked ] = useState("");
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
 
     useEffect(() => {
@@ -37,9 +40,18 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
         if(user) {
             dispatch(addFavorites(product_id))
         } else if(!user) {
-            navigate("/auth")
+            navigate("/auth");
+            notifyError('Вы не авторизованы');
         }
     }
+
+    function filterImagesByColor(images: string[], color: string) {
+        if(color !== "") {
+            return images[0]
+        }
+    }    
+
+    const filteredImages = colorPicked ? filterImagesByColor(product.product_images[colorPicked], colorPicked) : null;
 
     const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
 
@@ -67,6 +79,15 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                     ))}
                   </div>
                 </div>
+                <div className={styles.img_container} onClick={onClick}>
+                    { filteredImages ? (
+                        <img src={API_URL + filteredImages}  />
+                    ) : (
+                        <img src={product.default_image} />
+                    ) }
+                </div>
+                <div className={styles.heart_container}>
+                    <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
         
                 <div className={styles.cardMobile_info}>
         
@@ -88,7 +109,6 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                       ) }
                     </div>
                   </div>  
-        
                 </div>
         
                 <div className={styles.cardMobile_util}>

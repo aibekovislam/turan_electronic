@@ -17,6 +17,7 @@ import { colorPickToAddToCart, fetchOneProducts } from "../store/features/produc
 import { addReview, fetchReviews } from "../store/features/reviews/reviewSlice"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice"
+import { notifyError } from "../components/Toastify"
 
 function DetailPage() {
     const { id } = useParams();
@@ -63,7 +64,8 @@ function DetailPage() {
             setAddedToCart(true);
         } else if (!user) {
             setAddedToCart(false);
-            navigate("/auth")
+            navigate("/auth");
+            notifyError('Вы не авторизованы');
         }
     }    
 
@@ -71,7 +73,8 @@ function DetailPage() {
         if(user) {
             dispatch(addFavorites(product_id))
         } else if(!user) {
-            navigate("/auth")
+            navigate("/auth");
+            notifyError('Вы не авторизованы');
         }
     }
 
