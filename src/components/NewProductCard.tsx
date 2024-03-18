@@ -9,17 +9,13 @@ import { RootStates } from "../store/store";
 import { useEffect, useState } from "react";
 import { addFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 import { useNavigate } from "react-router-dom";
-import { notify, notifyError } from "./Toastify";
-import { API_URL } from "../utils/consts";
-import { addToCart } from "../store/features/favorite_and_cart/cartSlice";
-import { calculateDiscountedPrice } from "../functions/calculateDiscounte";
+import { notifyError } from "./Toastify";
 
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
     const navigate = useNavigate();
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
-    const [ colorPicked, setColorPicked ] = useState("");
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
 
 
@@ -46,19 +42,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
             navigate("/auth");
             notifyError('Вы не авторизованы');
         }
-    }
-
-    const handleColorPick = (color: string) => {
-        setColorPicked(color)
-    }
-
-    function filterImagesByColor(images: string[], color: string) {
-        if(color !== "") {
-            return images[0]
-        }
-    }    
-
-    const filteredImages = colorPicked ? filterImagesByColor(product.product_images[colorPicked], colorPicked) : null;
+    }  
 
     const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
 

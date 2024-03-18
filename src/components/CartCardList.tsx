@@ -16,8 +16,6 @@ function CartCardList() {
   const pickedColorJSON = localStorage.getItem("colorPicked");
   const colorPicked = pickedColorJSON ? JSON.parse(pickedColorJSON) : null;
   
-  const [ clickedCount, setClickedCount ] = useState(false);
-
   useEffect(() => {
     dispatch(fetchCarts());
   }, [dispatch])
@@ -33,7 +31,7 @@ function CartCardList() {
       ...prevCounts,
       [id]: (prevCounts[id] || 0) + 1
     }));
-    setClickedCount(true);
+    // setClickedCount(true);
   };  
 
   const decrementCount = (id: string) => {
@@ -46,7 +44,7 @@ function CartCardList() {
         [id]: Math.max((prevCounts[id] || 0) - 1, 1)
       }));
     }
-    setClickedCount(true);
+    // setClickedCount(true);
   };  
 
   useEffect(() => {
