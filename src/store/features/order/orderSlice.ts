@@ -43,7 +43,7 @@ export const fetchCities = (id: number): AppThunk => async (dispatch) => {
     }
 }
 
-export const addOrder = (obj: OrderType): AppThunk => async (dispatch) => {
+export const addOrder = (obj: OrderType): AppThunk => async () => {
     try {
         const response = await $axios.post(`${API_URL}/orders/`, obj);
         console.log(response);
