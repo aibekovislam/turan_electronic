@@ -14,6 +14,17 @@ function FavoriteList() {
     const favoritesProducts = useSelector((state: RootStates) => state.favorites.favorites);
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+
+    useEffect(() => {
+        const handleResize = () => {
+          setIsMobile(window.innerWidth < 520);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         dispatch(fetchFavorites())
@@ -73,7 +84,7 @@ function FavoriteList() {
                 <span>Очистить список</span>
             </div>
         </div>
-        <div className="d-f__rec-product">
+        <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
             { currentCards.map((cardItem: any) => (
                 <Card key={cardItem.id} product={cardItem} onClick={handleNavigate} />
             ) ) }

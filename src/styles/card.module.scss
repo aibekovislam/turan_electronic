@@ -198,6 +198,115 @@
     box-shadow: 1px 1px 4px 0px #00000059;
 }
 
+//! CardMobile
+
+@media screen and (max-width: 520px) {
+    .cardMobile_main{
+        border-radius: 15px;
+        border: 1px solid rgba(128, 128, 128, 0.523);
+        box-shadow: 16px 36px 64px 0px #6f88a07a;
+    }
+    
+    .cardMobile_container{
+        padding: 15px;
+    }
+    
+    .cardMobile_{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .cardMobile_rate{
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .cardMobile_info{
+        display: flex;
+        gap: 15px;
+    }
+    
+    .cardMobile_wrapper__left{
+        display: flex;
+        align-items: flex-end;
+    }
+    
+    .cardMobile_wrapper__left > img:first-child {
+        width: 113px;
+        height: 113px;
+        object-fit: cover;
+    }
+    
+    .cardMobile_title {
+        font-weight: 400;
+        font-size: 18px;
+    }
+    
+    .cardMobile_colors{
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 15px;
+        gap: 10px;
+    }
+    
+    .cardMobile_colors > span {
+        font-weight: 400;
+        font-size: 18px;
+    }
+    
+    .cardMobile_info {
+        margin-top: 25px;
+    }
+    
+    .cardMobile_util{
+        display: flex;
+        margin-top: 15px;
+    }
+    
+    .right{
+        display: flex;
+        align-items: center;
+    }
+    
+    .right > div:first-child {
+        width: 24vw;
+        margin-right: 10px;
+    }
+    
+    .right > div:last-child {
+        border-radius: 5px;
+        border: 1px solid #fff;
+        box-shadow: 16px 36px 64px 0px #6f88a07a;
+    }
+
+    .right__special{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    
+    .right__special > div:first-child {
+        width: 24vw;
+        margin-right: 10px;
+    }
+    
+    .right__special > div:last-child {
+        border-radius: 5px;
+        border: 1px solid #fff;
+        box-shadow: 16px 36px 64px 0px #6f88a07a;
+    }
+    
+    .mobile_color_block{
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+    } 
+}
+
+
+
 
 @media only screen and (max-width: 1300px) {
     .card_main {

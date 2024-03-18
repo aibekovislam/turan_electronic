@@ -1,12 +1,7 @@
 import styles from "../styles/card.module.scss"
-// import star2 from "../assets/svgs/card/star2:5.svg"
-// import black from "../assets/svgs/card/black.svg"
-// import white from "../assets/svgs/card/white.svg"
-// import lightBrown from "../assets/svgs/card/lightBrrown.svg"
 import shop from "../assets/svgs/card/shop.svg"
 import fillHeart from "../assets/svgs/card/fillHeart.svg"
 import heart from "../assets/svgs/card/Vector (8).svg"
-// import phone from "../assets/card/Phone.png"
 import React, { useEffect, useState } from "react"
 import { CardProps } from "../utils/interfacesAndTypes"
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte"
@@ -18,7 +13,7 @@ import { notify, notifyError } from "./Toastify"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 import { API_URL } from "../utils/consts"
 
-const Card: React.FC<CardProps> = ({ type, product, onClick }) => {  
+const Card: React.FC<CardProps> = ({  product, onClick }) => {  
     const [ loaded, setLoaded ] = useState(false);
     const navigate = useNavigate();
     const [ colorPicked, setColorPicked ] = useState("");
@@ -26,6 +21,17 @@ const Card: React.FC<CardProps> = ({ type, product, onClick }) => {
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
     const dispatch = useDispatch<any>();
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+
+    useEffect(() => {
+        const handleResize = () => {
+          setIsMobile(window.innerWidth < 520);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         setLoaded(true);
@@ -62,6 +68,66 @@ const Card: React.FC<CardProps> = ({ type, product, onClick }) => {
 
     if(loaded) {
         return (
+            isMobile ? (
+            <div className={styles.cardMobile_main}>
+                <div className={styles.cardMobile_container}>
+                  <div className={styles.cardMobile_}>
+            
+                    <div className={styles.cardMobile_rate}>
+                      {/* { product.is_arrived ? (
+                        <div className={styles.new_productCard_label}>
+                          Новое
+                        </div>
+                      ) : null} */}
+                      <div>
+                        {[1, 2, 3, 4, 5].map((star) => (
+                                        <span
+                                            key={star}
+                                            style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
+                                            >
+                                        &#9733;
+                                        </span>
+                        ))}
+                      </div>
+                    </div>
+            
+                    <div className={styles.cardMobile_info}>
+            
+                      <div className={styles.cardMobile_wrapper__left}> 
+                          <img src={product.default_image}  />
+                          <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
+                      </div>
+            
+                      <div className={styles.cardMobile_wrapper__right}> 
+                        <div className={styles.cardMobile_title}>
+                          { product.name }
+                        </div>
+                        <div className={styles.cardMobile_colors}>
+                          <span>Цвет</span>
+                          { product?.color !== undefined ? product?.color.map((item: any, index: number) => (
+                              <div key={index} className={styles.mobile_color_block} style={{ background: item.hash_code }}></div>
+                            )) : (
+                              <div>Loading...</div>
+                          ) }
+                        </div>
+                      </div>  
+            
+                    </div>
+            
+                        <div className={styles.right__special}>
+                          <div>
+                            { product.price } сом
+                          </div>
+                          <div>
+                            <img src={shop} />
+                          </div>
+                        </div>
+            
+            
+                  </div>
+                </div>
+            </div>
+            ) : (
             <div className={styles.card_main}>
                 <div className={styles.card_container}>
                     <div className={styles.card}>
@@ -139,6 +205,7 @@ const Card: React.FC<CardProps> = ({ type, product, onClick }) => {
                     </div>
                 </div>
             </div>
+            )
         )
     } else {
         return (
