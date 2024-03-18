@@ -4,7 +4,7 @@ import { activateUser } from "../store/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 
 function ConfirmPage() {
-  const [ searchParams, setSearchParams ] = useSearchParams();
+  const [ searchParams ] = useSearchParams();
   const dispatch = useDispatch<any>(); 
 
   const obj = {

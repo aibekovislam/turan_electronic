@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const RangeSlider = ({ fetchProductsAndLog, brand, products }) => {
+const RangeSlider = ({ fetchProductsAndLog, brand }: any) => {
   const [range, setRange] = useState({ min: 0, max: 100000 });
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const RangeSlider = ({ fetchProductsAndLog, brand, products }) => {
     });
   }, [range, brand, fetchProductsAndLog]);
 
-  const handleInputChange = (e, type) => {
+  const handleInputChange = (e: any, type: any) => {
     const value = parseInt(e.target.value, 10);
     setRange((prevRange) => ({
       ...prevRange,
@@ -19,7 +19,7 @@ const RangeSlider = ({ fetchProductsAndLog, brand, products }) => {
     }));
   };
 
-  const handleRangeChange = (e, type) => {
+  const handleRangeChange = (e: any, type: any) => {
     const value = parseInt(e.target.value, 10);
     setRange((prevRange) => ({
       ...prevRange,
