@@ -117,6 +117,8 @@ function DetailPage() {
     setOpenReviewInput(false);
   };
 
+  console.log(product)
+
     return (
         product !== undefined && product?.id === numberedId ? (
             <div>
