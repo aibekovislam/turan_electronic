@@ -21,7 +21,6 @@ export const favoriteSlice = createSlice({
 export const fetchFavorites = (): AppThunk => async (dispatch) => {
     try {
         const response = await $axios.get(`${API_URL}/users/favorites/`);
-        console.log(response)
         dispatch(favoriteSlice.actions.setFavorites(response.data.results));
     } catch (error) {
         console.log(error);

@@ -13,9 +13,9 @@ function CartCardList() {
   const carts = useSelector((state: RootStates) => state.carts.carts);
   const userString = localStorage.getItem("userInfo");
   const user = userString ? JSON.parse(userString) : null;
-  const pickedColorJSON = localStorage.getItem("colorPicked");
-  const colorPicked = pickedColorJSON ? JSON.parse(pickedColorJSON) : null;
-  
+  // const pickedColorJSON = localStorage.getItem("colorPicked");
+  // const colorPicked = pickedColorJSON ? JSON.parse(pickedColorJSON) : null;
+
   useEffect(() => {
     dispatch(fetchCarts());
   }, [dispatch])
@@ -31,7 +31,6 @@ function CartCardList() {
       ...prevCounts,
       [id]: (prevCounts[id] || 0) + 1
     }));
-    // setClickedCount(true);
   };  
 
   const decrementCount = (id: string) => {
@@ -44,7 +43,6 @@ function CartCardList() {
         [id]: Math.max((prevCounts[id] || 0) - 1, 1)
       }));
     }
-    // setClickedCount(true);
   };  
 
   useEffect(() => {
@@ -56,6 +54,16 @@ function CartCardList() {
   const handleOrderButtonClick = () => {
     setShowOrderForm(true);
   };
+
+  function getImagesByColor(colorId: any, productData: any) {
+    const colorHash = productData.color.find((color: any) => color.id === colorId)?.hash_code;
+    return productData.product_images[colorHash] || [];
+  }
+
+  function getColorHashCode(colorId: any, productData: any) {
+    const colorHash = productData.color.find((color: any) => color.id === colorId)?.hash_code;
+    return colorHash;
+  }
 
   if(carts.length === 0) {
     return (
@@ -81,8 +89,8 @@ function CartCardList() {
           <div className={styles.cart_container} key={index}>
             <div className={styles.cart}>
                 <div className={styles.cart_image}>
-                  {colorPicked ? (
-                    <img src={cart.product.product_images[colorPicked].length !== 0 ? `${API_URL}${cart.product.product_images[colorPicked]}` : cart.product.default_image} alt="phone" />
+                  {cart.product.product_images ? (
+                    <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : cart.product.default_image} alt="phone" />
                   ) : (
                     <div>Loading...</div>
                   )}
@@ -91,8 +99,8 @@ function CartCardList() {
                     <p>{ `${cart?.product.name} ${cart.memory_name !== "Нету" && cart.memory_name} `}ГБ</p>
                     <div className={styles.cart_description} >{ cart?.product.description.slice(0, 120) }...</div>
                     <div className={styles.colors}> Цвета: 
-                      { colorPicked !== null ? (
-                          <div key={index} className={styles.color_block} style={{ background: colorPicked }}></div>
+                      { getColorHashCode(cart.color, cart.product).length !== 0 ? (
+                          <div key={index} className={styles.color_block} style={{ background: getColorHashCode(cart.color, cart.product) }}></div>
                         ) : (
                           <div>Loading...</div>
                       ) }
@@ -111,8 +119,14 @@ function CartCardList() {
                     </div>
                 </div>
                 <div className={styles.cart_price}>
-                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(cart?.product.price, cart?.product.discount)} сом</div>
-                    <div className={styles.default_price}>{(counts[cart.id] || 1) * cart?.product.price } сом</div>
+                    { cart.product.discount !== 0 ? (
+                      <>
+                        <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(cart?.product.price, cart?.product.discount)} сом</div>
+                        <div className={styles.default_price}>{(counts[cart.id] || 1) * cart?.product.price } сом</div>
+                      </>
+                    ) : (
+                      <div className={styles.discount_price}>{(counts[cart.id] || 1) * cart?.product.price} сом</div>
+                    ) }
                 </div>
                 <div className={styles.cart_rate}>
                 { 

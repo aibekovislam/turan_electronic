@@ -25,7 +25,6 @@
         margin-top: 30px;
         overflow-x: auto; 
         scrollbar-width: none; 
-        scrollbar-color: #888 #e0e0e0; 
         -webkit-overflow-scrolling: touch; 
         white-space: nowrap; 
     }
@@ -61,7 +60,6 @@
         justify-content: center;
         width: 90px;
         height: 90px;
-        box-shadow: 16px 4px 64px 0px rgba(18, 61, 101, 0.2);
     }
     
     .category_image > img { 

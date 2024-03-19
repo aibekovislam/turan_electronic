@@ -44,3 +44,20 @@ export const extractBrandCategoryAndTitle = (products: ProductsType[] | undefine
         return acc;
     }, [] as { id: any, title: any }[]);
 };
+
+
+export function getFilteredFirstImage(imgArray: any, selectedIndex: any) {
+    if (!imgArray || !imgArray.length || selectedIndex < 0 || selectedIndex >= imgArray.length) {
+      return '';
+    }
+  
+    const filteredImages = imgArray.filter((_: any, index: any) => index === selectedIndex);
+    return filteredImages.length ? filteredImages[0] : '';
+}  
+
+
+export const getHighestPrice = (products: any) => {
+    let acc = 0;
+    products.map((item: any) => acc += item.price);
+    return acc;
+}

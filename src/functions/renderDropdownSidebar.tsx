@@ -35,7 +35,7 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
         case 0:
             return(
                 <div className={styles.sidebar__items}>
-                    <RangeSlider fetchProductsAndLog={fetchProductsAndLog} brand={brand} products={products} />
+                    <RangeSlider style={{ border: "none", boxShadow: "none" }} fetchProductsAndLog={fetchProductsAndLog} brand={brand} products={products} />
                 </div>
             )
         case 1: 
@@ -159,12 +159,12 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                                         const updatedFilters = {
                                         ...filters,
                                         brand: brand.id,
-                                        memory: item
+                                        memory: item.volume
                                         };
                                         fetchProductsAndLog(updatedFilters);
                                     }}  
                                 />
-                                <span className={styles.dropdown_text}>{item} ГБ</span>
+                                <span className={styles.dropdown_text}>{item.volume} ГБ</span>
                             </div>
                         ))}
                     </div>

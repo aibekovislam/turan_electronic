@@ -19,7 +19,6 @@ export interface BrandsProps {
     brand: BrandsType,
     products?: ProductsType[] | undefined,
     colors?: string[] | undefined,
-    filteredProducts: ProductsType[]
 }
 
 export interface ArrowProps {
@@ -116,7 +115,8 @@ export type CartType = {
     id?: any,
     user: number,
     product: any,
-    created_at: string
+    created_at: string,
+    color?: any
 }
 
 export type ProductsType = {
@@ -213,3 +213,15 @@ export type CarouselType = {
     images: string;
     description: string
 }
+
+export type Range = {
+    min: number;
+    max: number;
+};
+  
+export type Props = {
+    style?: any,
+    fetchProductsAndLog: (params: { min_price: number; max_price: number; brand: string }) => void;
+    brand?: { id: string };
+    products: any
+};

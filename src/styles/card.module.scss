@@ -203,8 +203,12 @@
 @media screen and (max-width: 520px) {
     .cardMobile_main{
         border-radius: 15px;
-        border: 1px solid rgba(128, 128, 128, 0.523);
-        box-shadow: 16px 36px 64px 0px #6f88a07a;
+        background: linear-gradient(210.55deg, #EBF2F9 19.14%, #C6D7EB 154.68%);
+        border: 1px solid #FFFFFF;
+        box-shadow: 16px 4px 64px 0px #123D6533;
+        width: 100%;
+        height: 220px;
+        position: relative;
     }
     
     .cardMobile_container{
@@ -232,9 +236,10 @@
     }
     
     .cardMobile_wrapper__left > img:first-child {
-        width: 113px;
-        height: 113px;
-        object-fit: cover;
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+        position: relative;
     }
     
     .cardMobile_title {
@@ -256,7 +261,7 @@
     }
     
     .cardMobile_info {
-        margin-top: 25px;
+        margin-top: 15px;
     }
     
     .cardMobile_util{
@@ -281,6 +286,9 @@
     }
 
     .right__special{
+        position: absolute;
+        bottom: 5%;
+        width: 90%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -288,21 +296,46 @@
     }
     
     .right__special > div:first-child {
-        width: 24vw;
+        width: 30vw;
         margin-right: 10px;
     }
-    
-    .right__special > div:last-child {
+
+    .price_mobile {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333333;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+    }
+    .bag__mobile {
+        width: 45px;
+        height: 35px;
         border-radius: 5px;
-        border: 1px solid #fff;
+        border: 1px solid #FFFFFF;
         box-shadow: 16px 36px 64px 0px #6f88a07a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
     .mobile_color_block{
-        width: 15px;
-        height: 15px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
     } 
+    .new_productCard_label {
+        position: absolute;
+        top: 10%;
+        z-index: 2;
+    }
+    .rating_mobile {
+        position: absolute;
+        right: 5%;
+    }
+    .cardMobile_wrapper__right {
+        margin-top: 20px;
+    }
 }
 
 

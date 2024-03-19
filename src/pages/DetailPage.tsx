@@ -59,8 +59,7 @@ function DetailPage() {
 
     const handleAddToCart = (id: number | undefined) => {
         if (id !== undefined && user && activeItem !== undefined) {
-            console.log(colorID, memoryID)
-            dispatch(addToCart(id, colorID, 1, memoryID))
+            dispatch(addToCart(id, colorID, 1, memoryID));
             setAddedToCart(true);
         } else if (!user) {
             setAddedToCart(false);
