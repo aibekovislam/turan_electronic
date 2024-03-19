@@ -4,9 +4,10 @@ import ArrowLeft from "../assets/svgs/detail/leftArrow.svg"
 import ArrowRight from "../assets/svgs/detail/rightArrow.svg"
 import { SliderDetailProps } from '../utils/interfacesAndTypes';
 import { API_URL } from '../utils/consts';
+import { getFilteredFirstImage } from '../functions/filterFunction';
 
 function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailProps) {
-  const [wordData, setWordData] = useState<string | undefined>(img_array[selectedColor]);
+  const [wordData, setWordData] = useState<string[] | undefined>(img_array[selectedColor]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
@@ -39,13 +40,13 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
     return <div>Loading...</div>;
   }  
 
-  console.log(img_array, default_image)
-
+  const filteredFirstImage = getFilteredFirstImage(img_array[selectedColor], selectedIndex);
+  console.log(filteredFirstImage, wordData)
   return (
     <div className={styles.main}>
       <div className={styles.carousel_detail}>
         <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} />
-        <img src={wordData?.length !== 0 ? `${API_URL}${wordData}` : default_image} className={styles.detail_img} />
+        <img src={wordData?.length !== 0 && wordData ? `${API_URL}${filteredFirstImage}` : default_image} className={styles.detail_img} />
         <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} />
       </div>
       <div className={styles.flex_row}>

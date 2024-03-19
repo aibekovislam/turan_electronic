@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { fetchFilterProducts } from "../store/features/products/productSlice.ts";
 import SidebarMenu from "./SidebarMenu.tsx";
 
-function BrandFilterNavbar({ brand, products, colors, filteredProducts }: BrandsProps) {
+function BrandFilterNavbar({ brand, products, colors }: BrandsProps) {
     const [pickedColor, setPickedColor] = useState<string | null>(null);
     const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
     const [ isOpen, setIsOpen ] = useState(false);
@@ -48,8 +48,8 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
             <div className={styles.brands_navbar__item}>
                 <div className={styles.brands_navigation}>
                     {Array(5).fill(null).map((_, index) => (
-                        <div className={styles.brands_navigation__item}>
-                            <div className={styles.brands_info_block} onClick={() => handleDropdownList(index)} key={index}>
+                        <div key={index} className={styles.brands_navigation__item} onClick={() => handleDropdownList(index)} >
+                            <div className={styles.brands_info_block}>
                                 {index === 0 ? (
                                 <img src={brand.logo_field} alt="brand" className={styles.brandLogo} />
                                 ) : (
@@ -62,7 +62,7 @@ function BrandFilterNavbar({ brand, products, colors, filteredProducts }: Brands
                                 <ArrowDown isUp={dropdownStates[index]} />
                             </div>
                             <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>
-                                { dropdownStates[index] && renderDropdownContent(index, products, colors, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, filteredProducts) }
+                                { dropdownStates[index] && renderDropdownContent(index, products, colors, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters) }
                             </div>
                         </div>
                     ))}

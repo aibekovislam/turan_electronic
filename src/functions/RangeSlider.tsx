@@ -1,31 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
+import { Props, Range } from "../utils/interfacesAndTypes";
+import { getHighestPrice } from "./filterFunction";
 
-const RangeSlider = ({ fetchProductsAndLog, brand }: any) => {
-  const [range, setRange] = useState({ min: 0, max: 100000 });
+const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => {
+  const maxPrice = getHighestPrice(products);
+
+  const [range, setRange] = useState<Range>({ min: 0, max: maxPrice });
 
   useEffect(() => {
     fetchProductsAndLog({
       min_price: range.min,
       max_price: range.max,
-      brand: brand?.id, 
+      brand: brand?.id || '', 
     });
-  }, [range, brand, fetchProductsAndLog]);
+  }, [range]);
 
-  const handleInputChange = (e: any, type: any) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>, type: keyof Range) => {
     const value = parseInt(e.target.value, 10);
     setRange((prevRange) => ({
       ...prevRange,
       [type]: value,
     }));
   };
-
-  const handleRangeChange = (e: any, type: any) => {
+  
+  const handleRangeChange = (e: ChangeEvent<HTMLInputElement>, type: keyof Range) => {
     const value = parseInt(e.target.value, 10);
-    setRange((prevRange) => ({
-      ...prevRange,
-      [type]: value,
-    }));
-  };
+    if (value !== range[type]) {
+      setRange((prevRange) => ({
+        ...prevRange,
+        [type]: value,
+      }));
+    }
+  };  
 
   useEffect(() => {
     if (range.min > range.max) {
@@ -37,7 +43,7 @@ const RangeSlider = ({ fetchProductsAndLog, brand }: any) => {
   }, [range.min, range.max]);
 
   return (
-    <div className="wrapper">
+    <div className="wrapper" style={style}>
       <div className="price-input">
         <div className="field">
           <input
@@ -61,8 +67,8 @@ const RangeSlider = ({ fetchProductsAndLog, brand }: any) => {
         <div
           className="progress"
           style={{
-            left: `${(range.min / 10000) * 100}%`,
-            right: `${100 - (range.max / 10000) * 100}%`,
+            left: `${(range.min / maxPrice) * 100}%`,
+            right: `${100 - (range.max / maxPrice) * 100}%`,
           }}
         ></div>
       </div>
@@ -71,7 +77,7 @@ const RangeSlider = ({ fetchProductsAndLog, brand }: any) => {
           type="range"
           className="range-min"
           min="0"
-          max="10000"
+          max={maxPrice.toString()}
           value={range.min}
           step="100"
           onChange={(e) => handleRangeChange(e, "min")}
@@ -80,7 +86,7 @@ const RangeSlider = ({ fetchProductsAndLog, brand }: any) => {
           type="range"
           className="range-max"
           min="0"
-          max="10000"
+          max={maxPrice.toString()}
           value={range.max}
           step="100"
           onChange={(e) => handleRangeChange(e, "max")}

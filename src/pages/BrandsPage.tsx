@@ -87,7 +87,7 @@ function BrandsPage() {
     if(oneBrand != undefined && filteredProducts !== undefined) {
         return (
             <>
-                <BrandFilterNavbar brand={oneBrand} products={filteredData} colors={colors} filteredProducts={filteredProducts} />
+                <BrandFilterNavbar brand={oneBrand} products={filteredData} colors={colors} />
                 <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ marginTop: "30px" }}>
                 { filteredProducts?.length !== 0 ? (
                     filteredProducts?.map((product: any) => (

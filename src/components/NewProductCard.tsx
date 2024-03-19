@@ -50,37 +50,32 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     
 
     return (
-
         isMobile ? (
-            <div className={styles.cardMobile_main}>
+            <div className={styles.cardMobile_main} onClick={() => onClick(product.id)}>
                 <div className={styles.cardMobile_container}>
                   <div className={styles.cardMobile_}>
-            
                     <div className={styles.cardMobile_rate}>
                       { product.is_arrived ? (
                         <div className={styles.new_productCard_label}>
                           Новое
                         </div>
                       ) : null}
-                      <div>
+                      <div className={styles.rating_mobile}>
                         {[1, 2, 3, 4, 5].map((star) => (
-                                        <span
-                                            key={star}
-                                            style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
-                                            >
-                                        &#9733;
-                                        </span>
+                            <span
+                                key={star}
+                                style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
+                            >
+                                &#9733;
+                            </span>
                         ))}
                       </div>
                     </div>
-            
                     <div className={styles.cardMobile_info}>
-            
                       <div className={styles.cardMobile_wrapper__left}> 
                           <img src={product.default_image}  />
                           <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
                       </div>
-            
                       <div className={styles.cardMobile_wrapper__right}> 
                         <div className={styles.cardMobile_title}>
                           { product.name }
@@ -94,10 +89,8 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                           ) }
                         </div>
                       </div>  
-            
                     </div>
-            
-                        <div className={styles.right__special}>
+                    <div className={styles.right__special}>
                           { product.in_stock ? (
                             <div className={styles.isAvilableProduct}>
                                 <img src={checked} />
@@ -106,15 +99,13 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         ) : (
                             <div style={{ color: "brown" }}>Нет в наличии</div>
                         ) }
-                          <div>
+                          <div className={styles.price_mobile}>
                             { product.price } сом
+                            <div className={styles.bag__mobile}>
+                                <img src={shop} />
+                            </div>
                           </div>
-                          <div>
-                            <img src={shop} />
-                          </div>
-                        </div>
-            
-            
+                    </div>
                   </div>
                 </div>
             </div>

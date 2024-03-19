@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom"
 import { notify, notifyError } from "./Toastify"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 import { API_URL } from "../utils/consts"
+import checked from "../assets/svgs/card/Vector (9).svg";
 
 const Card: React.FC<CardProps> = ({  product, onClick }) => {  
     const [ loaded, setLoaded ] = useState(false);
@@ -50,8 +51,6 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
         }
     }
 
-    console.log(product)
-
     const handleColorPick = (color: string) => {
         setColorPicked(color)
     }
@@ -69,64 +68,64 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
     if(loaded) {
         return (
             isMobile ? (
-            <div className={styles.cardMobile_main}>
-                <div className={styles.cardMobile_container}>
-                  <div className={styles.cardMobile_}>
-            
-                    <div className={styles.cardMobile_rate}>
-                      {/* { product.is_arrived ? (
-                        <div className={styles.new_productCard_label}>
-                          Новое
+                <div className={styles.cardMobile_main} onClick={() => onClick(product.id)}>
+                    <div className={styles.cardMobile_container}>
+                    <div className={styles.cardMobile_}>
+                        <div className={styles.cardMobile_rate}>
+                        { product.is_arrived ? (
+                            <div className={styles.new_productCard_label}>
+                            Новое
+                            </div>
+                        ) : null}
+                        <div className={styles.rating_mobile}>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <span
+                                    key={star}
+                                    style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
+                                >
+                                    &#9733;
+                                </span>
+                            ))}
                         </div>
-                      ) : null} */}
-                      <div>
-                        {[1, 2, 3, 4, 5].map((star) => (
-                                        <span
-                                            key={star}
-                                            style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
-                                            >
-                                        &#9733;
-                                        </span>
-                        ))}
-                      </div>
-                    </div>
-            
-                    <div className={styles.cardMobile_info}>
-            
-                      <div className={styles.cardMobile_wrapper__left}> 
-                          <img src={product.default_image}  />
-                          <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
-                      </div>
-            
-                      <div className={styles.cardMobile_wrapper__right}> 
-                        <div className={styles.cardMobile_title}>
-                          { product.name }
                         </div>
-                        <div className={styles.cardMobile_colors}>
-                          <span>Цвет</span>
-                          { product?.color !== undefined ? product?.color.map((item: any, index: number) => (
-                              <div key={index} className={styles.mobile_color_block} style={{ background: item.hash_code }}></div>
-                            )) : (
-                              <div>Loading...</div>
-                          ) }
+                        <div className={styles.cardMobile_info}>
+                        <div className={styles.cardMobile_wrapper__left}> 
+                            <img src={product.default_image}  />
+                            <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
                         </div>
-                      </div>  
-            
-                    </div>
-            
+                        <div className={styles.cardMobile_wrapper__right}> 
+                            <div className={styles.cardMobile_title}>
+                            { product.name }
+                            </div>
+                            <div className={styles.cardMobile_colors}>
+                            <span>Цвет</span>
+                            { product?.color !== undefined ? product?.color.map((item: any, index: number) => (
+                                <div key={index} className={styles.mobile_color_block} style={{ background: item.hash_code }}></div>
+                                )) : (
+                                <div>Loading...</div>
+                            ) }
+                            </div>
+                        </div>  
+                        </div>
                         <div className={styles.right__special}>
-                          <div>
-                            { product.price } сом
-                          </div>
-                          <div>
-                            <img src={shop} />
-                          </div>
+                            { product.in_stock ? (
+                                <div className={styles.isAvilableProduct}>
+                                    <img src={checked} />
+                                    <span>В наличии</span>
+                                </div>
+                            ) : (
+                                <div style={{ color: "brown" }}>Нет в наличии</div>
+                            ) }
+                            <div className={styles.price_mobile}>
+                                { product.price } сом
+                                <div className={styles.bag__mobile}>
+                                    <img src={shop} />
+                                </div>
+                            </div>
                         </div>
-            
-            
-                  </div>
+                    </div>
+                    </div>
                 </div>
-            </div>
             ) : (
             <div className={styles.card_main}>
                 <div className={styles.card_container}>
@@ -182,7 +181,7 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
                             </div>
                         </div>
                         <div className={styles.btn_container}>
-                            <button className={styles.btn}>
+                            <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
                                 <a href="#">Быстрый заказ</a>
                             </button>
                             <img src={shop} alt="" onClick={() => {
