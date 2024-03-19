@@ -25,7 +25,7 @@ const orderSlice = createSlice({
 
 export const fetchRegions = (): AppThunk => async (dispatch) => {
     try {
-        const response = await $axios.get(`${API_URL}/regions`);
+        const response = await $axios.get(`${API_URL}/regions/`);
         console.log(response)
         dispatch(setRegions(response.data));
     } catch (error) {
