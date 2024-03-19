@@ -1,1 +1,1 @@
-export const API_URL: string = "http://34.47.0.85"
+export const API_URL: string = "https://turan-backend.online"
