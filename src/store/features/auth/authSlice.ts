@@ -75,6 +75,24 @@ export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
     }
 }
 
+export const resendAuth = (obj: any): AppThunk => async () => {
+    try {
+        const respones = await axios.post(`${API_URL}/users/reset_password/`, obj);
+        console.log(respones);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const newPasswordConfirm = (obj: any): AppThunk => async () => {
+    try {
+        const response = await axios.post(`${API_URL}/users/reset_password_confirm/`, obj);
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const { setAuthenticated, setUser } = authSlice.actions;
 
 export default authSlice.reducer
