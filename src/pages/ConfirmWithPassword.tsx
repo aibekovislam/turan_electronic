@@ -47,11 +47,12 @@ function ConfirmWithPassword() {
 
         try {
             setErrorAuth(false);
+            const new_obj = {
+                ...obj,
+                ...authFormData
+            }
             if (obj.uid !== null && obj.token !== null) {
-                const new_obj = {
-                    ...obj,
-                    ...authFormData
-                }
+                console.log(new_obj)
                 dispatch(newPasswordConfirm(new_obj));
                 console.log(obj);
                 navigate("/auth");
