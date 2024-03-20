@@ -18,6 +18,8 @@ import { addReview, fetchReviews } from "../store/features/reviews/reviewSlice"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice"
 import { notifyError } from "../components/Toastify"
+import 'ldrs/ring';
+import { ping } from 'ldrs'
 
 function DetailPage() {
     const { id } = useParams();
@@ -36,6 +38,8 @@ function DetailPage() {
     const [ openReviewInput, setOpenReviewInput ] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [ addedToCart, setAddedToCart ] = useState(false);
+
+    ping.register()
 
     const handleItemClick = (item: string) => {
         setActiveItem(item);
@@ -145,7 +149,11 @@ function DetailPage() {
                                             ></div>
                                         ))
                                     ) : (
-                                        <div>Loading...</div>
+                                        <l-ping
+                                            size="45"
+                                            speed="2" 
+                                            color="black" 
+                                        ></l-ping>
                                     )}
                                 </div> 
                                 <div className={styles.description}>
@@ -174,7 +182,11 @@ function DetailPage() {
                                             </span>
                                         ))
                                     ) : (
-                                        <div>Loading...</div>
+                                        <l-ping
+                                            size="45"
+                                            speed="2" 
+                                            color="black" 
+                                        ></l-ping>
                                     )}
                                 </div>
                                 <div className={styles.title}>
@@ -228,7 +240,11 @@ function DetailPage() {
                                                 ))
                                                 ) : (
                                                 <tr>
-                                                    <td>Loading...</td>
+                                                    <l-ping
+                                                        size="45"
+                                                        speed="2" 
+                                                        color="black" 
+                                                    ></l-ping>
                                                 </tr>
                                                 )}
                                         </tbody>
@@ -289,7 +305,11 @@ function DetailPage() {
                                                                 </span>
                                                             ))
                                                         ) : (
-                                                            <div>Loading...</div>
+                                                            <l-ping
+                                                                size="45"
+                                                                speed="2" 
+                                                                color="black" 
+                                                            ></l-ping>
                                                         )}
                                                     </div>
                                                 <div className={styles.reviews_date}>
@@ -316,7 +336,13 @@ function DetailPage() {
                     <Brands/>
                 </div>
             ) : (
-                <div>Loading...</div>
+                <div className={styles.loader}>
+                    <l-ping
+                        size="45"
+                        speed="2" 
+                        color="black" 
+                    ></l-ping>
+                </div>
             )}
         </div>
     )
