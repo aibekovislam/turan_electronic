@@ -1,5 +1,5 @@
 import styles from "../styles/navbar.module.scss";
-import logo_svg from "../assets/svgs/logo.svg";
+import logo_svg from "../assets/svgs/Logo (1).svg";
 import favorite_svg from "../assets/svgs/ic_outline-contact-support.svg";
 import cart_svg from "../assets/svgs/Frame 53.svg";
 import personal__office_svg from "../assets/svgs/Frame 52.svg";
