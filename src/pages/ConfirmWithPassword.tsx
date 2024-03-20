@@ -18,6 +18,8 @@ function ConfirmWithPassword() {
       token: searchParams.get("token")
     }
 
+    console.log(obj)
+
     const user = useSelector((state: RootStates) => state.auth.user);
     const navigate = useNavigate();
 
@@ -48,13 +50,14 @@ function ConfirmWithPassword() {
         try {
             setErrorAuth(false);
             const new_obj = {
-                ...obj,
-                ...authFormData
+                uid: searchParams.get("uid"),
+                token: searchParams.get("token"),
+                new_password: authFormData.new_password
             }
             if (obj.uid !== null && obj.token !== null) {
                 console.log(new_obj)
                 dispatch(newPasswordConfirm(new_obj));
-                console.log(obj);
+                console.log(obj, new_obj);
                 navigate("/auth");
                 notify("Теперь пройдите авторизацию с новым паролем")
             }
