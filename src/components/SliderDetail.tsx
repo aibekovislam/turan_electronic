@@ -7,12 +7,14 @@ import { API_URL } from '../utils/consts';
 import { getFilteredFirstImage } from '../functions/filterFunction';
 
 function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailProps) {
-  const [wordData, setWordData] = useState<string[] | undefined>(img_array[selectedColor]);
+  const [wordData, setWordData] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    setWordData(img_array[selectedColor]);
-  }, [selectedColor]);
+    if (img_array && img_array[selectedColor]) {
+      setWordData(img_array[selectedColor]);
+    }
+  }, [selectedColor, img_array]);
 
   const handleClick = (index: number) => {
     setSelectedIndex(index);
@@ -36,17 +38,16 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
     handleChange(index);
   };
 
-  if (!selectedColor || img_array[selectedColor] === undefined) {
+  if (!selectedColor || !img_array || !img_array[selectedColor]) {
     return <div>Loading...</div>;
   }  
 
   const filteredFirstImage = getFilteredFirstImage(img_array[selectedColor], selectedIndex);
-  console.log(filteredFirstImage, wordData)
   return (
     <div className={styles.main}>
       <div className={styles.carousel_detail}>
         <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} />
-        <img src={wordData?.length !== 0 && wordData ? `${API_URL}${filteredFirstImage}` : default_image} className={styles.detail_img} />
+        <img src={wordData.length !== 0 ? `${API_URL}${filteredFirstImage}` : default_image} className={styles.detail_img} />
         <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} />
       </div>
       <div className={styles.flex_row}>
