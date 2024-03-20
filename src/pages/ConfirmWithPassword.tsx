@@ -65,7 +65,7 @@ function ConfirmWithPassword() {
 
     return (
         <div className={styles.auth_main} style={{ marginTop: "30px" }}>
-                <div className={styles.auth_container}>
+            <div className={styles.auth_container}>
                     <div className={styles.auth}>
                         <div className={styles.auth_text}>
                         <p>
@@ -104,8 +104,8 @@ function ConfirmWithPassword() {
                             <img src={pattern} />
                         </div>
                     </div>
-                </div>
             </div>
+        </div>
     )
 }
 
