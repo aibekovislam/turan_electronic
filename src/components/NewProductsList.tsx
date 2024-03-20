@@ -53,9 +53,7 @@ function NewProductsList() {
         </div>
         <div className={isMobile ? "d-f__new-product__mobile" : "d-f__new-product"}>
           {filteredNewProducts?.map((product: ProductsType, index: number) => (
-            <>
             <NewProductsCard product={product} key={index} onClick={() => handleNavigate(product.id)} />
-            </>
           ))}
         </div>
     </>

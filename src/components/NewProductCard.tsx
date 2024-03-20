@@ -45,8 +45,6 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     }  
 
     const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
-
-    console.log(product);
     
 
     return (

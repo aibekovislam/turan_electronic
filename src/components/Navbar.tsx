@@ -48,7 +48,7 @@ function Navbar() {
         </div>
         <div className={styles.block_2}>
           <div className={styles.logo}>
-            <img src={logo_svg} alt="logo" style={{ cursor: "pointer" }} onClick={() => navigate("/")} />
+            <img src={logo_svg} alt="logo" style={{ cursor: "pointer" }}  onClick={() => handleItemClick("home") } />
           </div>
           <ul className={styles.navigation}>
             <li
