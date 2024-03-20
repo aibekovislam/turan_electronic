@@ -27,6 +27,8 @@ function DetailPage() {
     const firstImage = Object.values(product?.product_images || {})[0]?.[0]?.[0] || null;
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
+    const tokenString = localStorage.getItem("tokens");
+    const token = tokenString ? JSON.parse(tokenString) : null;
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
     const pickedColor = useSelector((state: RootStates) => state.oneProduct.pickedColor);
 
@@ -258,10 +260,14 @@ function DetailPage() {
                                 <button type="submit">Отправить</button>
                             </form>
                             ) : (
-                                <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
-                                    <img src={reviews} className={styles.reviews__svg} alt="" />
-                                    <input type="button"  value="Написать отзыв"/>
-                                </div>
+                                <>
+                                    { user && token ?  (
+                                        <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
+                                            <img src={reviews} className={styles.reviews__svg} alt="" />
+                                            <input type="button"  value="Написать отзыв"/>
+                                        </div>
+                                    ) : null }
+                                </>
                             ) }
                             { reviewsArray.length !== 0 ? (
                                 <div className={styles.reviews}>
