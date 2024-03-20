@@ -121,7 +121,7 @@ function DetailPage() {
 
     return (
         <div>
-            product !== undefined && product?.id === numberedId ? (
+            product && product?.id === numberedId ? (
                 <div>
                     <div className={styles.detail_main}>
                         <div className={styles.section_title}>
