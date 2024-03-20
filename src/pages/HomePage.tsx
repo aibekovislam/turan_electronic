@@ -6,10 +6,7 @@ import MiniCardList from "../components/MiniCardList";
 import NewProductsList from "../components/NewProductsList";
 import RecommendationList from "../components/RecommendationList";
 import Brands from "../components/Brands";
-
-
-
-
+import { Analytics } from "@vercel/analytics/react"
 
 function HomePage() {
 
@@ -22,6 +19,7 @@ function HomePage() {
       <NewProductsList/>
       <RecommendationList/>
       <Brands/>
+      <Analytics/>
     </div>
   );
 }

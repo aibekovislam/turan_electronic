@@ -46,7 +46,7 @@ function MainRoutes() {
         <Route element={<BrandsPage/>} path="/products/brands/:brand" />
         <Route element={<CartPage/>} path="/cart" />
         <Route element={<ConfirmPage/>} path="/activate" />
-        <Route element={<ConfirmWithPassword/>} path="/activate/resend" />
+        <Route element={<ConfirmWithPassword/>} path="/password/reset/confirm" />
         <Route element={<NewProductsPage/>} path="/new/products" />
         <Route element={<RecommendationProductsPage/>} path="/recommendation/products" />
         <Route element={<CategoryPage/>} path="/categories" />

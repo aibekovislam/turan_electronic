@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from "../styles/slider.module.scss"
-import ArrowLeft from "../assets/svgs/detail/leftArrow.svg";
+import ArrowLeft from "../assets/svgs/detail/leftArrow.svg"
 import ArrowRight from "../assets/svgs/detail/rightArrow.svg"
 import { SliderDetailProps } from '../utils/interfacesAndTypes';
 import { API_URL } from '../utils/consts';
