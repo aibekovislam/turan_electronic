@@ -78,7 +78,7 @@ function ConfirmWithPassword() {
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         placeholder="Ваш новый пароль"
-                                        name="password"
+                                        name="new_password"
                                         value={authFormData.new_password}
                                         onChange={handleInputChange}
                                     />
