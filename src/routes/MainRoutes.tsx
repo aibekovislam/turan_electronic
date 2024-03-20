@@ -16,6 +16,7 @@ import AboutUs from "../pages/AboutUs";
 import UserProfilePage from "../pages/UserProfilePage";
 import ResendPage from "../pages/ResendPage";
 import ConfirmWithPassword from "../pages/ConfirmWithPassword";
+import Sender from "../pages/Sender";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -46,6 +47,7 @@ function MainRoutes() {
         <Route element={<BrandsPage/>} path="/products/brands/:brand" />
         <Route element={<CartPage/>} path="/cart" />
         <Route element={<ConfirmPage/>} path="/activate" />
+        <Route element={<Sender/>} path="/activating/load" />
         <Route element={<ConfirmWithPassword/>} path="/password/reset/confirm" />
         <Route element={<NewProductsPage/>} path="/new/products" />
         <Route element={<RecommendationProductsPage/>} path="/recommendation/products" />

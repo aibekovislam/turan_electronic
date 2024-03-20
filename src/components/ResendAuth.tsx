@@ -37,7 +37,7 @@ function ResendAuth() {
         try {
             setErrorAuth(false);
             await dispatch(resendAuth(authFormData));
-            navigate("/password/reset/confirm")
+            navigate("/activating/load")
         } catch (error) {
             console.error("Error during authentication:", error);
             setErrorAuth(true);
