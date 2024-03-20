@@ -7,14 +7,16 @@ import { calculateDiscountedPrice } from '../functions/calculateDiscounte';
 import RecommendationList from './RecommendationList';
 import OrderForm from './OrderForm';
 import { API_URL } from '../utils/consts';
+import 'ldrs/ring';
+import { ping } from 'ldrs'
 
 function CartCardList() {
   const dispatch = useDispatch<any>();
   const carts = useSelector((state: RootStates) => state.carts.carts);
   const userString = localStorage.getItem("userInfo");
   const user = userString ? JSON.parse(userString) : null;
-  // const pickedColorJSON = localStorage.getItem("colorPicked");
-  // const colorPicked = pickedColorJSON ? JSON.parse(pickedColorJSON) : null;
+
+  ping.register()
 
   useEffect(() => {
     dispatch(fetchCarts());
@@ -92,7 +94,11 @@ function CartCardList() {
                   {cart.product.product_images ? (
                     <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : cart.product.default_image} alt="phone" />
                   ) : (
-                    <div>Loading...</div>
+                    <l-ping
+                      size="45"
+                      speed="2" 
+                      color="black" 
+                    ></l-ping>
                   )}
                 </div>
                 <div className={styles.cart_content}>
@@ -102,7 +108,11 @@ function CartCardList() {
                       { getColorHashCode(cart.color, cart.product).length !== 0 ? (
                           <div key={index} className={styles.color_block} style={{ background: getColorHashCode(cart.color, cart.product) }}></div>
                         ) : (
-                          <div>Loading...</div>
+                          <l-ping
+                            size="45"
+                            speed="2" 
+                            color="black" 
+                          ></l-ping>
                       ) }
                     </div>
                     <div className={styles.cart_counter}>
