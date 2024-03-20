@@ -14,6 +14,8 @@ import CategoryPage from "../pages/CategoryPage";
 import NewsPage from "../pages/NewsPage";
 import AboutUs from "../pages/AboutUs";
 import UserProfilePage from "../pages/UserProfilePage";
+import ResendPage from "../pages/ResendPage";
+import ConfirmWithPassword from "../pages/ConfirmWithPassword";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -40,9 +42,11 @@ function MainRoutes() {
         <Route element={<DetailPage />} path="/product/:id" />
         <Route element={<RegistrationAndAuthorization/>} path="/auth" />
         <Route element={<UserProfilePage/>} path="/profile" />
+        <Route element={<ResendPage/>} path="/resend/auth" />
         <Route element={<BrandsPage/>} path="/products/brands/:brand" />
         <Route element={<CartPage/>} path="/cart" />
         <Route element={<ConfirmPage/>} path="/activate" />
+        <Route element={<ConfirmWithPassword/>} path="/activate/resend" />
         <Route element={<NewProductsPage/>} path="/new/products" />
         <Route element={<RecommendationProductsPage/>} path="/recommendation/products" />
         <Route element={<CategoryPage/>} path="/categories" />

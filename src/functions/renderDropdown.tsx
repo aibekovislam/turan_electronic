@@ -1,7 +1,7 @@
 import styles from "../styles/brands_and_footer.module.scss";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
-import { extractBrandCategoryAndTitle, extractPropertyArray } from "./filterFunction";
+import { extractBrandCategoryAndTitle, extractPropertyArray, filterMemory } from "./filterFunction";
 
 export function renderDropdownContent(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any) {
 
@@ -17,8 +17,9 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
 
     const brandTitles = extractBrandCategoryAndTitle(products);
     const brandModels = brandCategoryArray('name');
-    const productMemory = brandCategoryArray('memory');  
+    const productMemory = products ? filterMemory(products.map(product => product.memory)) : [];
 
+    console.log(productMemory[0])
     const handleColorClick = (color: string) => {
         setPickedColor(color === pickedColor ? null : color);
       
@@ -29,8 +30,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
         };
       
         fetchProductsAndLog(updatedFilters);
-      };
-    
+      };    
 
     switch (index) {
         case 0:
@@ -151,7 +151,7 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
                         }}
                     />
                     <span className={styles.dropdown_text}>Все</span>
-                    {productMemory.map((item: any, index: number) => (
+                    {productMemory[0].map((item: any, index: number) => (
                         <div key={index} className={styles.dropdown__item}>
                             <input
                                 type="radio"

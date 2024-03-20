@@ -22,6 +22,20 @@ export function extractPropertyArray<T>(items: T[] | undefined, propertyName: ke
     return Array.from(uniqueSet);
 }
 
+export const filterMemory = (memory: any[]) => {
+    const uniqueVolumes: any[] = [];
+    const volumeSet = new Set();
+
+    memory.forEach(item => {
+        if (!volumeSet.has(item.volume)) {
+            uniqueVolumes.push(item);
+            volumeSet.add(item.volume);
+        }
+    });
+
+    return uniqueVolumes;
+}
+
 
 export const extractBrandCategoryAndTitle = (products: ProductsType[] | undefined): { id: any, title: any }[] => {
     if (!products) {

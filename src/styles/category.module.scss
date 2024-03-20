@@ -9,7 +9,7 @@
 
 .category_small {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     column-gap: 15px;
     flex-wrap: wrap;
     row-gap: 15px;
@@ -22,7 +22,7 @@
 }
 
 .category {
-    width: 29vw;
+    width: 28vw;
     height: 21vw;
     border-radius: 24px;
     background: linear-gradient(210.55deg, #EBF2F9 19.14%, #C6D7EB 154.68%);

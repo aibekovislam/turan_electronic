@@ -38,7 +38,7 @@ function BrandFilterNavbar({ brand, products, colors }: BrandsProps) {
         setFilters(updatedFilters);
         console.log(updatedFilters);
         dispatch(fetchFilterProducts(updatedFilters));
-    };        
+    };           
 
     return (
         <div className={styles.brands_navbar}>
@@ -48,8 +48,8 @@ function BrandFilterNavbar({ brand, products, colors }: BrandsProps) {
             <div className={styles.brands_navbar__item}>
                 <div className={styles.brands_navigation}>
                     {Array(5).fill(null).map((_, index) => (
-                        <div key={index} className={styles.brands_navigation__item} onClick={() => handleDropdownList(index)} >
-                            <div className={styles.brands_info_block}>
+                        <div key={index} className={styles.brands_navigation__item}>
+                            <div className={styles.brands_info_block} onClick={() => handleDropdownList(index)}>
                                 {index === 0 ? (
                                 <img src={brand.logo_field} alt="brand" className={styles.brandLogo} />
                                 ) : (

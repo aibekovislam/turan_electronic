@@ -87,7 +87,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
                 />
                 <img src={showPassword ? showedEye : eye} onClick={() => setShowPassword(!showPassword)} className={styles.eye_svg} />
               </div>
-              <div className={styles.forgotten_password}>
+              <div className={styles.forgotten_password} onClick={() => navigate("/resend/auth")}>
                 <span>Забыли пароль?</span>
               </div>
             </div>
