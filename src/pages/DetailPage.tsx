@@ -44,11 +44,10 @@ function DetailPage() {
 
     const numberedId = Number(id);
 
-    if (id) {
-        useEffect(() => {
-          dispatch(fetchOneProducts(numberedId))
-        }, [dispatch, id])
-    }
+    useEffect(() => {
+        dispatch(fetchOneProducts(numberedId))
+    }, [dispatch, id])
+    
 
     const handleColorPick = (color: any) => {
         setColorPicked(color.hash_code);
@@ -121,7 +120,7 @@ function DetailPage() {
 
     return (
         <div>
-            product && product?.id === numberedId ? (
+            {product && product?.id === numberedId ? (
                 <div>
                     <div className={styles.detail_main}>
                         <div className={styles.section_title}>
@@ -312,7 +311,7 @@ function DetailPage() {
                 </div>
             ) : (
                 <div>Loading...</div>
-            )
+            )}
         </div>
     )
 }
