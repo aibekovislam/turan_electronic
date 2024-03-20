@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
     "@types/react-slick": "^0.23.13",
+    "@vercel/analytics": "^1.2.2",
     "@vitejs/plugin-react": "^4.2.1",
     "axios": "^1.6.7",
     "ldrs": "^1.0.1",
