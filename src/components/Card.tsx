@@ -160,7 +160,10 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
                             </div>
                         </div>
                         <div className={styles.img_container} onClick={() => onClick(product.id)}>
-                            { imgLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "190px" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div> }
+                            { imgLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "190px" }}>
+                                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                                Загрузка...
+                            </div> }
                             { filteredImages ? (
                                 <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none": "block" }} />
                             ) : (
