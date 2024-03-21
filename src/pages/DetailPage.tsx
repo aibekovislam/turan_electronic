@@ -1,9 +1,5 @@
 import SldierDetail from "../components/SliderDetail"
 import styles from "../styles/detail.module.scss"
-// import white from "../assets/svgs/detail/white.svg"
-// import black from "../assets/svgs/detail/black.svg"
-// import lighBrown from "../assets/svgs/detail/lightBrown.svg"
-// import star2 from "../assets/svgs/card/star2:5.svg"
 import heart from "../assets/svgs/card/Vector (8).svg"
 import fillHeart from "../assets/svgs/card/fillHeart.svg"
 import reviews from '../assets/svgs/detail/Rates.svg'
@@ -34,6 +30,7 @@ function DetailPage() {
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
     const pickedColor = useSelector((state: RootStates) => state.oneProduct.pickedColor);
 
+    const [ favoriteLoaded, setFavoriteLoad ] = useState(false);
     const [activeItem, setActiveItem] = useState<string | undefined>("");
     const [ openReviewInput, setOpenReviewInput ] = useState(false);
     const [expanded, setExpanded] = useState(false);
@@ -75,6 +72,7 @@ function DetailPage() {
 
     const handleClickFavorite = (product_id: number) => {
         if(user) {
+            setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         } else if(!user) {
             navigate("/auth");
@@ -108,21 +106,23 @@ function DetailPage() {
         rating: 0,
     });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setReviewData((prevData) => ({ ...prevData, [name]: value }));
-  };
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setReviewData((prevData) => ({ ...prevData, [name]: value }));
+    };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
-    dispatch(addReview({ ...reviewData, product: product?.id }));
+        dispatch(addReview({ ...reviewData, product: product?.id }));
 
-    setReviewData(reviewData);
-    setOpenReviewInput(false);
-  };
+        setReviewData(reviewData);
+        setOpenReviewInput(false);
+    };
 
-  console.log(product)
+    useEffect(() => {
+        setFavoriteLoad(false);
+    }, [favorites])
 
     return (
         <div>
@@ -149,11 +149,7 @@ function DetailPage() {
                                             ></div>
                                         ))
                                     ) : (
-                                        <l-ping
-                                            size="45"
-                                            speed="2" 
-                                            color="black" 
-                                        ></l-ping>
+                                        <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                                     )}
                                 </div> 
                                 <div className={styles.description}>
@@ -182,11 +178,7 @@ function DetailPage() {
                                             </span>
                                         ))
                                     ) : (
-                                        <l-ping
-                                            size="45"
-                                            speed="2" 
-                                            color="black" 
-                                        ></l-ping>
+                                        <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                                     )}
                                 </div>
                                 <div className={styles.title}>
@@ -217,9 +209,15 @@ function DetailPage() {
                                     <button className={`${styles.btn} ${ addedToCart ? styles.added_btn : "" }`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
                                         <a href="#">{ addedToCart ? "Добавлено в корзину" : "В корзину" }</a>
                                     </button>
-                                    <img style={{ cursor: "pointer" }} onClick={() => {
-                                        handleClickFavorite(product?.id || 0)
-                                    }} className={styles.detail_img} src={isProductInFavorites ? fillHeart : heart}  />
+                                    { favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div> }
+                                    <img
+                                        className={styles.detail_img}
+                                        src={isProductInFavorites ? fillHeart : heart}
+                                        onClick={() => {
+                                        handleClickFavorite(product.id || 0);
+                                        }}
+                                        style={{ display: favoriteLoaded ? "none": "block", cursor: "pointer" }}
+                                    />
                                 </div>
                                 <div className={styles.сharacteristics}>
                                     <div className={styles.сharacteristics_title}>
@@ -240,11 +238,7 @@ function DetailPage() {
                                                 ))
                                                 ) : (
                                                 <tr>
-                                                    <l-ping
-                                                        size="45"
-                                                        speed="2" 
-                                                        color="black" 
-                                                    ></l-ping>
+                                                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                                                 </tr>
                                                 )}
                                         </tbody>
@@ -305,11 +299,7 @@ function DetailPage() {
                                                                 </span>
                                                             ))
                                                         ) : (
-                                                            <l-ping
-                                                                size="45"
-                                                                speed="2" 
-                                                                color="black" 
-                                                            ></l-ping>
+                                                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                                                         )}
                                                     </div>
                                                 <div className={styles.reviews_date}>
@@ -337,11 +327,7 @@ function DetailPage() {
                 </div>
             ) : (
                 <div className={styles.loader}>
-                    <l-ping
-                        size="45"
-                        speed="2" 
-                        color="black" 
-                    ></l-ping>
+                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                 </div>
             )}
         </div>

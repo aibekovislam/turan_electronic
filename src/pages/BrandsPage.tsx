@@ -9,6 +9,8 @@ import Card from '../components/Card';
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import { default_filters } from '../utils/interfacesAndTypes';
+import 'ldrs/ring';
+import { ping } from 'ldrs'
 
 function BrandsPage() {
     const { brand } = useParams();
@@ -18,6 +20,8 @@ function BrandsPage() {
     const colors = useSelector((state: RootStates) => state.products.colors);
     const filteredProducts = useSelector((state: RootStates) => state.products.filteredProducts);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+
+    ping.register();
 
     useEffect(() => {
         const handleResize = () => {
@@ -122,7 +126,10 @@ function BrandsPage() {
         )
     } else {
         return (
-            <div>Loading...</div>
+            <div className={"loading"}>
+                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                <div>Загрузка...</div>
+            </div>
         )
     }
 }

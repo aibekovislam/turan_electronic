@@ -13,9 +13,14 @@ import { notify, notifyError } from "./Toastify"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 import { API_URL } from "../utils/consts"
 import checked from "../assets/svgs/card/Vector (9).svg";
+import 'ldrs/ring';
+import { ping } from 'ldrs'
+
 
 const Card: React.FC<CardProps> = ({  product, onClick }) => {  
     const [ loaded, setLoaded ] = useState(false);
+    const [ imgLoaded, setImgLoaded ] = useState(false);
+    const [ favoriteLoaded, setFavoriteLoad ] = useState(false);
     const navigate = useNavigate();
     const [ colorPicked, setColorPicked ] = useState("");
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
@@ -23,6 +28,8 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
     const user = userString ? JSON.parse(userString) : null;
     const dispatch = useDispatch<any>();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+
+    ping.register();
 
     useEffect(() => {
         const handleResize = () => {
@@ -44,6 +51,7 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
 
     const handleClickFavorite = (product_id: number) => {
         if(user) {
+            setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         } else if(!user) {
             navigate("/auth")
@@ -52,14 +60,23 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
     }
 
     const handleColorPick = (color: string) => {
-        setColorPicked(color)
-    }
+        if (color === colorPicked) {
+            setImgLoaded(false);
+        } else {
+            setImgLoaded(true);
+        }
+        setColorPicked(color);
+    };    
 
     function filterImagesByColor(images: string[], color: string) {
         if(color !== "") {
             return images[0]
         }
-    }    
+    }
+
+    useEffect(() => {
+        setFavoriteLoad(false);
+    }, [favorites])
 
     const filteredImages = colorPicked ? filterImagesByColor(product.product_images[colorPicked], colorPicked) : null;
       
@@ -143,18 +160,21 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
                             </div>
                         </div>
                         <div className={styles.img_container} onClick={() => onClick(product.id)}>
+                            { imgLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "190px" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div> }
                             { filteredImages ? (
-                                <img src={API_URL + filteredImages}  />
+                                <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none": "block" }} />
                             ) : (
-                                <img src={product.default_image} />
+                                <img src={product.default_image} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none": "block" }} />
                             ) }
                         </div>
                         <div className={styles.heart_container}>
+                            { favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div> }
                             <img
                                 src={isProductInFavorites ? fillHeart : heart}
                                 onClick={() => {
                                 handleClickFavorite(product.id);
                                 }}
+                                style={{ display: favoriteLoaded ? "none": "block" }}
                             />
                         </div>
                         <div className={styles.title_container}>

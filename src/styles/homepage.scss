@@ -211,6 +211,15 @@ input[type="range"]::-moz-range-thumb {
 }
 
 
+.loading {
+    width: 100%;
+    height: 285px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 @media only screen and (max-width: 1300px) {
     .accessories {
         margin-top: 3vw;
