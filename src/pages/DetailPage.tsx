@@ -71,7 +71,7 @@ function DetailPage() {
     }    
 
     const handleClickFavorite = (product_id: number) => {
-        if(user) {
+        if(user && token) {
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         } else if(!user) {
