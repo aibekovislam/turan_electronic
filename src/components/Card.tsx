@@ -26,6 +26,8 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
+    const tokenString = localStorage.getItem("tokens");
+    const token = tokenString ? JSON.parse(tokenString) : null;
     const dispatch = useDispatch<any>();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
 
@@ -50,7 +52,7 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
     }, [])
 
     const handleClickFavorite = (product_id: number) => {
-        if(user) {
+        if(user && token) {
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         } else if(!user) {
