@@ -1,17 +1,13 @@
-# React + TypeScript + Vite
+# Turan Electronics - интернет магазин
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Увидеть сайт вы можете по ссылке - [turan-electronics](https://turanelectronics.kg/)
 
-Currently, two official plugins are available:
+## Запустить проект:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Нужно склонится через команду - `git clone https://github.com/aibekovislam/turan_electronic.git`:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
+- После установки выполните команду (если установлен node.js) `npm install`
+- (Необязательно) Настройте свойство parserOptions верхнего уровня следующим образом. 
 
 ```js
 export default {
@@ -25,6 +21,4 @@ export default {
 }
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- После этого вы можете запустить проект с помощью команды - `npm run dev`
