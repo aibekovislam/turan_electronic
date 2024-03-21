@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 import { addFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 import { useNavigate } from "react-router-dom";
 import { notifyError } from "./Toastify";
+import { API_URL } from "../utils/consts";
+import 'ldrs/ring';
+import { ping } from 'ldrs'
 
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
     const navigate = useNavigate();
@@ -17,7 +20,14 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+    const tokenString = localStorage.getItem("tokens");
+    const token = tokenString ? JSON.parse(tokenString) : null;
+    const [ colorPicked, setColorPicked ] = useState("");
 
+    const [ imgLoaded, setImgLoaded ] = useState(false);
+    const [ favoriteLoaded, setFavoriteLoad ] = useState(false);
+
+    ping.register();
 
     useEffect(() => {
         const handleResize = () => {
@@ -36,16 +46,40 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     }, [])
 
     const handleClickFavorite = (product_id: number) => {
-        if(user) {
-            dispatch(addFavorites(product_id))
-        } else if(!user) {
-            navigate("/auth");
-            notifyError('Вы не авторизованы');
+        if(!user && !token) {
+            navigate("/auth")
+            notifyError('Вы не авторизованы')
+            return;
         }
-    }  
+        
+        if(user && token) {
+            setFavoriteLoad(true);
+            dispatch(addFavorites(product_id))
+        }
+    } 
+
+    function filterImagesByColor(images: string[], color: string) {
+        if(color !== "") {
+            return images[0]
+        }
+    }
+
+    const handleColorPick = (color: string) => {
+        if (color === colorPicked) {
+            setImgLoaded(false);
+        } else {
+            setImgLoaded(true);
+        }
+        setColorPicked(color);
+    };  
+
+    useEffect(() => {
+        setFavoriteLoad(false);
+    }, [favorites])
 
     const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
-    
+
+    const filteredImages = colorPicked ? filterImagesByColor(product.product_images[colorPicked], colorPicked) : null;
 
     return (
         isMobile ? (
@@ -71,8 +105,8 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                     </div>
                     <div className={styles.cardMobile_info}>
                       <div className={styles.cardMobile_wrapper__left}> 
-                          <img src={product.default_image}  />
-                          <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
+                            <img src={product.default_image}  />
+                            <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
                       </div>
                       <div className={styles.cardMobile_wrapper__right}> 
                         <div className={styles.cardMobile_title}>
@@ -129,10 +163,25 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         </div>
                     </div>
                     <div className={styles.img_container} onClick={onClick}>
-                        <img src={product.default_image}  />
+                        { imgLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "190px" }}>
+                                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                                Загрузка...
+                            </div> }
+                        { filteredImages ? (
+                                <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none": "block" }} />
+                            ) : (
+                                <img src={product.default_image} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none": "block" }} />
+                        ) }
                     </div>
                     <div className={styles.heart_container}>
-                        <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
+                    { favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div> }
+                        <img
+                            src={isProductInFavorites ? fillHeart : heart}
+                            onClick={() => {
+                                handleClickFavorite(product.id);
+                            }}
+                            style={{ display: favoriteLoaded ? "none": "block" }}
+                        />
                     </div>
                     <div className={styles.title_container}>
                         { product.in_stock ? (
@@ -160,7 +209,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                     <div className={styles.options_container}>
                         <h2>Цвет</h2>
                         { product?.color !== undefined ? product?.color.map((item: any, index: number) => (
-                            <div key={index} className={styles.color_block} style={{ background: item.hash_code }}></div>
+                            <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
                         )) : (
                             <div>Loading...</div>
                         ) }

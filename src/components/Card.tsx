@@ -52,14 +52,17 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
     }, [])
 
     const handleClickFavorite = (product_id: number) => {
+        if(!user && !token) {
+            navigate("/auth")
+            notifyError('Вы не авторизованы')
+            return;
+        }
+        
         if(user && token) {
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
-        } else if(!user) {
-            navigate("/auth")
-            notifyError('Вы не авторизованы')
         }
-    }
+    }    
 
     const handleColorPick = (color: string) => {
         if (color === colorPicked) {
