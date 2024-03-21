@@ -1,10 +1,11 @@
 .detail_container{
     display: flex;
     justify-content: space-between;
+    gap: 200px;
 }
 
 .detail_wrapper__left{
-    width: 614px;
+    width: 100%;
 }
 
 .loader {
@@ -16,7 +17,7 @@
 }
 
 .detail_wrapper__right {
-    width: 457px;
+    width: 100%;
     height: auto;
     border-radius: 24px;
     border: 1px solid #fff;
