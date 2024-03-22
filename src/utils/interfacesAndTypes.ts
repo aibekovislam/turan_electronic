@@ -116,7 +116,8 @@ export type CartType = {
     user: number,
     product: any,
     created_at: string,
-    color?: any
+    color?: any,
+    memory_name: any
 }
 
 export type ProductsType = {
@@ -146,7 +147,10 @@ export type ProductsType = {
     };
     brand_title: string,
     brand_category_title: string;
-    color: any
+    color: any,
+    memory_price: {
+        [key: string]: string
+    }
 }
 
 export type CityType = {

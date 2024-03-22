@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import nextArrow from "../assets/svgs/Vector (7).svg";
-import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import Card from "./Card";
 import "../styles/favorite.scss"
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
-import { fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
+import { clearFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
+import 'ldrs/ring';
+import { ping } from 'ldrs'
 
 function FavoriteList() {
     const navigate = useNavigate();
@@ -15,6 +15,9 @@ function FavoriteList() {
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+    const [ loaded, setLoaded ] = useState(false);
+
+    ping.register();
 
     useEffect(() => {
         const handleResize = () => {
@@ -39,39 +42,15 @@ function FavoriteList() {
         )
     }
 
-    const itemsPerPage = 16;
-    const maxVisiblePages = 3;
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const currentCards = favoritesProducts.slice(startIndex, endIndex);
-
-    const totalPages = Math.ceil(favoritesProducts.length / itemsPerPage);
-
-    const handleNextPage = () => {
-        setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
-    };
-
-    const handlePrevPage = () => {
-        setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-    };
-
-    const handlePageChange = (page: number) => {
-        setCurrentPage(page);
-    };
-
     const handleNavigate = (id: number) => {
         navigate(`/product/${id}`)
     }
 
-    const visiblePages = () => {
-        const totalVisiblePages = Math.min(totalPages, maxVisiblePages);
-        const start = Math.max(currentPage - Math.floor(totalVisiblePages / 2), 1);
-        const end = Math.min(start + totalVisiblePages - 1, totalPages);
-
-        return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-    };
+    useEffect(() => {
+        if(favoritesProducts.length !== 0) {
+            setLoaded(false);
+        }
+    }, [favoritesProducts])
 
   return (
     <>
@@ -80,34 +59,36 @@ function FavoriteList() {
             <div className="favorite_title">
                 Избранное
             </div>
-            <div className="favorite_clear">
-                <span>Очистить список</span>
+            { favoritesProducts?.length !== 0 ? (
+                !loaded ? (
+                    <div className="favorite_clear" onClick={() => {
+                        setLoaded(true)
+                        dispatch(clearFavorites())
+                    }}>
+                        <span>Очистить список</span>
+                    </div>
+                ) : (
+                    <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
+                        <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                    </div>
+                )
+            ) : (
+                null
+            ) }
+        </div>
+        { favoritesProducts?.length !== 0 && user ? (
+            <>
+                <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
+                    { favoritesProducts.map((cardItem: any) => (
+                        <Card key={cardItem.id} product={cardItem} onClick={handleNavigate} />
+                    ) ) }
+                </div>
+            </>
+        ) : (
+            <div className="empty_favorites" >
+                Пусто
             </div>
-        </div>
-        <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
-            { currentCards.map((cardItem: any) => (
-                <Card key={cardItem.id} product={cardItem} onClick={handleNavigate} />
-            ) ) }
-        </div>
-        <div className="pagination">
-        <div onClick={handlePrevPage} className={`prev__btn-pagination ${currentPage === 1 ? "disabled_pagination" : ""}`}>
-          <img src={prevArrow} />
-        </div>
-        <div className="pagination__numbers">
-            {visiblePages().map((page) => (
-                <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`${currentPage === page ? "active-pagination" : ""} pagination__number`}
-                >
-                {page}
-                </button>
-            ))}
-            </div>
-            <div onClick={handleNextPage} className={`next__btn-pagination ${currentPage === totalPages ? "disabled_pagination" : ""}`}>
-            <img src={nextArrow} />
-            </div>
-        </div>
+        ) }
     </>
   )
 }

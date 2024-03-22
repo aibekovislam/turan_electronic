@@ -37,6 +37,16 @@ export const addFavorites = (products_id: number): AppThunk => async (dispatch) 
     }
 }
 
+export const clearFavorites = (): AppThunk => async (dispatch) => {
+    try {
+        const response = await $axios.post(`${API_URL}/products/clear_favorites/`);
+        dispatch(fetchFavorites());
+        console.log(response);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const { setFavorites } = favoriteSlice.actions;
 
 export default favoriteSlice.reducer;
