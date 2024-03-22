@@ -204,7 +204,7 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
                             </div>
                             <div className={styles.title}>
                                 <h2>{ product.name }</h2>
-                                <p>{ product?.description !== undefined ? product?.description.slice(0, 100) + "..." : "" }</p>
+                                <p>{ product?.description !== undefined ? product?.description.slice(0, 35) + "..." : "" }</p>
                             </div>
                         </div>
                         <div className={styles.btn_container}>

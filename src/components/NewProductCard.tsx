@@ -197,7 +197,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         </div>
                         <div className={styles.title}>
                             <h2>{ product.name }</h2>
-                            <p>{ product.description.slice(0, 130) }</p>
+                            <p>{ product.description.slice(0, 35) }</p>
                         </div>
                     </div>
                     <div className={styles.btn_container}>
