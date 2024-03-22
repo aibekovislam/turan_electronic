@@ -78,6 +78,19 @@ function CartCardList() {
     )
   }
 
+  const filterPriceToMemory = (product: any, memory_name: any) => {
+    console.log(product);
+    const memory = product.memory_price[memory_name];
+    if (memory) {
+        const price = memory.replace(/[^\d.]/g, '');
+        console.log(price);
+        return price;
+    } else {
+        console.log('Цена для указанной памяти не найдена');
+        return null;
+    }
+  }
+
   return (
     <div className={styles.cart_main}>
         <div className={styles.cart_path}>
@@ -131,11 +144,11 @@ function CartCardList() {
                 <div className={styles.cart_price}>
                     { cart.product.discount !== 0 ? (
                       <>
-                        <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(cart?.product.price, cart?.product.discount)} сом</div>
-                        <div className={styles.default_price}>{(counts[cart.id] || 1) * cart?.product.price } сом</div>
+                        <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} сом</div>
+                        <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) } сом</div>
                       </>
                     ) : (
-                      <div className={styles.discount_price}>{(counts[cart.id] || 1) * cart?.product.price} сом</div>
+                      <div className={styles.discount_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name)} сом</div>
                     ) }
                 </div>
                 <div className={styles.cart_rate}>
@@ -159,7 +172,7 @@ function CartCardList() {
         )) }
         <div className={styles.total_block}>
           Итого: {carts
-            .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart?.product.price, cart?.product.discount))
+            .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount))
             .reduce((acc, price) => acc + price, 0)
             .toLocaleString("ru-RU")} сом
         </div>

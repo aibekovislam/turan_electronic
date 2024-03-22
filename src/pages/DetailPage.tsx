@@ -35,6 +35,7 @@ function DetailPage() {
     const [ openReviewInput, setOpenReviewInput ] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [ addedToCart, setAddedToCart ] = useState(false);
+    const [ productPrice, setProductPrice ] = useState(0);
 
     ping.register()
 
@@ -50,7 +51,12 @@ function DetailPage() {
     useEffect(() => {
         dispatch(fetchOneProducts(numberedId))
     }, [dispatch, id])
-    
+
+    useEffect(() => {
+        if(product?.price) {
+            setProductPrice(product.price)
+        }
+    }, [product])    
 
     const handleColorPick = (color: any) => {
         setColorPicked(color.hash_code);
@@ -129,6 +135,16 @@ function DetailPage() {
     useEffect(() => {
         setFavoriteLoad(false);
     }, [favorites])
+
+    useEffect(() => {
+        if(activeItem) {
+            let price = product?.memory_price[(activeItem as any)["volume"]];
+            let transPrice = price?.replace(/[^\d.]/g, '');
+            if(transPrice) {
+                setProductPrice(+transPrice);                
+            }
+        }
+    }, [activeItem])
 
     return (
         <div>
@@ -209,7 +225,7 @@ function DetailPage() {
                                     </ul>
                                 </div>
                                 <div className={styles.price}>
-                                    {<div>{ calculateDiscountedPrice(product?.price, product?.discount) } сом</div>}
+                                    {<div>{ calculateDiscountedPrice(productPrice, product.discount) } сом</div>}
                                 </div>
                                 <div className={styles.utils}>
                                     <button className={`${styles.btn} ${ addedToCart ? styles.added_btn : "" }`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
