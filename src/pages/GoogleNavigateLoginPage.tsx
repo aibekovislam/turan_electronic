@@ -7,11 +7,12 @@ function GoogleNavigateLoginPage() {
     const dispatch = useDispatch<any>(); 
 
     const obj = {
-        token: searchParams.get("token")
+        access: searchParams.get("token"),
+        refresh: ""
     }
 
     useEffect(() => {
-        if (obj.token !== null) {
+        if (obj.access !== null) {
             localStorage.setItem("tokens", JSON.stringify(obj));
             localStorage.setItem("userInfo", JSON.stringify({
                 user: "Google User"
@@ -19,7 +20,7 @@ function GoogleNavigateLoginPage() {
             // navigate("/")
             console.log(obj)
         }
-    }, [dispatch, obj.token]);  
+    }, [dispatch, obj.access]);  
 
     return (
         <h1>
