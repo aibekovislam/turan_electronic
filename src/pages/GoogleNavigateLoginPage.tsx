@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 function GoogleNavigateLoginPage() {
     const [ searchParams ] = useSearchParams();
     const dispatch = useDispatch<any>(); 
-    const navigate = useNavigate();
 
     const obj = {
         token: searchParams.get("token")
@@ -24,7 +23,7 @@ function GoogleNavigateLoginPage() {
 
     return (
         <h1>
-            Подождите немного идет авторизация...
+            Авторизация прошла, можете перейти на главную страницу
         </h1>
     )
 }
