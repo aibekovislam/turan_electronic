@@ -111,7 +111,9 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                 </div>
                 <div className={styles.reg_sign}>
                     <span>Войти через</span>
-                    <img src={google} className={styles.sign_icon} />
+                    <a href="https://turan-backend.online/google/login/">
+                        <img src={google} className={styles.sign_icon} />
+                    </a>
                 </div>
             </div>
         </div>
