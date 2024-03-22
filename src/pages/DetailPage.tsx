@@ -60,15 +60,21 @@ function DetailPage() {
     }
 
     const handleAddToCart = (id: number | undefined) => {
+        if (memoryID === 0) { 
+            notifyError("Выберите объем памяти");
+            return; 
+        }
+    
         if (id !== undefined && user && activeItem !== undefined) {
             dispatch(addToCart(id, colorID, 1, memoryID));
             setAddedToCart(true);
-        } else if (!user) {
+        } else if (!user) { 
             setAddedToCart(false);
             navigate("/auth");
             notifyError('Вы не авторизованы');
         }
-    }    
+    };
+      
 
     const handleClickFavorite = (product_id: number) => {
         if(user && token) {
