@@ -66,8 +66,8 @@ function BrandFilterNavbar({ brand, products, colors }: BrandsProps) {
                             </div>
                         </div>
                     ))}
-                    <div onClick={toggleSidebar} className={styles.brands_navigation__item} style={{ width: "13vw" }}>
-                        Все фильтры
+                    <div onClick={toggleSidebar} className={styles.brands_navigation__item} >
+                        <div>Все фильтры</div>
                         <img src={FilterSVG} className={styles.filter__svg} />
                     </div>
                     <SidebarMenu isOpen={isOpen} setIsOpen={setIsOpen} brand={brand} products={products} />

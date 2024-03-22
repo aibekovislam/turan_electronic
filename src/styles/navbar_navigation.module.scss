@@ -44,7 +44,7 @@
 .sidebar {
   position: fixed;
   top: 0;
-  right: -100%;
+  right: -125%;
   width: 380px;
   height: 100%;
   background: #E3EDF7;
@@ -161,10 +161,10 @@
 
 
 .brands__block_arrow_down {
-  img {
+  svg {
       transition: transform 0.3s ease;
-      width: 1vw;
-      height: 1vw;
+      width: 15vw;
+      height: 15vw;
   }
 }
 
@@ -194,4 +194,10 @@
   align-items: center;
   gap: 5px;
   margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 520px) {
+  .sidebar {
+    width: 320px;
+  }
 }
