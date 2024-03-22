@@ -60,7 +60,7 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
             <div key={index} className={styles.sidebar__items}>
               <div className={styles.sidebar_title} onClick={() => handleDropdownList(index)}>
                   <span>
-                    {index === 1 ? 'Цвет' : index === 2 ? 'Модель' : index === 3 ? 'Обьем' : 'Цена Сом'}
+                    {index === 1 ? 'Цвет' : index === 2 ? 'Модель' : index === 3 ? 'Объем' : 'Цена'}
                   </span>
                   <div className={styles.brands__block_arrow_down}>
                     <ArrowDown isUp={dropdownStates[index]} />

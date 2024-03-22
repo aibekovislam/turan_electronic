@@ -54,7 +54,7 @@ function BrandFilterNavbar({ brand, products, colors }: BrandsProps) {
                                 <img src={brand.logo_field} alt="brand" className={styles.brandLogo} />
                                 ) : (
                                 <div className={styles.brands__title_filter}>
-                                    {index === 1 ? 'Модель' : index === 2 ? 'Объем' : index === 3 ? 'Цена, сом' : index === 4 ? 'Цвет' : 'Все фильтры'}
+                                    {index === 1 ? 'Модель' : index === 2 ? 'Объем' : index === 3 ? 'Цена' : index === 4 ? 'Цвет' : 'Все фильтры'}
                                 </div>
                                 )}
                             </div>

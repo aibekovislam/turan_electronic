@@ -48,6 +48,7 @@ export const signUp = (obj: any): AppThunk => async (dispatch) => {
 
 export const activateUser = (obj: UserType): AppThunk => async (dispatch) => {
     try {
+        console.log(obj)
         const response = await axios.post(`${API_URL}/users/activation/`, obj);
         dispatch(authSlice.actions.setActivate(response.data));
         console.log(response.data, obj);
