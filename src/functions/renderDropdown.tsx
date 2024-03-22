@@ -36,43 +36,47 @@ export function renderDropdownContent(index: number, products: ProductsType[] | 
         case 0:
             return (
                 <div className={styles.dropdown__list}>
-                    <input
-                        type="radio"
-                        className={styles.dropdown_radio}
-                        name={groupName}
-                        defaultChecked={true}
-                        onChange={() => {
-                            let obj = {
-                                limit: 10,
-                                offset: 0,
-                                min_price: undefined,
-                                max_price: undefined,
-                                brand: brand.id,
-                                brand_category: undefined,
-                                color: [],
-                                memory: [],
-                                product_name: ""
-                            }
-                            fetchProductsAndLog(obj);
-                        }}
-                        />
-                    <span className={styles.dropdown_text}>Все</span>
+                    <label className={styles.dropdown_label}>
+                        <input
+                            type="radio"
+                            className={styles.dropdown_radio}
+                            name={groupName}
+                            defaultChecked={true}
+                            onChange={() => {
+                                let obj = {
+                                    limit: 10,
+                                    offset: 0,
+                                    min_price: undefined,
+                                    max_price: undefined,
+                                    brand: brand.id,
+                                    brand_category: undefined,
+                                    color: [],
+                                    memory: [],
+                                    product_name: ""
+                                }
+                                fetchProductsAndLog(obj);
+                            }}
+                            />
+                        <span className={styles.dropdown_text}>Все</span>
+                    </label>
                     {brandTitles.map((item: any, innerIndex: number) => (
                         <div key={innerIndex} className={styles.dropdown__item}>
-                            <input
-                                type="radio"
-                                className={styles.dropdown_radio}
-                                name={groupName}
-                                onChange={() => {
-                                    const updatedFilters = {
-                                      ...filters,
-                                      brand: brand.id,
-                                      brand_category: item.id
-                                    };
-                                    fetchProductsAndLog(updatedFilters);
-                                  }}                                
-                            />
-                            <span className={styles.dropdown_text}>{item.title}</span>
+                            <label className={styles.dropdown_label}>
+                                <input
+                                    type="radio"
+                                    className={styles.dropdown_radio}
+                                    name={groupName}
+                                    onChange={() => {
+                                        const updatedFilters = {
+                                        ...filters,
+                                        brand: brand.id,
+                                        brand_category: item.id
+                                        };
+                                        fetchProductsAndLog(updatedFilters);
+                                    }}
+                                />
+                                <span className={styles.dropdown_text}>{item.title}</span>
+                            </label>
                         </div>
                     ))}
                 </div>
