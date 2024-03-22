@@ -17,6 +17,7 @@ import UserProfilePage from "../pages/UserProfilePage";
 import ResendPage from "../pages/ResendPage";
 import ConfirmWithPassword from "../pages/ConfirmWithPassword";
 import Sender from "../pages/Sender";
+import GoogleNavigateLoginPage from "../pages/GoogleNavigateLoginPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -48,6 +49,7 @@ function MainRoutes() {
         <Route element={<CartPage/>} path="/cart" />
         <Route element={<ConfirmPage/>} path="/activate" />
         <Route element={<Sender/>} path="/activating/load" />
+        <Route element={<GoogleNavigateLoginPage/>} path="/login" />
         <Route element={<ConfirmWithPassword/>} path="/password/reset/confirm" />
         <Route element={<NewProductsPage/>} path="/new/products" />
         <Route element={<RecommendationProductsPage/>} path="/recommendation/products" />
