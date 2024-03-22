@@ -9,8 +9,7 @@ import { addFavorites, fetchFavorites } from "../store/features/favorite_and_car
 import { useDispatch, useSelector } from "react-redux"
 import { RootStates } from "../store/store"
 import { useNavigate } from "react-router-dom"
-import { notify, notifyError } from "./Toastify"
-import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
+import { notifyError } from "./Toastify"
 import { API_URL } from "../utils/consts"
 import checked from "../assets/svgs/card/Vector (9).svg";
 import 'ldrs/ring';
@@ -212,14 +211,7 @@ const Card: React.FC<CardProps> = ({  product, onClick }) => {
                             <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
                                 <a href="#">Быстрый заказ</a>
                             </button>
-                            <img src={shop} alt="" onClick={() => {
-                                if(user) {
-                                    dispatch(addToCart(product.id, 1, 1, 1))
-                                    notify(`Вы успешно добавили в корзину ${product.name}`)
-                                } else {
-                                    notifyError('Вы не авторизованы')
-                                }
-                            }} />
+                            <img src={shop} alt="" onClick={() => navigate(`/product/${product.id}`)}/>
                         </div>
                         <div className={styles.options_container}>
                             <h2>Цвет</h2>

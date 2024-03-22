@@ -113,7 +113,10 @@ function Navbar() {
               <img src={personal__office_svg} alt="Personal svg" />
             </div>
           </div>
-          <div className={`${styles.search__block} ${activeItem === "search__block" ? "active__navbar" : ""}`} onClick={() => handleItemClick("search__block")}>
+          <div 
+          className={`${styles.search__block} ${activeItem === "search__block" ? "active__navbar" : ""}`} 
+          // onClick={() => handleItemClick("search__block")}
+          >
             <input type="text" placeholder="Поиск..." name="search" />
             <img src={search_svg} alt="search_svg" className={styles.search__svg} />
           </div>

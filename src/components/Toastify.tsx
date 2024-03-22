@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 export function notify(msg: any) {
 	return toast.success(msg, {
 		position: "top-center",
-		autoClose: 2000,
+		autoClose: 2500,
 		hideProgressBar: false,
 		closeOnClick: true,
 		pauseOnHover: false,
@@ -17,7 +17,7 @@ export function notify(msg: any) {
 export function notifyError(msg: string) {
 	return toast.error(msg, {
 		position: "top-center",
-		autoClose: 5000,
+		autoClose: 2500,
 		hideProgressBar: false,
 		closeOnClick: true,
 		pauseOnHover: true,
