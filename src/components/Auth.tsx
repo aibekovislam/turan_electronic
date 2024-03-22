@@ -117,7 +117,9 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
           </div>
           <div className={styles.auth_sign}>
             <span>Войти через</span>
-            <img src={google} className={styles.sign_icon} />
+            <a href="https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=466150715276-pqd48j63eqpcms86v18vk0ima54lhjsv.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fturan-backend.online%2Faccounts%2Fgoogle%2Flogin%2Fcallback%2F&scope=profile%20email&response_type=code&state=HGgwBtAjOy23JNK7&access_type=online&service=lso&o2v=2&theme=mn&ddm=0&flowName=GeneralOAuthFlow">
+              <img src={google} className={styles.sign_icon} />
+            </a>
           </div>
         </div>
       </div>
