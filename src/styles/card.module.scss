@@ -132,8 +132,6 @@
     font-size: 14px;
     font-weight: 400;
     max-width: 245px;
-    height: 85px;
-    max-height: 85px;
     overflow: hidden;
 }
 
@@ -141,6 +139,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 3vw;
 }
 
 .btn {
