@@ -82,6 +82,10 @@ export interface BrandsI {
     brands: BrandsType[]
 }
 
+export interface NewsI {
+    news?: null | NewsType[]
+}
+
 export interface CarouselI {
     carousel: CarouselType[]
 }
@@ -209,6 +213,13 @@ export type BrandsType = {
     id? : number;
     title: string;
     logo_field: string;
+    image: string;
+}
+
+export type NewsType = {
+    id? : any;
+    title: string;
+    text: string;
     image: string;
 }
 
