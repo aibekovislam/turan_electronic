@@ -213,12 +213,12 @@
         border: 1px solid #FFFFFF;
         box-shadow: 16px 4px 64px 0px #123D6533;
         width: 100%;
-        height: 220px;
+        height: 180px;
         position: relative;
     }
     
     .cardMobile_container{
-        padding: 15px;
+        padding: 5px 15px;
     }
     
     .cardMobile_{
@@ -242,8 +242,8 @@
     }
     
     .cardMobile_wrapper__left > img:first-child {
-        width: 150px;
-        height: 150px;
+        width: 130px;
+        height: 130px;
         object-fit: contain;
         position: relative;
     }

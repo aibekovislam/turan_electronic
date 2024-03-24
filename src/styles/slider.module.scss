@@ -82,13 +82,15 @@
         height: 200px;
     }
     .carousel__item img {
+        object-fit: contain;
         height: 200px !important;
     }
     .text__carousel {
+        width: 250px;
         top: 10px;
-        font-size: 10px;
+        font-size: 14px;
         line-height: 15px;
-        max-width: 205px;
+        max-width: 250px;
     }
 }
 
