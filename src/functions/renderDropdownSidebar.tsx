@@ -18,8 +18,6 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
     const brandModels = brandCategoryArray('name');
     const productMemory = products ? filterMemory(products.map(product => product.memory)) : [];
 
-    console.log(productMemory)
-
     const handleColorClick = (color: string) => {
         setPickedColor(color === pickedColor ? null : color);
       
@@ -47,6 +45,7 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                         <input
                             type="radio"
                             className={styles.dropdown_radio}
+                            id={`radio_${index}_all`}
                             name={groupName}
                             onChange={() => {
                                 setPickedColor(null);
@@ -63,7 +62,7 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                             }}
                             checked={pickedColor === null}
                             />
-                        <span className={styles.dropdown_text}>Все</span>
+                            <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
                     </div>
                     <div className={`${styles.d_f_colors}`} style={{ justifyContent: "flex-start" }}>
                     {colors?.slice(0, showAllColors ? colors.length : 12).map((item: any, index: number) => (
@@ -85,6 +84,7 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                         <input
                             type="radio"
                             className={styles.dropdown_radio}
+                            id={`radio_${index}_all`}
                             name={groupName}
                             defaultChecked={true}
                             onChange={() => {
@@ -101,13 +101,14 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                                 fetchProductsAndLog(obj);
                             }}        
                         />
-                        <span className={styles.dropdown_text}>Все</span>
-                        {sortData(brandModels).map((item: any, index: number) => (
+                        <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                        {sortData(brandModels).slice(0, showAllColors ? brandModels.length : 8).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item}>
                                 <input
                                     type="radio"
                                     className={styles.dropdown_radio}
                                     name={groupName}
+                                    id={`radio_${index}`}
                                     onChange={() => {
                                         const updatedFilters = {
                                             ...filters,
@@ -118,14 +119,12 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                                         console.log(item)
                                     }}
                                 />
-                                <span className={styles.dropdown_text}>{item}</span>
+                                <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>{item}</label>
                             </div>
                         ))}
                     </div>
-                    <div className={styles.sidebar_all}>
-                        <span>
-                            Показать все 
-                        </span>
+                    <div className={styles.sidebar_all} onClick={() => setShowAllColors(!showAllColors)}>
+                        <span>{ showAllColors ? "Вернуться" : "Показать все" }</span>
                     </div>
                 </div>
             )
@@ -137,6 +136,7 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                             type="radio"
                             className={styles.dropdown_radio}
                             name={groupName}
+                            id={`radio_${index}_all`}
                             defaultChecked={true}
                             onChange={() => {
                                 let obj = {
@@ -152,13 +152,14 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                                 fetchProductsAndLog(obj)
                             }}
                         />
-                        <span className={styles.dropdown_text}>Все</span>
-                        {productMemory.sort(compareByVolume).map((item: any, index: number) => (
+                        <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                        {productMemory.sort(compareByVolume).slice(0, showAllColors ? productMemory.length : 8).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item}>
                                 <input
                                     type="radio"
                                     className={styles.dropdown_radio}
                                     name={groupName}
+                                    id={`radio_${index}_all`}
                                     onChange={() => {
                                         const updatedFilters = {
                                         ...filters,
@@ -168,14 +169,12 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                                         fetchProductsAndLog(updatedFilters);
                                     }}  
                                 />
-                                <span className={styles.dropdown_text}>{item.volume} ГБ</span>
+                                <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>{item.volume} ГБ</label>
                             </div>
                         ))}
                     </div>
-                    <div className={styles.sidebar_all}>
-                        <span>
-                            Показать все 
-                        </span>
+                    <div className={styles.sidebar_all} onClick={() => setShowAllColors(!showAllColors)}>
+                        <span>{ showAllColors ? "Вернуться" : "Показать все" }</span>
                     </div>
                 </div>
             )

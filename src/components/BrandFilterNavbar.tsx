@@ -1,7 +1,7 @@
 import styles from "../styles/brands_and_footer.module.scss";
 import { BrandsProps } from "../utils/interfacesAndTypes";
 import FilterSVG from "../assets/svgs/Vector (18).svg";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ArrowDown from "../assets/svgs/ArrowDown";
 import { renderDropdownContent } from "../functions/renderDropdown.tsx";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,7 @@ function BrandFilterNavbar({ brand, products }: BrandsProps) {
     const [pickedColor, setPickedColor] = useState<string | null>(null);
     const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
     const [ isOpen, setIsOpen ] = useState(false);
+    const sidebarRef = useRef<HTMLDivElement>(null);
     
     const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -21,6 +22,21 @@ function BrandFilterNavbar({ brand, products }: BrandsProps) {
     };
 
     const dispatch = useDispatch<any>();
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+          if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+            setIsOpen(false);
+          }
+        }
+    
+        console.log(isOpen)
+    
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [setIsOpen]);
 
     const [filters, setFilters] = useState({
         limit: 10,
@@ -70,7 +86,7 @@ function BrandFilterNavbar({ brand, products }: BrandsProps) {
                         <div>Все фильтры</div>
                         <img src={FilterSVG} className={styles.filter__svg} />
                     </div>
-                    <SidebarMenu isOpen={isOpen} setIsOpen={setIsOpen} brand={brand} products={products} />
+                    <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} />
                 </div>
             </div>
         </div>

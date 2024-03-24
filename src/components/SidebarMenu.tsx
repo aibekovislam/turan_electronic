@@ -7,8 +7,7 @@ import { renderDropdownSideBar } from '../functions/renderDropdownSidebar';
 import { RootStates } from '../store/store';
 import { fetchBrands } from '../store/features/brands/brandsSlice';
 
-
-function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
+function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef }: any) {
   const [pickedColor, setPickedColor] = useState<string | null>(null);
   const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
   const [showAllColors, setShowAllColors] = useState(false);
@@ -17,12 +16,7 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
 
     useEffect(() => {
         dispatch(fetchBrands())
-    }, [dispatch])
-
-    const toggleSidebar = () => {
-      setIsOpen(!isOpen);
-      setDropdownStates(Array(6).fill(false));
-    };
+    }, [dispatch])   
 
     const handleDropdownList = (index: number) => {
         const newDropdownStates = dropdownStates.map((state, i) => (i === index ? !state : false));
@@ -50,7 +44,7 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
 
   return (
     <>
-      <div className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
+      <div ref={sidebarRef} className={`${styles.sidebar} ${isOpen ? styles.open : ''}`} id='sidebar' >
         <div className={styles.d_f_filters}>
           <span className={styles.main_title_filters}>Фильтры</span>
           <button className={styles.closeBtn} onClick={toggleSidebar}>
