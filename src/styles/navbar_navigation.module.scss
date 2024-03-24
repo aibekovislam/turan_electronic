@@ -77,6 +77,8 @@
   cursor: pointer;
   background: none;
   border: none;
+  width: 28px;
+  height: 28px;
 }
 
 .sidebar_title {
@@ -84,6 +86,7 @@
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  user-select: none;
 }
 
 .sidebar_title > span{
@@ -158,13 +161,11 @@
   cursor: pointer;
 }
 
-
-
 .brands__block_arrow_down {
   svg {
       transition: transform 0.3s ease;
-      width: 15vw;
-      height: 15vw;
+      width: 28px;
+      height: 28px;
   }
 }
 

@@ -11,6 +11,7 @@ import { fetchBrands } from '../store/features/brands/brandsSlice';
 function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
   const [pickedColor, setPickedColor] = useState<string | null>(null);
   const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
+  const [showAllColors, setShowAllColors] = useState(false);
   const colors = useSelector((state: RootStates) => state.products.colors);
   const dispatch = useDispatch<any>();
 
@@ -18,7 +19,10 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
         dispatch(fetchBrands())
     }, [dispatch])
 
-    const toggleSidebar = () => setIsOpen(!isOpen);
+    const toggleSidebar = () => {
+      setIsOpen(!isOpen);
+      setDropdownStates(Array(6).fill(false));
+    };
 
     const handleDropdownList = (index: number) => {
         const newDropdownStates = dropdownStates.map((state, i) => (i === index ? !state : false));
@@ -67,7 +71,7 @@ function SidebarMenu({ isOpen, setIsOpen, brand, products }: any) {
                   </div>
               </div>
                   <div >
-                      { dropdownStates[index] && renderDropdownSideBar(index, products, colors, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters) }
+                      { dropdownStates[index] && renderDropdownSideBar(index, products, colors, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors) }
                   </div>
             </div>
           ))}

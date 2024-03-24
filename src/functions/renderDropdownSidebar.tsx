@@ -1,9 +1,9 @@
 import styles from "../styles/navbar_navigation.module.scss";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
-import { extractPropertyArray } from "./filterFunction";
+import { compareByVolume, extractPropertyArray, filterMemory, sortData } from "./filterFunction";
 
-export function renderDropdownSideBar(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any) {
+export function renderDropdownSideBar(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any, showAllColors: any, setShowAllColors: any) {
 
     const isColorPicked = (color: string) => {
         return color === pickedColor;
@@ -16,8 +16,9 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
     };
 
     const brandModels = brandCategoryArray('name');
-    const productMemory = brandCategoryArray('memory');  
-    
+    const productMemory = products ? filterMemory(products.map(product => product.memory)) : [];
+
+    console.log(productMemory)
 
     const handleColorClick = (color: string) => {
         setPickedColor(color === pickedColor ? null : color);
@@ -64,12 +65,15 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                             />
                         <span className={styles.dropdown_text}>Все</span>
                     </div>
-                    <div className={`${styles.d_f_colors}`}>
-                        {colors?.map((item: any, index: number) => (
-                            <div key={index} className={`${styles.dropdown__item}`}>
-                                <div onClick={() => {handleColorClick(item)}} className={`${styles.color_block} ${isColorPicked(item) ? styles.color_picked : ''}`} style={{ background: item }}></div>
-                            </div>
-                        ))}
+                    <div className={`${styles.d_f_colors}`} style={{ justifyContent: "flex-start" }}>
+                    {colors?.slice(0, showAllColors ? colors.length : 12).map((item: any, index: number) => (
+                        <div key={index} className={`${styles.dropdown__item}`}>
+                            <div onClick={() => {handleColorClick(item)}} className={`${styles.color_block} ${isColorPicked(item) ? styles.color_picked : ''}`} style={{ background: item }}></div>
+                        </div>
+                    ))}
+                    </div>
+                    <div className={styles.sidebar_all} onClick={() => setShowAllColors(!showAllColors)}>
+                        <span>{ showAllColors ? "Вернуться" : "Показать все" }</span>
                     </div>
                 </div>
             </div>
@@ -98,7 +102,7 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                             }}        
                         />
                         <span className={styles.dropdown_text}>Все</span>
-                        {brandModels.map((item: any, index: number) => (
+                        {sortData(brandModels).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item}>
                                 <input
                                     type="radio"
@@ -149,7 +153,7 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                             }}
                         />
                         <span className={styles.dropdown_text}>Все</span>
-                        {productMemory.map((item: any, index: number) => (
+                        {productMemory.sort(compareByVolume).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item}>
                                 <input
                                     type="radio"
@@ -169,9 +173,9 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                         ))}
                     </div>
                     <div className={styles.sidebar_all}>
-                    <span>
-                        Показать все 
-                    </span>
+                        <span>
+                            Показать все 
+                        </span>
                     </div>
                 </div>
             )

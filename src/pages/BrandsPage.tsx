@@ -17,7 +17,6 @@ function BrandsPage() {
     const dispatch = useDispatch<any>();
     const oneBrand = useSelector((state: RootStates) => state.oneBrand.brand);
     const products = useSelector((state: RootStates) => state.products.products);
-    const colors = useSelector((state: RootStates) => state.products.colors);
     const filteredProducts = useSelector((state: RootStates) => state.products.filteredProducts);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
 
@@ -91,7 +90,7 @@ function BrandsPage() {
     if(oneBrand != undefined && filteredProducts !== undefined) {
         return (
             <>
-                <BrandFilterNavbar brand={oneBrand} products={filteredData} colors={colors} />
+                <BrandFilterNavbar brand={oneBrand} products={filteredData} />
                 <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ marginTop: "30px" }}>
                 { filteredProducts?.length !== 0 ? (
                     filteredProducts?.map((product: any) => (
