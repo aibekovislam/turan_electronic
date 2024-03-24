@@ -230,11 +230,13 @@ input[type="range"]::-moz-range-thumb {
     .accessories__item_img_prev {
         width: 3.3vw;
         height: 3.3vw;
+        display: none !important;
         // left: 90% !important;
     }
     .accessories__item_img {
         width: 3.3vw;
         height: 3.3vw;
+        display: none !important;
     }
     .accessories__item_img img, .accessories__item_img_prev img {
         width: 2vw;
