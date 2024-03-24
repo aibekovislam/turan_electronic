@@ -210,6 +210,11 @@
     user-select: none;
 }
 
+.dropdown_text {
+    user-select: none;
+    cursor: pointer;
+}
+
 .brands__block_arrow_down {
     img {
         transition: transform 0.3s ease;

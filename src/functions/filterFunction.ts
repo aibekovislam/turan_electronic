@@ -27,15 +27,33 @@ export const filterMemory = (memory: any[]) => {
     const volumeSet = new Set();
 
     memory.forEach(item => {
-        if (!volumeSet.has(item.volume)) {
-            uniqueVolumes.push(item);
-            volumeSet.add(item.volume);
-        }
+        item.forEach((mem: any) => {
+            if (!volumeSet.has(mem.volume)) {
+                volumeSet.add(mem.volume);
+                uniqueVolumes.push(mem);
+            }
+        })
     });
 
     return uniqueVolumes;
 }
 
+
+export const returnColorsForFilter = (products: any[]) => {
+    const uniqueVolumes: any[] = [];
+    const volumeSet = new Set();
+
+    products.forEach(item => {
+        item.forEach((color: any) => {
+            if (!volumeSet.has(color.hash_code)) {
+                volumeSet.add(color.hash_code);
+                uniqueVolumes.push(color);
+            }
+        })
+    });
+
+    return uniqueVolumes;
+}
 
 export const extractBrandCategoryAndTitle = (products: ProductsType[] | undefined): { id: any, title: any }[] => {
     if (!products) {
@@ -75,3 +93,25 @@ export const getHighestPrice = (products: any) => {
     products.map((item: any) => acc += item.price);
     return acc;
 }
+
+
+export const sortData = (data: any) => {
+    return data.sort((a: any, b: any) => {
+      if (a < b) return -1;
+      if (a > b) return 1;
+    
+      if (!isNaN(a) && !isNaN(b)) {
+        return Number(a) - Number(b);
+      }
+  
+      if (!isNaN(a) && isNaN(b)) return 1;
+      if (isNaN(a) && !isNaN(b)) return -1;
+  
+      return 0;
+    });
+};
+
+export const compareByVolume = (a: any, b: any) => {
+    return a.volume - b.volume;
+};
+  
