@@ -91,8 +91,7 @@
 
 .navigation{
     display: flex;
-    width: 100px;
-    height: 40px;
+    gap: 10px;
 }
 
 .navigation__item {
@@ -102,7 +101,7 @@
     // width: 10vw;
     // height: 3vw;
     border-radius: 16px;
-    padding: 1px 10px 1px 10px;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -217,7 +216,7 @@ td {
     border: none;
     text-align: left;
     padding: 8px;
-    position: relative; /* Добавьте это свойство */
+    position: relative; 
 }
 
 th {
@@ -364,4 +363,122 @@ td:nth-child(2)::after {
     border: none;
     padding: 15px 10px;
     border-radius: 10px;
+}
+
+
+@media only screen and (max-width: 1015px) {
+    .detail_container{
+        gap: 100px;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .detail_container{
+        gap: 50px;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .detail_container{
+        display: flex;
+        flex-direction: column;
+    }
+    .detail_wrapper__right{
+        width: initial;
+    }
+    .description{
+        width: initial;
+    }
+    .reviews{
+        width: initial;
+    }
+    .title{
+        display: flex;
+        justify-content: center;
+    }
+    .storage{
+        justify-content: flex-start;
+    }
+}
+
+//! DetailMobile
+@media screen and (max-width: 520px) {
+    .mobile_detail__title > div:first-child {
+        font-weight: 500;
+        font-size: 20px;
+    }
+    .mobile_detail__util{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .options > div{
+        font-size: 16px;
+    }
+    .color_block { 
+        width: 20px;
+        height: 20px;
+    }
+    .detail_img {
+        width: 33px ;
+        height: 31px;
+    }
+    .storage{
+        margin-top: initial;
+        justify-content: initial;
+    }
+    .price{
+        display: flex;
+        justify-content: flex-end;
+    }
+    .navigation{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .mobile_detail__button{
+        display: flex;
+        justify-content: center;
+    }
+    .btn > a{
+        font-size: 18px;
+        font-weight: 400;
+    }
+    .mobile_detail_info{
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        margin-top: 25px;
+    }
+    .option_btn {
+        border-radius: 10px;
+        border: 1px solid #fff;
+        box-shadow: 16px 36px 64px 0px #6f88a07a;
+        width: 100%;
+        height: 30px;
+        color: #000;
+        background-color: transparent;
+        cursor: pointer;
+    }
+    .selected_btn{
+        border-radius: 10px;
+        width: 100%;
+        height: 30px;
+        color: #000;
+        cursor: pointer;
+        border: 1px solid #FFFFFF;
+        background: #E3EDF7;
+        box-shadow: 3px 3px 7px 0px rgba(136, 165, 191, 0.4784313725) inset;
+    }    
+    .dots__details_span::after{
+        bottom: 2px
+    }
+    .сharacteristics{
+        margin-top: initial;
+    }
+    .description{
+        margin-top: 20px;
+    }
+    .description > p {
+        font-size: 12px;
+    }
 }

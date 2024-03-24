@@ -97,8 +97,6 @@
 
 //! sliderDetail
 
-
-
 .carousel_detail{
     border-radius: 24px;
     // border: 1px solid #fff;
@@ -108,6 +106,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    width: auto;
+    height: auto;
 }   
 
 .flex_row{
@@ -119,8 +119,6 @@
 }
   
 .thumbnail{
-//   padding-left: 20px;
-    // border: 1px solid #fff;
     box-shadow: -4px -2px 16px 0px #FFFFFF;
     box-shadow: 16px 36px 64px 0px #6f88a07a;
     width: 135px;
@@ -155,4 +153,12 @@
     width: 100%;
     height: 300px;
     object-fit: contain;
+}
+
+@media only screen and (max-width: 520px)  {
+    .thumbnail{
+        width: 105px;
+        height: 100px;
+    }
+
 }
