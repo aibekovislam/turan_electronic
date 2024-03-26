@@ -25,12 +25,15 @@ function NewProductsList() {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchProducts(default_filters))
+    dispatch(fetchProducts({
+      ...default_filters,
+      limit: 100
+    }))
   }, [dispatch])
 
-  const displayedProducts = products.slice(0, 4);
+  const filteredNewProducts = products?.filter((item) => item.is_arrived === true);
 
-  const filteredNewProducts = displayedProducts.filter((item) => item.is_arrived === true);
+  const displayedProducts = filteredNewProducts?.slice(0, 4);
 
   const navigate = useNavigate();
 
@@ -52,7 +55,7 @@ function NewProductsList() {
             </div>
         </div>
         <div className={isMobile ? "d-f__new-product__mobile" : "d-f__new-product"}>
-          {filteredNewProducts?.map((product: ProductsType, index: number) => (
+          {displayedProducts?.map((product: ProductsType, index: number) => (
             <NewProductsCard product={product} key={index} onClick={() => handleNavigate(product.id)} />
           ))}
         </div>

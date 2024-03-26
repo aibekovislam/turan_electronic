@@ -152,6 +152,11 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                     <div className={styles.card_container}>
                         <div className={styles.card}>
                             <div className={styles.star_container}>
+                                { product.is_arrived ? (
+                                    <div className={styles.new_productCard_label}>
+                                        Новое
+                                    </div>
+                                ) : null}
                                 <div>
                                     {[1, 2, 3, 4, 5].map((star) => (
                                         <span
