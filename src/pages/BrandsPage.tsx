@@ -99,7 +99,7 @@ function BrandsPage() {
                             <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
                         ))
                     ) : (
-                        <div>Loading...</div>
+                        <div>Пока товаров нету в наличии</div>
                     )  
                 }
                 </div>

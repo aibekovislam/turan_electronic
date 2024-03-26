@@ -23,7 +23,8 @@ export interface BrandsProps {
 }
 
 export interface ArrowProps {
-    isUp: boolean
+    isUp: boolean,
+    style?: any
 }
 
 export interface AuthAndRegProps {
