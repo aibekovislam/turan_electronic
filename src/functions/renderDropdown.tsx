@@ -3,7 +3,7 @@ import { ProductsType } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
 import { compareByVolume, extractBrandCategoryAndTitle, extractPropertyArray, filterMemory, returnColorsForFilter, sortData } from "./filterFunction";
 
-export function renderDropdownContent(index: number, products: ProductsType[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any) {
+export function renderDropdownContent(index: number, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any, products: ProductsType[] | undefined) {
 
     const isColorPicked = (color: string) => {
         return color === pickedColor;

@@ -19,6 +19,7 @@ export interface BrandsProps {
     brand: BrandsType,
     products?: ProductsType[] | undefined,
     colors?: string[] | undefined,
+    dataForDropDown: any
 }
 
 export interface ArrowProps {
@@ -52,9 +53,10 @@ export interface ReviewI {
 }
 
 export interface ProductsI {
-    products: ProductsType[],
+    products?: ProductsType[],
     colors?: string[],
-    filteredProducts?: ProductsType[]
+    filteredProducts?: ProductsType[],
+    filterByBrand?: ProductsType[]
 }
 
 export interface ActiveUserI {

@@ -8,6 +8,7 @@ const initialState: ProductsI = {
     products: [],
     colors: [],
     filteredProducts: [],
+    filterByBrand: []
 };  
 
 const productSlice = createSlice({
@@ -24,6 +25,9 @@ const productSlice = createSlice({
         setFilterProducts: (state, action: PayloadAction<ProductsI>) => {
             state.filteredProducts = action.payload.products;
         },
+        setFilterByBrand: (state, action: PayloadAction<ProductsI>) => {
+            state.filterByBrand = action.payload.filterByBrand;
+        }
     }
 });
 
@@ -74,6 +78,20 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
             return "Такого нету"
         }
 
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getProductsByOneBrand = (filters: any): AppThunk => async (dispatch) => {
+    try {
+        const queryParams = {
+            brand: filters.brand || [],
+        };
+
+        const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
+        const data: ProductsI = { filterByBrand: response.data.results };
+        dispatch(productSlice.actions.setFilterByBrand(data));
     } catch (error) {
         console.log(error);
     }

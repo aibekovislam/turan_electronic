@@ -144,8 +144,6 @@ function DetailPage() {
         setOpenReviewInput(false);
     };
 
-
-
     useEffect(() => {
         setFavoriteLoad(false);
     }, [favorites])
@@ -159,6 +157,8 @@ function DetailPage() {
             }
         }
     }, [activeItem])
+
+    console.log(product)
 
     return (
         <div>
