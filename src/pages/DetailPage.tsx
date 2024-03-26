@@ -167,11 +167,9 @@ function DetailPage() {
                     {product && product?.id === numberedId ? (
                         <div className={styles.mobile_detail__container}>
                             <div className={styles.mobile_detail}>
-
                                 <div className={styles.section_title}>
                                     <div>Главная | Каталог | {product?.brand_category_title} | {product?.name}</div>
                                 </div>
-
                                 <div className={styles.mobile_detail__title}>
                                     <div>
                                         Apple IPhone 14 Pro Max
@@ -196,11 +194,9 @@ function DetailPage() {
                                     </div>
 
                                 </div>
-
                                 <div className={styles.slider_main}>
                                     <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
                                 </div>
-
                                 <div className={styles.mobile_detail__util}>
                                     <div className={styles.options}>
                                         <div>Выбрать цвет</div>
@@ -227,7 +223,6 @@ function DetailPage() {
                                         style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }}
                                     />
                                 </div>
-
                                 <div className={styles.storage}>
                                     <div>Память</div>
                                     <ul className={styles.navigation}>
@@ -245,23 +240,19 @@ function DetailPage() {
                                         ))}
                                     </ul>
                                 </div>
-
                                 <div className={styles.price}>
                                     {<div>{calculateDiscountedPrice(productPrice, product.discount)} сом</div>}
                                 </div>
-
                                 <div className={styles.mobile_detail__button}>
                                     <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
                                         <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
                                     </button>
                                 </div>
-
                                 <div className={styles.mobile_detail_info}>
                                     <button onClick={() => setVisibleDiv("div1")} className={visibleDiv === "div1" ? styles.selected_btn : styles.option_btn}>Характеристика</button>
                                     <button onClick={() => setVisibleDiv("div2")} className={visibleDiv === "div2" ? styles.selected_btn : styles.option_btn}>Описание</button>
                                     <button onClick={() => setVisibleDiv("div3")} className={visibleDiv === "div3" ? styles.selected_btn : styles.option_btn}>Отзыв</button>
                                 </div>
-
                                 <div>
                                     {visibleDiv === "div1" ? (
                                         <div className={styles.сharacteristics}>
@@ -340,10 +331,6 @@ function DetailPage() {
                                         )
                                     ) : null}
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     ) : (
@@ -351,7 +338,6 @@ function DetailPage() {
                             <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                         </div>
                     )}
-
                 </div>
             ) : (
                 <>
