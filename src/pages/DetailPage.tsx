@@ -83,10 +83,10 @@ function DetailPage() {
             return;
         }
 
-        if (id !== undefined && user && activeItem !== undefined) {
+        if (id !== undefined && user && activeItem !== undefined && token) {
             dispatch(addToCart(id, colorID, 1, memoryID));
             setAddedToCart(true);
-        } else if (!user) {
+        } else if (!user || !token) {
             setAddedToCart(false);
             navigate("/auth");
             notifyError('Вы не авторизованы');
