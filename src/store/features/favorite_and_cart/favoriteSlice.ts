@@ -23,7 +23,7 @@ export const fetchFavorites = (): AppThunk => async (dispatch) => {
         const response = await $axios.get(`${API_URL}/users/favorites/`);
         dispatch(favoriteSlice.actions.setFavorites(response.data.results));
     } catch (error) {
-        console.log(error);
+        return error;
     }
 }
 
@@ -33,7 +33,7 @@ export const addFavorites = (products_id: number): AppThunk => async (dispatch) 
         dispatch(fetchFavorites());
         return response.data
     } catch (error) {
-        console.log(error);
+        return error;
     }
 }
 
@@ -43,7 +43,7 @@ export const clearFavorites = (): AppThunk => async (dispatch) => {
         dispatch(fetchFavorites());
         console.log(response);
     } catch (error) {
-        console.log(error);
+        return error;
     }
 }
 

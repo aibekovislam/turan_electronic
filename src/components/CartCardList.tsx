@@ -79,7 +79,6 @@ function CartCardList() {
   }
 
   const filterPriceToMemory = (product: any, memory_name: any) => {
-    console.log(product);
     const memory = product.memory_price[memory_name];
     if (memory) {
         const price = memory.replace(/[^\d.]/g, '');
@@ -132,7 +131,6 @@ function CartCardList() {
                       <button onClick={() => {
                         if (counts[cart.id] <= 1){
                           dispatch(deleteCart(cart.id))
-                          console.log(cart.id)
                         } else {
                           decrementCount(cart.id)
                         }
