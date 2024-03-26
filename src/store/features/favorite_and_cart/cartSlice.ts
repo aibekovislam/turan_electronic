@@ -68,7 +68,8 @@ export const clearCart = (): AppThunk => async (dispatch) => {
     try {
         const response = await $axios.post(`${API_URL}/carts/clear/`);
         console.log(response);
-        dispatch(fetchCarts())
+        dispatch(fetchCarts());
+        localStorage.removeItem("addedProducts");
     } catch (error) {
         console.log(error);
     }
