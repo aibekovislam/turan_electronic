@@ -36,7 +36,9 @@ function CartCardList() {
   };  
 
   const decrementCount = (id: string) => {
+    console.log(counts[id])
     if (counts[id] <= 1) {
+      localStorage.removeItem("addedProducts");
       dispatch(deleteCart(+id));
     } else {
       dispatch(changeCountCartProduct(counts[id] - 1, +id));
@@ -59,7 +61,7 @@ function CartCardList() {
 
   function getImagesByColor(colorId: any, productData: any) {
     const colorHash = productData.color.find((color: any) => color.id === colorId)?.hash_code;
-    return productData.product_images[colorHash] || [];
+    return productData.product_images[colorHash][0] || [];
   }
 
   function getColorHashCode(colorId: any, productData: any) {
@@ -79,10 +81,9 @@ function CartCardList() {
   }
 
   const filterPriceToMemory = (product: any, memory_name: any) => {
-    const memory = product.memory_price[memory_name];
+    const memory = product?.memory_price ? product?.memory_price[memory_name] : null;
     if (memory) {
         const price = memory.replace(/[^\d.]/g, '');
-        console.log(price);
         return price;
     } else {
         console.log('Цена для указанной памяти не найдена');
@@ -114,7 +115,7 @@ function CartCardList() {
                   )}
                 </div>
                 <div className={styles.cart_content}>
-                    <p>{ `${cart?.product.name} ${cart.memory_name !== "Нету" && cart.memory_name} `}ГБ</p>
+                    <p>{ `${cart?.product.name} ${cart.memory_name !== "0" ? cart.memory_name + " ГБ" : ""} `}</p>
                     <div className={styles.cart_description} >{ cart?.product.description.slice(0, 120) }...</div>
                     <div className={styles.colors}> Цвета: 
                       { getColorHashCode(cart.color, cart.product).length !== 0 ? (
@@ -129,11 +130,8 @@ function CartCardList() {
                     </div>
                     <div className={styles.cart_counter}>
                       <button onClick={() => {
-                        if (counts[cart.id] <= 1){
-                          dispatch(deleteCart(cart.id))
-                        } else {
                           decrementCount(cart.id)
-                        }
+                          console.log("clicked")
                       }}>−</button>
                       <span>{counts[cart.id] || 1}</span> 
                       <button onClick={() => incrementCount(cart.id)}>+</button>
@@ -146,7 +144,7 @@ function CartCardList() {
                         <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) } сом</div>
                       </>
                     ) : (
-                      <div className={styles.discount_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name)} сом</div>
+                      <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} сом</div>
                     ) }
                 </div>
                 <div className={styles.cart_rate}>
@@ -170,7 +168,7 @@ function CartCardList() {
         )) }
         <div className={styles.total_block}>
           Итого: {carts
-            .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount))
+            .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart.product.memory_price !== null ? filterPriceToMemory(cart?.product, cart?.memory_name) : cart?.product.price, cart?.product.discount))
             .reduce((acc, price) => acc + price, 0)
             .toLocaleString("ru-RU")} сом
         </div>

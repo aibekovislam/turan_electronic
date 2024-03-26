@@ -13,7 +13,7 @@ import { colorPickToAddToCart, fetchOneProducts } from "../store/features/produc
 import { addReview, fetchReviews } from "../store/features/reviews/reviewSlice"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice"
-import { notifyError } from "../components/Toastify"
+import { notify, notifyError } from "../components/Toastify"
 import 'ldrs/ring';
 import { ping } from 'ldrs'
 
@@ -78,14 +78,22 @@ function DetailPage() {
     }
 
     const handleAddToCart = (id: number | undefined) => {
-        if (memoryID === 0) {
-            notifyError("Выберите объем памяти");
-            return;
+        if(product?.memory_price) {
+            if (memoryID === 0) {
+                notifyError("Выберите объем памяти");
+                return;
+            }
         }
 
         if (id !== undefined && user && activeItem !== undefined && token) {
-            dispatch(addToCart(id, colorID, 1, memoryID));
+            dispatch(addToCart(id, colorID, 1, memoryID === 0 ? 13 : memoryID));
             setAddedToCart(true);
+
+            const addedProducts = JSON.parse(localStorage.getItem('addedProducts') || '[]');
+            const updatedProducts = [...addedProducts, id];
+            localStorage.setItem('addedProducts', JSON.stringify(updatedProducts));
+
+            notify(`Вы добавили ${product?.name} в корзину`)
         } else if (!user || !token) {
             setAddedToCart(false);
             navigate("/auth");
@@ -93,6 +101,11 @@ function DetailPage() {
         }
     };
 
+    useEffect(() => {
+        const addedProducts = JSON.parse(localStorage.getItem('addedProducts') || '[]');
+        const addedToCart = addedProducts.includes(product?.id);
+        setAddedToCart(addedToCart);
+    }, [product]);    
 
     const handleClickFavorite = (product_id: number) => {
         if (user && token) {
@@ -150,10 +163,12 @@ function DetailPage() {
 
     useEffect(() => {
         if (activeItem) {
-            let price = product?.memory_price[(activeItem as any)["volume"]];
-            let transPrice = price?.replace(/[^\d.]/g, '');
-            if (transPrice) {
-                setProductPrice(+transPrice);
+            if(product?.memory_price) {
+                let price = product?.memory_price[(activeItem as any)["volume"]];
+                let transPrice = price?.replace(/[^\d.]/g, '');
+                if (transPrice) {
+                    setProductPrice(+transPrice);
+                }
             }
         }
     }, [activeItem])
@@ -224,7 +239,11 @@ function DetailPage() {
                                     />
                                 </div>
                                 <div className={styles.storage}>
-                                    <div>Память</div>
+                                    { product.memory_price ? (
+                                        <div>Память</div>
+                                    ) : (
+                                        null
+                                    ) }
                                     <ul className={styles.navigation}>
                                         {product?.memory?.map((item: any, index: number) => (
                                             <li
@@ -400,7 +419,11 @@ function DetailPage() {
                                             <div>{product?.name}</div>
                                         </div>
                                         <div className={styles.storage}>
-                                            <div>Память</div>
+                                            { product.memory_price ? (
+                                                <div>Память</div>
+                                            ) : (
+                                                null
+                                            ) }
                                             <ul className={styles.navigation}>
                                                 {product?.memory?.map((item: any, index: number) => (
                                                     <li

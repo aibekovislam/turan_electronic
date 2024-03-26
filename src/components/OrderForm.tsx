@@ -3,6 +3,8 @@ import styles from "../styles/cart.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { addOrder, fetchCities, fetchRegions } from "../store/features/order/orderSlice";
+import { fetchCarts } from "../store/features/favorite_and_cart/cartSlice";
+import { notify } from "./Toastify";
 // import { useNavigate } from "react-router-dom";
 
 function OrderForm({ products }: any) {
@@ -64,6 +66,9 @@ function OrderForm({ products }: any) {
       console.log(orderFormValue)
       setSendedForm(true);
       console.log(orderFormValue.items)
+      dispatch(fetchCarts())
+      localStorage.removeItem("addedProducts");
+      notify("Спасибо за покупку, мы скоро свяжемся с вами")
       // navigate("/")
     } catch (error) {
       console.log(error);
