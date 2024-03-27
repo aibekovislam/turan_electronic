@@ -1,6 +1,7 @@
 .card_main{
     width: 275px;
     height: auto;
+    max-height: 535px;
     border-radius: 24px;
     border: 1px solid #fff;
     box-shadow: 16px 36px 64px 0px #6f88a07a;
@@ -16,6 +17,7 @@
 
 .card_container{
     padding: 15px;
+    width: max-content;
 }
 
 .card{
@@ -139,7 +141,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 3vw;
+    margin-top: 30px;
 }
 
 .btn {
