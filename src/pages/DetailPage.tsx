@@ -86,7 +86,8 @@ function DetailPage() {
         }
 
         if (id !== undefined && user && activeItem !== undefined && token) {
-            dispatch(addToCart(id, colorID, 1, memoryID === 0 ? 13 : memoryID));
+            console.log(productPrice)
+            dispatch(addToCart(id, colorID, 1, memoryID === 0 ? 13 : memoryID, productPrice));
             setAddedToCart(true);
 
             const addedProducts = JSON.parse(localStorage.getItem('addedProducts') || '[]');

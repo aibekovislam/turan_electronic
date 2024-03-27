@@ -35,7 +35,8 @@ function OrderForm({ products }: any) {
       product: item.product.id,
       color: item.color,
       memory: item.memory,
-      count: item.count
+      count: item.count,
+      price: item.price
     }))  
   })
 

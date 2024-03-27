@@ -37,13 +37,15 @@ export const deleteCart = (id: number): AppThunk => async (dispatch) => {
     }
 }
 
-export const addToCart = (product_id: number | undefined, color: number | undefined, count: number, memory: number | undefined): AppThunk => async (dispatch) => {
+export const addToCart = (product_id: number | undefined, color: number | undefined, count: number, memory: number | undefined, price: any | undefined): AppThunk => async (dispatch) => {
     try {
+        const productPrice = price; 
         const obj = {
             product: product_id,
             count: count,
             color: color,
-            memory: memory
+            memory: memory,
+            productPrice, price
         }
         const response = await $axios.post(`${API_URL}/carts/`, obj);
         console.log(response, obj)
