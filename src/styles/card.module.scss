@@ -6,6 +6,7 @@
     border: 1px solid #fff;
     box-shadow: 16px 36px 64px 0px #6f88a07a;
     cursor: pointer;
+    padding-bottom: 15px;
 }
 
 .card_mini{
@@ -18,6 +19,11 @@
 .card_container{
     margin: 15px auto;
     max-width: max-content;
+}
+
+.title_container {
+    max-width: 245px;
+    height: 145px;
 }
 
 .card{
@@ -137,11 +143,14 @@
     overflow: hidden;
 }
 
+.btn_and_options {
+    margin-top: 30px;
+}
+
 .btn_container{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 30px;
 }
 
 .btn {

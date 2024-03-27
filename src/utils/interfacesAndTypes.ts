@@ -137,6 +137,7 @@ export type ProductsType = {
     rating: number;
     in_stock?: boolean;
     discount: number;
+    created_at: any,
     characteristics: {
         [key: string]: any
     };

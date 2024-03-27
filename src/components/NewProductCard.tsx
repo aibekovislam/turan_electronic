@@ -13,6 +13,7 @@ import { notifyError } from "./Toastify";
 import { API_URL } from "../utils/consts";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
+import { calculateDiscountedPrice } from "../functions/calculateDiscounte";
 
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
     const navigate = useNavigate();
@@ -142,81 +143,89 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                 </div>
             </div>
         ) : (
-        <div className={`${styles.card_main} ${styles.card_main_mobile}`}>
-            <div className={styles.card_container}>
-                <div className={styles.card}>
-                    <div className={styles.star_container}>
-                        { product.is_arrived ? (
-                            <div className={styles.new_productCard_label}>
-                                Новое
-                            </div>
-                        ) : null}
-                        <div>
-                            {[1, 2, 3, 4, 5].map((star) => (
-                                <span
-                                    key={star}
-                                    style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
+            <div className={styles.card_main}>
+                <div className={styles.card_container}>
+                    <div className={styles.card}>
+                        <div className={styles.star_container}>
+                            { product.is_arrived ? (
+                                <div className={styles.new_productCard_label}>
+                                    Новое
+                                </div>
+                            ) : null}
+                            <div>
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <span
+                                        key={star}
+                                        style={{ color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
                                     >
-                                &#9733;
-                                </span>
-                            ))}
+                                        &#9733;
+                                    </span>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles.img_container} onClick={onClick}>
-                        { imgLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "190px" }}>
+                        <div className={styles.img_container} onClick={() => onClick(product.id)}>
+                            {imgLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "190px" }}>
                                 <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                                 Загрузка...
-                            </div> }
-                        { filteredImages ? (
-                                <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none": "block" }} />
+                            </div>}
+                            {filteredImages ? (
+                                <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
                             ) : (
-                                <img src={product.default_image} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none": "block" }} />
-                        ) }
-                    </div>
-                    <div className={styles.heart_container}>
-                    { favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div> }
-                        <img
-                            src={isProductInFavorites ? fillHeart : heart}
-                            onClick={() => {
-                                handleClickFavorite(product.id);
-                            }}
-                            style={{ display: favoriteLoaded ? "none": "block" }}
-                        />
-                    </div>
-                    <div className={styles.title_container}>
-                        { product.in_stock ? (
-                            <div className={styles.isAvilableProduct}>
-                                <img src={checked} />
-                                <span>В наличии</span>
+                                <img src={product.default_image} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
+                            )}
+                        </div>
+                        <div className={styles.heart_container}>
+                            {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
+                            <img
+                                src={isProductInFavorites ? fillHeart : heart}
+                                onClick={() => {
+                                    handleClickFavorite(product.id);
+                                }}
+                                style={{ display: favoriteLoaded ? "none" : "block" }}
+                            />
+                        </div>
+                        <div className={styles.title_container}>
+                            <div className={styles.price}>
+                                <h2>{product.discount ? calculateDiscountedPrice(product.price, product.discount) : product.price} сом</h2>
+                                {product.discount !== 0 && <h3>{product.price} сом</h3>}
                             </div>
-                        ) : (
-                            <div style={{ color: "brown" }}>Нет в наличии</div>
-                        ) }
-                        <div className={styles.price}>
-                            <h2 style={{ marginBottom: "0" }}>{ product.price } сом</h2>
+                            <div className={styles.discount}>
+                                {product?.discount !== 0 && (
+                                    <>
+                                        <div>
+                                            -{product.discount}%
+                                        </div>
+                                        <div>
+                                            экономия {product.price - calculateDiscountedPrice(product.price, product.discount)} сом
+                                        </div>
+                                    </>
+                                )
+                                }
+                            </div>
+                            <div className={styles.title}>
+                                <h2>{product.name}</h2>
+                                <p>{product?.description !== undefined ? product?.description.slice(0, 35) + "..." : ""}</p>
+                            </div>
                         </div>
-                        <div className={styles.title}>
-                            <h2>{ product.name }</h2>
-                            <p>{ product.description.slice(0, 35) }</p>
+                        <div className={styles.btn_and_options}>
+                            <div className={styles.btn_container}>
+                                <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
+                                    <a href="#">Быстрый заказ</a>
+                                </button>
+                                <img src={shop} alt="" onClick={() => navigate(`/product/${product.id}`)} />
+                            </div>
+                            <div className={styles.options_container}>
+                                <h2>Цвет</h2>
+                                {product?.color !== undefined ? product?.color.map((item: any, index: number) => (
+                                    <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
+                                )) : (
+                                    <div>Loading...</div>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                    <div className={styles.btn_container}>
-                        <button className={styles.btn} onClick={onClick}>
-                            <a href="#">Быстрый заказ</a>
-                        </button>
-                        <img src={shop} alt="" />
-                    </div>
-                    <div className={styles.options_container}>
-                        <h2>Цвет</h2>
-                        { product?.color !== undefined ? product?.color.map((item: any, index: number) => (
-                            <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
-                        )) : (
-                            <div>Loading...</div>
-                        ) }
                     </div>
                 </div>
             </div>
-        </div>
         )
 
   )
