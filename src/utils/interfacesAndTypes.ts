@@ -124,7 +124,7 @@ export type CartType = {
     product: any,
     created_at: string,
     color?: any,
-    memory_name: any
+    memory_name: any, 
 }
 
 export type ProductsType = {

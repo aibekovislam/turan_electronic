@@ -213,6 +213,7 @@
 .dropdown_text {
     user-select: none;
     cursor: pointer;
+    font-size: 15px;
 }
 
 .brands__block_arrow_down {
@@ -251,6 +252,7 @@
     margin-right: 8px;
     outline: none;
     transition: background-color 0.3s;
+    padding: 6px;
 }
   
   .dropdown_radio:checked {
@@ -305,7 +307,12 @@
 }
 .dropdown__list_all{
     padding: 20px 10px 20px 10px;
-    
+}
+
+.dropdown__item {
+    display: flex;
+    width: 100%;
+    height: auto;
 }
 
 .range_slider{
