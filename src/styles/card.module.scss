@@ -1,4 +1,4 @@
-.card_main{
+.card_main {
     width: 275px;
     height: auto;
     max-height: 535px;
@@ -9,14 +9,14 @@
     padding-bottom: 15px;
 }
 
-.card_mini{
+.card_mini {
     width: 275px;
     height: auto;
     border-radius: 24px;
     border: 1px solid #fff;
 }
 
-.card_container{
+.card_container {
     margin: 15px auto;
     max-width: max-content;
 }
@@ -26,17 +26,18 @@
     height: 145px;
 }
 
-.card{
+.card {
     display: flex;
     flex-direction: column;
 }
-.star_container{
+
+.star_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.star_container__mini{
+.star_container__mini {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -53,7 +54,7 @@
     align-items: center;
 }
 
-.img_container{
+.img_container {
     display: flex;
     justify-content: center;
     margin-top: 1.2rem;
@@ -65,24 +66,24 @@
     object-fit: contain;
 }
 
-.heart_container{
+.heart_container {
     display: flex;
     justify-content: flex-end;
     margin-right: 0.3rem;
     cursor: pointer;
 }
 
-.price{
+.price {
     display: flex;
     align-items: center;
 }
 
-.price > h2{
+.price>h2 {
     font-size: 18px;
     font-weight: 400;
 }
 
-.price > h3 {
+.price>h3 {
     font-size: 13px;
     color: #888888;
     text-decoration-line: line-through;
@@ -90,18 +91,18 @@
     font-weight: 400;
 }
 
-.price_access{
+.price_access {
     display: flex;
     align-items: center;
 }
 
-.price_access > h2{
+.price_access>h2 {
     font-size: 18px;
     font-weight: 400;
     text-align: center;
 }
 
-.price_access > h3 {
+.price_access>h3 {
     font-size: 13px;
     color: #888888;
     text-decoration-line: line-through;
@@ -109,13 +110,13 @@
     font-weight: 400;
 }
 
-.discount{
+.discount {
     display: flex;
     gap: 15px;
     align-items: center;
 }
 
-.discount > div{
+.discount>div {
     background-color: #fff;
     border-radius: 5px;
     border: none;
@@ -124,18 +125,18 @@
     padding: 7px 2px 7px 2px;
 }
 
-.discount div:first-child{
-    background-color: rgba(255, 115, 0, 0.848) ;
+.discount div:first-child {
+    background-color: rgba(255, 115, 0, 0.848);
     font-size: 13px;
 }
 
-.title > h2{
+.title>h2 {
     color: rgba(0, 0, 0, 1);
     font-size: 14px;
     font-weight: 400;
 }
 
-.title > p{
+.title>p {
     color: rgba(136, 136, 136, 1);
     font-size: 14px;
     font-weight: 400;
@@ -147,7 +148,7 @@
     margin-top: 30px;
 }
 
-.btn_container{
+.btn_container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -178,7 +179,7 @@
     margin-left: 1.3rem;
 }
 
-.options_container{
+.options_container {
     display: flex;
     gap: 10px;
     margin-top: 10px;
@@ -217,103 +218,107 @@
 //! CardMobile
 
 @media screen and (max-width: 520px) {
-    .cardMobile_main{
+    .cardMobile_main {
         border-radius: 15px;
         background: linear-gradient(210.55deg, #EBF2F9 19.14%, #C6D7EB 154.68%);
         border: 1px solid #FFFFFF;
         box-shadow: 16px 4px 64px 0px #123D6533;
         width: 100%;
-        height: 180px;
+        height: auto;
         position: relative;
     }
-    
-    .cardMobile_container{
-        padding: 5px 15px;
+
+    .cardMobile_container {
+        padding: 8px 10px 8px 10px;
     }
-    
-    .cardMobile_{
+
+    .cardMobile_ {
         display: flex;
         flex-direction: column;
     }
-    
-    .cardMobile_rate{
+
+    .cardMobile_rate {
         display: flex;
         justify-content: space-between;
     }
-    
-    .cardMobile_info{
+
+    .cardMobile_info {
         display: flex;
-        gap: 15px;
+        justify-content: space-between;
+        // position: relative;
     }
-    
-    .cardMobile_wrapper__left{
+
+    .cardMobile_wrapper__left {
         display: flex;
         align-items: flex-end;
+        // position: absolute;
     }
-    
-    .cardMobile_wrapper__left > img:first-child {
+
+    .cardMobile_wrapper__left>img:first-child {
         width: 130px;
         height: 130px;
         object-fit: contain;
-        position: relative;
     }
-    
+
+    .cardMobile_wrapper__left>img:last-child {
+        margin-right: 2vh;
+    }
+
     .cardMobile_title {
         font-weight: 400;
-        font-size: 18px;
+        font-size: 16px;
     }
-    
-    .cardMobile_colors{
+
+    .cardMobile_colors {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
         margin-top: 15px;
         gap: 10px;
     }
-    
-    .cardMobile_colors > span {
+
+    .cardMobile_colors>span {
         font-weight: 400;
-        font-size: 18px;
+        font-size: 16px;
     }
-    
+
     .cardMobile_info {
         margin-top: 15px;
     }
-    
-    .cardMobile_util{
+
+    .cardMobile_util {
         display: flex;
         margin-top: 15px;
     }
-    
-    .right{
+
+    .right {
         display: flex;
         align-items: center;
     }
-    
-    .right > div:first-child {
+
+    .right>div:first-child {
         width: 24vw;
         margin-right: 10px;
     }
-    
-    .right > div:last-child {
+
+    .right>div:last-child {
         border-radius: 5px;
         border: 1px solid #fff;
         box-shadow: 16px 36px 64px 0px #6f88a07a;
     }
 
-    .right__special{
-        position: absolute;
-        bottom: 5%;
-        width: 90%;
+    .right__special {
+        // position: absolute;
+        // bottom: 5%;
+        // width: 90%;
         display: flex;
         align-items: center;
         justify-content: space-between;
         margin-top: 20px;
     }
-    
-    .right__special > div:first-child {
-        width: 30vw;
-        margin-right: 10px;
+
+    .right__special>div:first-child {
+        width: 31vw;
     }
 
     .price_mobile {
@@ -324,6 +329,7 @@
         align-items: center;
         column-gap: 10px;
     }
+
     .bag__mobile {
         width: 45px;
         height: 35px;
@@ -334,25 +340,30 @@
         justify-content: center;
         align-items: center;
     }
-    
-    .mobile_color_block{
+
+    .mobile_color_block {
         width: 20px;
         height: 20px;
         border-radius: 50%;
-    } 
-    .new_productCard_label {
-        position: absolute;
-        top: 10%;
-        z-index: 2;
     }
+
+    // .new_productCard_label {
+    //     // position: absolute;
+    //     top: 10%;
+    //     z-index: 2;
+    // }
+
     .rating_mobile {
-        position: absolute;
+        // position: absolute; 
         right: 5%;
     }
+
     .cardMobile_wrapper__right {
         margin-top: 20px;
     }
 }
+
+@media only screen and (max-width: 305px) {}
 
 
 
@@ -362,13 +373,16 @@
         width: 24vw;
         // height: 32vw;
     }
+
     .img_container {
         margin-top: 0px;
     }
+
     .img_container img {
         width: 15vw;
         height: 15vw;
     }
+
     .title h2 {
         margin-top: 0px;
     }
@@ -384,7 +398,7 @@
 //!  MiniCardMobile
 
 @media screen and (max-width: 520px) {
-    .mini_mobile__container{
+    .mini_mobile__container {
         border-radius: 15px;
         border: 1px solid #fff;
         width: 180px;
@@ -392,37 +406,45 @@
         padding: 10px;
         margin-bottom: 20px;
     }
-    .mini_mobile__star{
+
+    .mini_mobile__star {
         display: flex;
         justify-content: flex-end;
     }
-    .mini_mobile__star > span {
+
+    .mini_mobile__star>span {
         font-size: 12px;
     }
-    .mini_mobile__content{
+
+    .mini_mobile__content {
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-    .mini_mobile__content > span{
+
+    .mini_mobile__content>span {
         font-weight: 400;
         font-size: 14px;
     }
-    .mini_mobile__content > img {
+
+    .mini_mobile__content>img {
         width: 123px;
         height: 123px;
         object-fit: cover;
     }
-    .mini_mobile__utils{
+
+    .mini_mobile__utils {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
-    .mini_mobile__utils > div {
+
+    .mini_mobile__utils>div {
         border-radius: 5px;
         border: 1px solid #fff;
     }
-    .mini_mobile__utils > span {
+
+    .mini_mobile__utils>span {
         font-weight: 600;
         font-size: 15px;
     }

@@ -6,6 +6,10 @@ import personal__office_svg from "../assets/svgs/Frame 52.svg";
 import search_svg from "../assets/svgs/Button - Search → SVG.svg";
 import border__img from "../assets/Frame 87.png";
 import burger__menu from "../assets/svgs/Vector (16).svg";
+import home_mobile from "../assets/svgs/navbarMobile/home.svg"
+import heart_mobile from "../assets/svgs/navbarMobile/heart.svg"
+import user_mobile from "../assets/svgs/navbarMobile/user.svg"
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,13 +28,13 @@ function Navbar() {
 
   const handleItemClick = (item: string) => {
     setActiveItem(item);
-  
+
     if (item === "home") {
       navigate("/");
     } else {
       navigate(`/${item}`);
     }
-  };  
+  };
 
   return (
     <div className={styles.navbar}>
@@ -48,14 +52,13 @@ function Navbar() {
         </div>
         <div className={styles.block_2}>
           <div className={styles.logo}>
-            <img src={logo_svg} alt="logo" style={{ cursor: "pointer" }}  onClick={() => handleItemClick("home") } />
+            <img src={logo_svg} alt="logo" style={{ cursor: "pointer" }} onClick={() => handleItemClick("home")} />
           </div>
           <ul className={styles.navigation}>
             <li
               onClick={() => handleItemClick("home")}
-              className={`${styles.navigation__item} ${
-                activeItem === "home" ? "active__navbar" : ""
-              }`}
+              className={`${styles.navigation__item} ${activeItem === "home" ? "active__navbar" : ""
+                }`}
             >
               <a href="#">
                 Главная
@@ -63,9 +66,8 @@ function Navbar() {
             </li>
             <li
               onClick={() => handleItemClick("categories")}
-              className={`${styles.navigation__item} ${
-                activeItem === "categories" ? "active__navbar" : ""
-              }`}
+              className={`${styles.navigation__item} ${activeItem === "categories" ? "active__navbar" : ""
+                }`}
             >
               <a href="#">
                 Категории
@@ -73,9 +75,8 @@ function Navbar() {
             </li>
             <li
               onClick={() => handleItemClick("news")}
-              className={`${styles.navigation__item} ${
-                activeItem === "news" ? "active__navbar" : ""
-              }`}
+              className={`${styles.navigation__item} ${activeItem === "news" ? "active__navbar" : ""
+                }`}
             >
               <a href="#">
                 Новости
@@ -83,9 +84,8 @@ function Navbar() {
             </li>
             <li
               onClick={() => handleItemClick("about")}
-              className={`${styles.navigation__item} ${
-                activeItem === "about" ? "active__navbar" : ""
-              }`}
+              className={`${styles.navigation__item} ${activeItem === "about" ? "active__navbar" : ""
+                }`}
             >
               <a href="#">
                 О нас
@@ -113,12 +113,23 @@ function Navbar() {
               <img src={personal__office_svg} alt="Personal svg" />
             </div>
           </div>
-          <div 
-          className={`${styles.search__block} ${activeItem === "search__block" ? "active__navbar" : ""}`} 
+          <div
+            className={`${styles.search__block} ${activeItem === "search__block" ? "active__navbar" : ""}`}
           // onClick={() => handleItemClick("search__block")}
           >
             <input type="text" placeholder="Поиск..." name="search" />
             <img src={search_svg} alt="search_svg" className={styles.search__svg} />
+          </div>
+        </div>
+        <div className={styles.bottomNavbar}>
+          <div className={styles.bottomNavItem}>
+            <img onClick={() => navigate("/")} src={home_mobile} alt="Home" />
+          </div>
+          <div className={styles.bottomNavItem}>
+            <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Categories" />
+          </div>
+          <div className={styles.bottomNavItem}>
+            <img onClick={() => navigate("/profile")} src={user_mobile} alt="News" />
           </div>
         </div>
       </nav>
