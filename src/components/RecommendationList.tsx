@@ -50,12 +50,22 @@ function RecommendationList() {
     }
 
     const visiblePages = () => {
-    const totalVisiblePages = Math.min(totalPages, maxVisiblePages);
-    const start = Math.max(currentPage - Math.floor(totalVisiblePages / 2), 1);
-    const end = Math.min(start + totalVisiblePages - 1, totalPages);
+        const totalVisiblePages = Math.min(totalPages, maxVisiblePages);
+        const start = Math.max(currentPage - Math.floor(totalVisiblePages / 2), 1);
+        const end = Math.min(start + totalVisiblePages - 1, totalPages);
 
-    return Array.from({ length: end - start + 1 }, (_, index) => start + index);
-  };
+        return Array.from({ length: end - start + 1 }, (_, index) => start + index);
+    };
+
+    const getCurrentPageProducts = () => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, recProducts.length);
+        return recProducts.slice(startIndex, endIndex);
+    };
+
+    // Изменение этой строки, чтобы использовать только продукты текущей страницы
+    const currentPageProducts = getCurrentPageProducts();
+
   return (
     <>
         <div className={"accessories"} style={{ margin: "50px 0px" }}>
@@ -70,7 +80,7 @@ function RecommendationList() {
             </div>
         </div>
         <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
-            { recProducts.map((product) => (
+            { currentPageProducts.map((product) => (
                 <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
             ) ) }
         </div>
