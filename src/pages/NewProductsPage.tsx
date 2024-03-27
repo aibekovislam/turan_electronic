@@ -23,12 +23,13 @@ function NewProductsPage() {
     }, []);
 
     useEffect(() => {
-        dispatch(fetchProducts(default_filters))
+        dispatch(fetchProducts({
+            ...default_filters,
+            limit: 100
+        }))
     }, [dispatch])
 
-    const displayedProducts = products.slice(0, 4);
-
-    const filteredNewProducts = displayedProducts.filter((item) => item.is_arrived === true);
+    const filteredNewProducts = products?.filter((item) => item.is_arrived === true);
 
     const navigate = useNavigate();
 

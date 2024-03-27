@@ -31,7 +31,13 @@ function NewProductsList() {
     }))
   }, [dispatch])
 
-  const filteredNewProducts = products?.filter((item) => item.is_arrived === true);
+  const sortedProducts = products?.slice().sort((a, b) => {
+    const dateA = new Date(a.created_at).getTime();
+    const dateB = new Date(b.created_at).getTime();
+    return dateB - dateA;
+  });
+
+  const filteredNewProducts = sortedProducts?.filter((item) => item.is_arrived === true);
 
   const displayedProducts = filteredNewProducts?.slice(0, 4);
 
@@ -40,6 +46,8 @@ function NewProductsList() {
   const handleNavigate = (id: number) => {
     navigate(`/product/${id}`)
   }
+
+  console.log(filteredNewProducts)
 
   return (
     <>

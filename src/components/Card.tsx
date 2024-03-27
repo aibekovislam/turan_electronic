@@ -212,19 +212,21 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     <p>{product?.description !== undefined ? product?.description.slice(0, 35) + "..." : ""}</p>
                                 </div>
                             </div>
-                            <div className={styles.btn_container}>
-                                <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
-                                    <a href="#">Быстрый заказ</a>
-                                </button>
-                                <img src={shop} alt="" onClick={() => navigate(`/product/${product.id}`)} />
-                            </div>
-                            <div className={styles.options_container}>
-                                <h2>Цвет</h2>
-                                {product?.color !== undefined ? product?.color.map((item: any, index: number) => (
-                                    <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
-                                )) : (
-                                    <div>Loading...</div>
-                                )}
+                            <div className={styles.btn_and_options}>
+                                <div className={styles.btn_container}>
+                                    <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
+                                        <a href="#">Быстрый заказ</a>
+                                    </button>
+                                    <img src={shop} alt="" onClick={() => navigate(`/product/${product.id}`)} />
+                                </div>
+                                <div className={styles.options_container}>
+                                    <h2>Цвет</h2>
+                                    {product?.color !== undefined ? product?.color.map((item: any, index: number) => (
+                                        <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
+                                    )) : (
+                                        <div>Loading...</div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
