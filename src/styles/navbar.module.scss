@@ -1,8 +1,9 @@
-.block_1_mobile, .block_3_mobile {
+.block_1_mobile,
+.block_3_mobile {
     display: none;
 }
 
-.navbar{
+.navbar {
     background-color: aliceblue;
     width: 100%;
     height: 15vw;
@@ -13,7 +14,7 @@
     background: linear-gradient(210.55deg, #EBF2F9 19.14%, #C6D7EB 154.68%);
 }
 
-.navbar__items{
+.navbar__items {
     display: flex;
     justify-content: space-between;
 }
@@ -29,7 +30,7 @@
     border-radius: 25px;
 }
 
-.block_2{
+.block_2 {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -38,7 +39,7 @@
     width: 50vw;
 }
 
-.navigation{
+.navigation {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,7 +68,7 @@
     font-size: 1vw;
 }
 
-.logo{
+.logo {
     width: 29vw;
     height: 120px;
     display: flex;
@@ -77,7 +78,7 @@
 }
 
 .logo img {
-    width: 29vw;    
+    width: 29vw;
 }
 
 .block_3 {
@@ -97,7 +98,7 @@
     margin-top: 20px;
 }
 
-.favorite{
+.favorite {
     border: 1px solid #FFFFFF;
     box-shadow: 4px 2px 16px 0px #88A5BF7A;
     box-shadow: -4px -2px 16px 0px #FFFFFF;
@@ -182,10 +183,28 @@
     right: 10px;
 }
 
-@media only screen and ( max-width: 1700px ) {
+.bottomNavbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    border-top: 1px solid #fff;
+    display: flex;
+    justify-content: space-around;
+    background: linear-gradient(210.55deg, #EBF2F9 19.14%, #C6D7EB 154.68%);
+    align-items: center;
+    z-index: 1000;
+}
+
+
+
+
+@media only screen and (max-width: 1700px) {
     .logo {
         width: 450px;
     }
+
     .navigation {
         max-width: 950px;
     }
@@ -208,9 +227,11 @@
         width: 2vw;
         height: 2vw;
     }
+
     .search__block input {
         font-size: 1vw;
     }
+
     .logo {
         margin-top: 1vw;
     }
@@ -227,25 +248,34 @@
         display: flex;
         align-items: center;
     }
+
     .burgerMenu {
         display: none;
     }
+
     .personalOffice {
         display: none;
     }
+
     .navbar__items {
         width: 100%;
         align-items: center;
         justify-content: space-around;
     }
-    .block_1, .navigation, .block_3 {
+
+    .block_1,
+    .navigation,
+    .block_3 {
         display: none;
     }
+
     .block_2 {
         width: 50%;
         height: 10vw;
     }
-    .block_1_mobile, .block_3_mobile {
+
+    .block_1_mobile,
+    .block_3_mobile {
         display: flex;
         align-items: center;
         gap: 10px;

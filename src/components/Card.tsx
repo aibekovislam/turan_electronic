@@ -89,7 +89,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
     if (loaded) {
         return (
             isMobile ? (
-                <div className={styles.cardMobile_main} onClick={() => onClick(product.id)}>
+                <div className={styles.cardMobile_main}>
                     <div className={styles.cardMobile_container}>
                         <div className={styles.cardMobile_}>
                             <div className={styles.cardMobile_rate}>
@@ -111,11 +111,12 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                             </div>
                             <div className={styles.cardMobile_info}>
                                 <div className={styles.cardMobile_wrapper__left}>
-                                    <img src={product.default_image} />
-                                    <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
+                                    <img src={product.default_image} onClick={() => onClick(product.id)} />
+                                    {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
+                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
                                 </div>
                                 <div className={styles.cardMobile_wrapper__right}>
-                                    <div className={styles.cardMobile_title}>
+                                    <div onClick={() => onClick(product.id)} className={styles.cardMobile_title}>
                                         {product.name}
                                     </div>
                                     <div className={styles.cardMobile_colors}>
@@ -152,7 +153,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                     <div className={styles.card_container}>
                         <div className={styles.card}>
                             <div className={styles.star_container}>
-                                { product.is_arrived ? (
+                                {product.is_arrived ? (
                                     <div className={styles.new_productCard_label}>
                                         Новое
                                     </div>
