@@ -9,11 +9,12 @@ import { addFavorites, fetchFavorites } from "../store/features/favorite_and_car
 import { useDispatch, useSelector } from "react-redux"
 import { RootStates } from "../store/store"
 import { useNavigate } from "react-router-dom"
-import { notifyError } from "./Toastify"
+import { notify, notifyError } from "./Toastify"
 import { API_URL } from "../utils/consts"
 import checked from "../assets/svgs/card/Vector (9).svg";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
+import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 
 
 const Card: React.FC<CardProps> = ({ product, onClick }) => {
@@ -116,7 +117,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
                                 </div>
                                 <div className={styles.cardMobile_wrapper__right}>
-                                    <div onClick={() => onClick(product.id)} className={styles.cardMobile_title}>
+                                    <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>
                                         {product.name}
                                     </div>
                                     <div className={styles.cardMobile_colors}>
@@ -140,7 +141,11 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                 )}
                                 <div className={styles.price_mobile}>
                                     {product.price} сом
-                                    <div className={styles.bag__mobile}>
+                                    <div className={styles.bag__mobile} onClick={() => {
+                                        console.log(product.memory ? product.memory[0]?.id : 13)
+                                        dispatch(addToCart(product.id, product.color[0]?.id, 1, product.memory_price ? product.memory[0]?.id : 13, product.price))
+                                        notify(`Вы успешно добавили в корзину ${product.name}`)
+                                    }}>
                                         <img src={shop} />
                                     </div>
                                 </div>

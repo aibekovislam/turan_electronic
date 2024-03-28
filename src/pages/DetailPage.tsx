@@ -195,7 +195,7 @@ function DetailPage() {
                                 </div>
                                 <div className={styles.mobile_detail__title}>
                                     <div>
-                                        Apple IPhone 14 Pro Max
+                                        { product?.name }
                                     </div>
                                     <div className={styles.stars}>
                                         {product?.rating != undefined ? (

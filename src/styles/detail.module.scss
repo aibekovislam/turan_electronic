@@ -507,6 +507,16 @@ td:nth-child(2)::after {
         align-items: center;
         justify-content: space-between;
     }
+    th {
+        width: 100%;
+        // justify-content: space-between;
+    }
+    td {
+        font-size: 12px;
+    }
+    .dots__details_span span {
+        font-size: 12px;
+    }
     .options > div{
         font-size: 16px;
     }

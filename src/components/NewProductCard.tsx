@@ -9,11 +9,12 @@ import { RootStates } from "../store/store";
 import { useEffect, useState } from "react";
 import { addFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 import { useNavigate } from "react-router-dom";
-import { notifyError } from "./Toastify";
+import { notify, notifyError } from "./Toastify";
 import { API_URL } from "../utils/consts";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte";
+import { addToCart } from "../store/features/favorite_and_cart/cartSlice";
 
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
     const navigate = useNavigate();
@@ -84,7 +85,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
 
     return (
         isMobile ? (
-            <div className={styles.cardMobile_main} onClick={() => onClick(product.id)}>
+            <div className={styles.cardMobile_main}>
                 <div className={styles.cardMobile_container}>
                   <div className={styles.cardMobile_}>
                     <div className={styles.cardMobile_rate}>
@@ -106,11 +107,11 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                     </div>
                     <div className={styles.cardMobile_info}>
                       <div className={styles.cardMobile_wrapper__left}> 
-                            <img src={product.default_image}  />
+                            <img src={product.default_image} onClick={() => onClick(product.id)} />
                             <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
                       </div>
                       <div className={styles.cardMobile_wrapper__right}> 
-                        <div className={styles.cardMobile_title}>
+                        <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>
                           { product.name }
                         </div>
                         <div className={styles.cardMobile_colors}>
@@ -134,7 +135,11 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         ) }
                           <div className={styles.price_mobile}>
                             { product.price } сом
-                            <div className={styles.bag__mobile}>
+                            <div className={styles.bag__mobile} onClick={() => {
+                                    console.log(product.memory ? product.memory[0]?.id : 13)
+                                    dispatch(addToCart(product.id, product.color[0]?.id, 1, product.memory_price ? product.memory[0]?.id : 13, product.price))
+                                    notify(`Вы успешно добавили в корзину ${product.name}`)
+                                }}>
                                 <img src={shop} />
                             </div>
                           </div>
