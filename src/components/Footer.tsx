@@ -38,7 +38,7 @@ function Footer() {
                         <ul className={styles.footer__navigation__item_list}>
                             <li className={styles.list__item} style={{ marginTop: "20px" }}>
                                 <img src={img1} />
-                                <div className={styles.list__item_text}>Кыргызстан г. Бишкек ㅤㅤул.Киевская 168, 720001</div>
+                                <div className={styles.list__item_text}>Кыргызстан г. Бишкек Ибраимова 108Б</div>
                             </li>
                             <li className={styles.list__item}>
                                 <img src={img2} />
@@ -46,7 +46,7 @@ function Footer() {
                             </li>
                             <li className={styles.list__item}>
                                 <img src={img3} />
-                                <div className={styles.list__item_text}>Тел: +99600000000 Смартфоны</div>
+                                <div className={styles.list__item_text}>Тел: +996500838333 Смартфоны</div>
                             </li>
                             <li className={styles.list__item}>
                                 <img src={img4} />
