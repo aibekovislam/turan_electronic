@@ -362,7 +362,11 @@ td:nth-child(2)::after {
 
 .path a {
     text-decoration: none;
-    color: #8F9FAE;
+    color: rgb(136, 136, 136);
+}
+
+.path a:hover {
+    text-decoration: underline;
 }
 
 .modal {
