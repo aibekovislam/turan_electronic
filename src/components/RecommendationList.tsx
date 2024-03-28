@@ -63,7 +63,6 @@ function RecommendationList() {
         return recProducts.slice(startIndex, endIndex);
     };
 
-    // Изменение этой строки, чтобы использовать только продукты текущей страницы
     const currentPageProducts = getCurrentPageProducts();
 
   return (
@@ -73,7 +72,7 @@ function RecommendationList() {
             Рекомендуемые
             </div>
             <div className="accessories__item">
-            <span style={{ fontSize: "25px", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
+            <span onClick={() => navigate("/recommendation/products")} style={{ fontSize: "25px", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
             <div onClick={() => navigate("/recommendation/products")} className="accessories__item_img" style={{ position: "initial" }}>
                 <img src={nextArrow} />
             </div>

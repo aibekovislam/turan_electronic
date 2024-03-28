@@ -10,7 +10,7 @@ import img4 from "../assets/svgs/footer/Vector (15).svg";
 
 function Footer() {
   return (
-    <div className={styles.footer}>
+    <div className={styles.footer} style={{ marginBottom: "100px" }}>
         <div className={styles.footer__items}>
             <div className={styles.footer__item}>
                 <div className={styles.footer__logo_and_info}>

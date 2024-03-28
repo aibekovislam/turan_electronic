@@ -56,7 +56,7 @@ function NewProductsList() {
             Новое поступление
             </div>
             <div className="accessories__item">
-            <span style={{ fontSize: "2vw", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
+            <span onClick={() => navigate("/new/products")} style={{ fontSize: "2vw", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
             <div onClick={() => navigate("/new/products")} className="accessories__item_img" style={{ position: "initial" }}>
                 <img src={nextArrow} />
             </div>
