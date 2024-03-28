@@ -273,6 +273,7 @@
     &.active {
         max-height: 350px; 
         transition: max-height 1s ease;
+        overflow-y: scroll;
     }
 
     &::before {

@@ -37,7 +37,7 @@ function BrandsPage() {
         }
         dispatch(fetchFilterProducts(
             {
-                limit: 10,
+                limit: 100,
                 offset: 0,
                 min_price: undefined,
                 max_price: undefined,

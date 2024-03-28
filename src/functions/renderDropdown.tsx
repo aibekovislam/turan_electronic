@@ -210,7 +210,7 @@ export function renderDropdownContent(index: number, pickedColor: any, setPicked
                     <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>Все</label>
                     <div className={`${styles.d_f_colors}`}>
                         {colorsArray?.map((item: any, index: number) => (
-                            <div key={index} className={`${styles.dropdown__item}`}>
+                            <div key={index} className={`${styles.dropdown__item}`} style={{ width: "auto" }}>
                                 <div onClick={() => {handleColorClick(item.hash_code)}} className={`${styles.color_block} ${isColorPicked(item.hash_code) ? styles.color_picked : ''}`} style={{ background: item.hash_code }}></div>
                             </div>
                         ))}

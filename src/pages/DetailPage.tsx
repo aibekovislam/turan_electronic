@@ -77,6 +77,8 @@ function DetailPage() {
         }
     }, [product])
 
+    console.log(product)
+
     const handleColorPick = (color: any) => {
         setColorPicked(color.hash_code);
         dispatch(colorPickToAddToCart(color.hash_code));
