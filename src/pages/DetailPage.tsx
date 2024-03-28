@@ -143,10 +143,13 @@ function DetailPage() {
     };
 
     const reviewsArray = useSelector((state: RootStates) => state.reviews.reviews);
+    const filteredReviews = reviewsArray.filter((item: any) => item.product === product?.id)
 
     useEffect(() => {
         dispatch(fetchReviews())
     }, [dispatch]);
+
+    console.log(filteredReviews)
 
     const [reviewData, setReviewData] = useState({
         text: "",
@@ -360,9 +363,9 @@ function DetailPage() {
                                                 </>
                                             )}
                                             {
-                                                reviewsArray.length !== 0 ? (
+                                                filteredReviews.length !== 0 ? (
                                                     <div className={styles.reviews}>
-                                                        {reviewsArray?.map((reviewItem, index) => (
+                                                        {filteredReviews?.map((reviewItem, index) => (
                                                             <div className={styles.reviews_content} key={index}>
                                                                 <div className={styles.reviews_header}>
                                                                     <div className={styles.reviews_name} style={{ gap: "5px" }}>
@@ -586,9 +589,9 @@ function DetailPage() {
                                             ) : null}
                                         </>
                                     )}
-                                    {reviewsArray.length !== 0 ? (
+                                    {filteredReviews.length !== 0 ? (
                                         <div className={styles.reviews}>
-                                            {reviewsArray?.map((reviewItem, index) => (
+                                            {filteredReviews?.map((reviewItem, index) => (
                                                 <div className={styles.reviews_content} key={index}>
                                                     <div className={styles.reviews_header}>
                                                         <div className={styles.reviews_name} style={{ gap: "5px" }}>
