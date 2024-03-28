@@ -85,7 +85,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
 
     return (
         isMobile ? (
-            <div className={styles.cardMobile_main}>
+            <div className={styles.cardMobile_main} onClick={() => onClick(product.id)}>
                 <div className={styles.cardMobile_container}>
                   <div className={styles.cardMobile_}>
                     <div className={styles.cardMobile_rate}>
@@ -108,7 +108,15 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                     <div className={styles.cardMobile_info}>
                       <div className={styles.cardMobile_wrapper__left}> 
                             <img src={product.default_image} onClick={() => onClick(product.id)} />
-                            <img src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
+                            {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
+                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleClickFavorite(product.id);
+                            }} />
+                            {/* <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
+                                e.stopPropagation();
+                                handleClickFavorite(product.id);
+                            }} /> */}
                       </div>
                       <div className={styles.cardMobile_wrapper__right}> 
                         <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>

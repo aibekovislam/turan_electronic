@@ -52,7 +52,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
     }, [])
 
     const handleClickFavorite = (product_id: number) => {
-        if (!user && !token) {
+        if (!token) {
             navigate("/auth")
             notifyError('Вы не авторизованы')
             return;
@@ -90,7 +90,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
     if (loaded) {
         return (
             isMobile ? (
-                <div className={styles.cardMobile_main}>
+                <div className={styles.cardMobile_main} onClick={() => onClick(product.id)}>
                     <div className={styles.cardMobile_container}>
                         <div className={styles.cardMobile_}>
                             <div className={styles.cardMobile_rate}>
@@ -114,7 +114,10 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                 <div className={styles.cardMobile_wrapper__left}>
                                     <img src={product.default_image} onClick={() => onClick(product.id)} />
                                     {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={() => handleClickFavorite(product.id)} />
+                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleClickFavorite(product.id);
+                                    }} />
                                 </div>
                                 <div className={styles.cardMobile_wrapper__right}>
                                     <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>

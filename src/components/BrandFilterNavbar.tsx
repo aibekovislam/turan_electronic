@@ -7,6 +7,7 @@ import { renderDropdownContent } from "../functions/renderDropdown.tsx";
 import { useDispatch } from "react-redux";
 import { fetchFilterProducts } from "../store/features/products/productSlice.ts";
 import SidebarMenu from "./SidebarMenu.tsx";
+import { useNavigate } from "react-router-dom";
 
 function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
     const [pickedColor, setPickedColor] = useState<string | null>(null);
@@ -76,11 +77,13 @@ function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
         toggleSidebar();
     }
 
+    const navigate = useNavigate();
+
     return (
         isMobile ? (
             <div className={styles.brands_navbar} style={{ marginTop: "30px" }}>
-                <div className={styles.brands_navbar__item} onClick={() => handleMobileFilterClick()} >
-                    <div className={styles.brands__info}>Главная / { brand.title }</div>
+                <div className={styles.brands_navbar__item} >
+                    <div className={styles.brands__info}><span onClick={() => navigate('/')}>Главная</span> / { brand.title }</div>
                 </div>
                 <div className={styles.brands_navbar__item} onClick={() => handleMobileFilterClick()} >
                     <div className={styles.brands_navigation} style={{ height: "40px", borderRadius: "10px", alignItems: "center", justifyContent: "space-between" }}>
@@ -91,7 +94,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
                         </div>
                         <div>Фильтры</div>
                         <div className={styles.brands__block_arrow_down} style={{ display: "block", width: "18px", height: "18px", marginRight: "15px" }} onClick={handleFilterUp}>
-                            <ArrowDown isUp={filterUp} style={{ width: "18px", height: "18px", objectFit: "contain" }} />
+                            <ArrowDown isUp={false} style={{ width: "18px", height: "18px", objectFit: "contain" }} />
                         </div>
                     </div>
                 </div>
