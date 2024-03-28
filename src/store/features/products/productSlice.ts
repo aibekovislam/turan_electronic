@@ -86,6 +86,7 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
 export const getProductsByOneBrand = (filters: any): AppThunk => async (dispatch) => {
     try {
         const queryParams = {
+            limit: 100,
             brand: filters.brand || [],
         };
 
