@@ -49,11 +49,14 @@
 .cart_image{
     width: 245px;
     height: 224px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cart_image > img {
-    width: 15vw;
-    height: 15vw;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
 }
 
