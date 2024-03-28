@@ -19,6 +19,19 @@ function Navbar() {
   });
   const userString = localStorage.getItem("userInfo");
   const user = userString ? JSON.parse(userString) : null;
+  const tokenString = localStorage.getItem("tokens");
+  const token = tokenString ? JSON.parse(tokenString) : null;
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+
+  useEffect(() => {
+    const handleResize = () => {
+        setIsMobile(window.innerWidth < 520);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+}, []);
 
   const navigate = useNavigate();
 
@@ -31,6 +44,8 @@ function Navbar() {
 
     if (item === "home") {
       navigate("/");
+    } else if(token === null) {
+      navigate("/auth")
     } else {
       navigate(`/${item}`);
     }
@@ -98,7 +113,7 @@ function Navbar() {
             <img src={personal__office_svg} />
           </div>
           <div className={styles.cartMobile}>
-            <img src={cart_svg} />
+            <img src={cart_svg} onClick={() => navigate("/cart")} />
           </div>
         </div>
         <div className={styles.block_3}>
@@ -121,17 +136,19 @@ function Navbar() {
             <img src={search_svg} alt="search_svg" className={styles.search__svg} />
           </div>
         </div>
-        <div className={styles.bottomNavbar}>
-          <div className={styles.bottomNavItem}>
-            <img onClick={() => navigate("/")} src={home_mobile} alt="Home" />
+        { isMobile ? (
+          <div className={styles.bottomNavbar}>
+            <div className={styles.bottomNavItem}>
+              <img onClick={() => navigate("/")} src={home_mobile} alt="Home" />
+            </div>
+            <div className={styles.bottomNavItem}>
+              <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Categories" />
+            </div>
+            <div className={styles.bottomNavItem}>
+              <img onClick={() => navigate("/profile")} src={user_mobile} alt="News" />
+            </div>
           </div>
-          <div className={styles.bottomNavItem}>
-            <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Categories" />
-          </div>
-          <div className={styles.bottomNavItem}>
-            <img onClick={() => navigate("/profile")} src={user_mobile} alt="News" />
-          </div>
-        </div>
+        ) : (null) }
       </nav>
     </div>
   );

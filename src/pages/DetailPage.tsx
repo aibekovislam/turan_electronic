@@ -1,6 +1,7 @@
 import SldierDetail from "../components/SliderDetail"
 import styles from "../styles/detail.module.scss"
 import heart from "../assets/svgs/card/Vector (8).svg"
+import closeSvg from "../assets/svgs/detail/Vector (19).svg";
 import fillHeart from "../assets/svgs/card/fillHeart.svg"
 import reviews from '../assets/svgs/detail/Rates.svg'
 import { useEffect, useState } from "react"
@@ -16,6 +17,7 @@ import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice"
 import { notify, notifyError } from "../components/Toastify"
 import 'ldrs/ring';
 import { ping } from 'ldrs'
+import { Rating } from 'react-simple-star-rating'
 
 function DetailPage() {
     const { id } = useParams();
@@ -47,8 +49,13 @@ function DetailPage() {
     const [colorPicked, setColorPicked] = useState(firstImage);
     const [colorID, setColorID] = useState(0);
     const [memoryID, setMemoryID] = useState(0);
+    const [ reviewStar ] = useState(0);
 
     const numberedId = Number(id);
+
+    const handleRating = (rate: number) => {
+        setReviewData({...reviewData, rating: rate})
+    }
 
     useEffect(() => {
         const handleResize = () => {
@@ -141,7 +148,7 @@ function DetailPage() {
 
     const [reviewData, setReviewData] = useState({
         text: "",
-        rating: 0,
+        rating: reviewStar,
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -172,9 +179,7 @@ function DetailPage() {
                 }
             }
         }
-    }, [activeItem])
-
-    console.log(product)
+    }, [activeItem])   
 
     return (
         <div>
@@ -184,7 +189,9 @@ function DetailPage() {
                         <div className={styles.mobile_detail__container}>
                             <div className={styles.mobile_detail}>
                                 <div className={styles.section_title}>
-                                    <div>Главная | Каталог | {product?.brand_category_title} | {product?.name}</div>
+                                    <div className={styles.path}>
+                                        <a href="/">Главная</a> | <a href="/recommendation/products">Каталог</a> | <a href={`/products/brands/${product.brand}`}>{product?.brand_category_title}</a> | <a>{product?.name}</a>
+                                    </div>
                                 </div>
                                 <div className={styles.mobile_detail__title}>
                                     <div>
@@ -307,48 +314,95 @@ function DetailPage() {
                                             </p>
                                         </div>
                                     ) : visibleDiv === "div3" ? (
-                                        reviewsArray.length !== 0 ? (
-                                            <div className={styles.reviews}>
-                                                {reviewsArray?.map((reviewItem, index) => (
-                                                    <div className={styles.reviews_content} key={index}>
-                                                        <div className={styles.reviews_header}>
-                                                            <div className={styles.reviews_name} style={{ gap: "5px" }}>
-                                                                <div style={{ marginRight: "10px" }}>{reviewItem.user_name}</div>
-                                                                {reviewItem?.rating != undefined ? (
-                                                                    [1, 2, 3, 4, 5].map((star) => (
-                                                                        <span
-                                                                            key={star}
-                                                                            style={{
-                                                                                cursor: 'pointer',
-                                                                                color: star <= reviewItem.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
-                                                                            }}
-                                                                        >
-                                                                            &#9733;
-                                                                        </span>
-                                                                    ))
-                                                                ) : (
-                                                                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                                                                )}
-                                                            </div>
-                                                            <div className={styles.reviews_date}>
-                                                                <span>{
-                                                                    new Intl.DateTimeFormat("ru-RU", {
-                                                                        year: "numeric",
-                                                                        month: "numeric",
-                                                                        day: "numeric",
-                                                                    }).format(new Date(reviewItem.created_at))}
-                                                                </span>
-                                                            </div>
+                                        <>
+                                            {openReviewInput ? (
+                                                <div className={styles.modal}>
+                                                    <div className={styles.modalContent}>
+                                                        <div className={styles.modal_text}>
+                                                            Написать отзыв
+                                                            <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
                                                         </div>
-                                                        <div className={styles.reviews_description}>
-                                                            <p>{reviewItem.text}</p>
+                                                        <div className={styles.user_info}>
+                                                            <span>Ваше имя</span>
+                                                            <div>{ user.name }</div>
                                                         </div>
+                                                        <form className={styles.add_review} onSubmit={handleSubmit}>
+                                                            <div className={styles.rating_block}>
+                                                                Оцените товар
+                                                                <Rating onClick={handleRating} initialValue={reviewStar} SVGclassName={styles.svg_rating} />
+                                                            </div>
+                                                            <div className={styles.review_input_block}>
+                                                                <span>Отзыв</span>
+                                                                <input
+                                                                    type="text"
+                                                                    name="text"
+                                                                    value={reviewData.text}
+                                                                    onChange={handleChange}
+                                                                    className={styles.review_text}
+                                                                />
+                                                            </div>
+                                                            <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }}>
+                                                                <button className={styles.add_review_btn} type="submit">Отправить</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                ))}
-                                            </div>
-                                        ) : (
-                                            <div className={styles.reviews}>Пока нет отзывов</div>
-                                        )
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    {user && token ? (
+                                                        <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
+                                                            <img src={reviews} className={styles.reviews__svg} alt="" />
+                                                            <input type="button" value="Написать отзыв" />
+                                                        </div>
+                                                    ) : null}
+                                                </>
+                                            )}
+                                            {
+                                                reviewsArray.length !== 0 ? (
+                                                    <div className={styles.reviews}>
+                                                        {reviewsArray?.map((reviewItem, index) => (
+                                                            <div className={styles.reviews_content} key={index}>
+                                                                <div className={styles.reviews_header}>
+                                                                    <div className={styles.reviews_name} style={{ gap: "5px" }}>
+                                                                        <div style={{ marginRight: "10px" }}>{reviewItem.user_name}</div>
+                                                                        {reviewItem?.rating != undefined ? (
+                                                                            [1, 2, 3, 4, 5].map((star) => (
+                                                                                <span
+                                                                                    key={star}
+                                                                                    style={{
+                                                                                        cursor: 'pointer',
+                                                                                        color: star <= reviewItem.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
+                                                                                    }}
+                                                                                >
+                                                                                    &#9733;
+                                                                                </span>
+                                                                            ))
+                                                                        ) : (
+                                                                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                                                                        )}
+                                                                    </div>
+                                                                    <div className={styles.reviews_date}>
+                                                                        <span>{
+                                                                            new Intl.DateTimeFormat("ru-RU", {
+                                                                                year: "numeric",
+                                                                                month: "numeric",
+                                                                                day: "numeric",
+                                                                            }).format(new Date(reviewItem.created_at))}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className={styles.reviews_description}>
+                                                                    <p>{reviewItem.text}</p>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                ) : (
+                                                <div className={styles.reviews}>Пока нет отзывов</div>
+                                                )
+                                            }
+
+                                        </>
                                     ) : null}
                                 </div>
                             </div>
@@ -487,27 +541,37 @@ function DetailPage() {
                                 </div>
                                 <div className={styles.reviews_container}>
                                     {openReviewInput ? (
-                                        <form className={styles.add_review} onSubmit={handleSubmit}>
-                                            <input
-                                                type="text"
-                                                name="text"
-                                                value={reviewData.text}
-                                                onChange={handleChange}
-                                            />
-                                            <select
-                                                className={styles.rating_add}
-                                                name="rating"
-                                                value={reviewData.rating}
-                                                onChange={handleChange}
-                                            >
-                                                <option value={1}>1</option>
-                                                <option value={2}>2</option>
-                                                <option value={3}>3</option>
-                                                <option value={4}>4</option>
-                                                <option value={5}>5</option>
-                                            </select>
-                                            <button type="submit">Отправить</button>
-                                        </form>
+                                        <div className={styles.modal}>
+                                            <div className={styles.modalContent}>
+                                                <div className={styles.modal_text}>
+                                                    Написать отзыв
+                                                    <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
+                                                </div>
+                                                <div className={styles.user_info}>
+                                                    <span>Ваше имя</span>
+                                                    <div>{ user.name }</div>
+                                                </div>
+                                                <form className={styles.add_review} onSubmit={handleSubmit}>
+                                                    <div className={styles.rating_block}>
+                                                        Оцените товар
+                                                        <Rating onClick={handleRating} initialValue={reviewStar} SVGclassName={styles.svg_rating} />
+                                                    </div>
+                                                    <div className={styles.review_input_block}>
+                                                        <span>Отзыв</span>
+                                                        <input
+                                                            type="text"
+                                                            name="text"
+                                                            value={reviewData.text}
+                                                            onChange={handleChange}
+                                                            className={styles.review_text}
+                                                        />
+                                                    </div>
+                                                    <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }}>
+                                                        <button className={styles.add_review_btn} type="submit">Отправить</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     ) : (
                                         <>
                                             {user && token ? (

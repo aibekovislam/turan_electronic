@@ -14,6 +14,7 @@ function CategoryMobile() {
 
     const handleShowAllBrands = () => {
         setClick(true);
+        navigate("/categories")
       };
 
     useEffect(() => {
