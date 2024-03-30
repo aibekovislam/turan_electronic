@@ -254,6 +254,19 @@
     transition: background-color 0.3s;
     padding: 6px;
 }
+
+.path {
+    color: rgb(136, 136, 136);
+}
+
+.path a {
+    text-decoration: none;
+    color: rgb(136, 136, 136);
+}
+
+.path a:hover {
+    text-decoration: underline;
+}
   
   .dropdown_radio:checked {
     background-color: #FF7300;

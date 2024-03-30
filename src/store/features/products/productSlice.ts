@@ -68,6 +68,8 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
             product_name: filters.product_name || undefined
         };
 
+        console.log(queryParams)
+
         const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
 
         const data: ProductsI = { products: response.data.results };
