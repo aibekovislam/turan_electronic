@@ -83,7 +83,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
         isMobile ? (
             <div className={styles.brands_navbar} style={{ marginTop: "30px" }}>
                 <div className={styles.brands_navbar__item} >
-                    <div className={styles.brands__info}><span onClick={() => navigate('/')}>Главная</span> / { brand.title }</div>
+                    <div className={styles.brands__info}><span style={{ cursor: "pointer", userSelect: "none" }} onClick={() => navigate('/')}>Главная</span> / { brand.title }</div>
                 </div>
                 <div className={styles.brands_navbar__item} onClick={() => handleMobileFilterClick()} >
                     <div className={styles.brands_navigation} style={{ height: "40px", borderRadius: "10px", alignItems: "center", justifyContent: "space-between" }}>
@@ -103,7 +103,9 @@ function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
         ) : (
             <div className={styles.brands_navbar}>
                 <div className={styles.brands_navbar__item}>
-                    <div className={styles.brands__info}>Главная / { brand.title }</div>
+                    <div className={styles.path}>
+                        <a href="/">Главная</a> | { brand.title }
+                    </div>
                 </div>
                 <div className={styles.brands_navbar__item}>
                     <div className={styles.brands_navigation}>
