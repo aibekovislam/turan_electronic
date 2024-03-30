@@ -49,12 +49,12 @@ function DetailPage() {
     const [colorPicked, setColorPicked] = useState(firstImage);
     const [colorID, setColorID] = useState(0);
     const [memoryID, setMemoryID] = useState(0);
-    const [ reviewStar ] = useState(0);
+    const [reviewStar] = useState(0);
 
     const numberedId = Number(id);
 
     const handleRating = (rate: number) => {
-        setReviewData({...reviewData, rating: rate})
+        setReviewData({ ...reviewData, rating: rate })
     }
 
     useEffect(() => {
@@ -87,7 +87,7 @@ function DetailPage() {
     }
 
     const handleAddToCart = (id: number | undefined) => {
-        if(product?.memory_price) {
+        if (product?.memory_price) {
             if (memoryID === 0) {
                 notifyError("Выберите объем памяти");
                 return;
@@ -115,7 +115,7 @@ function DetailPage() {
         const addedProducts = JSON.parse(localStorage.getItem('addedProducts') || '[]');
         const addedToCart = addedProducts.includes(product?.id);
         setAddedToCart(addedToCart);
-    }, [product]);    
+    }, [product]);
 
     const handleClickFavorite = (product_id: number) => {
         if (user && token) {
@@ -176,7 +176,7 @@ function DetailPage() {
 
     useEffect(() => {
         if (activeItem) {
-            if(product?.memory_price) {
+            if (product?.memory_price) {
                 let price = product?.memory_price[(activeItem as any)["volume"]];
                 let transPrice = price?.replace(/[^\d.]/g, '');
                 if (transPrice) {
@@ -184,7 +184,7 @@ function DetailPage() {
                 }
             }
         }
-    }, [activeItem])   
+    }, [activeItem])
 
     return (
         <div>
@@ -200,7 +200,7 @@ function DetailPage() {
                                 </div>
                                 <div className={styles.mobile_detail__title}>
                                     <div>
-                                        { product?.name }
+                                        {product?.name}
                                     </div>
                                     <div className={styles.stars}>
                                         {product?.rating != undefined ? (
@@ -252,11 +252,11 @@ function DetailPage() {
                                     />
                                 </div>
                                 <div className={styles.storage}>
-                                    { product.memory_price ? (
+                                    {product.memory_price ? (
                                         <div>Память</div>
                                     ) : (
                                         null
-                                    ) }
+                                    )}
                                     <ul className={styles.navigation}>
                                         {product?.memory?.map((item: any, index: number) => (
                                             <li
@@ -329,7 +329,7 @@ function DetailPage() {
                                                         </div>
                                                         <div className={styles.user_info}>
                                                             <span>Ваше имя</span>
-                                                            <div>{ user.name }</div>
+                                                            <div>{user.name}</div>
                                                         </div>
                                                         <form className={styles.add_review} onSubmit={handleSubmit}>
                                                             <div className={styles.rating_block}>
@@ -403,7 +403,7 @@ function DetailPage() {
                                                         ))}
                                                     </div>
                                                 ) : (
-                                                <div className={styles.reviews}>Пока нет отзывов</div>
+                                                    <div className={styles.reviews}>Пока нет отзывов</div>
                                                 )
                                             }
 
@@ -458,6 +458,7 @@ function DetailPage() {
                                             </p>
                                         </div>
                                     </div>
+                                    <div></div>
                                     <div className={styles.detail_wrapper__right}>
                                         <div className={styles.stars}>
                                             {product?.rating != undefined ? (
@@ -481,11 +482,11 @@ function DetailPage() {
                                             <div>{product?.name}</div>
                                         </div>
                                         <div className={styles.storage}>
-                                            { product.memory_price ? (
+                                            {product.memory_price ? (
                                                 <div>Память</div>
                                             ) : (
                                                 null
-                                            ) }
+                                            )}
                                             <ul className={styles.navigation}>
                                                 {product?.memory?.map((item: any, index: number) => (
                                                     <li
@@ -556,7 +557,7 @@ function DetailPage() {
                                                 </div>
                                                 <div className={styles.user_info}>
                                                     <span>Ваше имя</span>
-                                                    <div>{ user.name }</div>
+                                                    <div>{user.name}</div>
                                                 </div>
                                                 <form className={styles.add_review} onSubmit={handleSubmit}>
                                                     <div className={styles.rating_block}>
