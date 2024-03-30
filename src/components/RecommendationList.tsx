@@ -15,11 +15,11 @@ function RecommendationList() {
 
     useEffect(() => {
         const handleResize = () => {
-          setIsMobile(window.innerWidth < 520);
+            setIsMobile(window.innerWidth < 520);
         };
-    
+
         window.addEventListener('resize', handleResize);
-    
+
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
@@ -65,45 +65,49 @@ function RecommendationList() {
 
     const currentPageProducts = getCurrentPageProducts();
 
-  return (
-    <>
-        <div className={"accessories"} style={{ margin: "50px 0px" }}>
-            <div className="accessories__item">
-            Рекомендуемые
+    const preventDefault = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.preventDefault();
+    };
+
+    return (
+        <>
+            <div className={"accessories"} style={{ margin: "50px 0px" }}>
+                <div className="accessories__item">
+                    Рекомендуемые
+                </div>
+                <div className="accessories__item">
+                    <span onClick={() => navigate("/recommendation/products")} style={{ fontSize: "25px", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
+                    <div onClick={() => navigate("/recommendation/products")} className="accessories__item_img" style={{ position: "initial" }}>
+                        <img src={nextArrow} />
+                    </div>
+                </div>
             </div>
-            <div className="accessories__item">
-            <span onClick={() => navigate("/recommendation/products")} style={{ fontSize: "25px", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
-            <div onClick={() => navigate("/recommendation/products")} className="accessories__item_img" style={{ position: "initial" }}>
-                <img src={nextArrow} />
+            <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
+                {currentPageProducts.map((product) => (
+                    <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
+                ))}
             </div>
+            <div className="pagination">
+                <div onClick={(e: any) => { handlePrevPage(); preventDefault(e); }} className={`prev__btn-pagination ${currentPage === 1 ? "disabled_pagination" : ""}`}>
+                    <img src={prevArrow} />
+                </div>
+                <div className="pagination__numbers">
+                    {visiblePages().map((page) => (
+                        <button
+                            key={page}
+                            onClick={(e) => { handlePageChange(page); preventDefault(e); }}
+                            className={`${currentPage === page ? "active-pagination" : ""} pagination__number`}
+                        >
+                            {page}
+                        </button>
+                    ))}
+                </div>
+                <div onClick={(e: any) => { handleNextPage(); preventDefault(e); }} className={`next__btn-pagination ${currentPage === totalPages ? "disabled_pagination" : ""}`}>
+                    <img src={nextArrow} />
+                </div>
             </div>
-        </div>
-        <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
-            { currentPageProducts.map((product) => (
-                <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
-            ) ) }
-        </div>
-        <div className="pagination">
-        <div onClick={handlePrevPage} className={`prev__btn-pagination ${currentPage === 1 ? "disabled_pagination" : ""}`}>
-          <img src={prevArrow} />
-        </div>
-        <div className="pagination__numbers">
-            {visiblePages().map((page) => (
-                <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={`${currentPage === page ? "active-pagination" : ""} pagination__number`}
-                >
-                {page}
-                </button>
-            ))}
-            </div>
-            <div onClick={handleNextPage} className={`next__btn-pagination ${currentPage === totalPages ? "disabled_pagination" : ""}`}>
-            <img src={nextArrow} />
-            </div>
-        </div>
-    </>
-  )
+        </>
+    )
 }
 
-export default RecommendationList
+export default RecommendationList;
