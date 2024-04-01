@@ -227,7 +227,7 @@ function DetailPage() {
                                 </div>
                                 <div className={styles.mobile_detail__util}>
                                     <div className={styles.options}>
-                                        <div>Выбрать цвет</div>
+                                        <div>{ product?.color.length !== 0 ? "Выбрать цвет" : "" }</div>
                                         {product?.color ? (
                                             product?.color.map((item: any, index: number) => (
                                                 <div
@@ -434,7 +434,7 @@ function DetailPage() {
                                             <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
                                         </div>
                                         <div className={styles.options}>
-                                            <div>Выбрать цвет</div>
+                                            <div>{ product?.color.length !== 0 ? "Выбрать цвет" : "" }</div>
                                             {product?.color ? (
                                                 product?.color.map((item: any, index: number) => (
                                                     <div

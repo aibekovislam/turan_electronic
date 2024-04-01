@@ -60,11 +60,12 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
 
   const filteredFirstImage = getFilteredFirstImage(img_array[selectedColor], selectedIndex);
 
-  console.log(filteredFirstImage)
   return (
     <div className={styles.main}>
       <div className={styles.carousel_detail}>
-        <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} />
+        { filteredFirstImage ? (
+          <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} />
+        ) : (null) }
         {loading ? (
             <l-ping
               size="45"
@@ -74,7 +75,9 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
         ) : (
           <img src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : default_image} className={styles.detail_img} />
         )}
-        <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} />
+        { filteredFirstImage ? (
+          <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} />
+        ) : (null) }
       </div>
       <div className={styles.flex_row}>
         {img_array[selectedColor]?.map((image: string, i: number) => (
