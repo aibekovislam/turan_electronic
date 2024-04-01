@@ -399,13 +399,17 @@
 //!  MiniCardMobile
 
 @media screen and (max-width: 520px) {
-    .mini_mobile__container {
+    .mini_mobile__main {
+        width: auto;
+        height: 220px;
         border-radius: 15px;
         border: 1px solid #fff;
-        width: 180px;
-        height: auto;
         padding: 10px;
-        margin-bottom: 20px;
+        margin-right: 20px;
+    }
+    .mini_mobile__container {
+        max-width: max-content;
+        margin: 0 auto;
     }
 
     .mini_mobile__star {
@@ -426,6 +430,7 @@
     .mini_mobile__content>span {
         font-weight: 400;
         font-size: 14px;
+        height: 35px;
     }
 
     .mini_mobile__content>img {
