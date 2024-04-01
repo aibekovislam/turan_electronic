@@ -52,8 +52,6 @@ function CategoryMobile() {
                     </div>
                 ))
             )}
-            
-            
         </div>
     </div>
   )

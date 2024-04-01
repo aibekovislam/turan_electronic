@@ -44,7 +44,7 @@ function Navbar() {
 
     if (item === "home") {
       navigate("/");
-    } else if(token === null) {
+    } else if(token === null && !user) {
       navigate("/auth")
     } else {
       navigate(`/${item}`);
