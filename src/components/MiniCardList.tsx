@@ -90,7 +90,7 @@ function MiniCardList() {
       const handleNavigate = (id: number) => {
         navigate(`/product/${id}`)
       }
-
+      
       return (
         <>
           <div className={"accessories"}>
@@ -100,16 +100,19 @@ function MiniCardList() {
           </div>
           <div className={`slider-container ${styles.mini_card_list}`}>
             <Slider {...settings}>
-              {accessories?.map((accessory: AccessoriesType | undefined, index: number) => (
-                isMobile ? (
-                  <MiniCardMobile key={index} accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} />
-                ) : (
-                <div key={index} className={styles.mini_card_block}>
-                  <MiniCard accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} style={{ cursor: "pointer" }} />
-                </div>
-                )
-
-              ))}
+              { accessories.length !== 0 ? (
+                accessories?.map((accessory: AccessoriesType, index: number) => (
+                  isMobile ? (
+                    <MiniCardMobile key={index} accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} />
+                  ) : (
+                  <div key={index} className={styles.mini_card_block}>
+                    <MiniCard accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} style={{ cursor: "pointer" }} />
+                  </div>
+                  )
+                ))
+              ) : (
+                <div>loading...</div>
+              ) }
             </Slider>
           </div>
         </>
