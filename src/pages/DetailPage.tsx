@@ -130,11 +130,11 @@ function DetailPage() {
     const isProductInFavorites = favorites.some((fav) => fav.id === product?.id);
 
     useEffect(() => {
-        const defaultColor: any = product?.color?.[0].hash_code;
+        const defaultColor: any = product?.color.length !== 0 ? product?.color?.[0].hash_code : "нету";
         if (defaultColor) {
             setColorPicked(defaultColor);
         }
-        setColorID(product?.color?.[0].id);
+        setColorID(product?.color.length !== 0 ? product?.color?.[0].id : "нету");
         dispatch(colorPickToAddToCart(defaultColor));
     }, [product]);
 
@@ -233,7 +233,7 @@ function DetailPage() {
                                                 <div
                                                     key={index}
                                                     className={`${styles.color_block} ${colorPicked === item.hash_code ? styles.selectedColor : ""}`}
-                                                    style={{ background: item.hash_code }}
+                                                    style={{ background: item.hash_code ? item.hash_code : "" }}
                                                     onClick={() => handleColorPick(item)}
                                                 ></div>
                                             ))
@@ -440,7 +440,7 @@ function DetailPage() {
                                                     <div
                                                         key={index}
                                                         className={`${styles.color_block} ${colorPicked === item.hash_code ? styles.selectedColor : ""}`}
-                                                        style={{ background: item.hash_code }}
+                                                        style={{ background: item.hash_code ? item.hash_code : "" }}
                                                         onClick={() => handleColorPick(item)}
                                                     ></div>
                                                 ))
