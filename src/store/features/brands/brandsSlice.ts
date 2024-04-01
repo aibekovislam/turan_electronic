@@ -20,8 +20,11 @@ const brandsSlice = createSlice({
 
 export const fetchBrands = (): AppThunk => async (dispatch) => {
     try {
-        const response = await axios.get(`${API_URL}/brands/`)
+        const response = await axios.get(`${API_URL}/brands/`, { params: {
+            limit: 100
+        } })
         const data: BrandsI = {brands: response.data.results}
+        console.log(data)
         dispatch(brandsSlice.actions.setBrands(data))
     } catch (error) {
         console.log(error);
