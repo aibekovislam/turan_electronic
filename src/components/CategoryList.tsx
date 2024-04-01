@@ -31,18 +31,29 @@ function CategoryList() {
       {isMobile ? (
         <CategoryMobile />
       ) : (
-        <div className={styles.category__container}>
-          <div className={styles.category_big}>
-            {brands.length > 0 && <Category type={"big"} brand={brands[0]} />}
+        <>
+          <div className={styles.category__container}>
+            <div className={styles.category_big}>
+              {brands.length > 0 && <Category type={"big"} brand={brands[0]} />}
+            </div>
+            <div className={styles.category_small}>
+              {brands.slice(1, 5).map((brand: BrandsType, index: number) => (
+                <div key={index}>
+                  <Category type={"small"} brand={brand} />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className={styles.category_small}>
-            {brands.slice(1, 6).map((brand: BrandsType, index: number) => (
-              <div key={index}>
-                <Category type={"small"} brand={brand} />
-              </div>
-            ))}
-          </div>
-        </div>
+          <div className={styles.category__container} style={{ marginTop: "15px" }}>
+            {/* <div className={styles.category_small}> */}
+              {brands.slice(5).map((brand: BrandsType, index: number) => (
+                <div key={index}>
+                  <Category type={"small"} brand={brand} />
+                </div>
+              ))}
+            </div>
+          {/* </div> */}
+        </>
       )}
     </>
   );

@@ -2,15 +2,15 @@
     display: flex;
     width: 100%;
     height: auto;
-    justify-content: space-between;
+    // justify-content: space-between;
+    gap: 45px;
     margin-top: 30px;
-    gap: 20px;
 }
 
 .category_small {
+    width: 59vw;
     display: flex;
-    justify-content: space-around;
-    column-gap: 15px;
+    justify-content: space-between;
     flex-wrap: wrap;
     row-gap: 15px;
 }
@@ -41,8 +41,8 @@
 }
 
 .big_category {
-    max-width: 400px;
-    width: 29vw;
+    // max-width: 400px;
+    width: 28.1vw;
     height: 43vw;
     border-radius: 24px;
     border: 1px solid #FFFFFF;
@@ -106,7 +106,7 @@
         width: 26vw;
     }
     .big_category, .big_category img {
-        width: 33vw;
+        width: 26vw;
     }
     .brand__category {
         margin-bottom: 20px;
