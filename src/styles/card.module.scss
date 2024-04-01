@@ -400,7 +400,7 @@
 
 @media screen and (max-width: 520px) {
     .mini_mobile__main {
-        width: auto;
+        width: 120px;
         height: 220px;
         border-radius: 15px;
         border: 1px solid #fff;
@@ -425,6 +425,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-bottom: 20px;
     }
 
     .mini_mobile__content>span {
@@ -434,9 +435,9 @@
     }
 
     .mini_mobile__content>img {
-        width: 123px;
-        height: 123px;
-        object-fit: cover;
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
     }
 
     .mini_mobile__utils {
@@ -453,5 +454,9 @@
     .mini_mobile__utils>span {
         font-weight: 600;
         font-size: 15px;
+    }
+    .cart {
+        width: 30px;
+        height: 30px;
     }
 }
