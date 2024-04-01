@@ -19,6 +19,8 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
     if (img_array && img_array[selectedColor]) {
       setLoading(true);
       setWordData(img_array[selectedColor]);
+    } else {
+      setWordData([default_image])
     }
   }, [selectedColor, img_array]);
 
@@ -48,7 +50,7 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
     handleChange(index);
   };
 
-  if (!selectedColor || !img_array || !img_array[selectedColor]) {
+  if (!wordData) {
     return <l-ping
               size="45"
               speed="2" 
@@ -58,6 +60,7 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
 
   const filteredFirstImage = getFilteredFirstImage(img_array[selectedColor], selectedIndex);
 
+  console.log(filteredFirstImage)
   return (
     <div className={styles.main}>
       <div className={styles.carousel_detail}>
@@ -69,7 +72,7 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
               color="black" 
             ></l-ping>
         ) : (
-          <img src={wordData.length !== 0 ? `${API_URL}${filteredFirstImage}` : default_image} className={styles.detail_img} />
+          <img src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : default_image} className={styles.detail_img} />
         )}
         <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} />
       </div>

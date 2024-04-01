@@ -82,8 +82,12 @@
 
 .footer__logo_and_info {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+}
+
+.footer__logo_and_info img {
+    width: max-content;
+    height: max-content;
 }
 
 .info {
