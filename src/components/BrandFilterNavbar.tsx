@@ -3,13 +3,13 @@ import { BrandsProps } from "../utils/interfacesAndTypes";
 import FilterSVG from "../assets/svgs/Vector (18).svg";
 import { useEffect, useRef, useState } from "react";
 import ArrowDown from "../assets/svgs/ArrowDown";
-import { renderDropdownContent } from "../functions/renderDropdown.tsx";
 import { useDispatch } from "react-redux";
-import { fetchFilterProducts } from "../store/features/products/productSlice.ts";
+import { fetchFilterProducts, getProductsByBrandCategory } from "../store/features/products/productSlice.ts";
 import SidebarMenu from "./SidebarMenu.tsx";
 import { useNavigate } from "react-router-dom";
+import { RenderDropdownContent } from "../functions/RenderDropdownContent.tsx";
 
-function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
+function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCategory }: BrandsProps) {
     const [pickedColor, setPickedColor] = useState<string | null>(null);
     const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
     const [ isOpen, setIsOpen ] = useState(false);
@@ -51,7 +51,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
     }, [setIsOpen]);
 
     const [filters, setFilters] = useState({
-        limit: 10,
+        limit: 100,
         offset: 0,
         min_price: undefined,
         max_price: undefined,
@@ -70,6 +70,10 @@ function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
 
     const handleFilterUp = () => {
         setFilterUp(!filterUp)
+    }
+
+    const fetchFilterDropdown = (updated_filters: any) => {
+        dispatch(getProductsByBrandCategory(updated_filters))
     }
 
     const handleMobileFilterClick = () => {
@@ -124,7 +128,9 @@ function BrandFilterNavbar({ brand, products, dataForDropDown }: BrandsProps) {
                                     <ArrowDown isUp={dropdownStates[index]} />
                                 </div>
                                 <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>
-                                    { dropdownStates[index] && renderDropdownContent(index, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, dataForDropDown) }
+                                    { dropdownStates[index] && 
+                                        <RenderDropdownContent index={index} pickedColor={pickedColor} setPickedColor={setPickedColor} brand={brand} fetchProductsAndLog={fetchProductsAndLog} filters={filters} dataForDropdown={dataForDropDown} fetchFilterDropdown={fetchFilterDropdown} productsByBrandCategory={productsByBrandCategory} /> 
+                                    }
                                 </div>
                             </div>
                         ))}

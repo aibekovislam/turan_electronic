@@ -8,7 +8,8 @@ const initialState: ProductsI = {
     products: [],
     colors: [],
     filteredProducts: [],
-    filterByBrand: []
+    filterByBrand: [],
+    filterByBrandCategory: []
 };  
 
 const productSlice = createSlice({
@@ -23,10 +24,13 @@ const productSlice = createSlice({
             state.colors = action.payload.colors || [];
         },
         setFilterProducts: (state, action: PayloadAction<ProductsI>) => {
-            state.filteredProducts = action.payload.products;
+            state.filteredProducts = action.payload.filteredProducts;
         },
         setFilterByBrand: (state, action: PayloadAction<ProductsI>) => {
             state.filterByBrand = action.payload.filterByBrand;
+        },
+        setFilterByBrandCategory: (state, action: PayloadAction<ProductsI>) => {
+            state.filterByBrandCategory = action.payload.filterByBrandCategory;
         }
     }
 });
@@ -34,7 +38,7 @@ const productSlice = createSlice({
 export const fetchProducts = (filters: any): AppThunk => async (dispatch) => {
     try {
         const queryParams = {
-            limit: filters.limit || 10,
+            limit: filters.limit || 100,
             offset: filters.offset || 0,
             min_price: filters.min_price || undefined,
             max_price: filters.max_price || undefined,
@@ -57,7 +61,7 @@ export const fetchProducts = (filters: any): AppThunk => async (dispatch) => {
 export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) => {
     try {
         const queryParams = {
-            limit: filters.limit || 10,
+            limit: filters.limit || 100,
             offset: filters.offset || 0,
             min_price: filters.min_price || undefined,
             max_price: filters.max_price || undefined,
@@ -68,11 +72,11 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
             product_name: filters.product_name || undefined
         };
 
-        console.log(queryParams)
-
         const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
 
-        const data: ProductsI = { products: response.data.results };
+        console.log(response)
+
+        const data: ProductsI = { filteredProducts: response.data.results };
 
         dispatch(productSlice.actions.setFilterProducts(data));
 
@@ -95,6 +99,22 @@ export const getProductsByOneBrand = (filters: any): AppThunk => async (dispatch
         const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
         const data: ProductsI = { filterByBrand: response.data.results };
         dispatch(productSlice.actions.setFilterByBrand(data));
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getProductsByBrandCategory = (filters: any): AppThunk => async (dispatch) => {
+    try {
+        const queryParams = {
+            limit: 100,
+            brand: filters.brand || [],
+            brand_category: filters.brand_category || undefined
+        };
+
+        const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
+        const data: ProductsI = { filterByBrandCategory: response.data.results };
+        dispatch(productSlice.actions.setFilterByBrandCategory(data));
     } catch (error) {
         console.log(error);
     }

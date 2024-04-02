@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchOneBrand } from '../store/features/brands/oneBrandSlice';
 import { RootStates } from '../store/store';
 import BrandFilterNavbar from '../components/BrandFilterNavbar';
-import { fetchFilterProducts, getProductsByOneBrand } from '../store/features/products/productSlice';
+import { fetchFilterProducts, getProductsByBrandCategory, getProductsByOneBrand } from '../store/features/products/productSlice';
 import Card from '../components/Card';
 import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
@@ -18,6 +18,7 @@ function BrandsPage() {
     const filteredProducts = useSelector((state: RootStates) => state.products.filteredProducts);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const products = useSelector((state: RootStates) => state.products.filterByBrand);
+    const productsByBrandCategory = useSelector((state: RootStates) => state.products.filterByBrandCategory);
 
     ping.register();
 
@@ -56,7 +57,15 @@ function BrandsPage() {
             }))
         }
     }, [dispatch])
-    
+
+    useEffect(() => {
+        if(brand != undefined) {
+            dispatch(getProductsByBrandCategory({
+                brand: Number(brand)
+            }))
+        }
+    }, [dispatch])
+
     const navigate = useNavigate();
     const itemsPerPage = 16;
     const maxVisiblePages = 3;
@@ -91,7 +100,7 @@ function BrandsPage() {
     if(oneBrand != undefined && filteredProducts !== undefined) {
         return (
             <>
-                <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} />
+                <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} productsByBrandCategory={productsByBrandCategory} />
                 <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ marginTop: "30px" }}>
                 {
                     filteredProducts?.length !== 0 ? (
@@ -99,7 +108,9 @@ function BrandsPage() {
                             <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
                         ))
                     ) : (
-                        <div>Пока товаров нету в наличии</div>
+                        <>
+                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                        </>
                     )  
                 }
                 </div>

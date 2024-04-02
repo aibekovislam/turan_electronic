@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
 import styles from '../styles/navbar_navigation.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchFilterProducts } from '../store/features/products/productSlice';
 import ArrowDown from '../assets/svgs/ArrowDown';
-import { renderDropdownSideBar } from '../functions/renderDropdownSidebar';
-import { RootStates } from '../store/store';
 import { fetchBrands } from '../store/features/brands/brandsSlice';
+import { RenderSidebarDrop } from '../functions/RenderSidebarDrop';
 
 function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef }: any) {
   const [pickedColor, setPickedColor] = useState<string | null>(null);
   const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
   const [showAllColors, setShowAllColors] = useState(false);
-  const colors = useSelector((state: RootStates) => state.products.colors);
   const dispatch = useDispatch<any>();
 
     useEffect(() => {
@@ -23,9 +21,8 @@ function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef }: any
         setDropdownStates(newDropdownStates);
     };
 
-
     const [filters, setFilters] = useState({
-        limit: 10,
+        limit: 100,
         offset: 0,
         min_price: undefined,
         max_price: undefined,
@@ -52,7 +49,6 @@ function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef }: any
           </button>
         </div>
         <ul className={styles.sidebarLinks}>
-
           <div className={styles.sidebar_main}>
           {Array(4).fill(null).map((_, index) => (
             <div key={index} className={styles.sidebar__items}>
@@ -65,7 +61,7 @@ function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef }: any
                   </div>
               </div>
                   <div >
-                      { dropdownStates[index] && renderDropdownSideBar(index, products, colors, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors) }
+                      { dropdownStates[index] && <RenderSidebarDrop index={index} products={products} pickedColor={pickedColor} setPickedColor={setPickedColor} brand={brand} fetchProductsAndLog={fetchProductsAndLog} filters={filters} showAllColors={showAllColors} setShowAllColors={setShowAllColors} /> }
                   </div>
             </div>
           ))}

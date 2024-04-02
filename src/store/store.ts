@@ -14,6 +14,7 @@ import cartReducer from "./features/favorite_and_cart/cartSlice";
 import orderReducer from "./features/order/orderSlice";
 import newsReducer from "./features/news/newsSlice";
 import newsOneSliceReducer from "./features/news/oneNewsSlice";
+import dropdownReducer from './features/dropdown/dropdownSlice'
 import footerReducer from "./features/footer/footerSlice";
 
 
@@ -35,7 +36,8 @@ export const store = configureStore({
         carts: cartReducer,
         orders: orderReducer,
         news: newsReducer,
-        oneNews: newsOneSliceReducer
+        oneNews: newsOneSliceReducer,
+        dropdown: dropdownReducer
     }
 })
 

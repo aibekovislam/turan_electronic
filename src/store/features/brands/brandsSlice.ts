@@ -24,7 +24,6 @@ export const fetchBrands = (): AppThunk => async (dispatch) => {
             limit: 100
         } })
         const data: BrandsI = {brands: response.data.results}
-        console.log(data)
         dispatch(brandsSlice.actions.setBrands(data))
     } catch (error) {
         console.log(error);
