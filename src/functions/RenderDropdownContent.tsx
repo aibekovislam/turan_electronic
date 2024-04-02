@@ -61,6 +61,10 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                         product_name: ""
                                     }
                                     fetchProductsAndLog(obj);
+                                    fetchFilterDropdown({
+                                        brand: brand.id,
+                                        brand_category: undefined
+                                    })
                                 }}
                                 />
                             <span className={styles.dropdown_text}>Все</span>
