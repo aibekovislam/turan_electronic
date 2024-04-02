@@ -221,6 +221,7 @@
     user-select: none;
     cursor: pointer;
     font-size: 15px;
+    display: block;
 }
 
 .brands__block_arrow_down {
@@ -246,6 +247,7 @@
 
 .dropdown_label{
     cursor: pointer;
+    display: flex;
 }
 
 .dropdown_radio {
