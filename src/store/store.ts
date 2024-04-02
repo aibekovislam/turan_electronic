@@ -15,6 +15,8 @@ import orderReducer from "./features/order/orderSlice";
 import newsReducer from "./features/news/newsSlice";
 import newsOneSliceReducer from "./features/news/oneNewsSlice";
 import dropdownReducer from './features/dropdown/dropdownSlice'
+import footerReducer from "./features/footer/footerSlice";
+
 
 
 export const store = configureStore({
@@ -23,6 +25,7 @@ export const store = configureStore({
         products: productsReducer,
         productRec: productRecReducer,
         brands: brandReducer,
+        footers: footerReducer,
         carousel: carouselReducer,
         accessories: accessoriesReducer,
         oneProduct: productOneSliceReducer,

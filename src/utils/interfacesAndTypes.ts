@@ -87,6 +87,10 @@ export interface BrandsI {
     brands: BrandsType[]
 }
 
+export interface FooterI {
+    footers: FootersType | null
+}
+
 export interface NewsI {
     news?: null | NewsType[]
 }
@@ -236,6 +240,13 @@ export type BrandsType = {
     title: string;
     logo_field: string;
     image: string;
+}
+
+export type FootersType = {
+    location? : string;
+    schedule: string;
+    phone: string;
+    email: string;
 }
 
 export type NewsType = {
