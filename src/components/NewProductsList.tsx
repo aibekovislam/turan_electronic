@@ -15,13 +15,13 @@ function NewProductsList() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
 
   useEffect(() => {
-      const handleResize = () => {
-        setIsMobile(window.innerWidth < 520);
-      };
-  
-      window.addEventListener('resize', handleResize);
-  
-      return () => window.removeEventListener('resize', handleResize);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 520);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
@@ -47,26 +47,25 @@ function NewProductsList() {
     navigate(`/product/${id}`)
   }
 
-  console.log(filteredNewProducts)
 
   return (
     <>
-        <div className={"accessories"} style={{ marginBottom: "30px" }}>
-            <div className="accessories__item">
-            Новое поступление
-            </div>
-            <div className="accessories__item">
-            <span onClick={() => navigate("/new/products")} style={{ fontSize: "2vw", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
-            <div onClick={() => navigate("/new/products")} className="accessories__item_img" style={{ position: "initial" }}>
-                <img src={nextArrow} />
-            </div>
-            </div>
+      <div className={"accessories"} style={{ marginBottom: "30px" }}>
+        <div className="accessories__item">
+          Новое поступление
         </div>
-        <div className={isMobile ? "d-f__new-product__mobile" : "d-f__new-product"}>
-          {displayedProducts?.map((product: ProductsType, index: number) => (
-            <NewProductsCard product={product} key={index} onClick={() => handleNavigate(product.id)} />
-          ))}
+        <div className="accessories__item">
+          <span onClick={() => navigate("/new/products")} style={{ fontSize: "2vw", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
+          <div onClick={() => navigate("/new/products")} className="accessories__item_img" style={{ position: "initial" }}>
+            <img src={nextArrow} />
+          </div>
         </div>
+      </div>
+      <div className={isMobile ? "d-f__new-product__mobile" : "d-f__new-product"}>
+        {displayedProducts?.map((product: ProductsType, index: number) => (
+          <NewProductsCard product={product} key={index} onClick={() => handleNavigate(product.id)} />
+        ))}
+      </div>
     </>
   )
 }
