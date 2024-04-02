@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom"
 import { RootStates } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchFilterProducts, getProductsByBrandCategory, getProductsByOneBrand } from "../store/features/products/productSlice";
 import Card from "../components/Card";
 import BrandFilterNavbar from "../components/BrandFilterNavbar";
@@ -16,8 +16,8 @@ function FilteredRoutePage() {
     const dispatch = useDispatch<any>();
     const oneBrand = useSelector((state: RootStates) => state.oneBrand.brand);
     const filteredProducts = useSelector((state: RootStates) => state.products.filteredProducts);
-    const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
-    const productsBrand = useSelector((state: RootStates) => state.products.filterByBrand);
+    // const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+    // const productsBrand = useSelector((state: RootStates) => state.products.filterByBrand);
     const productsByBrandCategory = useSelector((state: RootStates) => state.products.filterByBrandCategory);
 
     useEffect(() => {
@@ -34,15 +34,15 @@ function FilteredRoutePage() {
 
     ping.register();
 
-    useEffect(() => {
-        const handleResize = () => {
-          setIsMobile(window.innerWidth < 520);
-        };
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //       setIsMobile(window.innerWidth < 520);
+    //     };
     
-        window.addEventListener('resize', handleResize);
+    //     window.addEventListener('resize', handleResize);
     
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+    //     return () => window.removeEventListener('resize', handleResize);
+    // }, []);
 
     useEffect(() => {
         if(brand != undefined) {
