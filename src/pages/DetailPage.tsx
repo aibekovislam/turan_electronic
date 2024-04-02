@@ -425,7 +425,7 @@ function DetailPage() {
                             <div className={styles.detail_main}>
                                 <div className={styles.section_title}>
                                     <div className={styles.path}>
-                                        <a href="/">Главная</a> | <a href={`/products/brands/${product.brand}`}>{ product.brand_title }</a> | <a href={`/products/filter/${product.brand_category}`}>{product?.brand_category_title}</a> | {product?.name}
+                                        <a href="/">Главная</a> | <a href={`/products/brands/${product.brand}`}>{ product.brand_title }</a> | <a href={`/products/filter/${product.brand_category}/${product.brand}`}>{product?.brand_category_title}</a> | {product?.name}
                                     </div>
                                 </div>
                                 <div className={styles.detail_container}>

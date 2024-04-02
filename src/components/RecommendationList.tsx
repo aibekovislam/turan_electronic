@@ -82,7 +82,7 @@ function RecommendationList() {
                     </div>
                 </div>
             </div>
-            <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
+            <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ justifyContent: "space-between" }}>
                 {currentPageProducts.map((product) => (
                     <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
                 ))}

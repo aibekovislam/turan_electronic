@@ -51,11 +51,10 @@
     display: flex;
     width: 100%;
     height: auto;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     row-gap: 30px;
-    column-gap: 62px;
 }
 
 .d-f__rec-product__mobile{

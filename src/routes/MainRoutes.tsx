@@ -59,7 +59,7 @@ function MainRoutes() {
         <Route element={<NewsPage/>} path="/news" />
         <Route element={<AboutUs/>} path="/about" />
         <Route element={<NewsDetailPage/>} path="/news/:id" />
-        <Route element={<FilteredRoutePage/>} path="/products/filter/:brand_category_title" />
+        <Route element={<FilteredRoutePage/>} path="/products/filter/:brand_category_title/:brand" />
       </Route>
     </Routes>
   )
