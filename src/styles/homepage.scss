@@ -51,11 +51,11 @@
     display: flex;
     width: 100%;
     height: auto;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-wrap: wrap;
     row-gap: 30px;
-    // column-gap: 62px;
+    column-gap: 62px;
 }
 
 .d-f__rec-product__mobile{
@@ -220,7 +220,16 @@ input[type="range"]::-moz-range-thumb {
     align-items: center;
 }
 
+@media only screen and (max-width: 1400px) {
+    .d-f__rec-product {
+        column-gap: 23px;
+    }
+}
+
 @media only screen and (max-width: 1300px) {
+    .d-f__rec-product {
+        justify-content: space-between;
+    }
     .accessories {
         margin-top: 30px;
     }

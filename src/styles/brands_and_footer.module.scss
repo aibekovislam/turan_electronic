@@ -277,7 +277,7 @@
   
   .dropdown_radio:checked {
     background-color: #FF7300;
-}  
+}
 
 .dropdownContent {
     display: block;
@@ -334,6 +334,7 @@
     display: flex;
     width: 100%;
     height: auto;
+    align-items: center;
 }
 
 .range_slider{

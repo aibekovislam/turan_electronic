@@ -6,14 +6,17 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
   const maxPrice = getHighestPrice(products);
 
   const [range, setRange] = useState<Range>({ min: 0, max: maxPrice });
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
-    fetchProductsAndLog({
-      min_price: range.min,
-      max_price: range.max,
-      brand: brand?.id || '', 
-    });
-  }, [range]);
+    if (!isDragging) {
+      fetchProductsAndLog({
+        min_price: range.min,
+        max_price: range.max,
+        brand: brand?.id || '', 
+      });
+    }
+  }, [range, isDragging]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>, type: keyof Range) => {
     const value = parseInt(e.target.value, 10);
@@ -22,16 +25,24 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
       [type]: value,
     }));
   };
-  
-  const handleRangeChange = (e: ChangeEvent<HTMLInputElement>, type: keyof Range) => {
-    const value = parseInt(e.target.value, 10);
-    if (value !== range[type]) {
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseMove = (e: ChangeEvent<HTMLInputElement>, type: keyof Range) => {
+    if (isDragging) {
+      const value = parseInt(e.target.value, 10);
       setRange((prevRange) => ({
         ...prevRange,
         [type]: value,
       }));
     }
   };  
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
 
   useEffect(() => {
     if (range.min > range.max) {
@@ -51,6 +62,7 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
             className="input-min"
             value={range.min}
             onChange={(e) => handleInputChange(e, "min")}
+            step="5000"
           />
         </div>
         <div className="seperator">-</div>
@@ -60,6 +72,7 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
             className="input-max"
             value={range.max}
             onChange={(e) => handleInputChange(e, "max")}
+            step="5000"
           />
         </div>
       </div>
@@ -79,8 +92,10 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
           min="0"
           max={maxPrice.toString()}
           value={range.min}
-          step="100"
-          onChange={(e) => handleRangeChange(e, "min")}
+          step="5000"
+          onMouseDown={handleMouseDown}
+          onChange={(e) => handleMouseMove(e, "min")}
+          onMouseUp={handleMouseUp}
         />
         <input
           type="range"
@@ -88,8 +103,10 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
           min="0"
           max={maxPrice.toString()}
           value={range.max}
-          step="100"
-          onChange={(e) => handleRangeChange(e, "max")}
+          step="5000"
+          onMouseDown={handleMouseDown}
+          onChange={(e) => handleMouseMove(e, "max")}
+          onMouseUp={handleMouseUp}
         />
       </div>
     </div>

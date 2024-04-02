@@ -1,9 +1,15 @@
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/navbar_navigation.module.scss";
-import { ProductsType } from "../utils/interfacesAndTypes";
+import { ProductsType, RenderSidebarTypes } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
-import { compareByVolume, extractPropertyArray, filterMemory, sortData } from "./filterFunction";
+import { compareByVolume, extractPropertyArray, filterMemory, returnColorsForFilter, sortData } from "./filterFunction";
+import { selectPickedOption, setPickedOption } from "../store/features/dropdown/dropdownSlice";
 
-export function renderDropdownSideBar(index: number, products: ProductsType[] | undefined, colors: string[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any, showAllColors: any, setShowAllColors: any) {
+export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors}: RenderSidebarTypes) => {
+    const pickedOption = useSelector(selectPickedOption);
+    const dispatch = useDispatch();
+
+    const colorsArray = products ? returnColorsForFilter(products.map(product => product.color)) : [];
 
     const isColorPicked = (color: string) => {
         return color === pickedColor;
@@ -48,9 +54,10 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                             id={`radio_${index}_all`}
                             name={groupName}
                             onChange={() => {
+                                dispatch(setPickedOption(null))
                                 setPickedColor(null);
                                 let obj = {
-                                    limit: 10,
+                                    limit: 100,
                                     offset: 0,
                                     min_price: undefined,
                                     max_price: undefined,
@@ -60,14 +67,14 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                                 }
                                 fetchProductsAndLog(obj)
                             }}
-                            checked={pickedColor === null}
+                            defaultChecked={!pickedOption}
                             />
                             <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
                     </div>
                     <div className={`${styles.d_f_colors}`} style={{ justifyContent: "flex-start" }}>
-                    {colors?.slice(0, showAllColors ? colors.length : 12).map((item: any, index: number) => (
+                    {colorsArray?.slice(0, showAllColors ? colorsArray.length : 12).map((item: any, index: number) => (
                         <div key={index} className={`${styles.dropdown__item}`}>
-                            <div onClick={() => {handleColorClick(item)}} className={`${styles.color_block} ${isColorPicked(item) ? styles.color_picked : ''}`} style={{ background: item }}></div>
+                            <div onClick={() => {handleColorClick(item)}} className={`${styles.color_block} ${isColorPicked(item) ? styles.color_picked : ''}`} style={{ background: item.hash_code }}></div>
                         </div>
                     ))}
                     </div>
@@ -86,10 +93,11 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                             className={styles.dropdown_radio}
                             id={`radio_${index}_all`}
                             name={groupName}
-                            defaultChecked={true}
+                            defaultChecked={!pickedOption}
                             onChange={() => {
+                                dispatch(setPickedOption(null))
                                 let obj = {
-                                    limit: 10,
+                                    limit: 100,
                                     offset: 0,
                                     min_price: undefined,
                                     max_price: undefined,
@@ -108,8 +116,10 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
                                     type="radio"
                                     className={styles.dropdown_radio}
                                     name={groupName}
+                                    checked={pickedOption === item}
                                     id={`radio_${index}`}
                                     onChange={() => {
+                                        dispatch(setPickedOption(item))
                                         const updatedFilters = {
                                             ...filters,
                                             brand: brand.id,
@@ -132,39 +142,44 @@ export function renderDropdownSideBar(index: number, products: ProductsType[] | 
             return(
                 <div className={styles.sidebar__items}>
                     <div className={styles.sidebar_radio}>
-                        <input
-                            type="radio"
-                            className={styles.dropdown_radio}
-                            name={groupName}
-                            id={`radio_${index}_all`}
-                            defaultChecked={true}
-                            onChange={() => {
-                                let obj = {
-                                    limit: 10,
-                                    offset: 0,
-                                    min_price: undefined,
-                                    max_price: undefined,
-                                    brand: brand.id,
-                                    color: [],
-                                    memory: [],
-                                    product_name: ""
-                                }
-                                fetchProductsAndLog(obj)
-                            }}
-                        />
-                        <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                        <div className={styles.d_f_radio}>
+                            <input
+                                type="radio"
+                                className={styles.dropdown_radio}
+                                name={groupName}
+                                id={`radio_${index}_all`}
+                                defaultChecked={!pickedOption}
+                                onChange={() => {
+                                    dispatch(setPickedOption(null))
+                                    let obj = {
+                                        limit: 100,
+                                        offset: 0,
+                                        min_price: undefined,
+                                        max_price: undefined,
+                                        brand: brand.id,
+                                        color: [],
+                                        memory: [],
+                                        product_name: ""
+                                    }
+                                    fetchProductsAndLog(obj)
+                                }}
+                            />
+                            <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                        </div>
                         {productMemory.sort(compareByVolume).slice(0, showAllColors ? productMemory.length : 8).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item}>
                                 <input
                                     type="radio"
                                     className={styles.dropdown_radio}
                                     name={groupName}
+                                    checked={pickedOption === item.title}
                                     id={`radio_${index}_all`}
                                     onChange={() => {
+                                        dispatch(setPickedOption(item.title))
                                         const updatedFilters = {
-                                        ...filters,
-                                        brand: brand.id,
-                                        memory: item.volume
+                                            ...filters,
+                                            brand: brand.id,
+                                            memory: item.volume
                                         };
                                         fetchProductsAndLog(updatedFilters);
                                     }}  

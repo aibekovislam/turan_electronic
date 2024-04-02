@@ -89,11 +89,13 @@ export function getFilteredFirstImage(imgArray: any, selectedIndex: any) {
 
 
 export const getHighestPrice = (products: any) => {
-    let acc = 0;
-    products.map((item: any) => acc += item.price);
-    return acc;
-}
-
+    if (!products || products.length === 0) {
+        return 0;
+    }
+    return products.reduce((maxPrice: number, item: any) => {
+        return Math.max(maxPrice, item.price);
+    }, products[0].price);
+};
 
 export const sortData = (data: any) => {
     return data.sort((a: any, b: any) => {

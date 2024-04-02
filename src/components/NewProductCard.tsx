@@ -48,7 +48,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     }, [])
 
     const handleClickFavorite = (product_id: number) => {
-        if(!user && !token) {
+        if(!user || !token) {
             navigate("/auth")
             notifyError('Вы не авторизованы')
             return;
@@ -113,10 +113,6 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                                         e.stopPropagation();
                                         handleClickFavorite(product.id);
                             }} />
-                            {/* <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
-                                e.stopPropagation();
-                                handleClickFavorite(product.id);
-                            }} /> */}
                       </div>
                       <div className={styles.cardMobile_wrapper__right}> 
                         <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>
