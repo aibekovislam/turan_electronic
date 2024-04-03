@@ -12,7 +12,7 @@ function NewProductsList() {
   const dispatch = useDispatch<any>();
   const products = useSelector((state: RootStates) => state.products.products);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
-  const [countSlice, setCountSlice] = useState(4);
+  const [countSlice, setCountSlice] = useState(0);
   const [displayedProducts, setDisplayedProducts] = useState<ProductsType[]>([]);
 
   useEffect(() => {
@@ -22,6 +22,7 @@ function NewProductsList() {
     };
 
     window.addEventListener("resize", handleResize);
+    updateCountSlice(); // Добавляем вызов для инициализации countSlice
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
