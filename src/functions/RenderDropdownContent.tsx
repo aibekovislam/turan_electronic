@@ -5,10 +5,14 @@ import { compareByVolume, extractBrandCategoryAndTitle, extractPropertyArray, fi
 import { useDispatch, useSelector } from "react-redux";
 import { selectPickedOption, setPickedOption } from "../store/features/dropdown/dropdownSlice";
 
-export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, dataForDropdown, fetchFilterDropdown, productsByBrandCategory }: RenderDropdownTypes) => {
-    const pickedOption = useSelector(selectPickedOption);
+export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, dataForDropdown, fetchFilterDropdown, productsByBrandCategory, dropdownId }: RenderDropdownTypes) => {
+    const pickedOption = useSelector(selectPickedOption(dropdownId));
     const dispatch = useDispatch();
 
+    const colorsArray = dataForDropdown ? returnColorsForFilter(
+        productsByBrandCategory.map(product => product.color)
+    ) : [];
+    
     const isColorPicked = (color: string) => {
         return color === pickedColor;
     };
@@ -21,11 +25,12 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
 
     const brandTitles = extractBrandCategoryAndTitle(dataForDropdown);
     const brandModels = brandCategoryArray('name');
-    const productMemory = dataForDropdown ? filterMemory(productsByBrandCategory.map(product => product.memory)) : [];
-    const colorsArray = dataForDropdown ? returnColorsForFilter(productsByBrandCategory.map(product => product.color)) : [];
-
+    const productMemory = dataForDropdown ? filterMemory(
+        productsByBrandCategory.map(product => product.memory)
+    ) : [];    
+    
     const handleColorClick = (color: string) => {
-        setPickedColor(color === pickedColor ? null : color);
+        setPickedColor(color === pickedColor ? null : color);        
       
         const updatedFilters = {
           ...filters,
@@ -48,7 +53,10 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                 name={groupName}
                                 defaultChecked={!pickedOption} 
                                 onChange={() => {
-                                    dispatch(setPickedOption(null))
+                                    dispatch(setPickedOption({
+                                        dropdownId: dropdownId,
+                                        pickedOption: null
+                                    }))
                                     let obj = {
                                         limit: 100,
                                         offset: 0,
@@ -78,11 +86,20 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                         name={groupName}
                                         checked={pickedOption === item.title}
                                         onChange={() => {
-                                            dispatch(setPickedOption(item.title))
+                                            dispatch(setPickedOption({
+                                                dropdownId: dropdownId,
+                                                pickedOption: item.title
+                                            }))
                                             const updatedFilters = {
-                                                ...filters,
+                                                limit: 100,
+                                                offset: 0,
+                                                min_price: undefined,
+                                                max_price: undefined,
                                                 brand: brand.id,
-                                                brand_category: item.id
+                                                brand_category: item.id,
+                                                product_name: "",
+                                                memory: [],
+                                                color: [],
                                             };
                                             fetchProductsAndLog(updatedFilters);
                                             fetchFilterDropdown(updatedFilters)
@@ -100,29 +117,33 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
             case 1:
                 return (
                     <div className={styles.dropdown__list}>
-                        <input
-                            type="radio"
-                            className={styles.dropdown_radio}
-                            name={groupName}
-                            id={`radio_${index}_all`}
-                            defaultChecked={!pickedOption} 
-                            onChange={() => {
-                                dispatch(setPickedOption(null))
-                                let obj = {
-                                    limit: 100,
-                                    offset: 0,
-                                    min_price: undefined,
-                                    max_price: undefined,
-                                    brand: brand.id,
-                                    brand_category: undefined,
-                                    color: [],
-                                    memory: [],
-                                    product_name: ""
-                                }
-                                fetchProductsAndLog(obj);
-                            }}
-                            />
-                        <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                        <label className={styles.dropdown_label}>
+                            <input
+                                type="radio"
+                                className={styles.dropdown_radio}
+                                name={groupName}
+                                id={`radio_${index}_all`}
+                                defaultChecked={!pickedOption} 
+                                onChange={() => {
+                                    dispatch(setPickedOption({
+                                        dropdownId: dropdownId,
+                                        pickedOption: null
+                                    }))
+                                    let obj = {
+                                        limit: 100,
+                                        offset: 0,
+                                        min_price: undefined,
+                                        max_price: undefined,
+                                        brand: brand.id,
+                                        color: [],
+                                        memory: [],
+                                        product_name: ""
+                                    }
+                                    fetchProductsAndLog(obj);
+                                }}
+                                />
+                            <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                        </label>
                         {sortData(brandModels).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item}>
                                 <input
@@ -131,8 +152,11 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                     className={styles.dropdown_radio}
                                     name={groupName}
                                     checked={pickedOption === item}
-                                    onChange={async () => {
-                                        dispatch(setPickedOption(item))
+                                    onChange={() => {
+                                        dispatch(setPickedOption({
+                                            dropdownId: dropdownId,
+                                            pickedOption: item
+                                        }))
                                         const updatedFilters = {
                                             ...filters,
                                             brand: brand.id,
@@ -155,15 +179,22 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                 className={styles.dropdown_radio}
                                 name={groupName}
                                 id={`radio_${index}_all`}
-                                defaultChecked={true}
+                                defaultChecked={!pickedOption}
                                 onChange={() => {
+                                    dispatch(setPickedOption({
+                                        dropdownId: dropdownId,
+                                        pickedOption: null
+                                    }))
+                                    dispatch(setPickedOption({
+                                        dropdownId: "dropdown_1_index_1",
+                                        pickedOption: null
+                                    }))
                                     let obj = {
                                         limit: 100,
                                         offset: 0,
                                         min_price: undefined,
                                         max_price: undefined,
                                         brand: brand.id,
-                                        brand_category: undefined,
                                         color: [],
                                         memory: [],
                                         product_name: ""
@@ -203,29 +234,30 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
             case 4:
                 return (
                     <div className={`${styles.dropdown__list}`}>
-                        <input
-                            type="radio"
-                            className={styles.dropdown_radio}
-                            name={groupName}
-                            id={`radio_${index}`}
-                            onChange={() => {
-                                setPickedColor(null);
-                                let obj = {
-                                    limit: 100,
-                                    offset: 0,
-                                    min_price: undefined,
-                                    max_price: undefined,
-                                    brand: brand.id,
-                                    brand_category: undefined,
-                                    color: [],
-                                    memory: [],
-                                    product_name: ""
-                                }
-                                fetchProductsAndLog(obj)
-                            }}
-                            checked={pickedColor === null}
-                            />
-                        <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>Все</label>
+                        <label className={styles.dropdown_label}>
+                            <input
+                                type="radio"
+                                className={styles.dropdown_radio}
+                                name={groupName}
+                                id={`radio_${index}`}
+                                onChange={() => {
+                                    setPickedColor(null);
+                                    let obj = {
+                                        limit: 100,
+                                        offset: 0,
+                                        min_price: undefined,
+                                        max_price: undefined,
+                                        brand: brand.id,
+                                        color: [],
+                                        memory: [],
+                                        product_name: ""
+                                    }
+                                    fetchProductsAndLog(obj)
+                                }}
+                                checked={pickedColor === null}
+                                />
+                            <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>Все</label>
+                        </label>
                         <div className={`${styles.d_f_colors}`}>
                             {colorsArray?.map((item: any, index: number) => (
                                 <div key={index} className={`${styles.dropdown__item}`} style={{ width: "auto" }}>
@@ -252,6 +284,8 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                     </div>
                 );
             default:
-                return;   
+                return(
+                    <div>Таких товаров нет</div>
+                )  
         }
 }

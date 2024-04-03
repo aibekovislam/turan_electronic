@@ -109,7 +109,7 @@ function BrandsPage() {
                         ))
                     ) : (
                         <>
-                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                            <div>Таких товаров нет</div>
                         </>
                     )  
                 }

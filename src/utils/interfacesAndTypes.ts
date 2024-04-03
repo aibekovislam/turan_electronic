@@ -20,7 +20,7 @@ export interface BrandsProps {
     products?: ProductsType[] | undefined,
     colors?: string[] | undefined,
     dataForDropDown: any,
-    productsByBrandCategory?: any
+    productsByBrandCategory?: any,
 }
 
 export interface ArrowProps {
@@ -59,7 +59,8 @@ export interface ProductsI {
     colors?: string[],
     filteredProducts?: ProductsType[],
     filterByBrand?: ProductsType[],
-    filterByBrandCategory?: []
+    filterByBrandCategory?: [],
+    filterByProductName?: [],
 }
 
 export interface ActiveUserI {
@@ -131,11 +132,12 @@ export type RenderDropdownTypes = {
     filters: any, 
     dataForDropdown: ProductsType[] | undefined, 
     fetchFilterDropdown: any, 
-    productsByBrandCategory: ProductsType[]
+    productsByBrandCategory: ProductsType[],
+    dropdownId: any,
 }
 
 export type RenderSidebarTypes = {
-    index: number, products: ProductsType[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any, showAllColors: any, setShowAllColors: any
+    index: number, products: ProductsType[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any, showAllColors: any, setShowAllColors: any, dataForDropDown: ProductsType[] | undefined
 }
 
 export type CartType = {
