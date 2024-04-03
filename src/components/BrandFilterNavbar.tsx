@@ -18,6 +18,8 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const [ filterUp, setFilterUp ] = useState(false);
 
+    console.log(dataForDropDown)
+
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 520);
@@ -129,7 +131,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                                 </div>
                                 <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>
                                     { dropdownStates[index] && 
-                                        <RenderDropdownContent index={index} pickedColor={pickedColor} setPickedColor={setPickedColor} brand={brand} fetchProductsAndLog={fetchProductsAndLog} filters={filters} dataForDropdown={dataForDropDown} fetchFilterDropdown={fetchFilterDropdown} productsByBrandCategory={productsByBrandCategory} /> 
+                                        <RenderDropdownContent index={index} pickedColor={pickedColor} setPickedColor={setPickedColor} brand={brand} fetchProductsAndLog={fetchProductsAndLog} filters={filters} dataForDropdown={dataForDropDown} fetchFilterDropdown={fetchFilterDropdown} productsByBrandCategory={productsByBrandCategory} dropdownId={`dropdown_${brand.id}_index_${index}`} /> 
                                     }
                                 </div>
                             </div>
@@ -138,7 +140,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                             <div>Все фильтры</div>
                             <img src={FilterSVG} className={styles.filter__svg} />
                         </div>
-                        <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} />
+                        <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} dataForDropDown={dataForDropDown} />
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ const initialState: ProductsI = {
     colors: [],
     filteredProducts: [],
     filterByBrand: [],
-    filterByBrandCategory: []
+    filterByBrandCategory: [],
 };  
 
 const productSlice = createSlice({
@@ -31,7 +31,7 @@ const productSlice = createSlice({
         },
         setFilterByBrandCategory: (state, action: PayloadAction<ProductsI>) => {
             state.filterByBrandCategory = action.payload.filterByBrandCategory;
-        }
+        },
     }
 });
 
