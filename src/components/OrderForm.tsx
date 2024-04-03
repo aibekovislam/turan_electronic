@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { addOrder, fetchCities, fetchRegions } from "../store/features/order/orderSlice";
 import { fetchCarts } from "../store/features/favorite_and_cart/cartSlice";
-import { notify } from "./Toastify";
+import { notify, notifyError } from "./Toastify";
 // import { useNavigate } from "react-router-dom";
 
 function OrderForm({ products }: any) {
@@ -26,15 +26,15 @@ function OrderForm({ products }: any) {
 
   const dispatch = useDispatch<any>();
   const [loading, setLoading] = useState(true);
-  const [ sendedForm, setSendedForm ] = useState(false);
+  const [sendedForm, setSendedForm] = useState(false);
 
   useEffect(() => {
     dispatch(fetchRegions()).then(() => setLoading(false));
   }, [dispatch])
 
-  const [ regionsChange, setRegionsChange ] = useState(0);
+  const [regionsChange, setRegionsChange] = useState(0);
 
-  const [ orderFormValue, setOrderFormValue ] = useState({
+  const [orderFormValue, setOrderFormValue] = useState({
     name: "",
     email: "",
     phone: "",
@@ -72,9 +72,14 @@ function OrderForm({ products }: any) {
   
   const handleOrder = async (e: any) => {
     e.preventDefault();
+    const { name, email, phone, region, city, street, house } = orderFormValue;
+    if (!name || !email || !phone || !region || !city || !street || !house) {
+      notifyError("Заполните все поля формы");
+      return;
+    }
     try {
       console.log(orderFormValue);
-      await dispatch(addOrder(orderFormValue));
+      dispatch(addOrder(orderFormValue));
       console.log(orderFormValue)
       setSendedForm(true);
       console.log(orderFormValue.items)

@@ -18,8 +18,6 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const [ filterUp, setFilterUp ] = useState(false);
 
-    console.log(dataForDropDown)
-
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 520);
