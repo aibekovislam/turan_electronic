@@ -216,7 +216,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     )
                                     }
                                 </div>
-                                <div className={styles.title}>
+                                <div onClick={() => onClick(product.id)} className={styles.title}>
                                     <h2>{product.name}</h2>
                                     <p>{product?.description !== undefined ? product?.description.slice(0, 35) + "..." : ""}</p>
                                 </div>

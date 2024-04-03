@@ -24,20 +24,20 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const tokenString = localStorage.getItem("tokens");
     const token = tokenString ? JSON.parse(tokenString) : null;
-    const [ colorPicked, setColorPicked ] = useState("");
+    const [colorPicked, setColorPicked] = useState("");
 
-    const [ imgLoaded, setImgLoaded ] = useState(false);
-    const [ favoriteLoaded, setFavoriteLoad ] = useState(false);
+    const [imgLoaded, setImgLoaded] = useState(false);
+    const [favoriteLoaded, setFavoriteLoad] = useState(false);
 
     ping.register();
 
     useEffect(() => {
         const handleResize = () => {
-          setIsMobile(window.innerWidth < 520);
+            setIsMobile(window.innerWidth < 520);
         };
-    
+
         window.addEventListener('resize', handleResize);
-    
+
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
@@ -48,20 +48,20 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     }, [])
 
     const handleClickFavorite = (product_id: number) => {
-        if(!user || !token) {
+        if (!user || !token) {
             navigate("/auth")
             notifyError('Вы не авторизованы')
             return;
         }
-        
-        if(user && token) {
+
+        if (user && token) {
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         }
-    } 
+    }
 
     function filterImagesByColor(images: string[], color: string) {
-        if(color !== "") {
+        if (color !== "") {
             return images[0]
         }
     }
@@ -73,7 +73,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
             setImgLoaded(true);
         }
         setColorPicked(color);
-    };  
+    };
 
     useEffect(() => {
         setFavoriteLoad(false);
@@ -87,68 +87,68 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
         isMobile ? (
             <div className={styles.cardMobile_main} onClick={() => onClick(product.id)}>
                 <div className={styles.cardMobile_container}>
-                  <div className={styles.cardMobile_}>
-                    <div className={styles.cardMobile_rate}>
-                      { product.is_arrived ? (
-                        <div className={styles.new_productCard_label}>
-                          Новое
-                        </div>
-                      ) : null}
-                      <div className={styles.rating_mobile}>
-                        {[1, 2, 3, 4, 5].map((star) => (
-                            <span
-                                key={star}
-                                style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
-                            >
-                                &#9733;
-                            </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className={styles.cardMobile_info}>
-                      <div className={styles.cardMobile_wrapper__left}> 
-                            <img src={product.default_image} onClick={() => onClick(product.id)} />
-                            {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleClickFavorite(product.id);
-                            }} />
-                      </div>
-                      <div className={styles.cardMobile_wrapper__right}> 
-                        <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>
-                          { product.name }
-                        </div>
-                        <div className={styles.cardMobile_colors}>
-                          <span>Цвет</span>
-                          { product?.color !== undefined ? product?.color.map((item: any, index: number) => (
-                              <div key={index} className={styles.mobile_color_block} style={{ background: item.hash_code }}></div>
-                            )) : (
-                              <div>Loading...</div>
-                          ) }
-                        </div>
-                      </div>  
-                    </div>
-                    <div className={styles.right__special}>
-                          { product.in_stock ? (
-                            <div className={styles.isAvilableProduct}>
-                                <img src={checked} />
-                                <span>В наличии</span>
+                    <div className={styles.cardMobile_}>
+                        <div className={styles.cardMobile_rate}>
+                            {product.is_arrived ? (
+                                <div className={styles.new_productCard_label}>
+                                    Новое
+                                </div>
+                            ) : null}
+                            <div className={styles.rating_mobile}>
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <span
+                                        key={star}
+                                        style={{ cursor: 'pointer', color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray', marginRight: "5px" }}
+                                    >
+                                        &#9733;
+                                    </span>
+                                ))}
                             </div>
-                        ) : (
-                            <div style={{ color: "brown" }}>Нет в наличии</div>
-                        ) }
-                          <div className={styles.price_mobile}>
-                            { product.price } сом
-                            <div className={styles.bag__mobile} onClick={() => {
+                        </div>
+                        <div className={styles.cardMobile_info}>
+                            <div className={styles.cardMobile_wrapper__left}>
+                                <img src={product.default_image} onClick={() => onClick(product.id)} />
+                                {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
+                                <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleClickFavorite(product.id);
+                                }} />
+                            </div>
+                            <div className={styles.cardMobile_wrapper__right}>
+                                <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>
+                                    {product.name}
+                                </div>
+                                <div className={styles.cardMobile_colors}>
+                                    <span>Цвет</span>
+                                    {product?.color !== undefined ? product?.color.map((item: any, index: number) => (
+                                        <div key={index} className={styles.mobile_color_block} style={{ background: item.hash_code }}></div>
+                                    )) : (
+                                        <div>Loading...</div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.right__special}>
+                            {product.in_stock ? (
+                                <div className={styles.isAvilableProduct}>
+                                    <img src={checked} />
+                                    <span>В наличии</span>
+                                </div>
+                            ) : (
+                                <div style={{ color: "brown" }}>Нет в наличии</div>
+                            )}
+                            <div className={styles.price_mobile}>
+                                {product.price} сом
+                                <div className={styles.bag__mobile} onClick={() => {
                                     console.log(product.memory ? product.memory[0]?.id : 13)
                                     dispatch(addToCart(product.id, product.color[0]?.id, 1, product.memory_price ? product.memory[0]?.id : 13, product.price))
                                     notify(`Вы успешно добавили в корзину ${product.name}`)
                                 }}>
-                                <img src={shop} />
+                                    <img src={shop} />
+                                </div>
                             </div>
-                          </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
             </div>
         ) : (
@@ -156,7 +156,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                 <div className={styles.card_container}>
                     <div className={styles.card}>
                         <div className={styles.star_container}>
-                            { product.is_arrived ? (
+                            {product.is_arrived ? (
                                 <div className={styles.new_productCard_label}>
                                     Новое
                                 </div>
@@ -211,7 +211,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                                 )
                                 }
                             </div>
-                            <div className={styles.title}>
+                            <div onClick={() => onClick(product.id)} className={styles.title}>
                                 <h2>{product.name}</h2>
                                 <p>{product?.description !== undefined ? product?.description.slice(0, 35) + "..." : ""}</p>
                             </div>
@@ -237,7 +237,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
             </div>
         )
 
-  )
+    )
 }
 
 export default NewProductsCard
