@@ -78,17 +78,21 @@ function FilteredRoutePage() {
         }
     }, [dispatch])
 
-    console.log(filteredProducts)
-
         if(oneBrand) {
             return (
                 <div style={{ marginTop: "30px" }}>
-                    <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} productsByBrandCategory={productsByBrandCategory} />
-                    <div className="d-f__rec-product" style={{ marginTop: "30px" }}>
-                        { filteredProducts?.map((product: ProductsType, index: number) => (
-                            <Card onClick={handleNavigate} product={product} key={index} type="recommedation_card" />
-                        )) }
-                    </div>
+                    { filteredProducts?.length !== 0 ? (
+                        <>
+                            <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} productsByBrandCategory={productsByBrandCategory} />
+                            <div className="d-f__rec-product" style={{ marginTop: "30px" }}>
+                                { filteredProducts?.map((product: ProductsType, index: number) => (
+                                    <Card onClick={handleNavigate} product={product} key={index} type="recommedation_card" />
+                                )) }
+                            </div>
+                        </>
+                    ) : (
+                        <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                    ) }
                 </div>
             )
         }

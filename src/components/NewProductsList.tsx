@@ -9,45 +9,59 @@ import { ProductsType, default_filters } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
 
 function NewProductsList() {
-
   const dispatch = useDispatch<any>();
   const products = useSelector((state: RootStates) => state.products.products);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+  const [countSlice, setCountSlice] = useState(4);
+  const [displayedProducts, setDisplayedProducts] = useState<ProductsType[]>([]);
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 520);
+      updateCountSlice();
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     dispatch(fetchProducts({
       ...default_filters,
       limit: 100
-    }))
-  }, [dispatch])
+    }));
+  }, [dispatch]);
 
-  const sortedProducts = products?.slice().sort((a, b) => {
-    const dateA = new Date(a.created_at).getTime();
-    const dateB = new Date(b.created_at).getTime();
-    return dateB - dateA;
-  });
+  useEffect(() => {
+    if (products) {
+      updateDisplayedProducts();
+    }
+  }, [products, countSlice]);
 
-  const filteredNewProducts = sortedProducts?.filter((item) => item.is_arrived === true);
+  const updateCountSlice = () => {
+    const screenWidth = window.innerWidth;
+    if (screenWidth >= 1500) {
+      setCountSlice(5);
+    } else if (screenWidth >= 1440) {
+      setCountSlice(4);
+    } else {
+      setCountSlice(4);
+    }
+  };
 
-  const displayedProducts = filteredNewProducts?.slice(0, 4);
+  const updateDisplayedProducts = () => {
+    const filteredNewProducts = products ? products.filter((item) => item.is_arrived === true) : [];
+    const newDisplayedProducts = filteredNewProducts?.slice(0, countSlice);
+    setDisplayedProducts(newDisplayedProducts);
+  };
 
   const navigate = useNavigate();
 
   const handleNavigate = (id: number) => {
-    navigate(`/product/${id}`)
-  }
-
-
+    navigate(`/product/${id}`);
+  };
+  
   return (
     <>
       <div className={"accessories"} style={{ marginBottom: "30px" }}>
@@ -67,7 +81,7 @@ function NewProductsList() {
         ))}
       </div>
     </>
-  )
+  );
 }
 
-export default NewProductsList
+export default NewProductsList;

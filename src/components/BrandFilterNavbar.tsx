@@ -140,7 +140,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                             <div>Все фильтры</div>
                             <img src={FilterSVG} className={styles.filter__svg} />
                         </div>
-                        <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} dataForDropDown={dataForDropDown} />
+                        <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} dataForDropDown={dataForDropDown} productsByBrandCategory={productsByBrandCategory} />
                     </div>
                 </div>
             </div>

@@ -37,14 +37,13 @@
 }
 
 .d-f__new-product {
-    display: flex;
+    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, calc(16rem + 1.8vw)));
     width: 100%;
     height: auto;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    align-items: flex-start;
     row-gap: 30px;
-    // column-gap: 62px;
 }
 
 .d-f__rec-product {
