@@ -30,7 +30,7 @@ function MiniCard({ accessories, onClick, style }: any) {
                     </div>
                 </div>
                 <div className={styles.btn_container}>
-                    <button className={styles.btn}>
+                    <button className={styles.btn} style={{ width: "170px" }}>
                         <a href="#">Быстрый заказ</a>
                     </button>
                     <img src={shop} alt="" />

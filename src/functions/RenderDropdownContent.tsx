@@ -78,7 +78,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                             <span className={styles.dropdown_text}>Все</span>
                         </label>
                         {sortData(brandTitles).map((item: any, innerIndex: number) => (
-                            <div key={innerIndex} className={styles.dropdown__item}>
+                            <div key={innerIndex} className={styles.dropdown__item} style={{ alignItems: "normal" }}>
                                 <label className={styles.dropdown_label}>
                                     <input
                                         type="radio"
@@ -145,7 +145,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                             <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
                         </label>
                         {sortData(brandModels).map((item: any, index: number) => (
-                            <div key={index} className={styles.dropdown__item}>
+                            <div key={index} className={styles.dropdown__item} style={{ alignItems: "normal" }}>
                                 <input
                                     type="radio"
                                     id={`radio_${index}`}

@@ -5,7 +5,7 @@ import RangeSlider from "./RangeSlider";
 import { compareByVolume, extractPropertyArray, filterMemory, returnColorsForFilter, sortData } from "./filterFunction";
 import { setPickedOption, setPickedOptionSidebar } from "../store/features/dropdown/dropdownSlice";
 
-export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors, dataForDropDown}: RenderSidebarTypes) => {
+export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors, dataForDropDown, productsByBrandCategory}: RenderSidebarTypes) => {
     const dispatch = useDispatch();
 
     const colorsArray = products ? returnColorsForFilter(products.map(product => product.color)) : [];
@@ -44,7 +44,7 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
         case 0:
             return(
                 <div className={styles.sidebar__items}>
-                    <RangeSlider style={{ border: "none", boxShadow: "none" }} fetchProductsAndLog={fetchProductsAndLog} brand={brand} products={products} />
+                    <RangeSlider style={{ border: "none", boxShadow: "none" }} fetchProductsAndLog={fetchProductsAndLog} brand={brand} products={productsByBrandCategory} />
                 </div>
             )
         case 1: 
