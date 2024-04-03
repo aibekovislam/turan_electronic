@@ -22,8 +22,6 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
     const handleColorClick = (color: string) => {
         setPickedColor(color === pickedColor ? null : color);
       
-        console.log(pickedColor)
-      
         let updatedColorArray;
         if (Array.isArray(filters.color)) {
             updatedColorArray = color === pickedColor ? filters.color.filter((c: string) => c !== color) : [...filters.color, color];
@@ -148,7 +146,7 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
                                 type="radio"
                                 className={styles.dropdown_radio}
                                 name={groupName}
-                                id={`radio_${index}_all`}
+                                id={`null`}
                                 defaultChecked={true}
                                 onChange={() => {
                                     let obj = {
@@ -164,7 +162,7 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
                                     fetchProductsAndLog(obj)
                                 }}
                             />
-                            <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                            <label htmlFor={`null`} className={styles.dropdown_text}>Все</label>
                         </div>
                         {productMemory.sort(compareByVolume).slice(0, showAllColors ? productMemory.length : 8).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item}>
@@ -174,7 +172,7 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
                                     name={groupName}
                                     id={`radio_${index}_all`}
                                     onChange={() => {
-                                        dispatch(setPickedOptionSidebar(item.title))
+                                        dispatch(setPickedOptionSidebar(item.volume))
                                         const updatedFilters = {
                                             ...filters,
                                             brand: brand.id,
