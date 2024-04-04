@@ -175,9 +175,11 @@ input[type="number"]::-webkit-inner-spin-button {
   border-radius: 5px;
   background: rgba(255, 115, 0, 1);
 }
+
 .range-input {
   position: relative;
 }
+
 .range-input input {
   position: absolute;
   width: 100%;
@@ -188,6 +190,7 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
 input[type="range"]::-webkit-slider-thumb {
   height: 17px;
   width: 17px;
@@ -197,6 +200,7 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
+
 input[type="range"]::-moz-range-thumb {
   height: 17px;
   width: 17px;

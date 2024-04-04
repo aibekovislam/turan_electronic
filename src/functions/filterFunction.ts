@@ -92,9 +92,11 @@ export const getHighestPrice = (products: any) => {
     if (!products || products.length === 0) {
         return 0;
     }
-    return products.reduce((maxPrice: number, item: any) => {
-        return Math.max(maxPrice, item.price);
-    }, products[0].price);
+
+    const maxPrice = Math.max(...products.map((item: any) => item.price));
+    const magnitude = Math.pow(10, Math.floor(Math.log10(maxPrice)));
+
+    return Math.floor(maxPrice / magnitude) * magnitude;
 };
 
 export const sortData = (data: any) => {
