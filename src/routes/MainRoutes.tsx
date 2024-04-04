@@ -34,32 +34,32 @@ function ScrollToTop() {
 function MainRoutes() {
   return (
     <Routes>
-            <Route element={
-              <>
-                <ScrollToTop />
-                <MainLayout />
-              </>
-            }
+      <Route element={
+        <>
+          <ScrollToTop />
+          <MainLayout />
+        </>
+      }
       >
         <Route element={<HomePage />} path="/" />
         <Route element={<FavoritesPage />} path="/favorite" />
         <Route element={<DetailPage />} path="/product/:id" />
-        <Route element={<RegistrationAndAuthorization/>} path="/auth" />
-        <Route element={<UserProfilePage/>} path="/profile" />
-        <Route element={<ResendPage/>} path="/resend/auth" />
-        <Route element={<BrandsPage/>} path="/products/brands/:brand" />
-        <Route element={<CartPage/>} path="/cart" />
-        <Route element={<ConfirmPage/>} path="/activate" />
-        <Route element={<Sender/>} path="/activating/load" />
-        <Route element={<GoogleNavigateLoginPage/>} path="/login" />
-        <Route element={<ConfirmWithPassword/>} path="/password/reset/confirm" />
-        <Route element={<NewProductsPage/>} path="/new/products" />
-        <Route element={<RecommendationProductsPage/>} path="/recommendation/products" />
-        <Route element={<CategoryPage/>} path="/categories" />
-        <Route element={<NewsPage/>} path="/news" />
-        <Route element={<AboutUs/>} path="/about" />
-        <Route element={<NewsDetailPage/>} path="/news/:id" />
-        <Route element={<FilteredRoutePage/>} path="/products/filter/:brand_category_title/:brand" />
+        <Route element={<RegistrationAndAuthorization />} path="/auth" />
+        <Route element={<UserProfilePage />} path="/profile" />
+        <Route element={<ResendPage />} path="/resend/auth" />
+        <Route element={<BrandsPage />} path="/products/brands/:brand" />
+        <Route element={<CartPage />} path="/cart" />
+        <Route element={<ConfirmPage />} path="/activate" />
+        <Route element={<Sender />} path="/activating/load" />
+        <Route element={<GoogleNavigateLoginPage />} path="/login" />
+        <Route element={<ConfirmWithPassword />} path="/password/reset/confirm" />
+        <Route element={<NewProductsPage />} path="/new/products" />
+        <Route element={<RecommendationProductsPage />} path="/recommendation/products" />
+        <Route element={<CategoryPage />} path="/categories" />
+        <Route element={<NewsPage />} path="/news" />
+        <Route element={<AboutUs />} path="/about" />
+        <Route element={<NewsDetailPage />} path="/news/:id" />
+        <Route element={<FilteredRoutePage />} path="/products/filter/:brand_category_title/:brand" />
       </Route>
     </Routes>
   )
