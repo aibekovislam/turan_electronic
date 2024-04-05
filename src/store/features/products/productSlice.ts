@@ -66,28 +66,27 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
             min_price: filters.min_price || undefined,
             max_price: filters.max_price || undefined,
             brand: filters.brand || [],
+            color: filters.color?.join(`&color=`) || undefined,
             brand_category: filters.brand_category || undefined,
-            color: filters.color || [],
             memory: filters.memory || [],
-            product_name: filters.product_name || undefined
-        };
+            product_name: filters.product_name || undefined,
+        };             
 
         const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
 
-        console.log(response)
+        console.log(response);
 
-        const data: ProductsI = { filteredProducts: response.data.results };
+        const data = { filteredProducts: response.data.results };
 
         dispatch(productSlice.actions.setFilterProducts(data));
 
-        if(data.filteredProducts?.length === 0) {
-            return "Такого нету"
+        if (data.filteredProducts?.length === 0) {
+            return 'Такого нету';
         }
-
     } catch (error) {
         console.log(error);
     }
-}
+};
 
 export const getProductsByOneBrand = (filters: any): AppThunk => async (dispatch) => {
     try {
@@ -115,6 +114,18 @@ export const getProductsByBrandCategory = (filters: any): AppThunk => async (dis
         const response = await axios.get(`${API_URL}/products/`, { params: queryParams });
         const data: ProductsI = { filterByBrandCategory: response.data.results };
         dispatch(productSlice.actions.setFilterByBrandCategory(data));
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const searchProducts = (search_filters: any): AppThunk => async (dispatch) => {
+    try {
+        const response = await axios.get(`${API_URL}/products/`, {params: {
+            search: search_filters
+        }})
+        const data: ProductsI = { products: response.data.results };
+        dispatch(productSlice.actions.setProducts(data));
     } catch (error) {
         console.log(error);
     }

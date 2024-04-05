@@ -5,14 +5,14 @@ import { useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 
 function UserProfilePage() {
-  // const userString = localStorage.getItem("userInfo");
-  // const user = userString ? JSON.parse(userString) : null;
+  const userString = localStorage.getItem("userInfo");
+  const user = userString ? JSON.parse(userString) : null;
   const navigate = useNavigate();
 
   const currentUser = useSelector((state: RootStates) => state.auth.user);
 
   useEffect(() => {
-    if (!currentUser) {
+    if (!user) {
       navigate("/auth");
     }
   }, [currentUser, navigate]);
@@ -35,8 +35,8 @@ function UserProfilePage() {
             <li>Телефон</li>
           </div>
           <div className={styles.user_wrapper__right}>
-            <li>{currentUser?.name}</li>
-            <li>{currentUser?.email}</li>
+            <li>{user?.name}</li>
+            <li>{user?.email}</li>
             <li>+996</li>
           </div>
         </div>

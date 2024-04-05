@@ -19,20 +19,22 @@ function NewsDetailPage() {
   return (
     <div className={styles.news_detail__main}>
         <div className={styles.news_detail__container}>
+            <div className={styles.path}>
+                <a href="/" onClick={() => {
+                    localStorage.setItem("activeItem", JSON.stringify(`home`))
+                }}>Главная</a> / <a href="/news">Новости</a> / { news?.title }
+            </div>
             <div className={styles.news_detail}>
                 <div className={styles.news_detail__image}>
                     <img src={news?.image} />
                 </div>
                 <div className={styles.news_detai_section__title}>
                     <div className={styles.news_detail__title}>
-
+                        { news?.title }
                     </div>
                     <div className={styles.news_detail__text}>
-                        
+                        { news?.text }
                     </div>
-                </div>
-                <div className={styles.news_detail__button}>
-                    <button className={styles.news_detail_btn}>Оформить заявку</button>
                 </div>
             </div>
         </div>

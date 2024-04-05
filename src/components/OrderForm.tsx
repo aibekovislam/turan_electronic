@@ -3,26 +3,12 @@ import styles from "../styles/cart.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { addOrder, fetchCities, fetchRegions } from "../store/features/order/orderSlice";
-import { fetchCarts } from "../store/features/favorite_and_cart/cartSlice";
 import { notify, notifyError } from "./Toastify";
 
 function OrderForm({ products }: any) {
   const regions = useSelector((state: RootStates) => state.orders.regions);
   const cities = useSelector((state: RootStates) => state.orders.cities);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
-  // const [ selectedType, setSelectedType ] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 520);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // const navigate = useNavigate();
+  const [selectedType, setSelectedType] = useState("pickup");
 
   const dispatch = useDispatch<any>();
   const [loading, setLoading] = useState(true);
@@ -36,12 +22,12 @@ function OrderForm({ products }: any) {
 
   const [orderFormValue, setOrderFormValue] = useState({
     name: "",
-    email: "",
+    email: selectedType !== "pickup" ? "" : "samovyzov@gmail.com",
     phone: "",
-    region: regionsChange,
-    city: 0,
-    street: "",
-    house: "",
+    region: selectedType !== "pickup" ? regionsChange : 1,
+    city: selectedType !== "pickup" ? 0 : 1,
+    street: selectedType !== "pickup" ? "" : "Ибраимова",
+    house: selectedType !== "pickup" ? "" : "108Б",
     items: products.map((item: any) => ({
       product: item.product.id,
       color: item.color,
@@ -61,7 +47,6 @@ function OrderForm({ products }: any) {
         region: selectedRegionId
       }));
       dispatch(fetchCities(selectedRegionId));
-      console.log(regionsChange)
     } else {
       setOrderFormValue((prevData) => ({
         ...prevData,
@@ -73,17 +58,27 @@ function OrderForm({ products }: any) {
   const handleOrder = async (e: any) => {
     e.preventDefault();
     const { name, email, phone, region, city, street, house } = orderFormValue;
-    if (!name || !email || !phone || !region || !city || !street || !house) {
-      notifyError("Заполните все поля формы");
-      return;
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if(selectedType !== "pickup") {
+      if (!name || !email || !phone || !region || !city || !street || !house) {
+        notifyError("Заполните все поля формы");
+        return;
+      }
+      if (!emailRegex.test(email)) {
+        notifyError("Пожалуйста, введите корректный email");
+        return;
+      }
+    } else {
+      if (!name || !phone) {
+        notifyError("Заполните все поля формы");
+        return;
+      }
     }
     try {
-      console.log(orderFormValue);
       dispatch(addOrder(orderFormValue));
-      console.log(orderFormValue)
       setSendedForm(true);
-      console.log(orderFormValue.items)
-      dispatch(fetchCarts())
       localStorage.removeItem("addedProducts");
       notify("Спасибо за покупку, мы скоро свяжемся с вами")
     } catch (error) {
@@ -96,154 +91,111 @@ function OrderForm({ products }: any) {
   }
 
   return (
-    isMobile ? (
-      <div className={styles.order_block}>
-        <div className={styles.order_title}>
-          <span>{ !sendedForm ? "Способ получения" : "" }</span>
+    <div className={styles.order_block}>
+      <div className={styles.order_title}>
+        <span>{!sendedForm ? "Способ получения" : ""}</span>
+        { !sendedForm ? (
+          <div className={styles.order_type}>
+          <div className={styles.type_1}>
+            <input
+              type="radio"
+              id="pickup"
+              name="deliveryType"
+              checked={selectedType === "pickup"}
+              className={styles.type_radio}
+              onChange={() => setSelectedType("pickup")}
+            />
+            <label htmlFor="pickup" style={{ height: "16px" }}>Самовывоз</label>
+          </div>
+          <div className={styles.type_2}>
+            <input
+              type="radio"
+              id="delivery"
+              name="deliveryType"
+              className={styles.type_radio}
+              checked={selectedType === "delivery"}
+              onChange={() => setSelectedType("delivery")}
+            />
+            <label htmlFor="delivery" style={{ height: "16px" }}>Доставка</label>
+          </div>
         </div>
-        <form onSubmit={handleOrder}>
-          { !sendedForm ? (
-            <>
-              <div className={styles.order_form}>
-                <input onChange={handleInputChange} value={orderFormValue.name} type="text" placeholder="Фамилия и имя*" name="name" />
-                <div className={styles.inputs}>
-                    <input onChange={handleInputChange} value={orderFormValue.phone} type="text" placeholder="Телефон *" name="phone" />
-                    <input onChange={handleInputChange} value={orderFormValue.email} type="text" placeholder="Email" name="email" />
-                </div>
-              </div>
-              <div className={styles.order}>
-                <div className={styles.order_wrapper__left}>
-                    <div className={styles.order_call}>
-                      <span>Самовывоз</span>
-                    </div>
-                    <div className={styles.order_adress}>
-                      <p>г.Бишкек ул.Ахунбаева 132</p>
-                      <p>пн-вс 09:00-20:00</p>
-                    </div>
-                    <div className={styles.order_free}>
-                      <span>Бесплатно</span>
-                    </div>
-                </div>
-                <div className={styles.order_wrapper__right}>
-                    <div className={styles.order_right__title}>
-                      <span>Доставка</span>
-                    </div>
-                    <div className={styles.order__form}>
-                      <div className={styles.order_select}>
-                        <select onChange={handleInputChange} value={regionsChange} className={styles.mySelect} name="regions">
-                          <option value={0}>Выбрать регион</option>
-                          {regions.map(region => (
-                            <option key={region.id} value={region.id}>{region.name}</option>
-                          ))}
-                        </select>
-                        <select
-                          onChange={handleInputChange}
-                          value={orderFormValue.city}
-                          className={styles.mySelect}
-                          name="city"
-                        >
-                          <option value={0}>Выбрать город</option>
-                          { regions.length !== 0 ? (
-                            cities.map(city => (
-                              <option key={city.id} value={city.id}>{city.name}</option>
-                            ))
-                          ) : (
-                            <option>Выберите сначало регион</option>
-                          ) }
-                        </select>
-                      </div>
-                      <div className={styles.order_inputs}>
-                        <input onChange={handleInputChange} value={orderFormValue.street} type="text" placeholder="Улица" name="street" />
-                        <input onChange={handleInputChange} value={orderFormValue.house} type="text" placeholder="Дом/кв" name="house" />
-                      </div>
-                    </div>
-                    <div className={styles.order_setTime}>
-                      <span>от 200 сом (1-3 дня)</span>
-                    </div>
-                    <button className={styles.btn_send_form}>Отправить</button>
-                </div>
-            </div>
-            </>
-          ) : (
-            <div>Отправлено, мы скоро с вами свяжемся.</div>
-          ) } 
-        </form>
+        ) : (null) }
       </div>
-    ) : (
-      <div className={styles.order_block}>
-        <div className={styles.order_title}>
-          <span>{ !sendedForm ? "Способ получения" : "" }</span>
-        </div>
-        <form onSubmit={handleOrder}>
-          { !sendedForm ? (
-            <>
-              <div className={styles.order_form}>
-                <input onChange={handleInputChange} value={orderFormValue.name} type="text" placeholder="Фамилия и имя*" name="name" />
-                <div className={styles.inputs}>
-                    <input onChange={handleInputChange} value={orderFormValue.phone} type="text" placeholder="Телефон *" name="phone" />
-                    <input onChange={handleInputChange} value={orderFormValue.email} type="text" placeholder="Email" name="email" />
-                </div>
+      <form onSubmit={handleOrder}>
+        {!sendedForm ? (
+          <>
+            <div className={styles.order_form}>
+              <input onChange={handleInputChange} value={orderFormValue.name} type="text" placeholder="Фамилия и имя*" name="name" />
+              <div className={styles.inputs}>
+                <input onChange={handleInputChange} value={orderFormValue.phone} type="text" placeholder="Телефон *" name="phone" />
+                { selectedType !== "pickup" ? (
+                  <input onChange={handleInputChange} value={orderFormValue.email} type="text" placeholder="Email" name="email" />
+                ) : (null) }
               </div>
-              <div className={styles.order}>
-                <div className={styles.order_wrapper__left}>
-                    <div className={styles.order_call}>
-                      <span>Самовывоз</span>
-                    </div>
-                    <div className={styles.order_adress}>
-                      <p>г.Бишкек ул.Ахунбаева 132</p>
-                      <p>пн-вс 09:00-20:00</p>
-                    </div>
-                    <div className={styles.order_free}>
-                      <span>Бесплатно</span>
-                    </div>
-                </div>
-                <div className={styles.order_wrapper__right}>
-                    <div className={styles.order_right__title}>
-                      <span>Доставка</span>
-                    </div>
-                    <div className={styles.order__form}>
-                      <div className={styles.order_select}>
-                        <select onChange={handleInputChange} value={regionsChange} className={styles.mySelect} name="regions">
-                          <option value={0}>Выбрать регион</option>
-                          {regions.map(region => (
-                            <option key={region.id} value={region.id}>{region.name}</option>
-                          ))}
-                        </select>
-                        <select
-                          onChange={handleInputChange}
-                          value={orderFormValue.city}
-                          className={styles.mySelect}
-                          name="city"
-                        >
-                          <option value={0}>Выбрать город</option>
-                          { regions.length !== 0 ? (
-                            cities.map(city => (
-                              <option key={city.id} value={city.id}>{city.name}</option>
-                            ))
-                          ) : (
-                            <option>Выберите сначало регион</option>
-                          ) }
-                        </select>
-                      </div>
-                      <div className={styles.order_inputs}>
-                        <input onChange={handleInputChange} value={orderFormValue.street} type="text" placeholder="Улица" name="street" />
-                        <input onChange={handleInputChange} value={orderFormValue.house} type="text" placeholder="Дом/кв" name="house" />
-                      </div>
-                    </div>
-                    <div className={styles.order_setTime}>
-                      <span>от 200 сом (1-3 дня)</span>
-                    </div>
-                    <button className={styles.btn_send_form}>Отправить</button>
-                </div>
             </div>
-            </>
-          ) : (
-            <div>Отправлено, мы скоро с вами свяжемся.</div>
-          ) } 
-        </form>
-      </div>
-    )
-  )
+            <div className={styles.order}>
+              {selectedType === "pickup" ? (
+                <div className={styles.order_wrapper__left}>
+                  <div className={styles.order_call}>
+                    <span>Самовывоз</span>
+                  </div>
+                  <div className={styles.order_adress}>
+                    <p>г.Бишкек, ул.Ибраимова 108Б</p>
+                    <p>пн-вс 09:00-20:00</p>
+                  </div>
+                  <div className={styles.order_free}>
+                    <span>Бесплатно</span>
+                  </div>
+                  <button className={styles.btn_send_form} style={{ width: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>Отправить</button>
+                </div>
+              ) : (
+                <div className={styles.order_wrapper__right}>
+                  <div className={styles.order_right__title}>
+                    <span>Доставка</span>
+                  </div>
+                  <div className={styles.order__form}>
+                    <div className={styles.order_select}>
+                      <select onChange={handleInputChange} value={regionsChange} className={styles.mySelect} name="regions">
+                        <option value={0}>Выбрать регион</option>
+                        {regions.map(region => (
+                          <option key={region.id} value={region.id}>{region.name}</option>
+                        ))}
+                      </select>
+                      <select
+                        onChange={handleInputChange}
+                        value={orderFormValue.city}
+                        className={styles.mySelect}
+                        name="city"
+                      >
+                        <option value={0}>Выбрать город</option>
+                        {regions.length !== 0 ? (
+                          cities.map(city => (
+                            <option key={city.id} value={city.id}>{city.name}</option>
+                          ))
+                        ) : (
+                            <option>Выберите сначало регион</option>
+                          )}
+                      </select>
+                    </div>
+                    <div className={styles.order_inputs}>
+                      <input onChange={handleInputChange} value={orderFormValue.street} type="text" placeholder="Улица" name="street" />
+                      <input onChange={handleInputChange} value={orderFormValue.house} type="text" placeholder="Дом/кв" name="house" />
+                    </div>
+                  </div>
+                  <div className={styles.order_setTime}>
+                    <span>от 200 сом (1-3 дня)</span>
+                  </div>
+                  <button className={styles.btn_send_form}>Отправить</button>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <div>Отправлено, мы скоро с вами свяжемся.</div>
+        )}
+      </form>
+    </div>
+  );
 }
 
-export default OrderForm
+export default OrderForm;

@@ -33,12 +33,14 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
             : [color];
             
         setPickedColor(updatedColors);
+    
+        console.log(updatedColors)
         
         const updatedFilters = {
             ...filters,
             limit: 100,
             brand: brand.id,
-            color: updatedColors,
+            color: updatedColors
         };
         
         fetchProductsAndLog(updatedFilters);
@@ -64,7 +66,7 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
                             onChange={() => {
                                 setPickedColor(null);
                                 let obj = {
-                                    limit: 10,
+                                    limit: 100,
                                     offset: 0,
                                     min_price: undefined,
                                     max_price: undefined,

@@ -14,9 +14,14 @@ function NewsPage() {
     dispatch(fetchNews());
   }, [dispatch]);
 
-
+  console.log(news)
   return (
     <div className={styles.news_main}>
+      <div className={styles.path} style={{ marginTop: "30px" }}>
+        <a href="/" onClick={() => {
+                    localStorage.setItem("activeItem", JSON.stringify(`home`))
+        }}>Главная</a> / <a href="/news">Новости</a>
+      </div>
       {news?.map((item: NewsType, index: number) => (
         <NewsCard key={index} item={item}/>
       ))}
