@@ -261,6 +261,9 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @media only screen and (max-width: 520px) {
+    .wrapper {
+        padding: 0px;
+    }
     .accessories__item_img, .accessories__item_img_prev {
         top: -25px !important;
         width: 30px !important;
