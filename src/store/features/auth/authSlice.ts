@@ -69,6 +69,7 @@ export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
         dispatch(authSlice.actions.setUser(response.data));
         localStorage.setItem("userInfo", JSON.stringify(response.data));
         return response.data;
+        
     } catch (error: any) {
         console.error("Error during fetch:", error);
         console.log("Error response:", error.response);

@@ -33,7 +33,7 @@ function CartCardList() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const [counts, setCounts] = useState<{[key: string]: number}>(() => {
+  const [counts, setCounts] = useState<{ [key: string]: number }>(() => {
     const savedCounts = localStorage.getItem('cartCounts');
     return savedCounts ? JSON.parse(savedCounts) : {};
   });
@@ -44,21 +44,23 @@ function CartCardList() {
       ...prevCounts,
       [id]: (prevCounts[id] || 0) + 1
     }));
-  };  
+  };
 
   const decrementCount = (id: string) => {
-    console.log(counts[id])
-    if (counts[id] <= 1) {
+    const updatedCount = Math.max((counts[id] || 0) - 1, 1);
+    if (updatedCount <= 1) {
       localStorage.removeItem("addedProducts");
       dispatch(deleteCart(+id));
     } else {
-      dispatch(changeCountCartProduct(counts[id] - 1, +id));
       setCounts((prevCounts) => ({
         ...prevCounts,
-        [id]: Math.max((prevCounts[id] || 0) - 1, 1)
+        [id]: updatedCount
       }));
+      dispatch(changeCountCartProduct(updatedCount, +id));
     }
-  };  
+  };
+
+
 
   useEffect(() => {
     localStorage.setItem('cartCounts', JSON.stringify(counts));
@@ -80,13 +82,13 @@ function CartCardList() {
     return colorHash;
   }
 
-  if(carts.length === 0) {
+  if (carts.length === 0) {
     return (
       <>
         <div className={styles.empty_cart}>
           Ваша корзина пуста
         </div>
-        <RecommendationList/>
+        <RecommendationList />
       </>
     )
   }
@@ -94,176 +96,90 @@ function CartCardList() {
   const filterPriceToMemory = (product: any, memory_name: any) => {
     const memory = product?.memory_price ? product?.memory_price[memory_name] : null;
     if (memory) {
-        const price = memory.replace(/[^\d.]/g, '');
-        return price;
+      const price = memory.replace(/[^\d.]/g, '');
+      return price;
     } else {
-        console.log('Цена для указанной памяти не найдена');
-        return null;
+      console.log('Цена для указанной памяти не найдена');
+      return null;
     }
   }
 
   return (
     isMobile ? (
       <div className={styles.cart_main}>
-          <div className={styles.cart_path}>
-              <span>Главная | Каталог | Корзина</span>
-          </div>
-          <div className={styles.cart_header}>
-              <div>Корзина</div>
-              <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
-          </div>
-          { carts?.map((cart: any, index: number) => (
-            <div className={styles.cart_container} key={index}>
-              <div className={styles.cart}>
-                  <div className={styles.cart_image}>
-                    {cart.product.product_images ? (
-                      <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : cart.product.default_image} alt="phone" />
-                    ) : (
-                      <l-ping
-                        size="45"
-                        speed="2" 
-                        color="black" 
-                      ></l-ping>
-                    )}
-                  </div>
-                  <div className={styles.cart_content}>
-                      <p>{ `${cart?.product.name} ${cart.memory_name !== "0" ? cart.memory_name + " ГБ" : ""} `}</p>
-                      <div className={styles.cart_description} >{ cart?.product.description.slice(0, 120) }...</div>
-                      <div className={styles.colors}> Цвета: 
-                        { getColorHashCode(cart.color, cart.product).length !== 0 ? (
-                            <div key={index} className={styles.color_block} style={{ background: getColorHashCode(cart.color, cart.product) }}></div>
-                          ) : (
-                            <l-ping
-                              size="45"
-                              speed="2" 
-                              color="black" 
-                            ></l-ping>
-                        ) }
-                      </div>
-                      <div className={styles.cart_counter}>
-                        <button onClick={() => {
-                            decrementCount(cart.id)
-                            console.log("clicked")
-                        }}>−</button>
-                        <span>{counts[cart.id] || 1}</span> 
-                        <button onClick={() => incrementCount(cart.id)}>+</button>
-                      </div>
-                  </div>
-                  <div className={styles.cart_price}>
-                      { cart.product.discount !== 0 ? (
-                        <>
-                          <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} сом</div>
-                          <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) } сом</div>
-                        </>
-                      ) : (
-                        <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} сом</div>
-                      ) }
-                  </div>
-                  <div className={styles.cart_rate}>
-                  { 
-                  [1, 2, 3, 4, 5].map((star) => (
-                    <span
-                        key={star}
-                        style={{
-                          cursor: 'pointer',
-                          color: star <= cart.product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
-                          marginRight: '5px',
-                        }}
-                    >
-                      &#9733;
-                    </span>
-                  ))
-                  }
-                  </div>
-              </div>
-          </div>
-          )) }
-          <div className={styles.total_block}>
-            Итого: {carts
-              .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart.product.memory_price !== null ? filterPriceToMemory(cart?.product, cart?.memory_name) : cart?.product.price, cart?.product.discount))
-              .reduce((acc, price) => acc + price, 0)
-              .toLocaleString("ru-RU")} сом
-          </div>
-          <div className={styles.cart_button}>
-            <button className={styles.btn} onClick={handleOrderButtonClick}>Оформить заказ</button>
-          </div>
-          {showOrderForm && <OrderForm user={user} products={carts} />}
-      </div>
-    ) : (
-      <div className={styles.cart_main}>
         <div className={styles.cart_path}>
-            <span>Главная | Каталог | Корзина</span>
+          <span>Главная | Каталог | Корзина</span>
         </div>
         <div className={styles.cart_header}>
-            <div>Корзина</div>
-            <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
+          <div>Корзина</div>
+          <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
         </div>
-        { carts?.map((cart: any, index: number) => (
+        {carts?.map((cart: any, index: number) => (
           <div className={styles.cart_container} key={index}>
             <div className={styles.cart}>
-                <div className={styles.cart_image}>
-                  {cart.product.product_images ? (
-                    <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : cart.product.default_image} alt="phone" />
+              <div className={styles.cart_image}>
+                {cart.product.product_images ? (
+                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : cart.product.default_image} alt="phone" />
+                ) : (
+                  <l-ping
+                    size="45"
+                    speed="2"
+                    color="black"
+                  ></l-ping>
+                )}
+              </div>
+              <div className={styles.cart_content}>
+                <p>{`${cart?.product.name} ${cart.memory_name !== "0" ? cart.memory_name + " ГБ" : ""} `}</p>
+                <div className={styles.cart_description} >{cart?.product.description.slice(0, 120)}...</div>
+                <div className={styles.colors}> Цвета:
+                  {getColorHashCode(cart.color, cart.product).length !== 0 ? (
+                    <div key={index} className={styles.color_block} style={{ background: getColorHashCode(cart.color, cart.product) }}></div>
                   ) : (
                     <l-ping
                       size="45"
-                      speed="2" 
-                      color="black" 
+                      speed="2"
+                      color="black"
                     ></l-ping>
                   )}
                 </div>
-                <div className={styles.cart_content}>
-                    <p>{ `${cart?.product.name} ${cart.memory_name !== "0" ? cart.memory_name + " ГБ" : ""} `}</p>
-                    <div className={styles.cart_description} >{ cart?.product.description.slice(0, 120) }...</div>
-                    <div className={styles.colors}> Цвета: 
-                      { getColorHashCode(cart.color, cart.product).length !== 0 ? (
-                          <div key={index} className={styles.color_block} style={{ background: getColorHashCode(cart.color, cart.product) }}></div>
-                        ) : (
-                          <l-ping
-                            size="45"
-                            speed="2" 
-                            color="black" 
-                          ></l-ping>
-                      ) }
-                    </div>
-                    <div className={styles.cart_counter}>
-                      <button onClick={() => {
-                          decrementCount(cart.id)
-                          console.log("clicked")
-                      }}>−</button>
-                      <span>{counts[cart.id] || 1}</span> 
-                      <button onClick={() => incrementCount(cart.id)}>+</button>
-                    </div>
+                <div className={styles.cart_counter}>
+                  <button onClick={() => {
+                    decrementCount(cart.id)
+                    console.log("clicked")
+                  }}>−</button>
+                  <span>{counts[cart.id] || 1}</span>
+                  <button onClick={() => incrementCount(cart.id)}>+</button>
                 </div>
-                <div className={styles.cart_price}>
-                    { cart.product.discount !== 0 ? (
-                      <>
-                        <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} сом</div>
-                        <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) } сом</div>
-                      </>
-                    ) : (
-                      <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} сом</div>
-                    ) }
-                </div>
-                <div className={styles.cart_rate}>
-                { 
-                [1, 2, 3, 4, 5].map((star) => (
-                  <span
+              </div>
+              <div className={styles.cart_price}>
+                {cart.product.discount !== 0 ? (
+                  <>
+                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} сом</div>
+                    <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name)} сом</div>
+                  </>
+                ) : (
+                  <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} сом</div>
+                )}
+              </div>
+              <div className={styles.cart_rate}>
+                {
+                  [1, 2, 3, 4, 5].map((star) => (
+                    <span
                       key={star}
                       style={{
                         cursor: 'pointer',
                         color: star <= cart.product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
                         marginRight: '5px',
                       }}
-                  >
-                    &#9733;
-                  </span>
-                ))
+                    >
+                      &#9733;
+                    </span>
+                  ))
                 }
-                </div>
+              </div>
             </div>
-        </div>
-        )) }
+          </div>
+        ))}
         <div className={styles.total_block}>
           Итого: {carts
             .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart.product.memory_price !== null ? filterPriceToMemory(cart?.product, cart?.memory_name) : cart?.product.price, cart?.product.discount))
@@ -274,7 +190,93 @@ function CartCardList() {
           <button className={styles.btn} onClick={handleOrderButtonClick}>Оформить заказ</button>
         </div>
         {showOrderForm && <OrderForm user={user} products={carts} />}
-    </div>
+      </div>
+    ) : (
+      <div className={styles.cart_main}>
+        <div className={styles.cart_path}>
+          <span>Главная | Каталог | Корзина</span>
+        </div>
+        <div className={styles.cart_header}>
+          <div>Корзина</div>
+          <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
+        </div>
+        {carts?.map((cart: any, index: number) => (
+          <div className={styles.cart_container} key={index}>
+            <div className={styles.cart}>
+              <div className={styles.cart_image}>
+                {cart.product.product_images ? (
+                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : cart.product.default_image} alt="phone" />
+                ) : (
+                  <l-ping
+                    size="45"
+                    speed="2"
+                    color="black"
+                  ></l-ping>
+                )}
+              </div>
+              <div className={styles.cart_content}>
+                <p>{`${cart?.product.name} ${cart.memory_name !== "0" ? cart.memory_name + " ГБ" : ""} `}</p>
+                <div className={styles.cart_description} >{cart?.product.description.slice(0, 120)}...</div>
+                <div className={styles.colors}> Цвета:
+                  {getColorHashCode(cart.color, cart.product).length !== 0 ? (
+                    <div key={index} className={styles.color_block} style={{ background: getColorHashCode(cart.color, cart.product) }}></div>
+                  ) : (
+                    <l-ping
+                      size="45"
+                      speed="2"
+                      color="black"
+                    ></l-ping>
+                  )}
+                </div>
+                <div className={styles.cart_counter}>
+                  <button onClick={() => {
+                    decrementCount(cart.id)
+                    console.log("clicked")
+                  }}>−</button>
+                  <span>{counts[cart.id] || 1}</span>
+                  <button onClick={() => incrementCount(cart.id)}>+</button>
+                </div>
+              </div>
+              <div className={styles.cart_price}>
+                {cart.product.discount !== 0 ? (
+                  <>
+                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} сом</div>
+                    <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name)} сом</div>
+                  </>
+                ) : (
+                  <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} сом</div>
+                )}
+              </div>
+              <div className={styles.cart_rate}>
+                {
+                  [1, 2, 3, 4, 5].map((star) => (
+                    <span
+                      key={star}
+                      style={{
+                        cursor: 'pointer',
+                        color: star <= cart.product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
+                        marginRight: '5px',
+                      }}
+                    >
+                      &#9733;
+                    </span>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+        ))}
+        <div className={styles.total_block}>
+          Итого: {carts
+            .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart.product.memory_price !== null ? filterPriceToMemory(cart?.product, cart?.memory_name) : cart?.product.price, cart?.product.discount))
+            .reduce((acc, price) => acc + price, 0)
+            .toLocaleString("ru-RU")} сом
+        </div>
+        <div className={styles.cart_button}>
+          <button className={styles.btn} onClick={handleOrderButtonClick}>Оформить заказ</button>
+        </div>
+        {showOrderForm && <OrderForm user={user} products={carts} />}
+      </div>
     )
   );
 }
