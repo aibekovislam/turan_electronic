@@ -38,6 +38,22 @@ function CartCardList() {
     return savedCounts ? JSON.parse(savedCounts) : {};
   });
 
+
+  useEffect(() => {
+    localStorage.setItem('cartCounts', JSON.stringify(counts));
+  }, [counts]);
+  
+  useEffect(() => {
+    setCounts((prevCounts) => {
+      const newCounts: any = {};
+      carts.forEach((cart) => {
+        newCounts[cart.id] = prevCounts[cart.id] || 1;
+      });
+      return newCounts;
+    });
+  }, [carts]);  
+
+
   const incrementCount = (id: string) => {
     dispatch(changeCountCartProduct(counts[id] + 1, +id));
     setCounts((prevCounts) => ({
@@ -47,20 +63,19 @@ function CartCardList() {
   };
 
   const decrementCount = (id: string) => {
-    const updatedCount = Math.max((counts[id] || 0) - 1, 1);
-    if (updatedCount <= 1) {
+    const updatedCount = Math.max((counts[id] || 0) - 1, 0);
+    setCounts((prevCounts) => ({
+      ...prevCounts,
+      [id]: updatedCount
+    }));
+    
+    dispatch(changeCountCartProduct(updatedCount, +id));
+
+    if(updatedCount < 1) {
       localStorage.removeItem("addedProducts");
       dispatch(deleteCart(+id));
-    } else {
-      setCounts((prevCounts) => ({
-        ...prevCounts,
-        [id]: updatedCount
-      }));
-      dispatch(changeCountCartProduct(updatedCount, +id));
     }
-  };
-
-
+  };  
 
   useEffect(() => {
     localStorage.setItem('cartCounts', JSON.stringify(counts));
@@ -145,10 +160,9 @@ function CartCardList() {
                 <div className={styles.cart_counter}>
                   <button onClick={() => {
                     decrementCount(cart.id)
-                    console.log("clicked")
                   }}>−</button>
-                  <span>{counts[cart.id] || 1}</span>
-                  <button onClick={() => incrementCount(cart.id)}>+</button>
+                  <span>{cart.count}</span>
+                  <button onClick={() => incrementCount(cart?.id)}>+</button>
                 </div>
               </div>
               <div className={styles.cart_price}>
@@ -231,7 +245,6 @@ function CartCardList() {
                 <div className={styles.cart_counter}>
                   <button onClick={() => {
                     decrementCount(cart.id)
-                    console.log("clicked")
                   }}>−</button>
                   <span>{counts[cart.id] || 1}</span>
                   <button onClick={() => incrementCount(cart.id)}>+</button>
