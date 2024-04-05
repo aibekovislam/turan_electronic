@@ -14,7 +14,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
     ) : [];
     
     const isColorPicked = (color: string) => {
-        return color === pickedColor;
+        return pickedColor?.includes(color);
     };
     
     const groupName = `group_${index}`;
@@ -30,15 +30,23 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
     ) : [];    
     
     const handleColorClick = (color: string) => {
-        setPickedColor(color === pickedColor ? null : color);        
-      
+        const updatedColors = pickedColor 
+            ? pickedColor.includes(color)
+                ? pickedColor.filter((c: string) => c !== color)
+                : [...pickedColor, color]
+            : [color];
+            
+        setPickedColor(updatedColors);
+    
+        console.log(pickedColor)
+        
         const updatedFilters = {
-          ...filters,
-          limit: 100,
-          brand: brand.id,
-          color: color === pickedColor ? [] : color,
+            ...filters,
+            limit: 100,
+            brand: brand.id,
+            color: updatedColors
         };
-      
+        
         fetchProductsAndLog(updatedFilters);
     };
 
@@ -259,28 +267,30 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                             <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>Все</label>
                         </label>
                         <div className={`${styles.d_f_colors}`}>
-                            {colorsArray?.map((item: any, index: number) => (
-                                <div key={index} className={`${styles.dropdown__item}`} style={{ width: "auto" }}>
-                                    <div onClick={() => {handleColorClick(item.hash_code)}} className={`${styles.color_block} ${isColorPicked(item.hash_code) ? styles.color_picked : ''}`} style={{ background: item.hash_code }}></div>
-                                </div>
-                            ))}
+                        {colorsArray?.map((item: any, index: number) => (
+                            <div key={`color_${index}`} className={`${styles.dropdown__item}`} style={{ width: "auto" }}>
+                                <div onClick={() => {handleColorClick(item.hash_code)}} className={`${styles.color_block} ${isColorPicked(item.hash_code) ? styles.color_picked : ''}`} style={{ background: item.hash_code }}></div>
+                            </div>
+                        ))}
                         </div>
                     </div>
                 );
             case 5:
                 return (
                     <div className={styles.dropdown__list}>
-                        {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-                            <div key={item} className={styles.dropdown__item}>
-                                <input
-                                    type="radio"
-                                    className={styles.dropdown_radio}
-                                    name={groupName}
-                                    defaultChecked={false}
-                                />
-                                <span className={styles.dropdown_text}>Все</span>
-                            </div>
-                        ))}
+                        <div className={styles.dropdown__list}>
+                            {[1, 2, 3, 4, 5, 6, 7].map((item, itemIndex) => (
+                                <div key={itemIndex} className={styles.dropdown__item}>
+                                    <input
+                                        type="radio"
+                                        className={styles.dropdown_radio}
+                                        name={groupName}
+                                        defaultChecked={false}
+                                    />
+                                    <span className={styles.dropdown_text}>Все</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 );
             default:
