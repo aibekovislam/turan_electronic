@@ -5,12 +5,12 @@ import { RootStates } from "../store/store";
 import { addOrder, fetchCities, fetchRegions } from "../store/features/order/orderSlice";
 import { fetchCarts } from "../store/features/favorite_and_cart/cartSlice";
 import { notify, notifyError } from "./Toastify";
-// import { useNavigate } from "react-router-dom";
 
 function OrderForm({ products }: any) {
   const regions = useSelector((state: RootStates) => state.orders.regions);
   const cities = useSelector((state: RootStates) => state.orders.cities);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+  // const [ selectedType, setSelectedType ] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -86,7 +86,6 @@ function OrderForm({ products }: any) {
       dispatch(fetchCarts())
       localStorage.removeItem("addedProducts");
       notify("Спасибо за покупку, мы скоро свяжемся с вами")
-      // navigate("/")
     } catch (error) {
       console.log(error);
     }
