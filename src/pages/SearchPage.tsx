@@ -77,7 +77,7 @@ export default function SearchPage() {
 
     return (
         <>
-            <div className={"accessories"} style={{ margin: "50px 0px" }}>
+            <div className={"accessories"} style={{ margin: !isMobile ? "30px 0px" : "0px 0px 20px" }}>
             </div>
             <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ justifyContent: "space-between" }}>
                 {currentPageProducts.map((product) => (

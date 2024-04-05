@@ -24,7 +24,9 @@ function Navbar() {
   const tokenString = localStorage.getItem("tokens");
   const token = tokenString ? JSON.parse(tokenString) : null;
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+  const [ isMobileSearch, setIsMobileSearch ] = useState(false);
   const dispatch = useDispatch<any>();
+  const [searchText, setSearchText] = useState<string>(""); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,7 +56,8 @@ function Navbar() {
     }
   };
 
-  const handleChangeSearch = (e: any) => {
+  const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value); 
     dispatch(searchProducts(e.target.value))
   }
 
@@ -68,13 +71,25 @@ function Navbar() {
           <div className={styles.burgerMenu}>
             <img src={burger__menu} />
           </div>
-          <div className={styles.searchMobile}>
-            <img src={search_svg} />
+          <div className={`${styles.searchMobile} ${isMobileSearch ? styles.searchMobile__block : ""}`} onClick={() => {
+            navigate("/search");
+            setIsMobileSearch(true)
+            }}>
+            { isMobileSearch ? (
+              <input type="text" value={searchText} placeholder="Поиск..." name="search" onChange={handleChangeSearch} onClick={() => navigate("/search")} />
+              ) : (
+              <img src={search_svg} />
+            ) }
           </div>
+          { isMobileSearch ? (
+            <span className={styles.close_search} onClick={() => setIsMobileSearch(false)}>Закрыть</span>
+          ) : null }
         </div>
         <div className={styles.block_2}>
           <div className={styles.logo}>
-            <img src={logo_svg} alt="logo" style={{ cursor: "pointer" }} onClick={() => handleItemClick("home")} />
+              { !isMobileSearch ? (
+                <img src={logo_svg} alt="logo" style={{ cursor: "pointer" }} onClick={() => handleItemClick("home")} />
+              ) : (null) }
           </div>
           <ul className={styles.navigation}>
             <li
@@ -120,7 +135,9 @@ function Navbar() {
             <img src={personal__office_svg} />
           </div>
           <div className={styles.cartMobile}>
-            <img src={cart_svg} onClick={() => navigate("/cart")} />
+            { !isMobileSearch ? (
+              <img src={cart_svg} onClick={() => navigate("/cart")} />
+            ) : null }
           </div>
         </div>
         <div className={styles.block_3}>
