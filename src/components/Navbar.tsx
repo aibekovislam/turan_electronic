@@ -146,16 +146,16 @@ function Navbar() {
         { isMobile ? (
           <div className={styles.bottomNavbar}>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/")} src={home_mobile} alt="Home" />
+              <img onClick={() => navigate("/")} src={home_mobile} alt="Home" style={{ width: "20px" }} />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Categories" />
+              <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Categories" style={{ width: "20px" }} />
             </div>
             <div className={styles.bottomNavItem}>
               <img onClick={() => navigate("/cart")} src={cart_svg} alt="Cart" />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/profile")} src={user_mobile} alt="Auth" />
+              <img onClick={() => navigate("/profile")} src={user_mobile} alt="Auth" style={{ width: "20px" }} />
             </div>
           </div>
         ) : (null) }

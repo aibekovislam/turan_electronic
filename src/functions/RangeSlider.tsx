@@ -30,15 +30,14 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
     setIsDragging(true);
   };
 
-  const handleMouseMove = (e: ChangeEvent<HTMLInputElement>, type: keyof Range) => {
+  const handleMouseMove = (value: number, type: keyof Range) => {
     if (isDragging) {
-      const value = parseInt(e.target.value, 10);
       setRange((prevRange) => ({
         ...prevRange,
         [type]: value,
       }));
     }
-  };  
+  };
 
   const handleMouseUp = () => {
     setIsDragging(false);
@@ -94,8 +93,10 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
           value={range.min}
           step="5000"
           onMouseDown={handleMouseDown}
-          onChange={(e) => handleMouseMove(e, "min")}
+          onTouchStart={handleMouseDown}
+          onChange={(e) => handleMouseMove(parseInt(e.target.value, 10), "min")}
           onMouseUp={handleMouseUp}
+          onTouchEnd={handleMouseUp}
         />
         <input
           type="range"
@@ -105,8 +106,10 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
           value={range.max}
           step="5000"
           onMouseDown={handleMouseDown}
-          onChange={(e) => handleMouseMove(e, "max")}
+          onTouchStart={handleMouseDown}
+          onChange={(e) => handleMouseMove(parseInt(e.target.value, 10), "max")}
           onMouseUp={handleMouseUp}
+          onTouchEnd={handleMouseUp}
         />
       </div>
     </div>

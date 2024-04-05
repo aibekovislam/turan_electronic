@@ -102,7 +102,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                         </div>
                     </div>
                 </div>
-                <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} />
+                <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} dataForDropDown={dataForDropDown} productsByBrandCategory={productsByBrandCategory} />
             </div>
         ) : (
             <div className={styles.brands_navbar}>
