@@ -121,7 +121,7 @@ function DetailPage() {
         if (user && token) {
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
-        } else if (!user) {
+        } else if (!user || !token) {
             navigate("/auth");
             notifyError('Вы не авторизованы');
         }
@@ -247,6 +247,7 @@ function DetailPage() {
                                         src={isProductInFavorites ? fillHeart : heart}
                                         onClick={() => {
                                             handleClickFavorite(product.id || 0);
+                                            console.log(product.id)
                                         }}
                                         style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }}
                                     />

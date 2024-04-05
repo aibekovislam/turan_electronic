@@ -219,6 +219,47 @@
     font-size: 18px;
 }
 
+@media only screen and (max-width: 520px) {
+    .auth_container{
+        width: 100%;
+    }
+    .auth_form {
+        justify-content: center;
+        width: 100%;
+    }
+    .auth_input {
+        width: 80%;
+    }
+    .auth_input input {
+        width: -webkit-fill-available;
+    }
+    .eye_svg {
+        margin-top: 13px;
+        top: 0;
+    }
+    .auth_text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .auth_text p {
+        max-width: 300px;
+    }
+    .forgotten_password {
+        margin-left: 7rem;
+        margin-right: 7rem;
+        margin-top: 20px;
+    }
+    .forgotten_password span {
+        width: max-content;
+        display: block;
+    }
+    .conditions p {
+        font-size: 13px;
+    }
+    
+}
+
 //! RegisterConfirm
 
 .reg__confirm_text {
