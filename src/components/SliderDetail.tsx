@@ -12,6 +12,27 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
   const [wordData, setWordData] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(0);
+
+  const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    const touchMoveX = e.touches[0].clientX;
+    const diff = touchMoveX - touchStartX;
+    const threshold = 70;
+
+    if (diff > threshold) {
+      handlePrevious();
+    } else if (diff < -threshold) {
+      handleNext();
+    }
+  };
+
+  const handleTouchEnd: React.TouchEventHandler<HTMLDivElement> = () => {
+    setTouchStartX(0);
+  };
 
   ping.register();
 
@@ -62,7 +83,11 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
 
   return (
     <div className={styles.main}>
-      <div className={styles.carousel_detail}>
+      <div className={styles.carousel_detail}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+      >
         { filteredFirstImage ? (
           <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} />
         ) : (null) }
