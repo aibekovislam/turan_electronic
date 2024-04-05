@@ -66,7 +66,7 @@ export const fetchFilterProducts = (filters: any): AppThunk => async (dispatch) 
             min_price: filters.min_price || undefined,
             max_price: filters.max_price || undefined,
             brand: filters.brand || [],
-            color: filters.color?.join(`&color=`) || undefined,
+            colors: filters.color || undefined,
             brand_category: filters.brand_category || undefined,
             memory: filters.memory || [],
             product_name: filters.product_name || undefined,
