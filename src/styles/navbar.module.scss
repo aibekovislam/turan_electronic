@@ -177,6 +177,10 @@
     outline: none;
 }
 
+.searchMobile input:focus {
+    outline: none;
+}
+
 .search__svg {
     position: absolute;
     top: 15%;
@@ -248,7 +252,36 @@
         display: flex;
         align-items: center;
     }
-
+    .searchMobile__block {
+        box-shadow: 3px 3px 7px 0px #88A5BF7A inset;
+        border: 1px solid #FFFFFF !important;
+        width: 100%;
+        height: 40px;
+        border-radius: 16px;
+        border: 1px;
+        position: relative;
+        display: flex;
+        margin-left: 20px;
+    }
+    .searchMobile__block input {
+        background-color: initial;
+        border: none;
+        padding-left: 20px;
+        padding-top: 1vw;
+        width: 250px;
+        font-family: "Montserrat", sans-serif;
+    }
+    .close_search {
+        box-shadow: 16px 36px 64px 0px rgba(111, 136, 160, 0.4784313725);
+        border: 1px solid #FFFFFF;
+        height: 40px;
+        border-radius: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 13px;
+        padding: 0px 10px;
+    }
     .burgerMenu {
         display: none;
     }
