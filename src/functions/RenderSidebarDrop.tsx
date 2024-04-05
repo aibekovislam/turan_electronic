@@ -8,7 +8,13 @@ import { setPickedOption, setPickedOptionSidebar } from "../store/features/dropd
 export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors, dataForDropDown, productsByBrandCategory}: RenderSidebarTypes) => {
     const dispatch = useDispatch();
 
-    const colorsArray = products ? returnColorsForFilter(products.map(product => product.color)) : [];
+    const colorsArray = dataForDropDown ? returnColorsForFilter(
+        productsByBrandCategory.map(product => product.color)
+    ) : [];
+
+    const isColorPicked = (color: string) => {
+        return pickedColor?.includes(color);
+    };
     
     const groupName = `group_${index}`;
 
@@ -20,21 +26,21 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
     const productMemory = dataForDropDown ? filterMemory(dataForDropDown?.map(product => product.memory)) : [];
 
     const handleColorClick = (color: string) => {
-        setPickedColor(color === pickedColor ? null : color);
-      
-        let updatedColorArray;
-        if (Array.isArray(filters.color)) {
-            updatedColorArray = color === pickedColor ? filters.color.filter((c: string) => c !== color) : [...filters.color, color];
-        } else {
-            updatedColorArray = [color];
-        }
-      
+        const updatedColors = pickedColor 
+            ? pickedColor.includes(color)
+                ? pickedColor.filter((c: string) => c !== color)
+                : [...pickedColor, color]
+            : [color];
+            
+        setPickedColor(updatedColors);
+        
         const updatedFilters = {
-          ...filters,
-          brand: brand.id,
-          color: updatedColorArray,
+            ...filters,
+            limit: 100,
+            brand: brand.id,
+            color: updatedColors,
         };
-      
+        
         fetchProductsAndLog(updatedFilters);
     };    
       
@@ -74,8 +80,8 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
                     </div>
                     <div className={`${styles.d_f_colors}`} style={{ justifyContent: "flex-start" }}>
                     {colorsArray?.slice(0, showAllColors ? colorsArray.length : 12).map((item: any, index: number) => (
-                        <div key={index} className={`${styles.dropdown__item}`} style={{ width: "max-content" }}>
-                            <div onClick={() => {handleColorClick(item)}} className={`${styles.color_block} ${item === pickedColor ? styles.color_picked : ''}`} style={{ background: item.hash_code }}></div>
+                        <div key={index} className={`${styles.dropdown__item}`} style={{ width: "auto" }}>
+                            <div onClick={() => {handleColorClick(item.hash_code)}} className={`${styles.color_block} ${isColorPicked(item.hash_code) ? styles.color_picked : ''}`} style={{ background: item.hash_code }}></div>
                         </div>
                     ))}
                     </div>
