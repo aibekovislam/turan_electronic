@@ -12,6 +12,8 @@ import user_mobile from "../assets/svgs/navbarMobile/user.svg"
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { searchProducts } from "../store/features/products/productSlice";
 
 function Navbar() {
   const [activeItem, setActiveItem] = useState<string>(() => {
@@ -22,6 +24,7 @@ function Navbar() {
   const tokenString = localStorage.getItem("tokens");
   const token = tokenString ? JSON.parse(tokenString) : null;
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+  const dispatch = useDispatch<any>();
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,6 +53,10 @@ function Navbar() {
       navigate(`/${item}`);
     }
   };
+
+  const handleChangeSearch = (e: any) => {
+    dispatch(searchProducts(e.target.value))
+  }
 
   return (
     <div className={styles.navbar}>
@@ -132,7 +139,7 @@ function Navbar() {
             className={`${styles.search__block} ${activeItem === "search__block" ? "active__navbar" : ""}`}
           // onClick={() => handleItemClick("search__block")}
           >
-            <input type="text" placeholder="Поиск..." name="search" />
+            <input type="text" placeholder="Поиск..." name="search" onChange={handleChangeSearch} onClick={() => navigate("/search")} />
             <img src={search_svg} alt="search_svg" className={styles.search__svg} />
           </div>
         </div>
@@ -145,7 +152,10 @@ function Navbar() {
               <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Categories" />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/profile")} src={user_mobile} alt="News" />
+              <img onClick={() => navigate("/cart")} src={cart_svg} alt="Cart" />
+            </div>
+            <div className={styles.bottomNavItem}>
+              <img onClick={() => navigate("/profile")} src={user_mobile} alt="Auth" />
             </div>
           </div>
         ) : (null) }

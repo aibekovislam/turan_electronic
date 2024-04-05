@@ -20,6 +20,7 @@ import Sender from "../pages/Sender";
 import GoogleNavigateLoginPage from "../pages/GoogleNavigateLoginPage";
 import NewsDetailPage from "../pages/NewsDetailPage";
 import FilteredRoutePage from "../pages/FilteredRoutePage";
+import SearchPage from "../pages/SearchPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -59,6 +60,7 @@ function MainRoutes() {
         <Route element={<NewsPage />} path="/news" />
         <Route element={<AboutUs />} path="/about" />
         <Route element={<NewsDetailPage />} path="/news/:id" />
+        <Route element={<SearchPage />} path="/search" />
         <Route element={<FilteredRoutePage />} path="/products/filter/:brand_category_title/:brand" />
       </Route>
     </Routes>
