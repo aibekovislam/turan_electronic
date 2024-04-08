@@ -5,7 +5,7 @@ import heart from "../assets/svgs/card/Vector (8).svg"
 import React, { useEffect, useState } from "react"
 import { CardProps } from "../utils/interfacesAndTypes"
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte"
-import { addFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice"
+import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice"
 import { useDispatch, useSelector } from "react-redux"
 import { RootStates } from "../store/store"
 import { useNavigate } from "react-router-dom"
@@ -47,22 +47,22 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
         setLoaded(true);
     }, [product])
 
-    useEffect(() => {
-        dispatch(fetchFavorites())
-    }, [])
-
     const handleClickFavorite = (product_id: number) => {
         if (!token) {
             navigate("/auth")
             notifyError('Вы не авторизованы')
             return;
         }
-
+    
         if (user && token) {
+            if (product.in_favorite) {
+                return;
+            }
+            
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         }
-    }
+    }    
 
     const handleColorPick = (color: string) => {
         if (color === colorPicked) {
@@ -84,8 +84,6 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
     }, [favorites])
 
     const filteredImages = colorPicked ? filterImagesByColor(product.product_images[colorPicked], colorPicked) : null;
-
-    const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
 
     if (loaded) {
         return (
@@ -114,7 +112,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                 <div className={styles.cardMobile_wrapper__left}>
                                     <img src={product.default_image} onClick={() => onClick(product.id)} />
                                     {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
+                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={product.in_favorite ? fillHeart : heart} onClick={(e) => {
                                         e.stopPropagation();
                                         handleClickFavorite(product.id);
                                     }} />
@@ -191,7 +189,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                             <div className={styles.heart_container}>
                                 {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
                                 <img
-                                    src={isProductInFavorites ? fillHeart : heart}
+                                    src={product.in_favorite ? fillHeart : heart}
                                     onClick={() => {
                                         handleClickFavorite(product.id);
                                     }}

@@ -183,7 +183,8 @@ export type ProductsType = {
     color: any,
     memory_price: {
         [key: string]: string
-    }
+    },
+    in_favorite: boolean
 }
 
 export type CityType = {
