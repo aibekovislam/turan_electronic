@@ -7,7 +7,7 @@ import { ProductsType } from "../utils/interfacesAndTypes"
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { useEffect, useState } from "react";
-import { addFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
+import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 import { useNavigate } from "react-router-dom";
 import { notify, notifyError } from "./Toastify";
 import { API_URL } from "../utils/consts";
@@ -43,18 +43,22 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
 
     const dispatch = useDispatch<any>();
 
-    useEffect(() => {
-        dispatch(fetchFavorites())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(fetchFavorites())
+    // }, [])
 
     const handleClickFavorite = (product_id: number) => {
-        if (!user || !token) {
+        if (!token) {
             navigate("/auth")
             notifyError('Вы не авторизованы')
             return;
         }
-
+    
         if (user && token) {
+            if (product.in_favorite) {
+                return;
+            }
+            
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         }
@@ -78,8 +82,6 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     useEffect(() => {
         setFavoriteLoad(false);
     }, [favorites])
-
-    const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
 
     const filteredImages = colorPicked ? filterImagesByColor(product.product_images[colorPicked], colorPicked) : null;
 
@@ -109,9 +111,9 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                             <div className={styles.cardMobile_wrapper__left}>
                                 <img src={product.default_image} onClick={() => onClick(product.id)} />
                                 {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                                <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleClickFavorite(product.id);
+                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={product.in_favorite ? fillHeart : heart} onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleClickFavorite(product.id);
                                 }} />
                             </div>
                             <div className={styles.cardMobile_wrapper__right}>
@@ -184,14 +186,14 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                             )}
                         </div>
                         <div className={styles.heart_container}>
-                            {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                            <img
-                                src={isProductInFavorites ? fillHeart : heart}
-                                onClick={() => {
-                                    handleClickFavorite(product.id);
-                                }}
-                                style={{ display: favoriteLoaded ? "none" : "block" }}
-                            />
+                                {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
+                                <img
+                                    src={product.in_favorite ? fillHeart : heart}
+                                    onClick={() => {
+                                        handleClickFavorite(product.id);
+                                    }}
+                                    style={{ display: favoriteLoaded ? "none" : "block" }}
+                                />
                         </div>
                         <div className={styles.title_container}>
                             <div className={styles.price}>

@@ -16,6 +16,7 @@ import newsReducer from "./features/news/newsSlice";
 import newsOneSliceReducer from "./features/news/oneNewsSlice";
 import dropdownReducer from './features/dropdown/dropdownSlice'
 import footerReducer from "./features/footer/footerSlice";
+import chatReducer from "./features/chat/chatSlice";
 
 
 
@@ -37,7 +38,8 @@ export const store = configureStore({
         orders: orderReducer,
         news: newsReducer,
         oneNews: newsOneSliceReducer,
-        dropdown: dropdownReducer
+        dropdown: dropdownReducer,
+        chat: chatReducer
     }
 })
 

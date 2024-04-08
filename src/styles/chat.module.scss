@@ -1,0 +1,97 @@
+.chat {
+    position: fixed;
+    bottom: 20px;
+    right: 5%;
+}
+
+.chat_icon {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    background: #E3EDF7;
+    border: 1px solid #FFFFFF;
+    box-shadow: 4px 2px 16px 0px rgba(136, 165, 191, 0.4784313725);
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat_icon img {
+    width: 30px;
+    height: 30px;
+}
+
+.chat_content {
+    background-color: #E3EDF7;
+    box-shadow: 4px 2px 16px 0px rgba(136, 165, 191, 0.4784313725);
+    padding: 20px;
+    width: 270px;
+    border-radius: 25px;
+}
+
+.previus_chat {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    margin-bottom: 50px;
+    overflow-y: scroll;
+}
+
+.message_myself {
+    background-color: #2a73bb;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin: 10px 0;
+    width: max-content;
+}
+
+.message_from_operator {
+    background-color: #FF7300;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    margin: 10px 0;
+    width: max-content;
+}
+
+.message_block_myself {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form_chat {
+    display: flex;
+    padding-top: 20px;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 10px;
+}
+
+.sender_input {
+    height: 50px;
+    border-radius: 25px;
+    background-color: initial;
+    border: none;
+    padding-left: 20px;
+    font-family: "Montserrat", sans-serif;
+    box-shadow: 3px 3px 7px 0px rgba(136, 165, 191, 0.4784313725) inset;
+    border: 1px solid #FFFFFF !important;
+}
+
+.sender_btn {
+    height: 35px;
+    border-radius: 25px;
+    border: none;
+    background-color: #FF7300;
+    color: white;
+}
+
+.message_text {
+    padding: 0;
+    margin: 0;
+    max-width: 200px;
+    word-wrap: break-word;
+}
