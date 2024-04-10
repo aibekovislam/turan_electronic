@@ -137,7 +137,7 @@ export type RenderDropdownTypes = {
 }
 
 export type RenderSidebarTypes = {
-    index: number, products: ProductsType[] | undefined, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any, showAllColors: any, setShowAllColors: any, dataForDropDown: ProductsType[] | undefined,
+    index: number, pickedColor: any, setPickedColor: any, brand: any, fetchProductsAndLog: any, filters: any, showAllColors: any, setShowAllColors: any, dataForDropDown: ProductsType[] | undefined,
     productsByBrandCategory: ProductsType[]
 }
 

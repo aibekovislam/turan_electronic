@@ -10,6 +10,10 @@ import { Analytics } from "@vercel/analytics/react"
 import Chat from "../components/Chat";
 
 function HomePage() {
+  const userString = localStorage.getItem("userInfo");
+  const user = userString ? JSON.parse(userString) : null;
+  const tokenString = localStorage.getItem("tokens");
+  const token = tokenString ? JSON.parse(tokenString) : null;
 
   return (
     <div style={{ position: "relative" }}>
@@ -20,7 +24,9 @@ function HomePage() {
       <NewProductsList/>
       <RecommendationList/>
       <Brands/>
-      <Chat/>
+      { user && token.access ? (
+        <Chat/>
+      ) : null }
       <Analytics/>
     </div>
   );

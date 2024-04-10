@@ -43,10 +43,6 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
 
     const dispatch = useDispatch<any>();
 
-    // useEffect(() => {
-    //     dispatch(fetchFavorites())
-    // }, [])
-
     const handleClickFavorite = (product_id: number) => {
         if (!token) {
             navigate("/auth")
@@ -55,10 +51,6 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
         }
     
         if (user && token) {
-            if (product.in_favorite) {
-                return;
-            }
-            
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         }
@@ -84,6 +76,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     }, [favorites])
 
     const filteredImages = colorPicked ? filterImagesByColor(product.product_images[colorPicked], colorPicked) : null;
+    const isProductInFavorites = favorites.some((fav) => fav.id === product.id);
 
     return (
         isMobile ? (
@@ -111,7 +104,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                             <div className={styles.cardMobile_wrapper__left}>
                                 <img src={product.default_image} onClick={() => onClick(product.id)} />
                                 {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={product.in_favorite ? fillHeart : heart} onClick={(e) => {
+                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
                                         e.stopPropagation();
                                         handleClickFavorite(product.id);
                                 }} />
@@ -188,7 +181,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         <div className={styles.heart_container}>
                                 {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
                                 <img
-                                    src={product.in_favorite ? fillHeart : heart}
+                                    src={isProductInFavorites ? fillHeart : heart}
                                     onClick={() => {
                                         handleClickFavorite(product.id);
                                     }}

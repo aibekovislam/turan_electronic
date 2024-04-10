@@ -5,7 +5,7 @@ import RangeSlider from "./RangeSlider";
 import { compareByVolume, extractPropertyArray, filterMemory, returnColorsForFilter, sortData } from "./filterFunction";
 import { setPickedOption, setPickedOptionSidebar } from "../store/features/dropdown/dropdownSlice";
 
-export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors, dataForDropDown, productsByBrandCategory}: RenderSidebarTypes) => {
+export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors, dataForDropDown, productsByBrandCategory}: RenderSidebarTypes) => {
     const dispatch = useDispatch();
 
     const colorsArray = dataForDropDown ? returnColorsForFilter(
@@ -19,7 +19,7 @@ export const RenderSidebarDrop = ({index, products, pickedColor, setPickedColor,
     const groupName = `group_${index}`;
 
     const brandCategoryArray = (propertyName: keyof ProductsType) => {
-        return extractPropertyArray(products, propertyName);
+        return extractPropertyArray(dataForDropDown, propertyName);
     };
 
     const brandModels = brandCategoryArray('name');

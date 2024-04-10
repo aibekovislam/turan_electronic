@@ -6,7 +6,7 @@ import ArrowDown from '../assets/svgs/ArrowDown';
 import { fetchBrands } from '../store/features/brands/brandsSlice';
 import { RenderSidebarDrop } from '../functions/RenderSidebarDrop';
 
-function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef, dataForDropDown, productsByBrandCategory }: any) {
+function SidebarMenu({ isOpen, brand, toggleSidebar, sidebarRef, dataForDropDown, productsByBrandCategory }: any) {
   const [pickedColor, setPickedColor] = useState<string | null>(null);
   const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
   const [showAllColors, setShowAllColors] = useState(false);
@@ -61,7 +61,7 @@ function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef, dataF
                   </div>
               </div>
                   <div >
-                      { dropdownStates[index] && <RenderSidebarDrop index={index} products={products} pickedColor={pickedColor} setPickedColor={setPickedColor} brand={brand} fetchProductsAndLog={fetchProductsAndLog} filters={filters} showAllColors={showAllColors} setShowAllColors={setShowAllColors} dataForDropDown={dataForDropDown} productsByBrandCategory={productsByBrandCategory} /> }
+                      { dropdownStates[index] && <RenderSidebarDrop index={index} pickedColor={pickedColor} setPickedColor={setPickedColor} brand={brand} fetchProductsAndLog={fetchProductsAndLog} filters={filters} showAllColors={showAllColors} setShowAllColors={setShowAllColors} dataForDropDown={dataForDropDown} productsByBrandCategory={productsByBrandCategory} /> }
                   </div>
             </div>
           ))}

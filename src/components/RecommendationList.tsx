@@ -6,12 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchRecProducts } from "../store/features/products/productRecommenededSlice";
 import { RootStates } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import { fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 
 function RecommendationList() {
     const navigate = useNavigate();
     const dispatch = useDispatch<any>();
     const recProducts = useSelector((state: RootStates) => state.productRec.rec_products);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+    const userString = localStorage.getItem("userInfo");
+    const user = userString ? JSON.parse(userString) : null;
+    const tokenString = localStorage.getItem("tokens");
+    const token = tokenString ? JSON.parse(tokenString) : null;
 
     useEffect(() => {
         const handleResize = () => {
@@ -24,7 +29,10 @@ function RecommendationList() {
     }, []);
 
     useEffect(() => {
-        dispatch(fetchRecProducts())
+        dispatch(fetchRecProducts());
+        if(user && token) {
+            dispatch(fetchFavorites())
+        }
     }, [dispatch])
 
     const itemsPerPage = 16;
