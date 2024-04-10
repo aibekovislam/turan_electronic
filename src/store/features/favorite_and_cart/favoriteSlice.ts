@@ -31,6 +31,7 @@ export const addFavorites = (products_id: number): AppThunk => async (dispatch) 
     try {
         const response = await $axios.post(`${API_URL}/products/${products_id}/favorite/`);
         dispatch(fetchFavorites());
+        console.log(response.data)
         return response.data
     } catch (error) {
         return error;

@@ -2,7 +2,7 @@ import styles from '../styles/chat.module.scss';
 import ChatSVG from '../assets/svgs/chat-svgrepo-com.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../store/store';
-import { useState, useEffect, useRef } from 'react'; // Добавлены хуки useEffect и useRef
+import { useState, useEffect, useRef } from 'react';
 import { chatStart, sendMessage } from '../store/features/chat/chatSlice';
 
 export default function Chat() {
@@ -14,15 +14,25 @@ export default function Chat() {
     const user = userString ? JSON.parse(userString) : null;
     const chatIDJson = localStorage.getItem("chatID");
     const chatID = chatIDJson ? parseInt(chatIDJson) : null;
-
-    const messagesEndRef = useRef<HTMLDivElement>(null); // Создана ссылка на конец сообщений
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
 
     useEffect(() => {
-        // Прокрутка вниз при обновлении сообщений
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 520);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    }, [messages]); // Обновление useEffect при изменении messages
+    }, [messages]);
 
     const handleSendMessage = (e: any) => {
         e.preventDefault();
@@ -40,7 +50,7 @@ export default function Chat() {
     }
 
     return (
-        <div className={styles.chat}>
+        <div className={styles.chat} style={ isMobile ? { bottom: '100px' } : {} }>
             <div className={styles.chat_icon} onClick={() => {
                 setShowChat(!showChat);
                 if (messages.length === 0) {
@@ -69,7 +79,7 @@ export default function Chat() {
                                 )}
                             </div>
                         ))}
-                        <div ref={messagesEndRef} /> {/* Ссылка на конец сообщений */}
+                        <div ref={messagesEndRef} />
                     </div>
                     <form className={styles.form_chat} onSubmit={handleSendMessage}>
                         <input onChange={(e: any) => setMessageText(e.target.value)} type='text' placeholder='Введите сообщение оператору:' name='content' className={styles.sender_input} />

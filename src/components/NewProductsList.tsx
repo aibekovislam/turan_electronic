@@ -7,6 +7,7 @@ import { RootStates } from "../store/store";
 import { fetchProducts } from "../store/features/products/productSlice";
 import { ProductsType, default_filters } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
+import { fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 
 function NewProductsList() {
   const dispatch = useDispatch<any>();
@@ -14,6 +15,10 @@ function NewProductsList() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
   const [countSlice, setCountSlice] = useState(0);
   const [displayedProducts, setDisplayedProducts] = useState<ProductsType[]>([]);
+  const userString = localStorage.getItem("userInfo");
+  const user = userString ? JSON.parse(userString) : null;
+  const tokenString = localStorage.getItem("tokens");
+  const token = tokenString ? JSON.parse(tokenString) : null;
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,7 +27,7 @@ function NewProductsList() {
     };
 
     window.addEventListener("resize", handleResize);
-    updateCountSlice(); // Добавляем вызов для инициализации countSlice
+    updateCountSlice();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -32,6 +37,9 @@ function NewProductsList() {
       ...default_filters,
       limit: 100
     }));
+    if(user && token) {
+      dispatch(fetchFavorites())
+    }
   }, [dispatch]);
 
   useEffect(() => {

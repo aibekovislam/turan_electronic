@@ -429,9 +429,9 @@
         margin-bottom: 20px;
     }
 
-    .mini_mobile__content>span {
+    .mini_mobile__content > span {
         font-weight: 400;
-        font-size: 14px;
+        font-size: 12px;
         height: 35px;
     }
 
@@ -455,6 +455,7 @@
     .mini_mobile__utils>span {
         font-weight: 600;
         font-size: 15px;
+        max-width: 70px;
     }
     .cart {
         width: 30px;
