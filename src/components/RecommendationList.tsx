@@ -26,18 +26,18 @@ function RecommendationList() {
         window.addEventListener('resize', handleResize);
 
         return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    useEffect(() => {
-        dispatch(fetchRecProducts());
-        if(user && token) {
-            dispatch(fetchFavorites())
-        }
-    }, [dispatch])
+    }, []);   
 
     const itemsPerPage = 16;
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
+
+    useEffect(() => {
+        dispatch(fetchRecProducts((currentPage - 1) * itemsPerPage, itemsPerPage));
+        if(user && token) {
+            dispatch(fetchFavorites())
+        }
+    }, [dispatch, currentPage, itemsPerPage, user, token]) 
 
     const totalPages = Math.ceil(recProducts.length / itemsPerPage);
 
