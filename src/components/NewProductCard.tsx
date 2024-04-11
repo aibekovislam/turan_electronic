@@ -215,7 +215,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                             </div>
                             <div className={styles.options_container}>
                                 <h2>Цвет</h2>
-                                {product?.color !== undefined ? product?.color.map((item: any, index: number) => (
+                                {product?.color !== undefined ? product?.color.slice(0, 6).map((item: any, index: number) => (
                                     <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
                                 )) : (
                                     <div>Loading...</div>
