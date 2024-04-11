@@ -10,8 +10,6 @@ import { ping } from 'ldrs'
 function UserProfilePage() {
   const userString = localStorage.getItem("userInfo");
   const user = userString ? JSON.parse(userString) : null;
-  const userStringGoogle = localStorage.getItem("userInfoGoogle");
-  const userGoogle = userStringGoogle ? JSON.parse(userStringGoogle) : null;
   const navigate = useNavigate();
   const [ modifiedName, setModifiedName ] = useState(user.name);
   const [ editUser, setEditUser ] = useState(false);
@@ -55,6 +53,7 @@ function UserProfilePage() {
     });
   }
 
+
   return (
     <div className={styles.user_main}>
       <div className={styles.section_title}>
@@ -68,13 +67,13 @@ function UserProfilePage() {
       <div className={styles.user_container}>
         <div className={styles.user}>
           <div className={styles.user_wrapper__left}>
-            { userGoogle.user === "Google User" ? (
+            { !user.name ? (
               null
             ) : (
               <li>Имя</li>
             ) }
             <li>Email</li>
-            { userGoogle.user === "Google User" ? (
+            { !user.name ? (
               null
             ) : (
               <li>Телефон</li>
@@ -82,7 +81,7 @@ function UserProfilePage() {
           </div>
           <div className={styles.user_wrapper__right}>
             { !editUser ? (
-              userGoogle.user === "Google User" ? (
+              !user.name ? (
                 null
               ) : (
                 <li>{user?.name}</li>
@@ -95,7 +94,7 @@ function UserProfilePage() {
                     Загрузка...
                   </div>
                 )}
-                { !loading && !isMobile && userGoogle.user !== "Google User" ? (
+                { !loading && !isMobile ? (
                   <>
                     <input type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} />
                     <div className={styles.user_button} style={{ marginTop: "0px" }}>
@@ -106,14 +105,18 @@ function UserProfilePage() {
               </div>
             ) }
             <li>{user?.email}</li>
-            <li>+996</li>
+            <li>{ !user.name ? null : "+996" }</li>
           </div>
         </div>
-        <div className={styles.user_button} onClick={() => setEditUser(true)}>
-          <button>Редактировать</button>
-        </div>
+        { !user.name ? (
+          null
+        ) : (
+          <div className={styles.user_button} onClick={() => setEditUser(true)}>
+            <button>Редактировать</button>
+          </div>
+        ) }
       </div>
-      { isMobile && editUser && userGoogle.user !== "Google User" ? (
+      { isMobile && editUser ? (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
               { !loading ? (
