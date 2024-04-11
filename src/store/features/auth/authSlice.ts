@@ -67,7 +67,10 @@ export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
         
         const response: any = await $axios.get(`${API_URL}/users/me/`);
         dispatch(authSlice.actions.setUser(response.data));
-        localStorage.setItem("userInfo", JSON.stringify(response.data));
+        localStorage.setItem("userInfo", JSON.stringify({
+            ...response.data,
+            phone: "+996..."
+        }));
         return response.data;
         
     } catch (error: any) {
@@ -81,7 +84,10 @@ export const userMe = (): AppThunk => async (dispatch) => {
     try {        
         const response: any = await $axios.get(`${API_URL}/users/me/`);
         dispatch(authSlice.actions.setUser(response.data));
-        localStorage.setItem("userInfo", JSON.stringify(response.data));
+        localStorage.setItem("userInfo", JSON.stringify({
+            ...response.data,
+            phone: "+996..."
+        }));
         return response.data;
         
     } catch (error: any) {
@@ -109,7 +115,7 @@ export const newPasswordConfirm = (obj: any): AppThunk => async () => {
     }
 }
 
-export const changeName = (name: string): AppThunk => async (dispatch) => {
+export const changeName = (name: string, phone: string): AppThunk => async (dispatch) => {
     try {
         const data = {
             name: name
@@ -117,7 +123,10 @@ export const changeName = (name: string): AppThunk => async (dispatch) => {
         const response = await $axios.patch(`${API_URL}/users/me/`, data);
         const responseFromUser: any = await $axios.get(`${API_URL}/users/me/`);
         dispatch(authSlice.actions.setUser(responseFromUser.data));
-        localStorage.setItem("userInfo", JSON.stringify(responseFromUser.data));
+        localStorage.setItem("userInfo", JSON.stringify({
+            ...responseFromUser.data,
+            phone: phone
+        }));
         return response.data;
     } catch (error) {
         console.log(error);

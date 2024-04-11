@@ -12,6 +12,7 @@ function UserProfilePage() {
   const user = userString ? JSON.parse(userString) : null;
   const navigate = useNavigate();
   const [ modifiedName, setModifiedName ] = useState(user.name);
+  const [ modifiedPhone, setModifiedPhone ] = useState(user.phone);
   const [ editUser, setEditUser ] = useState(false);
   const [ loading, setLoading ] = useState(false);
   const dispatch = useDispatch<any>();
@@ -32,8 +33,13 @@ function UserProfilePage() {
   const handleChangeName = (e: any) => {
     const { value } = e.target;
     setModifiedName(value);
-    console.log(modifiedName)
   }
+
+  const handleChangePhone = (e: any) => {
+    const { value } = e.target;
+    setModifiedPhone(value);
+  }
+
 
   const currentUser = useSelector((state: RootStates) => state.auth.user);
 
@@ -45,14 +51,13 @@ function UserProfilePage() {
 
   const handleSave = () => {
     setLoading(true);
-    dispatch(changeName(modifiedName)).then(() => {
+    dispatch(changeName(modifiedName, modifiedPhone)).then(() => {
       setLoading(false);
       setEditUser(false);
     }).catch(() => {
       setLoading(false);
     });
   }
-
 
   return (
     <div className={styles.user_main}>
@@ -67,22 +72,14 @@ function UserProfilePage() {
       <div className={styles.user_container}>
         <div className={styles.user}>
           <div className={styles.user_wrapper__left}>
-            { !user.name ? (
-              null
-            ) : (
-              <li>Имя</li>
-            ) }
+            <li>Имя</li>
             <li>Email</li>
-            { !user.name ? (
-              null
-            ) : (
-              <li>Телефон</li>
-            ) }
+            <li>Телефон</li>
           </div>
           <div className={styles.user_wrapper__right}>
             { !editUser ? (
               !user.name ? (
-                null
+                <li onClick={() => setEditUser(true)}>Заполните поля</li>
               ) : (
                 <li>{user?.name}</li>
               )
@@ -96,39 +93,46 @@ function UserProfilePage() {
                 )}
                 { !loading && !isMobile ? (
                   <>
-                    <input type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} />
-                    <div className={styles.user_button} style={{ marginTop: "0px" }}>
-                      <button onClick={handleSave}>Сохранить</button>
+                    <div className={styles.modal}>
+                      <div className={styles.modalContent}>
+                          { !loading ? (
+                              <div className={styles.mobile_d_f}>
+                                <input type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} />
+                                <input type="text" name="phone" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} style={{ marginTop: "15px" }}  />
+                                <div className={styles.user_button_mobile} style={{ marginTop: "20px" }}>
+                                  <button onClick={handleSave}>Сохранить</button>
+                                </div>
+                              </div>
+                          ) : null }
+                      </div>
                     </div>
                   </>
                 ) : null }
               </div>
             ) }
             <li>{user?.email}</li>
-            <li>{ !user.name ? null : "+996" }</li>
+            { !user.name ? <li onClick={() => setEditUser(true)}>Заполните поля</li> : <li>{user.phone}</li> }
           </div>
-        </div>
-        { !user.name ? (
-          null
-        ) : (
+        </div>        
           <div className={styles.user_button} onClick={() => setEditUser(true)}>
             <button>Редактировать</button>
           </div>
-        ) }
       </div>
       { isMobile && editUser ? (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
               { !loading ? (
                   <div className={styles.mobile_d_f}>
-                    <input style={{ width: "max-content", height: "45px" }} type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} />
+                    <span className={styles.close_edit} onClick={() => setEditUser(false)}>X</span>
+                    <input style={{ width: "max-content", height: "45px" }} type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} placeholder="Имя" />
+                    <input style={{ width: "max-content", height: "45px", marginTop: "10px" }} type="text" name="phone" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} placeholder="Номер телефона" />
                     <div className={styles.user_button_mobile} style={{ marginTop: "20px" }}>
                       <button onClick={handleSave}>Сохранить</button>
                     </div>
                   </div>
               ) : null }
           </div>
-      </div>
+        </div>
       ) : null } 
     </div>
   );
