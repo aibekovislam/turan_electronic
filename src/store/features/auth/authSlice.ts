@@ -95,6 +95,21 @@ export const newPasswordConfirm = (obj: any): AppThunk => async () => {
     }
 }
 
+export const changeName = (name: string): AppThunk => async (dispatch) => {
+    try {
+        const data = {
+            name: name
+        }
+        const response = await $axios.patch(`${API_URL}/users/me/`, data);
+        const responseFromUser: any = await $axios.get(`${API_URL}/users/me/`);
+        dispatch(authSlice.actions.setUser(responseFromUser.data));
+        localStorage.setItem("userInfo", JSON.stringify(responseFromUser.data));
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+} 
+
 export const { setAuthenticated, setUser } = authSlice.actions;
 
 export default authSlice.reducer

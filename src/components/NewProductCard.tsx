@@ -9,12 +9,11 @@ import { RootStates } from "../store/store";
 import { useEffect, useState } from "react";
 import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 import { useNavigate } from "react-router-dom";
-import { notify, notifyError } from "./Toastify";
+import { notifyError } from "./Toastify";
 import { API_URL } from "../utils/consts";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte";
-import { addToCart } from "../store/features/favorite_and_cart/cartSlice";
 
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
     const navigate = useNavigate();
@@ -134,11 +133,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                             )}
                             <div className={styles.price_mobile}>
                                 {product.price} сом
-                                <div className={styles.bag__mobile} onClick={() => {
-                                    console.log(product.memory ? product.memory[0]?.id : 13)
-                                    dispatch(addToCart(product.id, product.color[0]?.id, 1, product.memory_price ? product.memory[0]?.id : 13, product.price))
-                                    notify(`Вы успешно добавили в корзину ${product.name}`)
-                                }}>
+                                <div className={styles.bag__mobile}>
                                     <img src={shop} />
                                 </div>
                             </div>
