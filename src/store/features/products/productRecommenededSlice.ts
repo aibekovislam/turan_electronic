@@ -18,11 +18,12 @@ const productRecSlice = createSlice({
     }
 });
 
-export const fetchRecProducts = (offset: number, limit: number): AppThunk => async (dispatch) => {
+export const fetchRecProducts = (): AppThunk => async (dispatch) => {
     try {
-        const response = await axios.get(`${API_URL}/products/recommended/?limit=${limit}&offset=${offset}`);
+        const response = await axios.get(`${API_URL}/products/recommended/`);
         const data: RecProductsI = { rec_products: response.data.products };
         dispatch(productRecSlice.actions.setRecProducts(data))
+        console.log(response)
     } catch (error) {
         console.log(error);
     }

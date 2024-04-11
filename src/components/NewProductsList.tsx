@@ -61,7 +61,7 @@ function NewProductsList() {
 
   const updateDisplayedProducts = () => {
     const filteredNewProducts = products ? products.filter((item) => item.is_arrived === true) : [];
-    const newDisplayedProducts = filteredNewProducts?.slice(0, countSlice);
+    const newDisplayedProducts = filteredNewProducts?.reverse().slice(0, countSlice);
     setDisplayedProducts(newDisplayedProducts);
   };
 

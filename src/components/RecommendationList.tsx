@@ -32,15 +32,15 @@ function RecommendationList() {
     const maxVisiblePages = 3;
     const [currentPage, setCurrentPage] = useState(1);
 
+    const totalPages = Math.ceil(recProducts.length / itemsPerPage);
+
     useEffect(() => {
-        dispatch(fetchRecProducts((currentPage - 1) * itemsPerPage, itemsPerPage));
+        dispatch(fetchRecProducts());
         if(user && token) {
             dispatch(fetchFavorites())
         }
-    }, [dispatch, currentPage, itemsPerPage, user, token]) 
-
-    const totalPages = Math.ceil(recProducts.length / itemsPerPage);
-
+    }, [dispatch]);    
+    
     const handleNextPage = () => {
         setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
     };
