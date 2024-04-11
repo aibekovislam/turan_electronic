@@ -60,6 +60,7 @@ function OrderForm({ products }: any) {
     const { name, email, phone, region, city, street, house } = orderFormValue;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    console.log(orderFormValue)
 
     if(selectedType !== "pickup") {
       if (!name || !email || !phone || !region || !city || !street || !house) {
