@@ -77,6 +77,20 @@ export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
     }
 }
 
+export const userMe = (): AppThunk => async (dispatch) => {
+    try {        
+        const response: any = await $axios.get(`${API_URL}/users/me/`);
+        dispatch(authSlice.actions.setUser(response.data));
+        localStorage.setItem("userInfo", JSON.stringify(response.data));
+        return response.data;
+        
+    } catch (error: any) {
+        console.error("Error during fetch:", error);
+        console.log("Error response:", error.response);
+        throw error;
+    }
+}
+
 export const resendAuth = (obj: any): AppThunk => async () => {
     try {
         const respones = await axios.post(`${API_URL}/users/reset_password/`, obj);

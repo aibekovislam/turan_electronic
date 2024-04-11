@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { userMe } from "../store/features/auth/authSlice";
 
 function GoogleNavigateLoginPage() {
     const [ searchParams ] = useSearchParams();
@@ -14,7 +15,8 @@ function GoogleNavigateLoginPage() {
     useEffect(() => {
         if (obj.access !== null) {
             localStorage.setItem("tokens", JSON.stringify(obj));
-            localStorage.setItem("userInfo", JSON.stringify({
+            dispatch(userMe());
+            localStorage.setItem("userInfoGoogle", JSON.stringify({
                 user: "Google User"
             }))
             // navigate("/")

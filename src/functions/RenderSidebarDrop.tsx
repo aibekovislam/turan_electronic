@@ -181,7 +181,7 @@ export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fe
                                         const updatedFilters = {
                                             ...filters,
                                             brand: brand.id,
-                                            memory: item.volume
+                                            memory: [item.volume]
                                         };
                                         fetchProductsAndLog(updatedFilters);
                                     }}  

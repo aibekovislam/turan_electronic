@@ -10,6 +10,8 @@ import { ping } from 'ldrs'
 function UserProfilePage() {
   const userString = localStorage.getItem("userInfo");
   const user = userString ? JSON.parse(userString) : null;
+  const userStringGoogle = localStorage.getItem("userInfoGoogle");
+  const userGoogle = userStringGoogle ? JSON.parse(userStringGoogle) : null;
   const navigate = useNavigate();
   const [ modifiedName, setModifiedName ] = useState(user.name);
   const [ editUser, setEditUser ] = useState(false);
@@ -66,13 +68,25 @@ function UserProfilePage() {
       <div className={styles.user_container}>
         <div className={styles.user}>
           <div className={styles.user_wrapper__left}>
-            <li>Имя</li>
+            { userGoogle.user === "Google User" ? (
+              null
+            ) : (
+              <li>Имя</li>
+            ) }
             <li>Email</li>
-            <li>Телефон</li>
+            { userGoogle.user === "Google User" ? (
+              null
+            ) : (
+              <li>Телефон</li>
+            ) }
           </div>
           <div className={styles.user_wrapper__right}>
             { !editUser ? (
-              <li>{user?.name}</li>
+              userGoogle.user === "Google User" ? (
+                null
+              ) : (
+                <li>{user?.name}</li>
+              )
             ) : (
               <div className={styles.form_to_change}>
                 {loading && (
@@ -81,7 +95,7 @@ function UserProfilePage() {
                     Загрузка...
                   </div>
                 )}
-                { !loading && !isMobile ? (
+                { !loading && !isMobile && userGoogle.user !== "Google User" ? (
                   <>
                     <input type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} />
                     <div className={styles.user_button} style={{ marginTop: "0px" }}>
@@ -99,7 +113,7 @@ function UserProfilePage() {
           <button>Редактировать</button>
         </div>
       </div>
-      { isMobile && editUser ? (
+      { isMobile && editUser && userGoogle.user !== "Google User" ? (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
               { !loading ? (
