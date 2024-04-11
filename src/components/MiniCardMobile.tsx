@@ -19,7 +19,7 @@ function MiniCardMobile({ accessories, onClick, }: any) {
                 </div>
                 <div className={styles.mini_mobile__content} onClick={onClick}>
                     <img src={accessories.default_image} alt="" />
-                    <span>{accessories.name}</span>
+                    <span>{accessories.name.slice(0, 30)}{ accessories.name.length > 30 ? "..." : "" }</span>
                 </div>
                 <div className={styles.mini_mobile__utils}>
                     <span>{accessories.price} сом</span>

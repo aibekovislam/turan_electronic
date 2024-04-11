@@ -118,7 +118,7 @@ export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fe
                             }}        
                         />
                         <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
-                        {sortData(brandModels).slice(0, showAllColors ? brandModels.length : 8).map((item: any, index: number) => (
+                        {sortData(brandModels).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item}>
                                 <input
                                     type="radio"
@@ -139,9 +139,6 @@ export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fe
                                 <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>{item}</label>
                             </div>
                         ))}
-                    </div>
-                    <div className={styles.sidebar_all} onClick={() => setShowAllColors(!showAllColors)}>
-                        <span>{ showAllColors ? "Вернуться" : "Показать все" }</span>
                     </div>
                 </div>
             )
