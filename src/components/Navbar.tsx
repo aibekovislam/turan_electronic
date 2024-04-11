@@ -172,7 +172,7 @@ function Navbar() {
               <img onClick={() => navigate("/cart")} src={cart_svg} alt="Cart" />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/profile")} src={user_mobile} alt="Auth" style={{ width: "20px" }} />
+              <img onClick={() => navigate(`/${user && token ? "profile" : "auth"}`)} src={user_mobile} alt="Auth" style={{ width: "20px" }} />
             </div>
           </div>
         ) : (null) }

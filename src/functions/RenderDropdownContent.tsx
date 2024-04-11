@@ -225,7 +225,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                     const updatedFilters = {
                                         ...filters,
                                         brand: brand.id,
-                                        memory: item.volume
+                                        memory: [item.volume]
                                     };
                                     fetchProductsAndLog(updatedFilters);
                                     }}  
