@@ -16,9 +16,6 @@ function GoogleNavigateLoginPage() {
         if (obj.access !== null) {
             localStorage.setItem("tokens", JSON.stringify(obj));
             dispatch(userMe());
-            localStorage.setItem("userInfoGoogle", JSON.stringify({
-                user: "Google User"
-            }))
             // navigate("/")
             console.log(obj)
         }
