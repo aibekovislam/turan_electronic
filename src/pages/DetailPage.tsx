@@ -40,6 +40,7 @@ function DetailPage() {
     const [productPrice, setProductPrice] = useState(0);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const [visibleDiv, setVisibleDiv] = useState<null | 'div1' | 'div2' | 'div3'>('div1');
+    const [priceColor, setPriceColor] = useState<any>(null);
 
     ping.register()
 
@@ -81,9 +82,17 @@ function DetailPage() {
 
     const handleColorPick = (color: any) => {
         setColorPicked(color.hash_code);
-        dispatch(colorPickToAddToCart(color.hash_code));
-        console.log(pickedColor)
-        setColorID(color.id);
+        if(product?.prices) {
+            const price_color = product?.prices.find((item: any) => {
+                return item.product_color === color.hash_code;
+            });
+            setPriceColor(price_color?.price);
+            dispatch(colorPickToAddToCart(price_color?.product_color));
+        } else {
+            dispatch(colorPickToAddToCart(color.hash_code));
+            console.log(pickedColor)
+            setColorID(color.id);
+        }
     }
 
     const handleAddToCart = (id: number | undefined) => {
@@ -148,8 +157,6 @@ function DetailPage() {
     useEffect(() => {
         dispatch(fetchReviews())
     }, [dispatch]);
-
-    console.log(filteredReviews)
 
     const [reviewData, setReviewData] = useState({
         text: "",
@@ -247,7 +254,6 @@ function DetailPage() {
                                         src={isProductInFavorites ? fillHeart : heart}
                                         onClick={() => {
                                             handleClickFavorite(product.id || 0);
-                                            console.log(product.id)
                                         }}
                                         style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }}
                                     />
@@ -274,12 +280,22 @@ function DetailPage() {
                                     </ul>
                                 </div>
                                 <div className={styles.price}>
-                                    {<div>{calculateDiscountedPrice(productPrice, product.discount)} сом</div>}
+                                    {
+                                        productPrice !== 0 ? (
+                                            <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
+                                        ) : (
+                                            <div>Нету в наличии</div>
+                                        )
+                                    }
                                 </div>
                                 <div className={styles.mobile_detail__button}>
-                                    <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
-                                        <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
-                                    </button>
+                                    { productPrice !== 0 ? (
+                                        <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
+                                            <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
+                                        </button>
+                                    ) : (
+                                        null
+                                    ) }
                                 </div>
                                 <div className={styles.mobile_detail_info}>
                                     <button onClick={() => setVisibleDiv("div1")} className={visibleDiv === "div1" ? styles.selected_btn : styles.option_btn}>Характеристика</button>
@@ -505,12 +521,22 @@ function DetailPage() {
                                             </ul>
                                         </div>
                                         <div className={styles.price}>
-                                            {<div>{calculateDiscountedPrice(productPrice, product.discount)} сом</div>}
+                                            {
+                                                productPrice !== 0 ? (
+                                                    <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
+                                                ) : (
+                                                    <div>Нету в наличии</div>
+                                                )
+                                            }
                                         </div>
                                         <div className={styles.utils}>
-                                            <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
-                                                <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
-                                            </button>
+                                            { productPrice !== 0 ? (
+                                                <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
+                                                    <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
+                                                </button>
+                                            ) : (
+                                                null
+                                            ) }
                                             {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
                                             <img
                                                 className={styles.detail_img}

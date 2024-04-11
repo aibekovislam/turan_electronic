@@ -33,7 +33,7 @@ export const fetchOneProducts = (id: number): AppThunk => async (dispatch) => {
     }
 }
 
-export const colorPickToAddToCart = (color: string | null): AppThunk => (dispatch) => {
+export const colorPickToAddToCart = (color: any): AppThunk => (dispatch) => {
     localStorage.setItem("colorPicked", JSON.stringify(color));
     dispatch(productOneSlice.actions.setColorPicked(color));
 }
