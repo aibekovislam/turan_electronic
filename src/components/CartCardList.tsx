@@ -164,6 +164,11 @@ function CartCardList() {
                   <span>{cart.count}</span>
                   <button onClick={() => incrementCount(cart?.id)}>+</button>
                 </div>
+                <div className={styles.delete_cart_block} onClick={() => {
+                  dispatch(deleteCart(cart.id))
+                }}>
+                  Удалить
+                </div>
               </div>
               <div className={styles.cart_price}>
                 {cart.product.discount !== 0 ? (
@@ -248,6 +253,11 @@ function CartCardList() {
                   }}>−</button>
                   <span>{counts[cart.id] || 1}</span>
                   <button onClick={() => incrementCount(cart.id)}>+</button>
+                </div>
+                <div className={styles.delete_cart_block} onClick={() => {
+                  dispatch(deleteCart(cart.id))
+                }}>
+                  Удалить
                 </div>
               </div>
               <div className={styles.cart_price}>

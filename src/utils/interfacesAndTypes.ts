@@ -185,7 +185,8 @@ export type ProductsType = {
         [key: string]: string
     },
     in_favorite: boolean,
-    prices: PriceType[]
+    prices: PriceType[],
+    reviews: any[]
 }
 
 export type PriceType = {

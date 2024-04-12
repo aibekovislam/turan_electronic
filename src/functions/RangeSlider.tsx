@@ -7,6 +7,7 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
 
   const [range, setRange] = useState<Range>({ min: 0, max: maxPrice });
   const [isDragging, setIsDragging] = useState(false);
+  const [isInputChanged, setIsInputChanged] = useState(false);
 
   useEffect(() => {
     if (!isDragging) {
@@ -19,13 +20,24 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
   }, [range, isDragging]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>, type: keyof Range) => {
-    const value = parseInt(e.target.value, 10);
+    const value = e.target.value.trim() !== "" ? parseInt(e.target.value, 10) : undefined;
+    setIsInputChanged(true);
     setRange((prevRange) => ({
       ...prevRange,
       [type]: value,
     }));
+  };  
+  
+  const handleInputBlur = (type: keyof Range) => {
+    if (!isInputChanged) {
+      setRange((prevRange) => ({
+        ...prevRange,
+        [type]: 0,
+      }));
+    }
+    setIsInputChanged(false);
   };
-
+  
   const handleMouseDown = () => {
     setIsDragging(true);
   };
@@ -59,9 +71,11 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
           <input
             type="number"
             className="input-min"
-            value={range.min}
+            value={!isInputChanged ? 0 : range.min}
             onChange={(e) => handleInputChange(e, "min")}
+            onBlur={() => handleInputBlur("min")}
             step="5000"
+            min={0}
           />
         </div>
         <div className="seperator">-</div>
@@ -71,6 +85,7 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
             className="input-max"
             value={range.max}
             onChange={(e) => handleInputChange(e, "max")}
+            onBlur={() => handleInputBlur("max")}
             step="5000"
           />
         </div>
