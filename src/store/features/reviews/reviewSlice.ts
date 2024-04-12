@@ -24,7 +24,6 @@ export const fetchReviews = (): AppThunk => async (dispatch) => {
         const response = await axios.get(`${API_URL}/reviews/`);
         const data: ReviewI = { reviews: response.data.results };
         dispatch(reviewSlice.actions.setReviews(data));
-        console.log(data);
     } catch (error) {
         console.log(error);
     }

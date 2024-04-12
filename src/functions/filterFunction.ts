@@ -96,7 +96,7 @@ export const getHighestPrice = (products: any) => {
     const maxPrice = Math.max(...products.map((item: any) => item.price));
     const magnitude = Math.pow(10, Math.floor(Math.log10(maxPrice)));
 
-    return Math.floor(maxPrice / magnitude) * magnitude;
+    return Math.ceil(maxPrice / magnitude) * magnitude;
 };
 
 export const sortData = (data: any) => {

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootStates } from "../store/store"
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte"
 import { colorPickToAddToCart, fetchOneProducts } from "../store/features/products/oneProductSlice"
-import { addReview, fetchReviews } from "../store/features/reviews/reviewSlice"
+import { addReview } from "../store/features/reviews/reviewSlice"
 import { addToCart } from "../store/features/favorite_and_cart/cartSlice"
 import { addFavorites } from "../store/features/favorite_and_cart/favoriteSlice"
 import { notify, notifyError } from "../components/Toastify"
@@ -150,13 +150,6 @@ function DetailPage() {
     const toggleDescription = () => {
         setExpanded(!expanded);
     };
-
-    const reviewsArray = useSelector((state: RootStates) => state.reviews.reviews);
-    const filteredReviews = reviewsArray.filter((item: any) => item.product === product?.id)
-
-    useEffect(() => {
-        dispatch(fetchReviews())
-    }, [dispatch]);
 
     const [reviewData, setReviewData] = useState({
         text: "",
@@ -380,9 +373,8 @@ function DetailPage() {
                                                 </>
                                             )}
                                             {
-                                                filteredReviews.length !== 0 ? (
                                                     <div className={styles.reviews}>
-                                                        {filteredReviews?.map((reviewItem, index) => (
+                                                        {product.reviews?.map((reviewItem, index) => (
                                                             <div className={styles.reviews_content} key={index}>
                                                                 <div className={styles.reviews_header}>
                                                                     <div className={styles.reviews_name} style={{ gap: "5px" }}>
@@ -419,9 +411,6 @@ function DetailPage() {
                                                             </div>
                                                         ))}
                                                     </div>
-                                                ) : (
-                                                    <div className={styles.reviews}>Пока нет отзывов</div>
-                                                )
                                             }
 
                                         </>
@@ -617,9 +606,8 @@ function DetailPage() {
                                             ) : null}
                                         </>
                                     )}
-                                    {filteredReviews.length !== 0 ? (
                                         <div className={styles.reviews}>
-                                            {filteredReviews?.map((reviewItem, index) => (
+                                            {product.reviews?.map((reviewItem, index) => (
                                                 <div className={styles.reviews_content} key={index}>
                                                     <div className={styles.reviews_header}>
                                                         <div className={styles.reviews_name} style={{ gap: "5px" }}>
@@ -656,9 +644,6 @@ function DetailPage() {
                                                 </div>
                                             ))}
                                         </div>
-                                    ) : (
-                                        <div className={styles.reviews}>Пока нет отзывов</div>
-                                    )}
                                 </div>
                             </div>
                             <Brands />
