@@ -82,7 +82,7 @@ function DetailPage() {
 
     const handleColorPick = (color: any) => {
         setColorPicked(color.hash_code);
-        if(product?.prices) {
+        if(product?.prices.length !== 0) {
             const price_color = product?.prices.find((item: any) => {
                 return item.product_color === color.hash_code;
             });
@@ -90,7 +90,7 @@ function DetailPage() {
             dispatch(colorPickToAddToCart(price_color?.product_color));
         } else {
             dispatch(colorPickToAddToCart(color.hash_code));
-            console.log(pickedColor)
+            console.log(pickedColor, colorID);
             setColorID(color.id);
         }
     }

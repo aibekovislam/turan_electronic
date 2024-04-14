@@ -27,11 +27,12 @@ export const fetchCarts = (): AppThunk => async (dispatch) => {
     }
 }
 
-export const deleteCart = (id: number): AppThunk => async (dispatch) => {
+export const deleteCart = (id: number): AppThunk => async (dispatch, getState) => {
     try {
         const response = await $axios.delete(`${API_URL}/carts/${id}/`);
         if (response.status === 204) {
-            dispatch(cartSlice.actions.setCarts([]));
+            const updatedCarts = getState().carts.carts.filter(cart => cart.id !== id);
+            dispatch(cartSlice.actions.setCarts(updatedCarts));
         } else {
             console.log("Ошибка при удалении товара");
         }
@@ -39,7 +40,6 @@ export const deleteCart = (id: number): AppThunk => async (dispatch) => {
         console.log(error);
     }
 }
-
 
 export const addToCart = (product_id: number | undefined, color: number | undefined, count: number, memory: number | undefined, price: any | undefined): AppThunk => async (dispatch) => {
     try {

@@ -1,5 +1,6 @@
 import styles from "../styles/card.module.scss"
 import shop from "../assets/svgs/card/shop.svg"
+import { API_URL } from "../utils/consts"
 
 
 function MiniCardMobile({ accessories, onClick, }: any) {
@@ -18,7 +19,7 @@ function MiniCardMobile({ accessories, onClick, }: any) {
                     ))}
                 </div>
                 <div className={styles.mini_mobile__content} onClick={onClick}>
-                    <img src={accessories.default_image} alt="" />
+                    <img src={`${API_URL}/${accessories.default_image.slice(16)}`} alt="" />
                     <span>{accessories.name.slice(0, 30)}{ accessories.name.length > 30 ? "..." : "" }</span>
                 </div>
                 <div className={styles.mini_mobile__utils}>
