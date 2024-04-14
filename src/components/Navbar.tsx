@@ -57,9 +57,11 @@ function Navbar() {
   };
 
   const handleChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value); 
-    dispatch(searchProducts(e.target.value))
-  }
+    const searchText = e.target.value;
+    setSearchText(searchText);
+    localStorage.setItem('searchText', searchText);
+    dispatch(searchProducts(searchText));
+  };
 
   return (
     <div className={styles.navbar}>
@@ -76,7 +78,9 @@ function Navbar() {
             setIsMobileSearch(true)
             }}>
             { isMobileSearch ? (
-              <input type="text" value={searchText} placeholder="Поиск..." name="search" onChange={handleChangeSearch} onClick={() => navigate("/search")} />
+              <input type="text" value={searchText} placeholder="Поиск..." name="search" onChange={handleChangeSearch} onClick={() => {
+                navigate("/search");
+              }} />
               ) : (
               <img src={search_svg} />
             ) }
@@ -156,7 +160,9 @@ function Navbar() {
             className={`${styles.search__block} ${activeItem === "search__block" ? "active__navbar" : ""}`}
           // onClick={() => handleItemClick("search__block")}
           >
-            <input type="text" placeholder="Поиск..." name="search" onChange={handleChangeSearch} onClick={() => navigate("/search")} />
+            <input type="text" placeholder="Поиск..." name="search" onChange={handleChangeSearch} onClick={() => {
+                navigate("/search");
+              }} />
             <img src={search_svg} alt="search_svg" className={styles.search__svg} />
           </div>
         </div>

@@ -5,6 +5,7 @@ import { fetchBrands } from "../store/features/brands/brandsSlice";
 import { RootStates } from "../store/store";
 import { BrandsType } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../utils/consts";
 
 function CategoryMobile() {
     const dispatch = useDispatch<any>();
@@ -37,7 +38,7 @@ function CategoryMobile() {
                 brands.slice(0, 6).map((item: BrandsType, index: number) => (
                     <div onClick={() => handleNavigate(item?.id)} key={index} className={styles.category}>
                         <div className={styles.category_image}>
-                            <img src={item?.image}  />
+                            <img src={`${API_URL}/${item?.image.slice(16)}`}  />
                         </div>
                         <span>{item.title}</span>
                     </div>
@@ -46,7 +47,7 @@ function CategoryMobile() {
                 brands.map((item: BrandsType, index: number) => (
                     <div onClick={() => handleNavigate(item?.id)} key={index} className={styles.category}>
                         <div className={styles.category_image}>
-                            <img src={item?.image}  />
+                            <img src={`${API_URL}/${item?.image.slice(16)}`}  />
                         </div>
                         <span>{item.title}</span>
                     </div>
