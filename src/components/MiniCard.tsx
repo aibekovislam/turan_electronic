@@ -1,5 +1,6 @@
 import styles from "../styles/card.module.scss";
 import shop from "../assets/svgs/card/shop.svg"
+import { API_URL } from "../utils/consts";
 
 function MiniCard({ accessories, onClick, style }: any) {
   return (
@@ -19,7 +20,7 @@ function MiniCard({ accessories, onClick, style }: any) {
                     ))}
                 </div>
                 <div className={styles.img_container}>
-                    <img style={{ maxWidth: "133px", maxHeight: "133px", objectFit: "contain" }} src={accessories.default_image}  />
+                    <img style={{ maxWidth: "133px", maxHeight: "133px", objectFit: "contain" }} src={`${API_URL}/${accessories.default_image?.slice(16)}`}  />
                 </div>
                 <div className={styles.title_container}>
                     <div className={styles.title}>

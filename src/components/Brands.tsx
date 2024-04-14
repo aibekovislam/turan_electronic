@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { fetchBrands } from "../store/features/brands/brandsSlice";
 import { BrandsType } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../utils/consts";
 
 function Brands() {
     const dispatch = useDispatch<any>()
@@ -28,7 +29,7 @@ function Brands() {
         <div className={styles.brands__item}>
             {brands?.map((brand: BrandsType, index : number) => (
                 <div onClick={() => handleNavigate(brand?.id)} key={index} className={styles.brands__img}>
-                    <img src={brand.logo_field} />
+                    <img src={`${API_URL}/${brand.logo_field.slice(16)}`} />
                 </div>
             ))}
         </div>
