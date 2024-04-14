@@ -119,6 +119,8 @@ function CartCardList() {
     }
   }
 
+  console.log(carts)
+
   return (
     isMobile ? (
       <div className={styles.cart_main}>
@@ -165,7 +167,17 @@ function CartCardList() {
                   <button onClick={() => incrementCount(cart?.id)}>+</button>
                 </div>
                 <div className={styles.delete_cart_block} onClick={() => {
-                  dispatch(deleteCart(cart.id))
+                    const stringProducts = localStorage.getItem("addedProducts");
+                    const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
+
+                    const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
+
+                    if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
+                        localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+                    }
+
+                    dispatch(deleteCart(cart.id));
+                    dispatch(fetchCarts())
                 }}>
                   Удалить
                 </div>
@@ -255,7 +267,18 @@ function CartCardList() {
                   <button onClick={() => incrementCount(cart.id)}>+</button>
                 </div>
                 <div className={styles.delete_cart_block} onClick={() => {
-                  dispatch(deleteCart(cart.id))
+                    const stringProducts = localStorage.getItem("addedProducts");
+                    const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
+
+                    const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
+
+                    if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
+                        localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+                    }
+
+                    dispatch(deleteCart(cart.id));
+                    
+                    dispatch(fetchCarts())
                 }}>
                   Удалить
                 </div>
