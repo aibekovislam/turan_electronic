@@ -57,6 +57,21 @@ export const sendMessage = (content: string, chat_id: number): AppThunk => async
     }
 }
 
+export const chatIDStart = (client_id: number): AppThunk => async () => {
+    try {
+        const data = {
+            client: client_id
+        }
+        const response = await $axios.post(`${API_URL}/chat/chats/`, data);
+        console.log(response)
+        if (!localStorage.getItem("chatID")) {
+            localStorage.setItem("chatID", JSON.stringify(response.data.id));
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const chatStart = (): AppThunk => async (dispatch) => {
     try {
         dispatch(userMe());
@@ -79,6 +94,7 @@ export const chatStart = (): AppThunk => async (dispatch) => {
                 const message = data.message ? data.message : data;
             
                 const chatID = message.chat_id;
+                console.log(chatID)
                 
                 if (chatID !== undefined) {
                     if (!localStorage.getItem("chatID")) {
