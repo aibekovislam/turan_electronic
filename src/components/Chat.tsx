@@ -53,6 +53,7 @@ export default function Chat() {
             <div className={styles.chat_icon} onClick={() => {
                 setShowChat(!showChat);
                 chatStarted();
+                console.log("started", chatID)
             }}>
                 {showChat ? (
                     <span>X</span>
