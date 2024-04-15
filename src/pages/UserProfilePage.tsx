@@ -17,6 +17,8 @@ function UserProfilePage() {
   const [ loading, setLoading ] = useState(false);
   const dispatch = useDispatch<any>();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+  const tokenString = localStorage.getItem("tokens");
+  const token = tokenString ? JSON.parse(tokenString) : null;
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,7 +46,7 @@ function UserProfilePage() {
   const currentUser = useSelector((state: RootStates) => state.auth.user);
 
   useEffect(() => {
-    if (!user) {
+    if (!user && !token) {
       navigate("/auth");
     }
   }, [currentUser, navigate]);

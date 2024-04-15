@@ -24,7 +24,7 @@ function HomePage() {
       <NewProductsList/>
       <RecommendationList/>
       <Brands/>
-      { user && token && token.access ? (
+      { user && token && token.access && user.id !== 1 ? (
         <Chat/>
       ) : null }
       <Analytics/>
