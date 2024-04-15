@@ -26,10 +26,10 @@ const chatSlice = createSlice({
         setMessages: (state, action: PayloadAction<any>) => {
             const newMessage = action.payload.messages;
             const chat_id = action.payload.chat_id || newMessage.chat_id;
-
-            console.log("Received chat_id:", chat_id);
         
-            return produce(state, draftState => {
+            console.log("Received chat_id:", chat_id);
+            
+            produce(state, draftState => {
                 if (!draftState.chatMessages[chat_id]) {
                     draftState.chatMessages[chat_id] = [newMessage];
                 } else {
@@ -39,7 +39,7 @@ const chatSlice = createSlice({
                     }
                 }
             });
-        }
+        }        
     }
 });
 
