@@ -92,19 +92,18 @@ export const chatStart = (): AppThunk => async (dispatch) => {
                 console.log(data);
                 const message = data.message ? data.message : data;
                 const chatID = message.chat_id;
-                
+                            
                 if (chatID !== undefined) {
                     if (!localStorage.getItem("chatID")) {
                         localStorage.setItem("chatID", JSON.stringify(chatID));
                     }
-
-                    dispatch(chatSlice.actions.setMessages({ chatID: message }));
+            
+                    dispatch(chatSlice.actions.setMessages({ messages: message, chat_id: chatID }));
                     dispatch(chatSlice.actions.setChatID({ chatID }));
-                    console.log(chatID);
-                
+                            
                     console.log('Received data from the server:', message);
                 }
-            };              
+            };                         
 
             websocket.onerror = (error) => {
                 console.error('WebSocket error:', error);
@@ -138,25 +137,21 @@ export const chatOperator = (client_id: number): AppThunk => async (dispatch) =>
             
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                console.log(data)
-            
+                console.log(data);
                 const message = data.message ? data.message : data;
-            
                 const chatID = message.chat_id;
-                
+                            
                 if (chatID !== undefined) {
                     if (!localStorage.getItem("chatID")) {
                         localStorage.setItem("chatID", JSON.stringify(chatID));
                     }
-                
+            
+                    dispatch(chatSlice.actions.setMessages({ messages: message, chat_id: chatID }));
                     dispatch(chatSlice.actions.setChatID({ chatID }));
-                
-                    dispatch(chatSlice.actions.setMessages({ chatID: message }));
-                    console.log(message);
-                
+                            
                     console.log('Received data from the server:', message);
                 }
-            };                  
+            };                              
 
             websocket.onerror = (error) => {
                 console.error('WebSocket error:', error);
