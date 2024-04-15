@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { allChats, chatOperator, sendMessage } from '../store/features/chat/chatSlice';
 import { RootStates } from '../store/store';
 import sendSVG from '../assets/svgs/Frame.svg';
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminChatPage() {
     const userString = localStorage.getItem("userInfo");
@@ -16,17 +17,25 @@ export default function AdminChatPage() {
     const [ pickedChat, setPickedChat ] = useState(0);
     const messages = useSelector((state: RootStates) => state.chat.chatMessages);
 
+    const navigate = useNavigate();
+
+    const chatMessagesRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if(user.id !== 1) {
+            navigate("/")
+        }
+    }, [])
+
+    useEffect(() => {
+        if (chatMessagesRef.current) {
+            chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+        }
+    }, [messages, pickedChat]);
+
     useEffect(() => {
         dispatch(allChats());
     }, [dispatch])
-
-    const messagesEndRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (messagesEndRef.current) {
-            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-        }
-    }, [messages]);
 
     const handleSendMessage = (e: any) => {
         e.preventDefault();
@@ -42,8 +51,8 @@ export default function AdminChatPage() {
             const lastMessage = chatMessages[chatMessages.length - 1];
             return lastMessage.text;
         }
-        return "Нет сообщений";
-    };    
+        return "";
+    };
 
     return (
         <div className={styles.chat_admin}>
@@ -69,7 +78,7 @@ export default function AdminChatPage() {
                     )) }
                 </div>
                 <div className={styles.opened_chat}>
-                    <div className={styles.chat_with_messages}>
+                    <div className={styles.chat_with_messages} ref={chatMessagesRef}>
                         { pickedChat === 0 ? (
                             <h2 style={{ display: 'flex', justifyContent: "center", alignItems: 'center', height: "100%", margin: 0 }}>Выберите чат</h2>
                         ) : null }
@@ -90,9 +99,6 @@ export default function AdminChatPage() {
                                 )}
                             </div>
                         ))}
-                        { pickedChat !== 0 ? (
-                            <div ref={messagesEndRef} />
-                        ) : null }
                     </div>
                     { pickedChat !== 0 ? (
                         <form className={styles.form_chat_admin} onSubmit={handleSendMessage}>
