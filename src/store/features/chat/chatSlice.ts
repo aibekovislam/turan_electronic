@@ -3,7 +3,6 @@ import { AppThunk } from "../../store";
 import { API_URL } from "../../../utils/consts";
 import $axios from "../../../utils/axios";
 import { ChatI, ChatType } from "../../../utils/interfacesAndTypes";
-import { produce } from "immer";
 import { userMe } from "../auth/authSlice";
 
 const initialState: ChatI = {
@@ -29,29 +28,25 @@ const chatSlice = createSlice({
         
             console.log("Received chat_id:", chat_id);
             
-            produce(state, draftState => {
-                if (!draftState.chatMessages[chat_id]) {
-                    draftState.chatMessages[chat_id] = [newMessage];
-                } else {
-                    const existingMessageIndex = draftState.chatMessages[chat_id].findIndex((msg: any) => msg.text === newMessage.text && msg.sender === newMessage.sender);
-                    if (existingMessageIndex === -1) {
-                        draftState.chatMessages[chat_id].push(newMessage);
-                    }
+            if (!state.chatMessages[chat_id]) {
+                state.chatMessages[chat_id] = [newMessage];
+            } else {
+                const existingMessageIndex = state.chatMessages[chat_id].findIndex((msg: any) => msg.text === newMessage.text && msg.sender === newMessage.sender);
+                if (existingMessageIndex === -1) {
+                    state.chatMessages[chat_id].push(newMessage);
                 }
-            });
-        }        
+            }
+        }            
     }
 });
 
-export const sendMessage = (content: string, chat_id: number): AppThunk => async (dispatch) => {
+export const sendMessage = (content: string, chat_id: number): AppThunk => async () => {
     try {
         const data = {
             text: content
         }
         const resposne = await $axios.post(`${API_URL}/chat/send/${chat_id}/`, data);
         console.log(resposne);
-
-        dispatch(chatSlice.actions.setMessages({ messages: resposne.data, chat_id: chat_id }));
     } catch (error) {
         console.log(error)
     }
