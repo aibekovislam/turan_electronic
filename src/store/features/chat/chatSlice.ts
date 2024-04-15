@@ -39,7 +39,7 @@ const chatSlice = createSlice({
                     }
                 }
             });
-        },        
+        }
     }
 });
 
@@ -89,12 +89,9 @@ export const chatStart = (): AppThunk => async (dispatch) => {
 
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-            
-                console.log(data)
+                console.log(data);
                 const message = data.message ? data.message : data;
-            
                 const chatID = message.chat_id;
-                console.log(chatID)
                 
                 if (chatID !== undefined) {
                     if (!localStorage.getItem("chatID")) {
@@ -102,13 +99,11 @@ export const chatStart = (): AppThunk => async (dispatch) => {
                     }
                 
                     dispatch(chatSlice.actions.setChatID({ chatID }));
-                
-                    dispatch(chatSlice.actions.setMessages({ messages: message }));
                     console.log(chatID);
                 
                     console.log('Received data from the server:', message);
                 }
-            }; 
+            };              
 
             websocket.onerror = (error) => {
                 console.error('WebSocket error:', error);
@@ -156,7 +151,7 @@ export const chatOperator = (client_id: number): AppThunk => async (dispatch) =>
                     dispatch(chatSlice.actions.setChatID({ chatID }));
                 
                     dispatch(chatSlice.actions.setMessages({ messages: message }));
-                    console.log(chatID);
+                    console.log(message);
                 
                     console.log('Received data from the server:', message);
                 }
