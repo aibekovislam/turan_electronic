@@ -1,9 +1,10 @@
 import styles from '../styles/chat.module.scss';
-import ChatSVG from '../assets/svgs/chat-svgrepo-com.svg';
+import ChatSVG from '../assets/svgs/Vector (24).svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../store/store';
 import { useState, useEffect, useRef } from 'react';
 import { chatStart, sendMessage } from '../store/features/chat/chatSlice';
+import sendSVG from '../assets/svgs/Frame.svg';
 
 export default function Chat() {
     const messages = useSelector((state: RootStates) => state.chat.messages);
@@ -64,28 +65,34 @@ export default function Chat() {
                 )}
             </div>
             {showChat ? (
-                <div className={styles.chat_content}>
-                    <div className={styles.previus_chat}>
-                        {messages && messages.slice(1).map((message: any, index: number) => (
-                            <div className={`${message && message.sender === user?.id ? styles.message_block_myself : ""}`} key={index}>
-                                {message && message.sender === user?.id ? (
-                                    <div className={styles.message_myself}>
-                                        <p className={styles.message_text}>{message.text}</p>
-                                    </div>
-                                ) : (
-                                    <div className={styles.message_from_operator}>
-                                        <p className={styles.message_text}>{message.text}</p>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                        <div ref={messagesEndRef} />
+                <>
+                    <div className={styles.chat_content}>
+                        <div className={styles.previus_chat}>
+                            {messages && messages.slice(1).map((message: any, index: number) => (
+                                <div className={`${message && message.sender === user?.id ? styles.message_block_myself : ""}`} key={index}>
+                                    {message && message.sender === user?.id ? (
+                                        <div className={styles.message_myself}>
+                                            <span className={styles.user_name}>{ user.name }</span>
+                                            <p className={styles.message_text}>{message.text}</p>
+                                            <span className={styles.date_message}>{ new Date(message.sent_at).toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'}) }</span>
+                                        </div>
+                                    ) : (
+                                        <div className={styles.message_from_operator}>
+                                            <span className={styles.operator__name}>Оператор</span>
+                                            <p className={styles.message_text}>{message.text}</p>
+                                            <span className={styles.date_message}>{ new Date(message.sent_at).toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'}) }</span>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
                     </div>
                     <form className={styles.form_chat} onSubmit={handleSendMessage}>
                         <input onChange={(e: any) => setMessageText(e.target.value)} type='text' placeholder='Введите сообщение оператору:' name='content' className={styles.sender_input} />
-                        <button className={styles.sender_btn}>Отправить</button>
+                        <button className={styles.sender_btn}><img src={sendSVG} /></button>
                     </form>
-                </div>
+                </>
             ) : null}
         </div>
     )

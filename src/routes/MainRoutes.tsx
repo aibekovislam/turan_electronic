@@ -21,6 +21,7 @@ import GoogleNavigateLoginPage from "../pages/GoogleNavigateLoginPage";
 import NewsDetailPage from "../pages/NewsDetailPage";
 import FilteredRoutePage from "../pages/FilteredRoutePage";
 import SearchPage from "../pages/SearchPage";
+import AdminChatPage from "../pages/AdminChatPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -62,6 +63,7 @@ function MainRoutes() {
         <Route element={<NewsDetailPage />} path="/news/:id" />
         <Route element={<SearchPage />} path="/search" />
         <Route element={<FilteredRoutePage />} path="/products/filter/:brand_category_title/:brand" />
+        <Route element={<AdminChatPage/>} path="/admin/chat" />
       </Route>
     </Routes>
   )

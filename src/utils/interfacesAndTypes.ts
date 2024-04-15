@@ -203,6 +203,21 @@ export type CityType = {
     region: number
 }
 
+export interface ChatI {
+    chats: ChatType[],
+    messages: any,
+    chatID: any,
+    chatMessages: any
+}
+
+export type ChatType = {
+    client: number,
+    client_email: string,
+    created_at: string,
+    id: number,
+    updated_at: string
+}
+
 export type RegionType = {
     id: number,
     name: string
