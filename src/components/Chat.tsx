@@ -48,6 +48,8 @@ export default function Chat() {
         dispatch(chatStart());
     }
 
+    console.log(messages)
+
     return (
         <div className={styles.chat} style={ isMobile ? { bottom: '100px' } : {} }>
             <div className={styles.chat_icon} onClick={() => {
