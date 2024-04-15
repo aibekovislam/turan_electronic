@@ -9,8 +9,6 @@ import { useNavigate } from 'react-router-dom';
 export default function AdminChatPage() {
     const userString = localStorage.getItem("userInfo");
     const user = userString ? JSON.parse(userString) : null;
-    const tokenString = localStorage.getItem("tokens");
-    const token = tokenString ? JSON.parse(tokenString) : null;
     const dispatch = useDispatch<any>();
     const chats = useSelector((state: RootStates) => state.chat.chats);
     const [messageText, setMessageText] = useState("");

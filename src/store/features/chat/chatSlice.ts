@@ -75,6 +75,7 @@ export const chatStart = (): AppThunk => async (dispatch) => {
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
             
+                console.log(data)
                 const message = data.message ? data.message : data;
             
                 const chatID = message.chat_id;
