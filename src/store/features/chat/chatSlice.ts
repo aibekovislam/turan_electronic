@@ -97,8 +97,8 @@ export const chatStart = (): AppThunk => async (dispatch) => {
                     if (!localStorage.getItem("chatID")) {
                         localStorage.setItem("chatID", JSON.stringify(chatID));
                     }
-                    
-                    dispatch(chatSlice.actions.setMessages({ messages: message }));
+
+                    dispatch(chatSlice.actions.setMessages({ chatID: message }));
                     dispatch(chatSlice.actions.setChatID({ chatID }));
                     console.log(chatID);
                 
@@ -151,7 +151,7 @@ export const chatOperator = (client_id: number): AppThunk => async (dispatch) =>
                 
                     dispatch(chatSlice.actions.setChatID({ chatID }));
                 
-                    dispatch(chatSlice.actions.setMessages({ messages: message }));
+                    dispatch(chatSlice.actions.setMessages({ chatID: message }));
                     console.log(message);
                 
                     console.log('Received data from the server:', message);
