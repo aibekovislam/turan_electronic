@@ -4,6 +4,7 @@ import { API_URL } from "../../../utils/consts";
 import $axios from "../../../utils/axios";
 import { ChatI, ChatType } from "../../../utils/interfacesAndTypes";
 import { produce } from "immer";
+import { userMe } from "../auth/authSlice";
 
 const initialState: ChatI = {
     chats: [],
@@ -24,7 +25,9 @@ const chatSlice = createSlice({
         },
         setMessages: (state, action: PayloadAction<any>) => {
             const newMessage = action.payload.messages;
-            const { chat_id } = newMessage;
+            const chat_id = action.payload.chat_id || newMessage.chat_id;
+
+            console.log("Received chat_id:", chat_id);
         
             return produce(state, draftState => {
                 if (!draftState.chatMessages[chat_id]) {
@@ -36,17 +39,19 @@ const chatSlice = createSlice({
                     }
                 }
             });
-        },                       
+        },        
     }
 });
 
-export const sendMessage = (content: string, chat_id: number): AppThunk => async () => {
+export const sendMessage = (content: string, chat_id: number): AppThunk => async (dispatch) => {
     try {
         const data = {
             text: content
         }
         const resposne = await $axios.post(`${API_URL}/chat/send/${chat_id}/`, data);
         console.log(resposne);
+
+        dispatch(chatSlice.actions.setMessages({ messages: resposne.data, chat_id: chat_id }));
     } catch (error) {
         console.log(error)
     }
@@ -54,6 +59,7 @@ export const sendMessage = (content: string, chat_id: number): AppThunk => async
 
 export const chatStart = (): AppThunk => async (dispatch) => {
     try {
+        dispatch(userMe());
         const tokenString = localStorage.getItem("tokens");
         const token = tokenString ? JSON.parse(tokenString) : null;
         const tokenValue = token ? token.access : null;
@@ -65,7 +71,7 @@ export const chatStart = (): AppThunk => async (dispatch) => {
             websocket.onopen = () => {
                 console.log('WebSocket connection is open.');
             }
-            
+
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
             
@@ -73,16 +79,19 @@ export const chatStart = (): AppThunk => async (dispatch) => {
             
                 const chatID = message.chat_id;
                 
-                if (!localStorage.getItem("chatID")) {
-                    localStorage.setItem("chatID", JSON.stringify(chatID));
+                if (chatID !== undefined) {
+                    if (!localStorage.getItem("chatID")) {
+                        localStorage.setItem("chatID", JSON.stringify(chatID));
+                    }
+                
+                    dispatch(chatSlice.actions.setChatID({ chatID }));
+                
+                    dispatch(chatSlice.actions.setMessages({ messages: message }));
+                    console.log(chatID);
+                
+                    console.log('Received data from the server:', message);
                 }
-            
-                dispatch(chatSlice.actions.setChatID({ chatID }));
-            
-                dispatch(chatSlice.actions.setMessages({ messages: message }));
-            
-                console.log('Received data from the server:', message);
-            };                  
+            }; 
 
             websocket.onerror = (error) => {
                 console.error('WebSocket error:', error);
@@ -121,15 +130,18 @@ export const chatOperator = (client_id: number): AppThunk => async (dispatch) =>
             
                 const chatID = message.chat_id;
                 
-                if (!localStorage.getItem("chatID")) {
-                    localStorage.setItem("chatID", JSON.stringify(chatID));
+                if (chatID !== undefined) {
+                    if (!localStorage.getItem("chatID")) {
+                        localStorage.setItem("chatID", JSON.stringify(chatID));
+                    }
+                
+                    dispatch(chatSlice.actions.setChatID({ chatID }));
+                
+                    dispatch(chatSlice.actions.setMessages({ messages: message }));
+                    console.log(chatID);
+                
+                    console.log('Received data from the server:', message);
                 }
-            
-                dispatch(chatSlice.actions.setChatID({ chatID }));
-            
-                dispatch(chatSlice.actions.setMessages({ messages: message }));
-            
-                console.log('Received data from the server:', message);
             };                  
 
             websocket.onerror = (error) => {
@@ -147,7 +159,6 @@ export const chatOperator = (client_id: number): AppThunk => async (dispatch) =>
         console.log(error);
     }
 }
-
 
 export const allChats = (): AppThunk => async (dispatch) => {
     try {
