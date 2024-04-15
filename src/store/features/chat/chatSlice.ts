@@ -97,7 +97,8 @@ export const chatStart = (): AppThunk => async (dispatch) => {
                     if (!localStorage.getItem("chatID")) {
                         localStorage.setItem("chatID", JSON.stringify(chatID));
                     }
-                
+                    
+                    dispatch(chatSlice.actions.setMessages({ messages: message }));
                     dispatch(chatSlice.actions.setChatID({ chatID }));
                     console.log(chatID);
                 
