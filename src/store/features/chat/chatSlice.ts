@@ -142,6 +142,7 @@ export const chatOperator = (client_id: number): AppThunk => async (dispatch) =>
             
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
+                console.log(data)
             
                 const message = data.message ? data.message : data;
             

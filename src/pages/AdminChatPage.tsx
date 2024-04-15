@@ -52,6 +52,8 @@ export default function AdminChatPage() {
         return "";
     };
 
+    console.log(messages);
+    
     return (
         <div className={styles.chat_admin}>
             <div className={styles.path}>
