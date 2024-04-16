@@ -39,12 +39,13 @@ export default function Chat() {
         e.preventDefault();
         if (chatID) {
             dispatch(sendMessage(messageText, chatID));
-            setMessageText(""); // Clear message text
-        } else {
-            chatIDStart(user.id);
+            setMessageText("");
+        } 
+        if(user && !chatID) {
+            dispatch(chatIDStart(user.id))
             if(chatID) {
                 dispatch(sendMessage(messageText, chatID));
-                setMessageText(""); // Clear message text
+                setMessageText("");
             }
         }
     }
@@ -54,6 +55,12 @@ export default function Chat() {
     const chatStarted = () => {
         dispatch(chatStart());
     }
+
+    useEffect(() => {
+        if(chatID) {
+            chatStarted()
+        }
+    }, [chatID])
 
     console.log(messages)
 

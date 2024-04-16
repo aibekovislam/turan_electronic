@@ -102,7 +102,7 @@ export default function AdminChatPage() {
                     </div>
                     { pickedChat !== 0 ? (
                         <form className={styles.form_chat_admin} onSubmit={handleSendMessage}>
-                            <input onChange={(e: any) => setMessageText(e.target.value)} type='text' placeholder='Сообщение...' name='content' className={styles.sender_input_admin} />
+                            <input value={messageText} onChange={(e: any) => setMessageText(e.target.value)} type='text' placeholder='Сообщение...' name='content' className={styles.sender_input_admin} />
                             <button className={styles.sender_btn_admin}><img src={sendSVG} /></button>
                         </form>
                     ) : null }
