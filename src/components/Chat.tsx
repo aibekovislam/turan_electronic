@@ -68,7 +68,6 @@ export default function Chat() {
         <div className={styles.chat} style={ isMobile ? { bottom: '100px' } : {} }>
             <div className={styles.chat_icon} onClick={() => {
                 setShowChat(!showChat);
-                chatStarted();
             }}>
                 {showChat ? (
                     <span>X</span>
@@ -80,7 +79,7 @@ export default function Chat() {
                 <>
                     <div className={styles.chat_content}>
                         <div className={styles.previus_chat}>
-                            {chatID && messages && messages?.map((message: any, index: number) => (
+                            {chatID && messages[chatID] && messages[chatID].slice(1)?.map((message: any, index: number) => (
                                 <div className={`${message && message.sender === user?.id ? styles.message_block_myself : ""}`} key={index}>
                                     {message && message.sender === user?.id ? (
                                         <div className={styles.message_myself}>
