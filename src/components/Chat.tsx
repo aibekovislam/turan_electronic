@@ -68,6 +68,9 @@ export default function Chat() {
         <div className={styles.chat} style={ isMobile ? { bottom: '100px' } : {} }>
             <div className={styles.chat_icon} onClick={() => {
                 setShowChat(!showChat);
+                if(!chatID) {
+                    chatStarted()
+                }
             }}>
                 {showChat ? (
                     <span>X</span>
