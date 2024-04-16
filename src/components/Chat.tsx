@@ -3,7 +3,7 @@ import ChatSVG from '../assets/svgs/Vector (24).svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../store/store';
 import { useState, useEffect, useRef } from 'react';
-import { chatIDStart, chatStart, sendMessage } from '../store/features/chat/chatSlice';
+import { chatStart, sendMessage } from '../store/features/chat/chatSlice';
 import sendSVG from '../assets/svgs/Frame.svg';
 
 export default function Chat() {

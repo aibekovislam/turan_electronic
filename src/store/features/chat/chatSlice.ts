@@ -25,19 +25,16 @@ const chatSlice = createSlice({
         },
         setMessages: (state, action: PayloadAction<any>) => {
             const newMessage = action.payload.messages;
-            const chat_id = action.payload.chat_id || newMessage.chat_id;
+            const chat_id = action.payload.chat_id || newMessage.chat;
 
-            console.log("Received chat_id:", chat_id);
-        
-            return produce(state, draftState => {
-                if (!draftState.chatMessages[chat_id]) {
-                    draftState.chatMessages[chat_id] = [newMessage];
-                } else {
-                    const existingMessageIndex = draftState.chatMessages[chat_id].findIndex((msg: any) => msg.text === newMessage.text && msg.sender === newMessage.sender);
-                    if (existingMessageIndex === -1) {
-                        draftState.chatMessages[chat_id].push(newMessage);
-                    }
+            console.log("chatID:", chat_id);
+            console.log("newMessage", newMessage);
+
+            state.chatMessages = produce(state.chatMessages, (draft: any) => {
+                if (!draft[chat_id]) {
+                    draft[chat_id] = [];
                 }
+                draft[chat_id].push(newMessage);
             });
         },
         setClientMessages: (state, action: PayloadAction<any>) => {
@@ -58,7 +55,23 @@ export const sendMessage = (content: string, chat_id: number): AppThunk => async
         const resposne = await $axios.post(`${API_URL}/chat/send/${chat_id}/`, data);
         console.log(resposne);
 
-        dispatch(chatSlice.actions.setMessages({ messages: resposne.data, chat_id: chat_id }));
+        if(chat_id !== undefined) {
+            dispatch(chatSlice.actions.setMessages({ messages: resposne.data, chat_id: chat_id }));
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const sendMessageOperator = (content: string, chat_id: number): AppThunk => async (dispatch) => {
+    try {
+        const data = {
+            text: content
+        }
+        const resposne = await $axios.post(`${API_URL}/chat/send/${chat_id}/`, data);
+        console.log(resposne);
+
+        dispatch(chatSlice.actions.setMessages({ messages: resposne.data }));
     } catch (error) {
         console.log(error)
     }
