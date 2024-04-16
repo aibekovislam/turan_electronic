@@ -99,22 +99,28 @@ function MiniCardList() {
           Аксессуары
         </div>
       </div>
-      <div className={`slider-container ${styles.mini_card_list} ${styles.miniCardMobileList_container}`}>
-        {accessories.length !== 0 ? (
-          accessories?.map((accessory: AccessoriesType, index: number) => (
-            isMobile ? (
+      <div className={isMobile ? `slider-container ${styles.mini_card_list} ${styles.miniCardMobileList_container}` : `slider-container ${styles.mini_card_list} `}>
+        {isMobile ? <>
+          {accessories.length !== 0 ? (
+            accessories?.map((accessory: AccessoriesType, index: number) => (
               <MiniCardMobile key={index} accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} />
-            ) : (
-              <Slider {...settings}>
+            ))
+          ) : (
+            <div>loading...</div>
+          )}
+        </> : <>
+          <Slider {...settings}>
+            {accessories.length !== 0 ? (
+              accessories?.map((accessory: AccessoriesType, index: number) => (
                 <div key={index} className={styles.mini_card_block}>
                   <MiniCard accessories={accessory} onClick={() => accessory?.id && handleNavigate(accessory.id)} style={{ cursor: "pointer" }} />
                 </div>
-              </Slider>
-            )
-          ))
-        ) : (
-          <div>loading...</div>
-        )}
+              ))
+            ) : (
+              <div>loading...</div>
+            )}
+          </Slider>
+        </>}
       </div>
     </>
   );
