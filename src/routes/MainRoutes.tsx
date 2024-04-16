@@ -1,48 +1,32 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import HomePage from "../pages/HomePage";
-import FavoritesPage from "../pages/FavoritesPage";
-import DetailPage from "../pages/DetailPage";
-import RegistrationAndAuthorization from "../pages/RegistrationAndAuthorization";
-import BrandsPage from "../pages/BrandsPage";
-import CartPage from "../pages/CartPage";
-import { useEffect } from "react";
-import ConfirmPage from "../pages/ConfirmPage";
-import NewProductsPage from "../pages/NewProductsPage";
-import RecommendationProductsPage from "../pages/RecommendationProductsPage";
-import CategoryPage from "../pages/CategoryPage";
-import NewsPage from "../pages/NewsPage";
-import AboutUs from "../pages/AboutUs";
-import UserProfilePage from "../pages/UserProfilePage";
-import ResendPage from "../pages/ResendPage";
-import ConfirmWithPassword from "../pages/ConfirmWithPassword";
-import Sender from "../pages/Sender";
-import GoogleNavigateLoginPage from "../pages/GoogleNavigateLoginPage";
-import NewsDetailPage from "../pages/NewsDetailPage";
-import FilteredRoutePage from "../pages/FilteredRoutePage";
-import SearchPage from "../pages/SearchPage";
-import AdminChatPage from "../pages/AdminChatPage";
-
-function ScrollToTop() {
-  const { pathname } = useLocation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
-}
+import { lazy } from "react";
+const HomePage = lazy(() => import("../pages/HomePage"));
+const FavoritesPage = lazy(() => import("../pages/FavoritesPage"));
+const DetailPage = lazy(() => import("../pages/DetailPage"));
+const RegistrationAndAuthorization = lazy(() => import("../pages/RegistrationAndAuthorization"));
+const BrandsPage = lazy(() => import("../pages/BrandsPage"));
+const CartPage = lazy(() => import("../pages/CartPage"));
+const ConfirmPage = lazy(() => import("../pages/ConfirmPage"));
+const NewProductsPage = lazy(() => import("../pages/NewProductsPage"));
+const RecommendationProductsPage = lazy(() => import("../pages/RecommendationProductsPage"));
+const CategoryPage = lazy(() => import("../pages/CategoryPage"));
+const NewsPage = lazy(() => import("../pages/NewsPage"));
+const AboutUs = lazy(() => import("../pages/AboutUs"));
+const UserProfilePage = lazy(() => import("../pages/UserProfilePage"));
+const ResendPage = lazy(() => import("../pages/ResendPage"));
+const ConfirmWithPassword = lazy(() => import("../pages/ConfirmWithPassword"));
+const Sender = lazy(() => import("../pages/Sender"));
+const GoogleNavigateLoginPage = lazy(() => import("../pages/GoogleNavigateLoginPage"));
+const NewsDetailPage = lazy(() => import("../pages/NewsDetailPage"));
+const FilteredRoutePage = lazy(() => import("../pages/FilteredRoutePage"));
+const SearchPage = lazy(() => import("../pages/SearchPage"));
+const AdminChatPage = lazy(() => import("../pages/AdminChatPage"));
 
 function MainRoutes() {
   return (
     <Routes>
-      <Route element={
-        <>
-          <ScrollToTop />
-          <MainLayout />
-        </>
-      }
-      >
+      <Route element={<MainLayout />}>
         <Route element={<HomePage />} path="/" />
         <Route element={<FavoritesPage />} path="/favorite" />
         <Route element={<DetailPage />} path="/product/:id" />
@@ -63,7 +47,7 @@ function MainRoutes() {
         <Route element={<NewsDetailPage />} path="/news/:id" />
         <Route element={<SearchPage />} path="/search" />
         <Route element={<FilteredRoutePage />} path="/products/filter/:brand_category_title/:brand" />
-        <Route element={<AdminChatPage/>} path="/admin/chat" />
+        <Route element={<AdminChatPage />} path="/admin/chat" />
       </Route>
     </Routes>
   )
