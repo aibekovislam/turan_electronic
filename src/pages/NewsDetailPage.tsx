@@ -4,6 +4,7 @@ import { fetchOneNews } from "../store/features/news/oneNewsSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { useParams } from "react-router-dom";
+import { API_URL } from "../utils/consts";
 
 function NewsDetailPage() {
     const { id } = useParams();
@@ -26,7 +27,7 @@ function NewsDetailPage() {
             </div>
             <div className={styles.news_detail}>
                 <div className={styles.news_detail__image}>
-                    <img src={news?.image} />
+                    <img src={`${API_URL}/${news?.image.slice(16)}`} />
                 </div>
                 <div className={styles.news_detai_section__title}>
                     <div className={styles.news_detail__title}>
