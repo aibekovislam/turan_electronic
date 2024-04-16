@@ -38,24 +38,23 @@ const chatSlice = createSlice({
             });
         },
         setClientMessages: (state, action: PayloadAction<any>) => {
-            const newMessages = action.payload.messages;
+            const newMessages = Array.isArray(action.payload.messages) ? action.payload.messages : [action.payload.messages];
+            const existingIds = state.messages.map((message: any) => message.id);
             
-            const messagesToAdd = Array.isArray(newMessages) ? newMessages : [newMessages];
-        
+            const messagesToAdd = newMessages.filter((message: any) => !existingIds.includes(message.id));
+            
             state.messages = [...state.messages, ...messagesToAdd];
-        }   
+        }            
     }
 });
 
-export const sendMessage = (content: string, chat_id: number): AppThunk => async (dispatch) => {
+export const sendMessage = (content: string, chat_id: number): AppThunk => async () => {
     try {
         const data = {
             text: content
         }
         const resposne = await $axios.post(`${API_URL}/chat/send/${chat_id}/`, data);
         console.log(resposne);
-
-        dispatch(chatSlice.actions.setMessages({ messages: resposne.data, chat_id: chat_id }));
     } catch (error) {
         console.log(error)
     }
@@ -78,6 +77,7 @@ export const chatIDStart = (client_id: number): AppThunk => async () => {
         const data = {
             client: client_id
         }
+        console.log("called from server")
         const response = await $axios.post(`${API_URL}/chat/chats/`, data);
         console.log(response)
         if (!localStorage.getItem("chatID")) {
