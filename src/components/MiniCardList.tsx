@@ -60,6 +60,7 @@ function MiniCardList() {
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
         initialSlide: 0,
+        swipe: true,
         responsive: [
           {
             breakpoint: 1024,
