@@ -204,10 +204,10 @@ export type CityType = {
 }
 
 export interface ChatI {
-    chats: ChatType[],
-    messages: any,
-    chatID: any,
-    chatMessages: any
+    chats: ChatType[];
+    messages: { [key: number]: any[] };
+    chatID: any;
+    chatMessages: any;
 }
 
 export type ChatType = {

@@ -8,7 +8,7 @@ import { userMe } from "../auth/authSlice";
 
 const initialState: ChatI = {
     chats: [],
-    messages: [],
+    messages: {},
     chatID: null,
     chatMessages: {}
 };
@@ -27,9 +27,6 @@ const chatSlice = createSlice({
             const newMessage = action.payload.messages;
             const chat_id = action.payload.chat_id || newMessage.chat;
 
-            console.log("chatID:", chat_id);
-            console.log("newMessage", newMessage);
-
             state.chatMessages = produce(state.chatMessages, (draft: any) => {
                 if (!draft[chat_id]) {
                     draft[chat_id] = [];
@@ -38,12 +35,15 @@ const chatSlice = createSlice({
             });
         },
         setClientMessages: (state, action: PayloadAction<any>) => {
-            const newMessages = Array.isArray(action.payload.messages) ? action.payload.messages : [action.payload.messages];
-            const existingIds = state.messages.map((message: any) => message.id);
-            
-            const messagesToAdd = newMessages.filter((message: any) => !existingIds.includes(message.id));
-            
-            state.messages = [...state.messages, ...messagesToAdd];
+            const newMessage = action.payload.messages;
+            const chat_id = action.payload.chat_id || newMessage.chat_id;
+
+            state.messages = produce(state.messages, (draft: any) => {
+                if (!draft[chat_id]) {
+                    draft[chat_id] = [];
+                }
+                draft[chat_id].push(newMessage);
+            });
         }            
     }
 });
@@ -57,7 +57,7 @@ export const sendMessage = (content: string, chat_id: number): AppThunk => async
         console.log(resposne);
     } catch (error) {
         console.log(error)
-    }
+     }
 }
 
 export const sendMessageOperator = (content: string, chat_id: number): AppThunk => async () => {
@@ -105,20 +105,18 @@ export const chatStart = (): AppThunk => async (dispatch) => {
 
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-            
                 const message = data.message ? data.message : data;
-            
-                const chatID = message.chat_id;
-                
-                if (!localStorage.getItem("chatID")) {
-                    localStorage.setItem("chatID", JSON.stringify(chatID));
+                const chatID = message.chat_id || message.chat;
+                            
+                console.log(message, chatID);
+                if (chatID !== undefined) {
+                    if (!localStorage.getItem("chatID")) {
+                        localStorage.setItem("chatID", JSON.stringify(chatID));
+                    }
+                    
+                    dispatch(chatSlice.actions.setClientMessages({ messages: message, chat_id: chatID }));
+                    dispatch(chatSlice.actions.setChatID({ chatID }));                            
                 }
-            
-                dispatch(chatSlice.actions.setChatID({ chatID }));
-            
-                dispatch(chatSlice.actions.setClientMessages({ messages: message }));
-            
-                console.log('Received data from the server:', message);
             };                                    
 
             websocket.onerror = (error) => {
