@@ -22,7 +22,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   });
   const [errorAuth, setErrorAuth] = useState(false);
   const [loadedAuth, setLoadedAuth] = useState(false);
-  const [ showPassword, setShowPassword ] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     console.log("User changed:", user);
@@ -50,9 +50,9 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
       setLoadedAuth(false);
     }
   };
-  
 
-  if(user) {
+
+  if (user) {
     navigate("/")
     notify('Вы успешно вошли в аккаунт')
   }
@@ -85,26 +85,26 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
                   value={authFormData.password}
                   onChange={handleInputChange}
                 />
-                <img src={showPassword ? showedEye : eye} onClick={() => setShowPassword(!showPassword)} className={styles.eye_svg} />
+                <img alt="eye" src={showPassword ? showedEye : eye} onClick={() => setShowPassword(!showPassword)} className={styles.eye_svg} />
               </div>
               <div className={styles.forgotten_password} onClick={() => navigate("/resend/auth")}>
                 <span>Забыли пароль?</span>
               </div>
             </div>
-            { errorAuth && (
+            {errorAuth && (
               <div className={styles.errors} style={{ marginTop: "10px" }}>
                 Проверьте ваши данные пожалуйста
               </div>
-            ) }
-              <div className={styles.auth_button}>
-                { loadedAuth ? (
-                  <div>Обработка данных...</div>
-                ) : (
-                  <button className={`${styles.reg_button}`} disabled={loadedAuth}>
-                    Войти
-                  </button>
-                ) }
-              </div>
+            )}
+            <div className={styles.auth_button}>
+              {loadedAuth ? (
+                <div>Обработка данных...</div>
+              ) : (
+                <button className={`${styles.reg_button}`} disabled={loadedAuth}>
+                  Войти
+                </button>
+              )}
+            </div>
           </form>
           <div className={styles.auth_title}>
             <span>Впервые у нас?</span>
@@ -113,12 +113,12 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
             </a>
           </div>
           <div className={styles.auth_pattern}>
-            <img src={pattern} />
+            <img alt="pattern" src={pattern} />
           </div>
           <div className={styles.auth_sign}>
             <span>Войти через</span>
             <a href="https://turan-backend.online/google/login/">
-              <img src={google} className={styles.sign_icon} />
+              <img alt="google svg" src={google} className={styles.sign_icon} />
             </a>
           </div>
         </div>

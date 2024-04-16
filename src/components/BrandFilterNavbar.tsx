@@ -13,11 +13,11 @@ import { API_URL } from "../utils/consts.ts";
 function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCategory }: BrandsProps) {
     const [pickedColor, setPickedColor] = useState<string | null>(null);
     const [dropdownStates, setDropdownStates] = useState(Array(6).fill(false));
-    const [ isOpen, setIsOpen ] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const sidebarRef = useRef<HTMLDivElement>(null);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
-    const [ filterUp, setFilterUp ] = useState(false);
+    const [filterUp, setFilterUp] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -34,7 +34,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
     };
 
     useEffect(() => {
-        if(isOpen === true) {
+        if (isOpen === true) {
             fetchProductsAndLog({
                 limit: 100,
                 offset: 0,
@@ -57,14 +57,14 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
 
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
-          if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
-            setIsOpen(false);
-          }
+            if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
         }
-    
+
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
-          document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [setIsOpen]);
 
@@ -77,7 +77,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
         color: [] || "",
         memory: [],
         product_name: ""
-      });
+    });
 
     const fetchProductsAndLog = (obj: any) => {
         const updatedFilters = { ...filters, ...obj };
@@ -105,7 +105,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
         isMobile ? (
             <div className={styles.brands_navbar} style={{ marginTop: "30px" }}>
                 <div className={styles.brands_navbar__item} >
-                    <div className={styles.brands__info}><span style={{ cursor: "pointer", userSelect: "none" }} onClick={() => navigate('/')}>Главная</span> / { brand.title }</div>
+                    <div className={styles.brands__info}><span style={{ cursor: "pointer", userSelect: "none" }} onClick={() => navigate('/')}>Главная</span> / {brand.title}</div>
                 </div>
                 <div className={styles.brands_navbar__item} onClick={() => handleMobileFilterClick()} >
                     <div className={styles.brands_navigation} style={{ height: "40px", borderRadius: "10px", alignItems: "center", justifyContent: "space-between" }}>
@@ -126,7 +126,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
             <div className={styles.brands_navbar}>
                 <div className={styles.brands_navbar__item}>
                     <div className={styles.path}>
-                        <a href="/">Главная</a> | { brand.title }
+                        <a href="/">Главная</a> | {brand.title}
                     </div>
                 </div>
                 <div className={styles.brands_navbar__item}>
@@ -146,15 +146,15 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                                     <ArrowDown isUp={dropdownStates[index]} />
                                 </div>
                                 <div className={`${styles.dropdownContent} ${dropdownStates[index] ? styles.active : styles.notActive}`}>
-                                    { dropdownStates[index] && 
-                                        <RenderDropdownContent index={index} pickedColor={pickedColor} setPickedColor={setPickedColor} brand={brand} fetchProductsAndLog={fetchProductsAndLog} filters={filters} dataForDropdown={dataForDropDown} fetchFilterDropdown={fetchFilterDropdown} productsByBrandCategory={productsByBrandCategory} dropdownId={`dropdown_${brand.id}_index_${index}`} /> 
+                                    {dropdownStates[index] &&
+                                        <RenderDropdownContent index={index} pickedColor={pickedColor} setPickedColor={setPickedColor} brand={brand} fetchProductsAndLog={fetchProductsAndLog} filters={filters} dataForDropdown={dataForDropDown} fetchFilterDropdown={fetchFilterDropdown} productsByBrandCategory={productsByBrandCategory} dropdownId={`dropdown_${brand.id}_index_${index}`} />
                                     }
                                 </div>
                             </div>
                         ))}
                         <div onClick={toggleSidebar} className={styles.brands_navigation__item} >
                             <div>Все фильтры</div>
-                            <img src={FilterSVG} className={styles.filter__svg} />
+                            <img alt="filter svg" src={FilterSVG} className={styles.filter__svg} />
                         </div>
                         <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} dataForDropDown={dataForDropDown} productsByBrandCategory={productsByBrandCategory} />
                     </div>
