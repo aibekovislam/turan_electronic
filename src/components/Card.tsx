@@ -52,12 +52,12 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
             notifyError('Вы не авторизованы')
             return;
         }
-    
+
         if (user && token) {
             setFavoriteLoad(true);
             dispatch(addFavorites(product_id))
         }
-    }    
+    }
 
     const handleColorPick = (color: string) => {
         if (color === colorPicked) {
@@ -106,9 +106,9 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                             </div>
                             <div className={styles.cardMobile_info}>
                                 <div className={styles.cardMobile_wrapper__left}>
-                                    <img src={`${API_URL}/${product.default_image?.slice(16)}`} onClick={() => onClick(product.id)} />
+                                    <img alt={product.name} src={`${API_URL}/${product.default_image?.slice(16)}`} onClick={() => onClick(product.id)} />
                                     {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                                    <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
+                                    <img alt={product.name} style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
                                         e.stopPropagation();
                                         handleClickFavorite(product.id);
                                     }} />
@@ -130,7 +130,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                             <div className={styles.right__special}>
                                 {product.in_stock ? (
                                     <div className={styles.isAvilableProduct}>
-                                        <img src={checked} />
+                                        <img alt={product.name} src={checked} />
                                         <span>В наличии</span>
                                     </div>
                                 ) : (
@@ -139,7 +139,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                 <div className={styles.price_mobile}>
                                     {product.price} сом
                                     <div className={styles.bag__mobile}>
-                                        <img src={shop} />
+                                        <img alt={product.name} src={shop} />
                                     </div>
                                 </div>
                             </div>
@@ -173,9 +173,9 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     Загрузка...
                                 </div>}
                                 {filteredImages ? (
-                                    <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
+                                    <img alt={product.brand_title} src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
                                 ) : (
-                                    <img src={`${API_URL}/${product.default_image?.slice(16)}`} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
+                                    <img alt={product.brand_title} src={`${API_URL}/${product.default_image?.slice(16)}`} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
                                 )}
                             </div>
                             <div className={styles.heart_container}>
@@ -186,6 +186,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                         handleClickFavorite(product.id);
                                     }}
                                     style={{ display: favoriteLoaded ? "none" : "block" }}
+                                    alt={product.brand_title}
                                 />
                             </div>
                             <div className={styles.title_container}>
@@ -216,7 +217,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
                                         <a href="#">Быстрый заказ</a>
                                     </button>
-                                    <img src={shop} alt="" onClick={() => navigate(`/product/${product.id}`)} />
+                                    <img alt={product.brand_title} src={shop} onClick={() => navigate(`/product/${product.id}`)} />
                                 </div>
                                 <div className={styles.options_container}>
                                     <h2>Цвет</h2>

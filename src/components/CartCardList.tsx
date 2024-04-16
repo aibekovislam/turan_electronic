@@ -42,7 +42,7 @@ function CartCardList() {
   useEffect(() => {
     localStorage.setItem('cartCounts', JSON.stringify(counts));
   }, [counts]);
-  
+
   useEffect(() => {
     setCounts((prevCounts) => {
       const newCounts: any = {};
@@ -51,7 +51,7 @@ function CartCardList() {
       });
       return newCounts;
     });
-  }, [carts]);  
+  }, [carts]);
 
 
   const incrementCount = (id: string) => {
@@ -68,14 +68,14 @@ function CartCardList() {
       ...prevCounts,
       [id]: updatedCount
     }));
-    
+
     dispatch(changeCountCartProduct(updatedCount, +id));
 
-    if(updatedCount < 1) {
+    if (updatedCount < 1) {
       localStorage.removeItem("addedProducts");
       dispatch(deleteCart(+id));
     }
-  };  
+  };
 
   useEffect(() => {
     localStorage.setItem('cartCounts', JSON.stringify(counts));
@@ -167,17 +167,17 @@ function CartCardList() {
                   <button onClick={() => incrementCount(cart?.id)}>+</button>
                 </div>
                 <div className={styles.delete_cart_block} onClick={() => {
-                    const stringProducts = localStorage.getItem("addedProducts");
-                    const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
+                  const stringProducts = localStorage.getItem("addedProducts");
+                  const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
 
-                    const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
+                  const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
 
-                    if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
-                        localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
-                    }
+                  if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
+                    localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+                  }
 
-                    dispatch(deleteCart(cart.id));
-                    dispatch(fetchCarts())
+                  dispatch(deleteCart(cart.id));
+                  dispatch(fetchCarts())
                 }}>
                   Удалить
                 </div>
@@ -267,18 +267,18 @@ function CartCardList() {
                   <button onClick={() => incrementCount(cart.id)}>+</button>
                 </div>
                 <div className={styles.delete_cart_block} onClick={() => {
-                    const stringProducts = localStorage.getItem("addedProducts");
-                    const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
+                  const stringProducts = localStorage.getItem("addedProducts");
+                  const addedProducts = stringProducts ? JSON.parse(stringProducts) : [];
 
-                    const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
+                  const updatedProducts = addedProducts.filter((productId: any) => productId !== cart.product.id);
 
-                    if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
-                        localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
-                    }
+                  if (JSON.stringify(addedProducts) !== JSON.stringify(updatedProducts)) {
+                    localStorage.setItem("addedProducts", JSON.stringify(updatedProducts));
+                  }
 
-                    dispatch(deleteCart(cart.id));
-                    
-                    dispatch(fetchCarts())
+                  dispatch(deleteCart(cart.id));
+
+                  dispatch(fetchCarts())
                 }}>
                   Удалить
                 </div>

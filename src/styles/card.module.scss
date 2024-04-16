@@ -464,3 +464,13 @@
         height: 30px;
     }
 }
+
+//! MiniCardMobileList
+
+.miniCardMobileList_container {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
