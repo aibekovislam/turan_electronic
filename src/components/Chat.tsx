@@ -7,7 +7,7 @@ import { chatIDStart, chatStart, sendMessage } from '../store/features/chat/chat
 import sendSVG from '../assets/svgs/Frame.svg';
 
 export default function Chat() {
-    const messages = useSelector((state: RootStates) => state.chat.chatMessages);
+    const messages = useSelector((state: RootStates) => state.chat.messages);
     const dispatch = useDispatch<any>();
     const [showChat, setShowChat] = useState(false);
     const [messageText, setMessageText] = useState("");
@@ -54,12 +54,8 @@ export default function Chat() {
         <div className={styles.chat} style={ isMobile ? { bottom: '100px' } : {} }>
             <div className={styles.chat_icon} onClick={() => {
                 setShowChat(!showChat);
-                if(chatID === null) {
-                    dispatch(chatIDStart(user.id))
-                    console.log("started", chatID)
-                } else {
+                
                     chatStarted()
-                }
             }}>
                 {showChat ? (
                     <span>X</span>
@@ -71,7 +67,7 @@ export default function Chat() {
                 <>
                     <div className={styles.chat_content}>
                         <div className={styles.previus_chat}>
-                            {chatID && messages && messages[chatID]?.map((message: any, index: number) => (
+                            {chatID && messages && messages?.map((message: any, index: number) => (
                                 <div className={`${message && message.sender === user?.id ? styles.message_block_myself : ""}`} key={index}>
                                     {message && message.sender === user?.id ? (
                                         <div className={styles.message_myself}>

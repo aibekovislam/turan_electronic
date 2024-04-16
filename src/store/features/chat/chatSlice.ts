@@ -39,7 +39,14 @@ const chatSlice = createSlice({
                     }
                 }
             });
-        }          
+        },
+        setClientMessages: (state, action: PayloadAction<any>) => {
+            const newMessages = action.payload.messages;
+            
+            const messagesToAdd = Array.isArray(newMessages) ? newMessages : [newMessages];
+        
+            state.messages = [...state.messages, ...messagesToAdd];
+        }   
     }
 });
 
@@ -89,20 +96,20 @@ export const chatStart = (): AppThunk => async (dispatch) => {
 
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
-                console.log(data.message); // Печатаем сообщение для проверки
+            
                 const message = data.message ? data.message : data;
+            
                 const chatID = message.chat_id;
-                            
-                if (chatID !== undefined) {
-                    if (!localStorage.getItem("chatID")) {
-                        localStorage.setItem("chatID", JSON.stringify(chatID));
-                    }
-                    
-                    dispatch(chatSlice.actions.setMessages({ messages: message, chat_id: chatID }));
-                    dispatch(chatSlice.actions.setChatID({ chatID }));
-                            
-                    console.log('Received data from the server:', message);
+                
+                if (!localStorage.getItem("chatID")) {
+                    localStorage.setItem("chatID", JSON.stringify(chatID));
                 }
+            
+                dispatch(chatSlice.actions.setChatID({ chatID }));
+            
+                dispatch(chatSlice.actions.setClientMessages({ messages: message }));
+            
+                console.log('Received data from the server:', message);
             };                                    
 
             websocket.onerror = (error) => {
