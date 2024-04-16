@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles/chat.module.scss';
 import { useEffect, useRef, useState } from 'react';
-import { allChats, chatOperator, sendMessage } from '../store/features/chat/chatSlice';
+import { allChats, chatOperator, sendMessageOperator } from '../store/features/chat/chatSlice';
 import { RootStates } from '../store/store';
 import sendSVG from '../assets/svgs/Frame.svg';
 import { useNavigate } from 'react-router-dom';
@@ -38,7 +38,7 @@ export default function AdminChatPage() {
     const handleSendMessage = (e: any) => {
         e.preventDefault();
         if (pickedChat !== 0) {
-            dispatch(sendMessage(messageText, pickedChat));
+            dispatch(sendMessageOperator(messageText, pickedChat));
             setMessageText("");
             console.log("Message text after clearing:", messageText);
         }
