@@ -55,23 +55,19 @@ export const sendMessage = (content: string, chat_id: number): AppThunk => async
         const resposne = await $axios.post(`${API_URL}/chat/send/${chat_id}/`, data);
         console.log(resposne);
 
-        if(chat_id !== undefined) {
-            dispatch(chatSlice.actions.setMessages({ messages: resposne.data, chat_id: chat_id }));
-        }
+        dispatch(chatSlice.actions.setMessages({ messages: resposne.data, chat_id: chat_id }));
     } catch (error) {
         console.log(error)
     }
 }
 
-export const sendMessageOperator = (content: string, chat_id: number): AppThunk => async (dispatch) => {
+export const sendMessageOperator = (content: string, chat_id: number): AppThunk => async () => {
     try {
         const data = {
             text: content
         }
         const resposne = await $axios.post(`${API_URL}/chat/send/${chat_id}/`, data);
         console.log(resposne);
-
-        dispatch(chatSlice.actions.setMessages({ messages: resposne.data }));
     } catch (error) {
         console.log(error)
     }
@@ -158,7 +154,7 @@ export const chatOperator = (client_id: number): AppThunk => async (dispatch) =>
             websocket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
                 const message = data.message ? data.message : data;
-                const chatID = message.chat_id;
+                const chatID = message.chat_id || message.chat;
                             
                 console.log(message, chatID);
                 if (chatID !== undefined) {

@@ -3,7 +3,7 @@ import ChatSVG from '../assets/svgs/Vector (24).svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStates } from '../store/store';
 import { useState, useEffect, useRef } from 'react';
-import { chatStart, sendMessage } from '../store/features/chat/chatSlice';
+import { chatIDStart, chatStart, sendMessage } from '../store/features/chat/chatSlice';
 import sendSVG from '../assets/svgs/Frame.svg';
 
 export default function Chat() {
@@ -39,10 +39,17 @@ export default function Chat() {
         e.preventDefault();
         if (chatID) {
             dispatch(sendMessage(messageText, chatID));
-            setMessageText("");
-            console.log("Message text after clearing:", messageText);
+            setMessageText(""); // Clear message text
+        } else {
+            chatIDStart(user.id);
+            if(chatID) {
+                dispatch(sendMessage(messageText, chatID));
+                setMessageText(""); // Clear message text
+            }
         }
     }
+    
+    console.log(messageText)
 
     const chatStarted = () => {
         dispatch(chatStart());
@@ -54,8 +61,7 @@ export default function Chat() {
         <div className={styles.chat} style={ isMobile ? { bottom: '100px' } : {} }>
             <div className={styles.chat_icon} onClick={() => {
                 setShowChat(!showChat);
-                
-                    chatStarted()
+                chatStarted();
             }}>
                 {showChat ? (
                     <span>X</span>
@@ -88,7 +94,7 @@ export default function Chat() {
                         </div>
                     </div>
                     <form className={styles.form_chat} onSubmit={handleSendMessage}>
-                        <input onChange={(e: any) => setMessageText(e.target.value)} type='text' placeholder='Введите сообщение оператору:' name='content' className={styles.sender_input} />
+                        <input value={messageText} onChange={(e: any) => setMessageText(e.target.value)} type='text' placeholder='Введите сообщение оператору:' name='content' className={styles.sender_input} />
                         <button className={styles.sender_btn}><img src={sendSVG} /></button>
                     </form>
                 </>
