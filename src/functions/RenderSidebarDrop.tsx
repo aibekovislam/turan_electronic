@@ -1,15 +1,16 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/navbar_navigation.module.scss";
 import { ProductsType, RenderSidebarTypes } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
 import { compareByVolume, extractPropertyArray, filterMemory, returnColorsForFilter, sortData } from "./filterFunction";
-import { setPickedOption, setPickedOptionSidebar } from "../store/features/dropdown/dropdownSlice";
+import { selectPickedOption, setPickedOption, setPickedOptionSidebar } from "../store/features/dropdown/dropdownSlice";
 
-export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors, dataForDropDown, productsByBrandCategory}: RenderSidebarTypes) => {
+export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors, dataForDropDown, productsByBrandCategory, products, dropdownID}: RenderSidebarTypes) => {
+    const pickedOption = useSelector(selectPickedOption(dropdownID));
     const dispatch = useDispatch();
 
     const colorsArray = dataForDropDown ? returnColorsForFilter(
-        productsByBrandCategory.map(product => product.color)
+        products.map(product => product.color)
     ) : [];
 
     const isColorPicked = (color: string) => {
@@ -23,7 +24,7 @@ export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fe
     };
 
     const brandModels = brandCategoryArray('name');
-    const productMemory = dataForDropDown ? filterMemory(dataForDropDown?.map(product => product.memory)) : [];
+    const productMemory = dataForDropDown ? filterMemory(products?.map(product => product.memory)) : [];
 
     const handleColorClick = (color: string) => {
         const updatedColors = pickedColor 
@@ -102,8 +103,12 @@ export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fe
                             className={styles.dropdown_radio}
                             id={`radio_${index}_all`}
                             name={groupName}
-                            defaultChecked={true}
+                            defaultChecked={!pickedOption} 
                             onChange={() => {
+                                dispatch(setPickedOption({
+                                    dropdownId: dropdownID,
+                                    pickedOption: null
+                                }))
                                 let obj = {
                                     limit: 100,
                                     offset: 0,
@@ -125,8 +130,12 @@ export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fe
                                     className={styles.dropdown_radio}
                                     name={groupName}
                                     id={`radio_${index}`}
+                                    checked={pickedOption === item}
                                     onChange={() => {
-                                        dispatch(setPickedOption(item))
+                                        dispatch(setPickedOption({
+                                            dropdownId: dropdownID,
+                                            pickedOption: item
+                                        }))
                                         const updatedFilters = {
                                             ...filters,
                                             brand: brand.id,

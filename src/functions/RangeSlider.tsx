@@ -20,7 +20,12 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
   }, [range, isDragging]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>, type: keyof Range) => {
-    const value = e.target.value.trim() !== "" ? parseInt(e.target.value, 10) : undefined;
+    let value = e.target.value.trim() !== "" ? parseInt(e.target.value, 10) : undefined;
+    if(value) {
+      if(value > maxPrice) {
+        value = maxPrice
+      }
+    }
     setIsInputChanged(true);
     setRange((prevRange) => ({
       ...prevRange,
@@ -48,6 +53,7 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
         ...prevRange,
         [type]: value,
       }));
+      setIsInputChanged(true)
     }
   };
 
@@ -87,6 +93,7 @@ const RangeSlider = ({ style ,fetchProductsAndLog, brand, products }: Props) => 
             onChange={(e) => handleInputChange(e, "max")}
             onBlur={() => handleInputBlur("max")}
             step="5000"
+            max={maxPrice}
           />
         </div>
       </div>

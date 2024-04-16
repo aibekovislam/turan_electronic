@@ -29,7 +29,24 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const toggleSidebar = () => setIsOpen(!isOpen);
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
+
+    useEffect(() => {
+        if(isOpen === true) {
+            fetchProductsAndLog({
+                limit: 100,
+                offset: 0,
+                min_price: undefined,
+                max_price: undefined,
+                brand: undefined,
+                color: [] || "",
+                memory: [],
+                product_name: ""
+            })
+        }
+    }, [isOpen])
 
     const handleDropdownList = (index: number) => {
         const newDropdownStates = dropdownStates.map((state, i) => (i === index ? !state : false));
@@ -62,7 +79,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
         product_name: ""
       });
 
-      const fetchProductsAndLog = (obj: any) => {
+    const fetchProductsAndLog = (obj: any) => {
         const updatedFilters = { ...filters, ...obj };
         setFilters(updatedFilters);
         console.log(updatedFilters);
