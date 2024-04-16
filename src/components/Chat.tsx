@@ -46,6 +46,7 @@ export default function Chat() {
             if(chatID) {
                 dispatch(sendMessage(messageText, chatID));
                 setMessageText("");
+                dispatch(chatStart());
             }
         }
     }
@@ -56,12 +57,6 @@ export default function Chat() {
         dispatch(chatStart());
     }
 
-    useEffect(() => {
-        if(chatID) {
-            chatStarted()
-        }
-    }, [chatID])
-
     console.log(messages)
 
     return (
@@ -69,7 +64,11 @@ export default function Chat() {
             <div className={styles.chat_icon} onClick={() => {
                 setShowChat(!showChat);
                 if(!chatID) {
-                    chatStarted()
+                    dispatch(chatIDStart(user.id))
+                    chatStarted();
+                } else if(chatID !== undefined && chatID !== null) {
+                    chatStarted();
+                    console.log("chatid уже есть")
                 }
             }}>
                 {showChat ? (
