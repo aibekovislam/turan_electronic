@@ -326,7 +326,7 @@ function DetailPage() {
                                                 <span className={styles.open_des_func} onClick={toggleDescription}>
                                                     {expanded ? "Свернуть" : "Развернуть"}
                                                 </span>
-                                            </p>
+                                            </p> 
                                         </div>
                                     ) : visibleDiv === "div3" ? (
                                         <>
