@@ -7,6 +7,10 @@ body {
     box-sizing: border-box;
     font-family: "Montserrat", sans-serif;
     overflow-x: hidden;
+    ::selection {
+        background-color: #FF7300;
+        color: white;
+    }
 }
 
 .container {
