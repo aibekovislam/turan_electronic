@@ -8,10 +8,12 @@ import { useState } from "react"
 import axios from "axios"
 import { API_URL } from "../utils/consts"
 import { useNavigate } from "react-router-dom"
+import { notifyError } from "./Toastify";
 
 function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
     const [loadedAuth, setLoadedAuth] = useState(false);
     const [errorAuth, setErrorAuth] = useState(false);
+    const [ errorWithPassWord, setErrorWithPassword ] = useState(false);
     const [ showPassword, setShowPassword ] = useState(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState(false);
 
@@ -41,6 +43,12 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                 setErrorAuth(true);
                 return;
             }
+
+            if (authFormData.password.length < 8 || /^\D+$/.test(authFormData.password)) {
+                setErrorWithPassword(true);
+                notifyError("Слишком простой пароль")
+                return;
+            }    
 
             const { confirmPassword, ...requestData } = authFormData;
 
@@ -72,11 +80,11 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                             <input onChange={handleInputChange} value={authFormData.name} type="text" name="name" placeholder="Имя"/>
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type={showPassword ? "text" : "password"} value={authFormData.password} name="password"  placeholder="Пароль"/>
+                            <input onChange={handleInputChange} type={showPassword ? "text" : "password"} value={authFormData.password} name="password"  placeholder="Пароль" className={`${errorWithPassWord ? styles.error_password : ""}`}/>
                             <img src={showPassword ? showedEye : eye}  className={styles.eye_svg} onClick={() => setShowPassword(!showPassword)} />
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type={showConfirmPassword ? "text" : "password"} value={authFormData.confirmPassword} name="confirmPassword" placeholder="Потвердить пароль"/>
+                            <input onChange={handleInputChange} type={showConfirmPassword ? "text" : "password"} value={authFormData.confirmPassword} name="confirmPassword" placeholder="Потвердить пароль" className={`${errorWithPassWord ? styles.error_password : ""}`}/>
                             <img src={showConfirmPassword ? showedEye : eye} className={styles.eye_svg} onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
                         </div>
                         <div className={styles.auth_input}>

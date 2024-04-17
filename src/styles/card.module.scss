@@ -401,7 +401,7 @@
 
 @media screen and (max-width: 520px) {
     .mini_mobile__main {
-        width: 120px;
+        width: 180px;
         height: 220px;
         border-radius: 15px;
         border: 1px solid #fff;
@@ -434,10 +434,13 @@
         font-weight: 400;
         font-size: 12px;
         height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .mini_mobile__content>img {
-        width: 100px;
+        width: 120px;
         height: 100px;
         object-fit: contain;
     }
