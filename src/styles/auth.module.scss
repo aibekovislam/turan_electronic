@@ -53,11 +53,10 @@
     border: none;
     padding-left: 20px;
     box-shadow: 3px 3px 7px 0px #88A5BF7A inset;
-    border: 1px solid #FFFFFF !important;
+    border: 1px solid #FFFFFF;
     width: 357px;
     height: 40px;
     border-radius: 16px;
-    border: 1px;
     font-family: "Montserrat", sans-serif;
 }
 
@@ -460,4 +459,8 @@
     right: 10px;
     font-size: 24px;
     font-weight: normal;
+}
+
+.error_password {
+    border: 1px solid red !important;
 }

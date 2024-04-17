@@ -21,7 +21,7 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
   const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
     const touchMoveX = e.touches[0].clientX;
     const diff = touchMoveX - touchStartX;
-    const threshold = 70;
+    const threshold = 40;
 
     if (diff > threshold) {
       handlePrevious();
