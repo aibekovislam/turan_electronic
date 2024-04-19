@@ -10,6 +10,7 @@ import nextArrow from "../assets/svgs/Vector (7).svg";
 import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
+import '../styles/homepage.scss'
 
 function BrandsPage() {
     const { brand } = useParams();
