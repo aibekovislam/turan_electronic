@@ -9,8 +9,10 @@ export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fe
     const pickedOption = useSelector(selectPickedOption(dropdownID));
     const dispatch = useDispatch();
 
+    console.log(products)
+
     const colorsArray = dataForDropDown ? returnColorsForFilter(
-        products.map(product => product.color)
+        products?.map(product => product.color)
     ) : [];
 
     const isColorPicked = (color: string) => {
