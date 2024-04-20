@@ -12,10 +12,11 @@ import showedEye from "../assets/svgs/auth/eye-svgrepo-com.svg";
 function ConfirmWithPassword() {
     const [ searchParams ] = useSearchParams();
     const dispatch = useDispatch<any>();
+    const urlParams = new URLSearchParams(window.location.search);
 
     const obj = {
-      uid: searchParams.get("uid"),
-      token: searchParams.get("token")
+      uid: urlParams.get('uid'),
+      token: urlParams.get('token')
     }
 
     console.log(obj)
