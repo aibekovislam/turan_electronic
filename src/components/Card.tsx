@@ -137,11 +137,11 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     <div style={{ color: "brown" }}>Нет в наличии</div>
                                 )}
                                 <div className={styles.price_mobile}>
-                                    { product.price !== 0 ? (
-                                        <div>{ product.price }</div> сом
+                                    {product.price !== 0 ? (
+                                        <>{product.price} сом</>
                                     ) : (
-                                        <div>Нету в наличии</div>
-                                    ) }
+                                        <div style={{ color: 'red' }}>Нету в наличии</div>
+                                    )}
                                     <div className={styles.bag__mobile}>
                                         <img alt={product.name} src={shop} />
                                     </div>
@@ -202,7 +202,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                                  {product.discount !== 0 && <h3>{product.price} сом</h3>}
                                              </>
                                         ) : (
-                                            <div>Нету в наличии</div>
+                                            <h2 style={{ color: 'red' }}>Нету в наличии</h2>
                                         )
                                     }
                                 </div>
