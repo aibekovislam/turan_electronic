@@ -137,7 +137,11 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     <div style={{ color: "brown" }}>Нет в наличии</div>
                                 )}
                                 <div className={styles.price_mobile}>
-                                    {product.price} сом
+                                    { product.price !== 0 ? (
+                                        {product.price} сом
+                                    ) : (
+                                        <div>Нету в наличии</div>
+                                    ) }
                                     <div className={styles.bag__mobile}>
                                         <img alt={product.name} src={shop} />
                                     </div>
@@ -191,8 +195,16 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                             </div>
                             <div className={styles.title_container}>
                                 <div className={styles.price}>
-                                    <h2>{product.discount ? calculateDiscountedPrice(product.price, product.discount) : product.price} сом</h2>
-                                    {product.discount !== 0 && <h3>{product.price} сом</h3>}
+                                    {
+                                        product.price !== 0 ? (
+                                             <>
+                                                 <h2>{product.discount ? calculateDiscountedPrice(product.price, product.discount) : product.price} сом</h2>
+                                                 {product.discount !== 0 && <h3>{product.price} сом</h3>}
+                                             </>
+                                        ) : (
+                                            <div>Нету в наличии</div>
+                                        )
+                                    }
                                 </div>
                                 <div className={styles.discount}>
                                     {product?.discount !== 0 && (
