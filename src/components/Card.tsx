@@ -138,7 +138,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                 )}
                                 <div className={styles.price_mobile}>
                                     { product.price !== 0 ? (
-                                        product.price сом
+                                        <div>{ product.price }</div> сом
                                     ) : (
                                         <div>Нету в наличии</div>
                                     ) }
