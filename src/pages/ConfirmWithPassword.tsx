@@ -8,6 +8,7 @@ import { newPasswordConfirm } from "../store/features/auth/authSlice";
 import { notify } from "../components/Toastify";
 import eye from "../assets/svgs/auth/eye.svg";
 import showedEye from "../assets/svgs/auth/eye-svgrepo-com.svg";
+import { Helmet } from "react-helmet-async";
 
 function ConfirmWithPassword() {
     const [ searchParams ] = useSearchParams();
@@ -69,48 +70,55 @@ function ConfirmWithPassword() {
     }
 
     return (
-        <div className={styles.auth_main} style={{ marginTop: "30px" }}>
-            <div className={styles.auth_container}>
-                    <div className={styles.auth}>
-                        <div className={styles.auth_text}>
-                        <p>
-                            Введите новый пароль
-                        </p>
-                        </div>
-                        <form onSubmit={handleResendLogin} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                            <div className={styles.auth_form}>
-                                <div className={styles.auth_input}>
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        placeholder="Ваш новый пароль"
-                                        name="new_password"
-                                        value={authFormData.new_password}
-                                        onChange={handleInputChange}
-                                    />
-                                    <img src={showPassword ? showedEye : eye} onClick={() => setShowPassword(!showPassword)} className={styles.eye_svg} />
-                                </div>
+        <>
+            <Helmet>
+                <title>Новый пароль - Turan electronics</title>
+                <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+                <link rel="canonical" href={`https://turanelectronics.kg/password/reset/confirm`} />
+            </Helmet>
+            <div className={styles.auth_main} style={{ marginTop: "30px" }}>
+                <div className={styles.auth_container}>
+                        <div className={styles.auth}>
+                            <div className={styles.auth_text}>
+                            <p>
+                                Введите новый пароль
+                            </p>
                             </div>
-                            { errorAuth && (
-                                <div className={styles.errors} style={{ marginTop: "10px" }}>
-                                    Введите валидные данные!
+                            <form onSubmit={handleResendLogin} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                                <div className={styles.auth_form}>
+                                    <div className={styles.auth_input}>
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            placeholder="Ваш новый пароль"
+                                            name="new_password"
+                                            value={authFormData.new_password}
+                                            onChange={handleInputChange}
+                                        />
+                                        <img src={showPassword ? showedEye : eye} onClick={() => setShowPassword(!showPassword)} className={styles.eye_svg} />
+                                    </div>
                                 </div>
-                            ) }
-                            <div className={styles.auth_button}>
-                            { loadedAuth ? (
-                                <div>Обработка данных...</div>
-                            ) : (
-                                <button className={`${styles.reg_button}`} disabled={loadedAuth}>
-                                    Далее
-                                </button>
-                            ) }
+                                { errorAuth && (
+                                    <div className={styles.errors} style={{ marginTop: "10px" }}>
+                                        Введите валидные данные!
+                                    </div>
+                                ) }
+                                <div className={styles.auth_button}>
+                                { loadedAuth ? (
+                                    <div>Обработка данных...</div>
+                                ) : (
+                                    <button className={`${styles.reg_button}`} disabled={loadedAuth}>
+                                        Далее
+                                    </button>
+                                ) }
+                                </div>
+                            </form>
+                            <div className={styles.auth_pattern}>
+                                <img src={pattern} />
                             </div>
-                        </form>
-                        <div className={styles.auth_pattern}>
-                            <img src={pattern} />
                         </div>
-                    </div>
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

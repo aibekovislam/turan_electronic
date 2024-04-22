@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { RootStates } from "../store/store";
 import { fetchRecProducts } from "../store/features/products/productRecommenededSlice";
 import Card from "../components/Card";
+import { Helmet } from "react-helmet-async";
 
 function RecommendationProductsPage() {
 
@@ -31,13 +32,20 @@ function RecommendationProductsPage() {
     }
 
     return (
-        <div style={{ marginTop: "30px" }} >
-            <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
-                { recProducts.map((product) => (
-                    <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
-                ) ) }
+        <>
+            <Helmet>
+                <title>Рекомендуемые товары - Turan electronics</title>
+                <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+                <link rel="canonical" href={`https://turanelectronics.kg/recommendation/products`} />
+            </Helmet>
+            <div style={{ marginTop: "30px" }} >
+                <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"}>
+                    { recProducts.map((product) => (
+                        <Card key={product.id} product={product} type={"recommedation_card"} onClick={handleNavigate} />
+                    ) ) }
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 

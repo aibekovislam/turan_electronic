@@ -18,6 +18,7 @@ import { notify, notifyError } from "../components/Toastify"
 import 'ldrs/ring';
 import { ping } from 'ldrs'
 import { Rating } from 'react-simple-star-rating'
+import { Helmet } from "react-helmet-async";
 
 function DetailPage() {
     const { id } = useParams();
@@ -187,285 +188,27 @@ function DetailPage() {
     }, [activeItem])
 
     return (
-        <div>
-            {isMobile ? (
-                <div className={styles.mobile_detail__main}>
-                    {product && product?.id === numberedId ? (
-                        <div className={styles.mobile_detail__container}>
-                            <div className={styles.mobile_detail}>
-                                <div className={styles.section_title}>
-                                    <div className={styles.path}>
-                                        <a href="/">Главная</a> | <a href="/recommendation/products">Каталог</a> | <a href={`/products/brands/${product.brand}`}>{product?.brand_category_title}</a> | <a>{product?.name}</a>
-                                    </div>
-                                </div>
-                                <div className={styles.mobile_detail__title}>
-                                    <div>
-                                        {product?.name}
-                                    </div>
-                                    <div className={styles.stars}>
-                                        {product?.rating != undefined ? (
-                                            [1, 2, 3, 4, 5].map((star) => (
-                                                <span
-                                                    key={star}
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                        color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
-                                                        marginRight: '5px',
-                                                    }}
-                                                >
-                                                    &#9733;
-                                                </span>
-                                            ))
-                                        ) : (
-                                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                                        )}
-                                    </div>
-
-                                </div>
-                                <div className={styles.slider_main}>
-                                    <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
-                                </div>
-                                <div className={styles.mobile_detail__util}>
-                                    <div className={styles.options}>
-                                        <div>{ product?.color.length !== 0 ? "Выбрать цвет" : "" }</div>
-                                        {product?.color ? (
-                                            product?.color.map((item: any, index: number) => (
-                                                <div
-                                                    key={index}
-                                                    className={`${styles.color_block} ${colorPicked === item.hash_code ? styles.selectedColor : ""}`}
-                                                    style={{ background: item.hash_code ? item.hash_code : "" }}
-                                                    onClick={() => handleColorPick(item)}
-                                                ></div>
-                                            ))
-                                        ) : (
-                                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                                        )}
-                                    </div>
-                                    {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                                    <img
-                                        className={styles.detail_img}
-                                        src={isProductInFavorites ? fillHeart : heart}
-                                        onClick={() => {
-                                            handleClickFavorite(product.id || 0);
-                                        }}
-                                        style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }}
-                                    />
-                                </div>
-                                <div className={styles.storage}>
-                                    {product.memory_price ? (
-                                        <div>Память</div>
-                                    ) : (
-                                        null
-                                    )}
-                                    <ul className={styles.navigation}>
-                                        {product?.memory?.map((item: any, index: number) => (
-                                            <li
-                                                key={index}
-                                                className={`${styles.navigation__item} ${activeItem === item ? styles.active__navbar : ""}`}
-                                                onClick={() => {
-                                                    handleItemClick(item);
-                                                    setMemoryID(item.id)
-                                                }}
-                                            >
-                                                {item.volume}ГБ
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                                <div className={styles.price}>
-                                    {
-                                        productPrice !== 0 ? (
-                                            <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
-                                        ) : (
-                                            <div>Нету в наличии</div>
-                                        )
-                                    }
-                                </div>
-                                <div className={styles.mobile_detail__button}>
-                                    { productPrice !== 0 ? (
-                                        <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
-                                            <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
-                                        </button>
-                                    ) : (
-                                        null
-                                    ) }
-                                </div>
-                                <div className={styles.mobile_detail_info}>
-                                    <button onClick={() => setVisibleDiv("div1")} className={visibleDiv === "div1" ? styles.selected_btn : styles.option_btn}>Характеристика</button>
-                                    <button onClick={() => setVisibleDiv("div2")} className={visibleDiv === "div2" ? styles.selected_btn : styles.option_btn}>Описание</button>
-                                    <button onClick={() => setVisibleDiv("div3")} className={visibleDiv === "div3" ? styles.selected_btn : styles.option_btn}>Отзыв</button>
-                                </div>
-                                <div>
-                                    {visibleDiv === "div1" ? (
-                                        <div className={styles.сharacteristics}>
-                                            <table>
-                                                <tbody>
-                                                    {product?.characteristics ? (
-                                                        Object.entries(product.characteristics).map(([key, value], index) => (
-                                                            <tr key={index}>
-                                                                <th>
-                                                                    <span className={styles.dots__details_span}>
-                                                                        <span>{key}</span>
-                                                                    </span>
-                                                                </th>
-                                                                <td>{value}</td>
-                                                            </tr>
-                                                        ))
-                                                    ) : (
-                                                        <tr>
-                                                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                                                        </tr>
-                                                    )}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    ) : visibleDiv === "div2" ? (
-                                        <div className={styles.description}>
-                                            <p>
-                                                {expanded ? product?.description : `${product?.description?.slice(0, 100)}...`}
-                                                <span className={styles.open_des_func} onClick={toggleDescription}>
-                                                    {expanded ? "Свернуть" : "Развернуть"}
-                                                </span>
-                                            </p> 
-                                        </div>
-                                    ) : visibleDiv === "div3" ? (
-                                        <>
-                                            {openReviewInput ? (
-                                                <div className={styles.modal}>
-                                                    <div className={styles.modalContent}>
-                                                        <div className={styles.modal_text}>
-                                                            Написать отзыв
-                                                            <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
-                                                        </div>
-                                                        <div className={styles.user_info}>
-                                                            <span>Ваше имя</span>
-                                                            <div>{user.name}</div>
-                                                        </div>
-                                                        <form className={styles.add_review} onSubmit={handleSubmit}>
-                                                            <div className={styles.rating_block}>
-                                                                Оцените товар
-                                                                <Rating onClick={handleRating} initialValue={reviewStar} SVGclassName={styles.svg_rating} />
-                                                            </div>
-                                                            <div className={styles.review_input_block}>
-                                                                <span>Отзыв</span>
-                                                                <input
-                                                                    type="text"
-                                                                    name="text"
-                                                                    value={reviewData.text}
-                                                                    onChange={handleChange}
-                                                                    className={styles.review_text}
-                                                                />
-                                                            </div>
-                                                            <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }}>
-                                                                <button className={styles.add_review_btn} type="submit">Отправить</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                <>
-                                                    {user && token ? (
-                                                        <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
-                                                            <img src={reviews} className={styles.reviews__svg} alt="" />
-                                                            <input type="button" value="Написать отзыв" />
-                                                        </div>
-                                                    ) : null}
-                                                </>
-                                            )}
-                                            {
-                                                    <div className={styles.reviews}>
-                                                        {product.reviews?.map((reviewItem, index) => (
-                                                            <div className={styles.reviews_content} key={index}>
-                                                                <div className={styles.reviews_header}>
-                                                                    <div className={styles.reviews_name} style={{ gap: "5px" }}>
-                                                                        <div style={{ marginRight: "10px" }}>{reviewItem.user_name}</div>
-                                                                        {reviewItem?.rating != undefined ? (
-                                                                            [1, 2, 3, 4, 5].map((star) => (
-                                                                                <span
-                                                                                    key={star}
-                                                                                    style={{
-                                                                                        cursor: 'pointer',
-                                                                                        color: star <= reviewItem.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
-                                                                                    }}
-                                                                                >
-                                                                                    &#9733;
-                                                                                </span>
-                                                                            ))
-                                                                        ) : (
-                                                                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                                                                        )}
-                                                                    </div>
-                                                                    <div className={styles.reviews_date}>
-                                                                        <span>{
-                                                                            new Intl.DateTimeFormat("ru-RU", {
-                                                                                year: "numeric",
-                                                                                month: "numeric",
-                                                                                day: "numeric",
-                                                                            }).format(new Date(reviewItem.created_at))}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div className={styles.reviews_description}>
-                                                                    <p>{reviewItem.text}</p>
-                                                                </div>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                            }
-
-                                        </>
-                                    ) : null}
-                                </div>
-                            </div>
-                        </div>
-                    ) : (
-                        <div className={styles.loader}>
-                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                        </div>
-                    )}
-                </div>
-            ) : (
-                <>
-                    {product && product?.id === numberedId ? (
-                        <div>
-                            <div className={styles.detail_main}>
-                                <div className={styles.section_title}>
-                                    <div className={styles.path}>
-                                        <a href="/">Главная</a> | <a href={`/products/brands/${product.brand}`}>{ product.brand_title }</a> | <a href={`/products/filter/${product.brand_category}/${product.brand}`}>{product?.brand_category_title}</a> | {product?.name}
-                                    </div>
-                                </div>
-                                <div className={styles.detail_container}>
-                                    <div className={styles.detail_wrapper__left}>
-                                        <div className={styles.slider_main}>
-                                            <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
-                                        </div>
-                                        <div className={styles.options}>
-                                            <div>{ product?.color.length !== 0 ? "Выбрать цвет" : "" }</div>
-                                            {product?.color ? (
-                                                product?.color.map((item: any, index: number) => (
-                                                    <div
-                                                        key={index}
-                                                        className={`${styles.color_block} ${colorPicked === item.hash_code ? styles.selectedColor : ""}`}
-                                                        style={{ background: item.hash_code ? item.hash_code : "" }}
-                                                        onClick={() => handleColorPick(item)}
-                                                    ></div>
-                                                ))
-                                            ) : (
-                                                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                                            )}
-                                        </div>
-                                        <div className={styles.description}>
-                                            <div>Описание</div>
-                                            <p>
-                                                {expanded ? product?.description : `${product?.description?.slice(0, 100)}...`}
-                                                <span className={styles.open_des_func} onClick={toggleDescription}>
-                                                    {expanded ? "Свернуть" : "Развернуть"}
-                                                </span>
-                                            </p>
+        <>
+            <Helmet>
+                <title>{`${product?.name}`} - Turan electronics интернет магазин электроники</title>
+                <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+                <link rel="canonical" href={`https://turanelectronics.kg/product/${product?.id}`} />
+            </Helmet>
+            <div>
+                {isMobile ? (
+                    <div className={styles.mobile_detail__main}>
+                        {product && product?.id === numberedId ? (
+                            <div className={styles.mobile_detail__container}>
+                                <div className={styles.mobile_detail}>
+                                    <div className={styles.section_title}>
+                                        <div className={styles.path}>
+                                            <a href="/">Главная</a> | <a href="/recommendation/products">Каталог</a> | <a href={`/products/brands/${product.brand}`}>{product?.brand_category_title}</a> | <a>{product?.name}</a>
                                         </div>
                                     </div>
-                                    <div></div>
-                                    <div className={styles.detail_wrapper__right}>
+                                    <div className={styles.mobile_detail__title}>
+                                        <div>
+                                            {product?.name}
+                                        </div>
                                         <div className={styles.stars}>
                                             {product?.rating != undefined ? (
                                                 [1, 2, 3, 4, 5].map((star) => (
@@ -484,178 +227,443 @@ function DetailPage() {
                                                 <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                                             )}
                                         </div>
-                                        <div className={styles.title}>
-                                            <div>{product?.name}</div>
-                                        </div>
-                                        <div className={styles.storage}>
-                                            {product.memory_price ? (
-                                                <div>Память</div>
-                                            ) : (
-                                                null
-                                            )}
-                                            <ul className={styles.navigation}>
-                                                {product?.memory?.map((item: any, index: number) => (
-                                                    <li
+
+                                    </div>
+                                    <div className={styles.slider_main}>
+                                        <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
+                                    </div>
+                                    <div className={styles.mobile_detail__util}>
+                                        <div className={styles.options}>
+                                            <div>{ product?.color.length !== 0 ? "Выбрать цвет" : "" }</div>
+                                            {product?.color ? (
+                                                product?.color.map((item: any, index: number) => (
+                                                    <div
                                                         key={index}
-                                                        className={`${styles.navigation__item} ${activeItem === item ? styles.active__navbar : ""}`}
-                                                        style={{ marginRight: "10px" }}
-                                                        onClick={() => {
-                                                            handleItemClick(item);
-                                                            setMemoryID(item.id)
-                                                        }}
-                                                    >
-                                                        {item.volume}ГБ
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                        <div className={styles.price}>
-                                            {
-                                                productPrice !== 0 ? (
-                                                    <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
-                                                ) : (
-                                                    <div>Нету в наличии</div>
-                                                )
-                                            }
-                                        </div>
-                                        <div className={styles.utils}>
-                                            { productPrice !== 0 ? (
-                                                <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
-                                                    <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
-                                                </button>
+                                                        className={`${styles.color_block} ${colorPicked === item.hash_code ? styles.selectedColor : ""}`}
+                                                        style={{ background: item.hash_code ? item.hash_code : "" }}
+                                                        onClick={() => handleColorPick(item)}
+                                                    ></div>
+                                                ))
                                             ) : (
-                                                null
-                                            ) }
-                                            {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
-                                            <img
-                                                className={styles.detail_img}
-                                                src={isProductInFavorites ? fillHeart : heart}
-                                                onClick={() => {
-                                                    handleClickFavorite(product.id || 0);
-                                                }}
-                                                style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }}
-                                            />
+                                                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                                            )}
                                         </div>
-                                        <div className={styles.сharacteristics}>
-                                            <div className={styles.сharacteristics_title}>
-                                                <div>Характеристики:</div>
-                                            </div>
-                                            <table>
-                                                <tbody>
-                                                    {product?.characteristics ? (
-                                                        Object.entries(product.characteristics).map(([key, value], index) => (
-                                                            <tr key={index}>
-                                                                <th>
-                                                                    <span className={styles.dots__details_span}>
-                                                                        <span>{key}</span>
-                                                                    </span>
-                                                                </th>
-                                                                <td>{value}</td>
+                                        {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
+                                        <img
+                                            className={styles.detail_img}
+                                            src={isProductInFavorites ? fillHeart : heart}
+                                            onClick={() => {
+                                                handleClickFavorite(product.id || 0);
+                                            }}
+                                            style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }}
+                                        />
+                                    </div>
+                                    <div className={styles.storage}>
+                                        {product.memory_price ? (
+                                            <div>Память</div>
+                                        ) : (
+                                            null
+                                        )}
+                                        <ul className={styles.navigation}>
+                                            {product?.memory?.map((item: any, index: number) => (
+                                                <li
+                                                    key={index}
+                                                    className={`${styles.navigation__item} ${activeItem === item ? styles.active__navbar : ""}`}
+                                                    onClick={() => {
+                                                        handleItemClick(item);
+                                                        setMemoryID(item.id)
+                                                    }}
+                                                >
+                                                    {item.volume}ГБ
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className={styles.price}>
+                                        {
+                                            productPrice !== 0 ? (
+                                                <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
+                                            ) : (
+                                                <div>Нету в наличии</div>
+                                            )
+                                        }
+                                    </div>
+                                    <div className={styles.mobile_detail__button}>
+                                        { productPrice !== 0 ? (
+                                            <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
+                                                <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
+                                            </button>
+                                        ) : (
+                                            null
+                                        ) }
+                                    </div>
+                                    <div className={styles.mobile_detail_info}>
+                                        <button onClick={() => setVisibleDiv("div1")} className={visibleDiv === "div1" ? styles.selected_btn : styles.option_btn}>Характеристика</button>
+                                        <button onClick={() => setVisibleDiv("div2")} className={visibleDiv === "div2" ? styles.selected_btn : styles.option_btn}>Описание</button>
+                                        <button onClick={() => setVisibleDiv("div3")} className={visibleDiv === "div3" ? styles.selected_btn : styles.option_btn}>Отзыв</button>
+                                    </div>
+                                    <div>
+                                        {visibleDiv === "div1" ? (
+                                            <div className={styles.сharacteristics}>
+                                                <table>
+                                                    <tbody>
+                                                        {product?.characteristics ? (
+                                                            Object.entries(product.characteristics).map(([key, value], index) => (
+                                                                <tr key={index}>
+                                                                    <th>
+                                                                        <span className={styles.dots__details_span}>
+                                                                            <span>{key}</span>
+                                                                        </span>
+                                                                    </th>
+                                                                    <td>{value}</td>
+                                                                </tr>
+                                                            ))
+                                                        ) : (
+                                                            <tr>
+                                                                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
                                                             </tr>
-                                                        ))
-                                                    ) : (
-                                                        <tr>
-                                                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                                                        </tr>
-                                                    )}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                        )}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        ) : visibleDiv === "div2" ? (
+                                            <div className={styles.description}>
+                                                <p>
+                                                    {expanded ? product?.description : `${product?.description?.slice(0, 100)}...`}
+                                                    <span className={styles.open_des_func} onClick={toggleDescription}>
+                                                        {expanded ? "Свернуть" : "Развернуть"}
+                                                    </span>
+                                                </p> 
+                                            </div>
+                                        ) : visibleDiv === "div3" ? (
+                                            <>
+                                                {openReviewInput ? (
+                                                    <div className={styles.modal}>
+                                                        <div className={styles.modalContent}>
+                                                            <div className={styles.modal_text}>
+                                                                Написать отзыв
+                                                                <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
+                                                            </div>
+                                                            <div className={styles.user_info}>
+                                                                <span>Ваше имя</span>
+                                                                <div>{user.name}</div>
+                                                            </div>
+                                                            <form className={styles.add_review} onSubmit={handleSubmit}>
+                                                                <div className={styles.rating_block}>
+                                                                    Оцените товар
+                                                                    <Rating onClick={handleRating} initialValue={reviewStar} SVGclassName={styles.svg_rating} />
+                                                                </div>
+                                                                <div className={styles.review_input_block}>
+                                                                    <span>Отзыв</span>
+                                                                    <input
+                                                                        type="text"
+                                                                        name="text"
+                                                                        value={reviewData.text}
+                                                                        onChange={handleChange}
+                                                                        className={styles.review_text}
+                                                                    />
+                                                                </div>
+                                                                <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }}>
+                                                                    <button className={styles.add_review_btn} type="submit">Отправить</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        {user && token ? (
+                                                            <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
+                                                                <img src={reviews} className={styles.reviews__svg} alt="" />
+                                                                <input type="button" value="Написать отзыв" />
+                                                            </div>
+                                                        ) : null}
+                                                    </>
+                                                )}
+                                                {
+                                                        <div className={styles.reviews}>
+                                                            {product.reviews?.map((reviewItem, index) => (
+                                                                <div className={styles.reviews_content} key={index}>
+                                                                    <div className={styles.reviews_header}>
+                                                                        <div className={styles.reviews_name} style={{ gap: "5px" }}>
+                                                                            <div style={{ marginRight: "10px" }}>{reviewItem.user_name}</div>
+                                                                            {reviewItem?.rating != undefined ? (
+                                                                                [1, 2, 3, 4, 5].map((star) => (
+                                                                                    <span
+                                                                                        key={star}
+                                                                                        style={{
+                                                                                            cursor: 'pointer',
+                                                                                            color: star <= reviewItem.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
+                                                                                        }}
+                                                                                    >
+                                                                                        &#9733;
+                                                                                    </span>
+                                                                                ))
+                                                                            ) : (
+                                                                                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                                                                            )}
+                                                                        </div>
+                                                                        <div className={styles.reviews_date}>
+                                                                            <span>{
+                                                                                new Intl.DateTimeFormat("ru-RU", {
+                                                                                    year: "numeric",
+                                                                                    month: "numeric",
+                                                                                    day: "numeric",
+                                                                                }).format(new Date(reviewItem.created_at))}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className={styles.reviews_description}>
+                                                                        <p>{reviewItem.text}</p>
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                }
+
+                                            </>
+                                        ) : null}
                                     </div>
                                 </div>
-                                <div className={styles.reviews_container}>
-                                    {openReviewInput ? (
-                                        <div className={styles.modal}>
-                                            <div className={styles.modalContent}>
-                                                <div className={styles.modal_text}>
-                                                    Написать отзыв
-                                                    <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
-                                                </div>
-                                                <div className={styles.user_info}>
-                                                    <span>Ваше имя</span>
-                                                    <div>{user.name}</div>
-                                                </div>
-                                                <form className={styles.add_review} onSubmit={handleSubmit}>
-                                                    <div className={styles.rating_block}>
-                                                        Оцените товар
-                                                        <Rating onClick={handleRating} initialValue={reviewStar} SVGclassName={styles.svg_rating} />
-                                                    </div>
-                                                    <div className={styles.review_input_block}>
-                                                        <span>Отзыв</span>
-                                                        <input
-                                                            type="text"
-                                                            name="text"
-                                                            value={reviewData.text}
-                                                            onChange={handleChange}
-                                                            className={styles.review_text}
-                                                        />
-                                                    </div>
-                                                    <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }}>
-                                                        <button className={styles.add_review_btn} type="submit">Отправить</button>
-                                                    </div>
-                                                </form>
+                            </div>
+                        ) : (
+                            <div className={styles.loader}>
+                                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <>
+                        {product && product?.id === numberedId ? (
+                            <div>
+                                <div className={styles.detail_main}>
+                                    <div className={styles.section_title}>
+                                        <div className={styles.path}>
+                                            <a href="/">Главная</a> | <a href={`/products/brands/${product.brand}`}>{ product.brand_title }</a> | <a href={`/products/filter/${product.brand_category}/${product.brand}`}>{product?.brand_category_title}</a> | {product?.name}
+                                        </div>
+                                    </div>
+                                    <div className={styles.detail_container}>
+                                        <div className={styles.detail_wrapper__left}>
+                                            <div className={styles.slider_main}>
+                                                <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
+                                            </div>
+                                            <div className={styles.options}>
+                                                <div>{ product?.color.length !== 0 ? "Выбрать цвет" : "" }</div>
+                                                {product?.color ? (
+                                                    product?.color.map((item: any, index: number) => (
+                                                        <div
+                                                            key={index}
+                                                            className={`${styles.color_block} ${colorPicked === item.hash_code ? styles.selectedColor : ""}`}
+                                                            style={{ background: item.hash_code ? item.hash_code : "" }}
+                                                            onClick={() => handleColorPick(item)}
+                                                        ></div>
+                                                    ))
+                                                ) : (
+                                                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                                                )}
+                                            </div>
+                                            <div className={styles.description}>
+                                                <div>Описание</div>
+                                                <p>
+                                                    {expanded ? product?.description : `${product?.description?.slice(0, 100)}...`}
+                                                    <span className={styles.open_des_func} onClick={toggleDescription}>
+                                                        {expanded ? "Свернуть" : "Развернуть"}
+                                                    </span>
+                                                </p>
                                             </div>
                                         </div>
-                                    ) : (
-                                        <>
-                                            {user && token ? (
-                                                <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
-                                                    <img src={reviews} className={styles.reviews__svg} alt="" />
-                                                    <input type="button" value="Написать отзыв" />
+                                        <div></div>
+                                        <div className={styles.detail_wrapper__right}>
+                                            <div className={styles.stars}>
+                                                {product?.rating != undefined ? (
+                                                    [1, 2, 3, 4, 5].map((star) => (
+                                                        <span
+                                                            key={star}
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                                color: star <= product.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
+                                                                marginRight: '5px',
+                                                            }}
+                                                        >
+                                                            &#9733;
+                                                        </span>
+                                                    ))
+                                                ) : (
+                                                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                                                )}
+                                            </div>
+                                            <div className={styles.title}>
+                                                <div>{product?.name}</div>
+                                            </div>
+                                            <div className={styles.storage}>
+                                                {product.memory_price ? (
+                                                    <div>Память</div>
+                                                ) : (
+                                                    null
+                                                )}
+                                                <ul className={styles.navigation}>
+                                                    {product?.memory?.map((item: any, index: number) => (
+                                                        <li
+                                                            key={index}
+                                                            className={`${styles.navigation__item} ${activeItem === item ? styles.active__navbar : ""}`}
+                                                            style={{ marginRight: "10px" }}
+                                                            onClick={() => {
+                                                                handleItemClick(item);
+                                                                setMemoryID(item.id)
+                                                            }}
+                                                        >
+                                                            {item.volume}ГБ
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            <div className={styles.price}>
+                                                {
+                                                    productPrice !== 0 ? (
+                                                        <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
+                                                    ) : (
+                                                        <div>Нету в наличии</div>
+                                                    )
+                                                }
+                                            </div>
+                                            <div className={styles.utils}>
+                                                { productPrice !== 0 ? (
+                                                    <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
+                                                        <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
+                                                    </button>
+                                                ) : (
+                                                    null
+                                                ) }
+                                                {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
+                                                <img
+                                                    className={styles.detail_img}
+                                                    src={isProductInFavorites ? fillHeart : heart}
+                                                    onClick={() => {
+                                                        handleClickFavorite(product.id || 0);
+                                                    }}
+                                                    style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }}
+                                                />
+                                            </div>
+                                            <div className={styles.сharacteristics}>
+                                                <div className={styles.сharacteristics_title}>
+                                                    <div>Характеристики:</div>
                                                 </div>
-                                            ) : null}
-                                        </>
-                                    )}
-                                        <div className={styles.reviews}>
-                                            {product.reviews?.map((reviewItem, index) => (
-                                                <div className={styles.reviews_content} key={index}>
-                                                    <div className={styles.reviews_header}>
-                                                        <div className={styles.reviews_name} style={{ gap: "5px" }}>
-                                                            <div style={{ marginRight: "10px" }}>{reviewItem.user_name}</div>
-                                                            {reviewItem?.rating != undefined ? (
-                                                                [1, 2, 3, 4, 5].map((star) => (
-                                                                    <span
-                                                                        key={star}
-                                                                        style={{
-                                                                            cursor: 'pointer',
-                                                                            color: star <= reviewItem.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
-                                                                        }}
-                                                                    >
-                                                                        &#9733;
-                                                                    </span>
-                                                                ))
-                                                            ) : (
+                                                <table>
+                                                    <tbody>
+                                                        {product?.characteristics ? (
+                                                            Object.entries(product.characteristics).map(([key, value], index) => (
+                                                                <tr key={index}>
+                                                                    <th>
+                                                                        <span className={styles.dots__details_span}>
+                                                                            <span>{key}</span>
+                                                                        </span>
+                                                                    </th>
+                                                                    <td>{value}</td>
+                                                                </tr>
+                                                            ))
+                                                        ) : (
+                                                            <tr>
                                                                 <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                                                            )}
-                                                        </div>
-                                                        <div className={styles.reviews_date}>
-                                                            <span>{
-                                                                new Intl.DateTimeFormat("ru-RU", {
-                                                                    year: "numeric",
-                                                                    month: "numeric",
-                                                                    day: "numeric",
-                                                                }).format(new Date(reviewItem.created_at))}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div className={styles.reviews_description}>
-                                                        <p>{reviewItem.text}</p>
-                                                    </div>
-                                                </div>
-                                            ))}
+                                                            </tr>
+                                                        )}
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
+                                    </div>
+                                    <div className={styles.reviews_container}>
+                                        {openReviewInput ? (
+                                            <div className={styles.modal}>
+                                                <div className={styles.modalContent}>
+                                                    <div className={styles.modal_text}>
+                                                        Написать отзыв
+                                                        <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
+                                                    </div>
+                                                    <div className={styles.user_info}>
+                                                        <span>Ваше имя</span>
+                                                        <div>{user.name}</div>
+                                                    </div>
+                                                    <form className={styles.add_review} onSubmit={handleSubmit}>
+                                                        <div className={styles.rating_block}>
+                                                            Оцените товар
+                                                            <Rating onClick={handleRating} initialValue={reviewStar} SVGclassName={styles.svg_rating} />
+                                                        </div>
+                                                        <div className={styles.review_input_block}>
+                                                            <span>Отзыв</span>
+                                                            <input
+                                                                type="text"
+                                                                name="text"
+                                                                value={reviewData.text}
+                                                                onChange={handleChange}
+                                                                className={styles.review_text}
+                                                            />
+                                                        </div>
+                                                        <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }}>
+                                                            <button className={styles.add_review_btn} type="submit">Отправить</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                {user && token ? (
+                                                    <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
+                                                        <img src={reviews} className={styles.reviews__svg} alt="" />
+                                                        <input type="button" value="Написать отзыв" />
+                                                    </div>
+                                                ) : null}
+                                            </>
+                                        )}
+                                            <div className={styles.reviews}>
+                                                {product.reviews?.map((reviewItem, index) => (
+                                                    <div className={styles.reviews_content} key={index}>
+                                                        <div className={styles.reviews_header}>
+                                                            <div className={styles.reviews_name} style={{ gap: "5px" }}>
+                                                                <div style={{ marginRight: "10px" }}>{reviewItem.user_name}</div>
+                                                                {reviewItem?.rating != undefined ? (
+                                                                    [1, 2, 3, 4, 5].map((star) => (
+                                                                        <span
+                                                                            key={star}
+                                                                            style={{
+                                                                                cursor: 'pointer',
+                                                                                color: star <= reviewItem.rating ? 'rgba(255, 115, 0, 0.848)' : 'gray',
+                                                                            }}
+                                                                        >
+                                                                            &#9733;
+                                                                        </span>
+                                                                    ))
+                                                                ) : (
+                                                                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                                                                )}
+                                                            </div>
+                                                            <div className={styles.reviews_date}>
+                                                                <span>{
+                                                                    new Intl.DateTimeFormat("ru-RU", {
+                                                                        year: "numeric",
+                                                                        month: "numeric",
+                                                                        day: "numeric",
+                                                                    }).format(new Date(reviewItem.created_at))}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div className={styles.reviews_description}>
+                                                            <p>{reviewItem.text}</p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                    </div>
                                 </div>
+                                <Brands />
                             </div>
-                            <Brands />
-                        </div>
-                    ) : (
-                        <div className={styles.loader}>
-                            <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                        </div>
-                    )}
-                </>
-            )}
-        </div>
+                        ) : (
+                            <div className={styles.loader}>
+                                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
+        </>
     )
 }
 
