@@ -106,6 +106,11 @@ export interface OrderI {
     order: OrderType[]
 }
 
+export interface ActiveItem {
+    id: number,
+    volume: any;
+}
+
 export const default_filters = {
     limit: 100,
     offset: 0,
