@@ -127,20 +127,20 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.right__special}>
-                                {product.in_stock ? (
+                            <div className={styles.right__special} style={ product.price !== 0 ? {} : { justifyContent: "flex-end" } } >
+                                {product.in_stock && product.price !== 0 ? (
                                     <div className={styles.isAvilableProduct}>
                                         <img alt={product.name} src={checked} />
                                         <span>В наличии</span>
                                     </div>
                                 ) : (
-                                    <div style={{ color: "brown" }}>Нет в наличии</div>
+                                    null
                                 )}
-                                <div className={styles.price_mobile}>
+                                <div className={styles.price_mobile} style={ product.price !== 0 ? {} : { width: "100%", justifyContent: "flex-end" } }>
                                     {product.price !== 0 ? (
                                         <>{product.price} сом</>
                                     ) : (
-                                        <div style={{ color: 'red' }}>Нету в наличии</div>
+                                        <div style={{ color: 'red' }}>Нет в наличии</div>
                                     )}
                                     <div className={styles.bag__mobile}>
                                         <img alt={product.name} src={shop} />
@@ -202,7 +202,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                                  {product.discount !== 0 && <h3>{product.price} сом</h3>}
                                              </>
                                         ) : (
-                                            <h2 style={{ color: 'red' }}>Нету в наличии</h2>
+                                            <h2 style={{ color: 'red' }}>Нет в наличии</h2>
                                         )
                                     }
                                 </div>

@@ -34,7 +34,7 @@ function DetailPage() {
     const pickedColor = useSelector((state: RootStates) => state.oneProduct.pickedColor);
 
     const [favoriteLoaded, setFavoriteLoad] = useState(false);
-    const [activeItem, setActiveItem] = useState<string | undefined>("");
+    const [activeItem, setActiveItem] = useState<any>("");
     const [openReviewInput, setOpenReviewInput] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [addedToCart, setAddedToCart] = useState(false);
@@ -177,11 +177,23 @@ function DetailPage() {
 
     useEffect(() => {
         if (activeItem) {
-            if (product?.memory_price) {
-                let price = product?.memory_price[(activeItem as any)["volume"]];
-                let transPrice = price?.replace(/[^\d.]/g, '');
-                if (transPrice) {
-                    setProductPrice(+transPrice);
+            if(product?.prices) {
+                let transPrice = product.prices.find((item: any) => {
+                    return item.product_color === pickedColor
+                })
+                if(transPrice?.price !== undefined) {
+                    if(transPrice.memory === activeItem["volume"]) {
+                        setProductPrice(transPrice?.price)
+                    } else {
+                        setProductPrice(product.price)
+                    }
+                } else {
+                    setProductPrice(product.price)
+                }
+                console.log(transPrice, activeItem)
+            } else {
+                if(product?.price !== undefined) {
+                    setProductPrice(product?.price)
                 }
             }
         }
