@@ -11,6 +11,7 @@ import prevArrow from "../assets/svgs/mingcute_arrow-right-line.svg";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
 import '../styles/homepage.scss'
+import { Helmet } from 'react-helmet-async';
 
 function BrandsPage() {
     const { brand } = useParams();
@@ -101,6 +102,11 @@ function BrandsPage() {
     if(oneBrand != undefined && filteredProducts !== undefined) {
         return (
             <>
+                <Helmet>
+                    <title>Товары - {`${oneBrand.title} Turan electronics интернет магазин`}</title>
+                    <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+                    <link rel="canonical" href={`https://turanelectronics.kg/products/${oneBrand.id}`} />
+                </Helmet>
                 <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} productsByBrandCategory={productsByBrandCategory} />
                 <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ marginTop: "30px" }}>
                 {
@@ -138,10 +144,16 @@ function BrandsPage() {
         )
     } else {
         return (
-            <div className={"loading"}>
-                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                <div>Загрузка...</div>
-            </div>
+            <>
+                <Helmet>
+                    <title>Turan electronics - бренд</title>
+                    <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+                </Helmet>
+                <div className={"loading"}>
+                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                    <div>Загрузка...</div>
+                </div>
+            </>
         )
     }
 }

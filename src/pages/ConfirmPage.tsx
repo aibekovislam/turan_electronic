@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom"
 import { activateUser } from "../store/features/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { Helmet } from "react-helmet-async";
 
 function ConfirmPage() {
   const [ searchParams ] = useSearchParams();
@@ -20,13 +21,20 @@ function ConfirmPage() {
   }, [dispatch, obj.uid, obj.token]);  
 
   return (
-    <div>
-        { obj.uid && obj.token ? (
-            <h1>Ваш аккаунт активирован, авторизуйтесь пожалуйста. <a href="/auth">Ссылка на авторизацию</a></h1>
-          ) : (
-            <h1>Мы отправили письмо на вашу почту, подтвердите пожалуйста.</h1>
-          ) }
-    </div>
+    <>
+      <Helmet>
+        <title>Подтверждение аккаунта - Turan electronics</title>
+        <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+        <link rel="canonical" href={`https://turanelectronics.kg/activate`} />
+      </Helmet>
+      <div>
+          { obj.uid && obj.token ? (
+              <h1>Ваш аккаунт активирован, авторизуйтесь пожалуйста. <a href="/auth">Ссылка на авторизацию</a></h1>
+            ) : (
+              <h1>Мы отправили письмо на вашу почту, подтвердите пожалуйста.</h1>
+            ) }
+      </div>
+    </>
   )
 }
 
