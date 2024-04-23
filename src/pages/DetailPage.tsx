@@ -42,7 +42,6 @@ function DetailPage() {
     const [productPrice, setProductPrice] = useState(0);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const [visibleDiv, setVisibleDiv] = useState<null | 'div1' | 'div2' | 'div3'>('div1');
-    const [priceColor, setPriceColor] = useState<any>(null);
 
     ping.register()
 
@@ -88,7 +87,6 @@ function DetailPage() {
             const price_color = product?.prices.find((item: any) => {
                 return item.product_color === color.hash_code;
             });
-            setPriceColor(price_color?.price);
             dispatch(colorPickToAddToCart(price_color?.product_color));
         } else {
             dispatch(colorPickToAddToCart(color.hash_code));
@@ -308,7 +306,7 @@ function DetailPage() {
                                     <div className={styles.price}>
                                         {
                                             productPrice !== 0 ? (
-                                                <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
+                                                <div>{calculateDiscountedPrice(productPrice ? productPrice : product.price, product.discount)} сом</div>
                                             ) : (
                                                 <div style={{ color: "red" }}>Нет в наличии</div>
                                             )
@@ -545,7 +543,7 @@ function DetailPage() {
                                             <div className={styles.price}>
                                                 {
                                                     productPrice !== 0 ? (
-                                                        <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
+                                                        <div>{calculateDiscountedPrice(productPrice ? productPrice : product.price, product.discount)} сом</div>
                                                     ) : (
                                                         <div style={{ color: "red" }} >Нет в наличии</div>
                                                     )
