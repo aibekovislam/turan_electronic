@@ -205,6 +205,12 @@ function DetailPage() {
                 <title>{`${product?.name}`} - Turan electronics интернет магазин электроники</title>
                 <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
                 <link rel="canonical" href={`https://turanelectronics.kg/product/${product?.id}`} />
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content={`https://turanelectronics.kg/product/${product?.id}`} />
+                <meta property="og:title" content={`${product?.name} - купить по выгодной цене в интернет-магазине Turan electronics`}/>
+                <meta property="og:description" content={`✅ ${product?.name} - в наличии в интернет-магазине Turan electronics! Самые выгодные цены на смартфоны! ✔ Характеристики ✔ Фото ✔ Ассортимент ✔ Отзывы ✔ Гарантия ✔ Рассрочка! Доставка 🚚`}/>
+                <meta property="og:image" content="https://www.turanelectronics.kg/assets/Logo%20(1)-DC1p9Mn0.svg" />
+                <meta data-hid="property::og:site_name" property="og:site_name" content="TuranElectronics"/>
             </Helmet>
             <section>
                 {isMobile ? (
