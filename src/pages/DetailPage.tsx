@@ -206,7 +206,7 @@ function DetailPage() {
                 <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
                 <link rel="canonical" href={`https://turanelectronics.kg/product/${product?.id}`} />
             </Helmet>
-            <div>
+            <section>
                 {isMobile ? (
                     <div className={styles.mobile_detail__main}>
                         {product && product?.id === numberedId ? (
@@ -504,7 +504,7 @@ function DetailPage() {
                                                 )}
                                             </div>
                                             <div className={styles.title}>
-                                                <div>{product?.name}</div>
+                                                <h1>{product?.name}</h1>
                                             </div>
                                             <div className={styles.storage}>
                                                 {product.memory_price ? (
@@ -674,7 +674,7 @@ function DetailPage() {
                         )}
                     </>
                 )}
-            </div>
+            </section>
         </>
     )
 }
