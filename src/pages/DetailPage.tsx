@@ -179,19 +179,26 @@ function DetailPage() {
     useEffect(() => {
         if (activeItem) {
             if(product?.prices) {
-                let transPrice = product.prices.find((item: any) => {
+                let transPrice = product.prices.filter((item: any) => {
                     return item.product_color === pickedColor
                 })
-                if(transPrice?.price !== undefined) {
-                    if(transPrice.memory === activeItem["volume"]) {
-                        setProductPrice(transPrice?.price)
+                const colorAndMemoryPrice = transPrice.find((item: any) => {
+                    if(item.memory) {
+                        return item.memory === activeItem["volume"]
+                    } else {
+                        return { ...item }
+                    }
+                })
+                if(colorAndMemoryPrice?.price !== undefined) {
+                    if(colorAndMemoryPrice.memory) {
+                        setProductPrice(colorAndMemoryPrice?.price)
                     } else {
                         setProductPrice(product.price)
                     }
                 } else {
                     setProductPrice(product.price)
                 }
-                console.log(transPrice, activeItem)
+                console.log(colorAndMemoryPrice, activeItem)
             } else {
                 if(product?.price !== undefined) {
                     setProductPrice(product?.price)
