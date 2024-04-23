@@ -19,6 +19,7 @@ import 'ldrs/ring';
 import { ping } from 'ldrs'
 import { Rating } from 'react-simple-star-rating'
 import { Helmet } from "react-helmet-async";
+import { API_URL } from "../utils/consts";
 
 function DetailPage() {
     const { id } = useParams();
@@ -209,7 +210,7 @@ function DetailPage() {
                 <meta property="og:url" content={`https://turanelectronics.kg/product/${product?.id}`} />
                 <meta property="og:title" content={`${product?.name} - купить по выгодной цене в интернет-магазине Turan electronics`}/>
                 <meta property="og:description" content={`✅ ${product?.name} - в наличии в интернет-магазине Turan electronics! Самые выгодные цены на смартфоны! ✔ Характеристики ✔ Фото ✔ Ассортимент ✔ Отзывы ✔ Гарантия ✔ Рассрочка! Доставка 🚚`}/>
-                <meta property="og:image" content="https://www.turanelectronics.kg/assets/Logo%20(1)-DC1p9Mn0.svg" />
+                <meta property="og:image" content={`${API_URL}/${product?.default_image?.slice(16)}`} />
                 <meta data-hid="property::og:site_name" property="og:site_name" content="TuranElectronics"/>
             </Helmet>
             <section>
