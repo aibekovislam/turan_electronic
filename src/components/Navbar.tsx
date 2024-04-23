@@ -64,7 +64,7 @@ function Navbar() {
   };
 
   return (
-    <div className={styles.navbar}>
+    <header className={styles.navbar}>
       <nav className={styles.navbar__items}>
         <div className={styles.block_1}>
           <img src={border__img} alt="img" />
@@ -183,7 +183,7 @@ function Navbar() {
           </div>
         ) : (null) }
       </nav>
-    </div>
+    </header>
   );
 }
 
