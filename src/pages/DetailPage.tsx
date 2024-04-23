@@ -296,7 +296,7 @@ function DetailPage() {
                                             productPrice !== 0 ? (
                                                 <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
                                             ) : (
-                                                <div>Нету в наличии</div>
+                                                <div>Нет в наличии</div>
                                             )
                                         }
                                     </div>
@@ -533,7 +533,7 @@ function DetailPage() {
                                                     productPrice !== 0 ? (
                                                         <div>{calculateDiscountedPrice(!priceColor ? productPrice : priceColor, product.discount)} сом</div>
                                                     ) : (
-                                                        <div>Нету в наличии</div>
+                                                        <div>Нет в наличии</div>
                                                     )
                                                 }
                                             </div>
