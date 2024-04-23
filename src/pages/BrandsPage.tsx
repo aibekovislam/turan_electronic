@@ -103,8 +103,8 @@ function BrandsPage() {
         return (
             <>
                 <Helmet>
-                    <title>Товары - {`${oneBrand.title} Turan electronics интернет магазин`}</title>
-                    <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+                    <title>{`${oneBrand.title} каталог - Turan electronics интернет магазин`}</title>
+                    <meta name="description" content={`Ищете продукцию от бренда ${oneBrand.title}? У нас широкий ассортимент товаров высокого качества по выгодным ценам. Посетите наш интернет-магазин и выберите лучшие товары для себя. Доставка по всей стране!`}></meta>
                     <link rel="canonical" href={`https://turanelectronics.kg/products/${oneBrand.id}`} />
                 </Helmet>
                 <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} productsByBrandCategory={productsByBrandCategory} />
