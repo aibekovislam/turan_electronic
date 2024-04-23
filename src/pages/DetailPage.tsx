@@ -79,10 +79,21 @@ function DetailPage() {
         }
     }, [product])
 
+    // useEffect(() => {
+    //     if (product?.memory && product?.memory.length <= 0) {
+    //         setActiveItem({ volume: "0" });
+    //     }
+    // }, [product]);    
+
+    console.log(activeItem)
+
     console.log(product)
 
     const handleColorPick = (color: any) => {
         setColorPicked(color.hash_code);
+        if (product?.memory && product?.memory.length <= 0) {
+            setActiveItem({ volume: "0" });
+        }
         if(product?.prices.length !== 0) {
             const price_color = product?.prices.find((item: any) => {
                 return item.product_color === color.hash_code;
