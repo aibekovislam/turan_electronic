@@ -19,9 +19,11 @@ function HomePage() {
   return (
     <>
       <Helmet>
-        <title>Главная - Turan electronics</title>
+        <title>Turan Electronics - интернет магазин</title>
         <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
         <link rel="canonical" href={`https://turanelectronics.kg/`} />
+        <link rel="icon" type="image/svg+xml" href="./src/assets/logo_for_web.svg" />
+        <link rel="shortcut icon" href="./src/assets/logo_for_web.svg" type="image/x-icon"></link>
       </Helmet>
       <div style={{ position: "relative" }}>
         <NavbarNavigation/>
