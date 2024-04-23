@@ -214,7 +214,7 @@ function DetailPage() {
                 }
             }
         }
-    }, [activeItem])
+    }, [activeItem, pickedColor])
 
     return (
         <>
