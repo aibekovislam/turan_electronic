@@ -1,3 +1,4 @@
 User-agent: *
 Host: turanelectronics.kg
 Sitemap: https://turanelectronics.kg/sitemap.xml
+Sitemap: https://www.turanelectronics.kg/sitemap.xml
