@@ -78,7 +78,7 @@ function Footer() {
                         <div className={styles.footer__navigaiton__item}>
                             <div className={styles.footer__navigaiton__item_title}>Личный кабинет</div>
                             <ul className={styles.footer__navigation__item_list}>
-                                <li className={styles.list__item} style={{ marginTop: "20px" }} onClick={() => navigate("/profile")}>Личный Кабинет</li>
+                                <li className={styles.list__item} style={{ marginTop: "20px" }} onClick={() => navigate("/auth")}>Личный Кабинет</li>
                                 <li className={styles.list__item} onClick={() => navigate("/categories")}>Производители</li>
                             </ul>
                         </div>

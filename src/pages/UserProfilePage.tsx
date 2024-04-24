@@ -24,12 +24,6 @@ function UserProfilePage() {
   const tokenString = localStorage.getItem("tokens");
   const token = tokenString ? JSON.parse(tokenString) : null;
   const userOrderHistoryList = useSelector((state: RootStates) => state.orderHistory.orderHistory)
-
-  useEffect(() => {
-    if (!user || !token) {
-      navigate("/auth");
-    }
-  }, [!user]);
   
   useEffect(() => {
     const handleResize = () => {
