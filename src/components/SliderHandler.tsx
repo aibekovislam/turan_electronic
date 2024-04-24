@@ -4,8 +4,8 @@ import nextArrowSVG from "../assets/svgs/Vector (6).svg";
 import styles from "../styles/slider.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
-import { useEffect } from "react";
-import { fetchCarousel } from "../store/features/carousel/carouselSlice";
+import { useEffect, useState } from "react";
+import { fetchCarousel, fetchCarouselMobile } from "../store/features/carousel/carouselSlice";
 import {  CarouselType } from "../utils/interfacesAndTypes";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
@@ -27,10 +27,23 @@ function SamplePrevArrow(props: any) {
 
 export default function SimpleSlider() {
     const dispatch = useDispatch<any>()
-    const carousel = useSelector((state: RootStates) => state.carousel.carousel)
+    const carousel = useSelector((state: RootStates) => state.carousel.carousel);
+    const carouselMobile = useSelector((state: RootStates) => state.carousel.carouselMobile);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
 
     useEffect(() => {
-        dispatch(fetchCarousel())
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 520);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    useEffect(() => {
+        dispatch(fetchCarousel());
+        dispatch(fetchCarouselMobile());
     }, [dispatch])
 
     ping.register();
@@ -59,24 +72,42 @@ export default function SimpleSlider() {
         autoplaySpeed: 3500,
     };    
 
-    console.log(carousel)
+    console.log(carouselMobile)
     
   return (
     <div className={styles.carousel} >
-        { carousel.length !== 0 ? (
-            <Slider {...settings}>
-                {carousel?.map((carousel: CarouselType, index: number) => (
-                    <div className={styles.carousel__item} key={index}>
-                        <img src={`${API_URL}/${carousel.images.slice(16)}`} className={styles.carousel__img} />
-                        <div className={styles.text__carousel}>{carousel.description}</div>
-                    </div>
-                ))}
-            </Slider>
+        { isMobile ? (
+            carouselMobile?.length !== 0 ? (
+                <Slider {...settings}>
+                    {carouselMobile?.map((carousel: CarouselType, index: number) => (
+                        <div className={styles.carousel__item} key={index}>
+                            <img src={`${API_URL}/${carousel.images.slice(16)}`} className={styles.carousel__img} />
+                            <div className={styles.text__carousel}>{carousel.description}</div>
+                        </div>
+                    ))}
+                </Slider>
+            ) : (
+                <div className={styles.loading}>
+                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                    <div>Загрузка...</div>
+                </div>
+            )
         ) : (
-            <div className={styles.loading}>
-                <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                <div>Загрузка...</div>
-            </div>
+            carousel?.length !== 0 ? (
+                <Slider {...settings}>
+                    {carousel?.map((carousel: CarouselType, index: number) => (
+                        <div className={styles.carousel__item} key={index}>
+                            <img src={`${API_URL}/${carousel.images.slice(16)}`} className={styles.carousel__img} />
+                            <div className={styles.text__carousel}>{carousel.description}</div>
+                        </div>
+                    ))}
+                </Slider>
+            ) : (
+                <div className={styles.loading}>
+                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                    <div>Загрузка...</div>
+                </div>
+            )
         ) }
     </div>
   );

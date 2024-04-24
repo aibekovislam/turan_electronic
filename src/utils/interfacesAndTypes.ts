@@ -97,7 +97,8 @@ export interface NewsI {
 }
 
 export interface CarouselI {
-    carousel: CarouselType[]
+    carousel?: CarouselType[],
+    carouselMobile?: CarouselType[]
 }
 
 export interface OrderI {
@@ -160,6 +161,7 @@ export type CartType = {
 }
 
 export type ProductsType = {
+    [x: string]: any;
     id: number;
     name: string;
     description: string;
@@ -207,7 +209,8 @@ export type PriceType = {
 export type CityType = {
     id: number,
     name: string,
-    region: number
+    region: number,
+    delivery_price: any
 }
 
 export interface ChatI {
