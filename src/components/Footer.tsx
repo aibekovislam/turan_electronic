@@ -11,6 +11,7 @@ import { fetchFooters } from "../store/features/footer/footerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Footer() {
     const dispatch = useDispatch<any>()
@@ -20,6 +21,7 @@ function Footer() {
         dispatch(fetchFooters())
     }, [dispatch])
 
+    const navigate = useNavigate();
 
     return (
         <div className={styles.footer} style={{ marginBottom: "100px" }}>
@@ -69,26 +71,15 @@ function Footer() {
                         <div className={styles.footer__navigaiton__item}>
                             <div className={styles.footer__navigaiton__item_title}>Информация</div>
                             <ul className={styles.footer__navigation__item_list}>
-                                <li className={styles.list__item} style={{ marginTop: "20px" }}>Система начислений КЭШБЕК</li>
-                                <li className={styles.list__item}>О Нас</li>
-                                <li className={styles.list__item}>Условия гарантии</li>
-                                <li className={styles.list__item}>Условия кредитования</li>
-                                <li className={styles.list__item}>Доставка</li>
-                                <li className={styles.list__item}>Политика конфиденциальности</li>
-                                <li className={styles.list__item}>Публичная оферта</li>
-                                <li className={styles.list__item}>Контакты</li>
+                                <li className={styles.list__item} style={{ marginTop: "20px" }} onClick={() => navigate('/about')}>О Нас</li>
+                                <li className={styles.list__item} style={{ cursor: 'default' }}>Контакты</li>
                             </ul>
                         </div>
                         <div className={styles.footer__navigaiton__item}>
                             <div className={styles.footer__navigaiton__item_title}>Личный кабинет</div>
                             <ul className={styles.footer__navigation__item_list}>
-                                <li className={styles.list__item} style={{ marginTop: "20px" }}>Личный Кабинет</li>
-                                <li className={styles.list__item}>История заказов</li>
-                                <li className={styles.list__item}>Закладки</li>
-                                <li className={styles.list__item}>Сравнить</li>
-                                <li className={styles.list__item}>Рассылка</li>
-                                <li className={styles.list__item}>Карта сайта</li>
-                                <li className={styles.list__item}>Производители</li>
+                                <li className={styles.list__item} style={{ marginTop: "20px" }} onClick={() => navigate("/profile")}>Личный Кабинет</li>
+                                <li className={styles.list__item} onClick={() => navigate("/categories")}>Производители</li>
                             </ul>
                         </div>
                     </div>

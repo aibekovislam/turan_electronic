@@ -128,7 +128,7 @@ function OrderForm({ products }: any) {
             <div className={styles.order_form}>
               <input onChange={handleInputChange} value={orderFormValue.name} type="text" placeholder="Фамилия и имя*" name="name" />
               <div className={styles.inputs}>
-                <input onChange={handleInputChange} value={orderFormValue.phone} type="text" placeholder="Телефон *" name="phone" />
+                <input onChange={handleInputChange} value={orderFormValue.phone} type="number" placeholder="Телефон *" name="phone" />
                 { selectedType !== "pickup" ? (
                   <input onChange={handleInputChange} value={orderFormValue.email} type="text" placeholder="Email" name="email" />
                 ) : (null) }
@@ -184,7 +184,14 @@ function OrderForm({ products }: any) {
                     </div>
                   </div>
                   <div className={styles.order_setTime}>
-                    <span>от 200 сом (1-3 дня)</span>
+                  <span>
+                    {regions && regions.length !== 0 ? 
+                      (cities.find((item) => item.id === orderFormValue.city)?.delivery_price !== 0 && cities.find((item) => item.id === orderFormValue.city)?.delivery_price ? 
+                        (cities.find((item) => item.id === orderFormValue.city)?.delivery_price + ' сом ' || "Бесплатно") 
+                        : "Бесплатно")
+                      : "Бесплатно"
+                    } (1-3 дня)
+                  </span>
                   </div>
                   <button className={styles.btn_send_form}>Отправить</button>
                 </div>

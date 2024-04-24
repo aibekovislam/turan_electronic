@@ -464,3 +464,213 @@
 .error_password {
     border: 1px solid red !important;
 }
+
+
+.cart_container{
+    width: 100%;
+    height: auto;
+    border-radius: 24px;
+    border: 2px solid #fff;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+    position: relative;
+    margin: 30px 0px;
+}
+
+.cart{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 15px 15px 0px;
+}
+
+.cart_image{
+    width: 245px;
+    height: 224px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart_image > img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.colors {
+    width: max-content;
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.color_block {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    box-shadow: 1px 1px 4px 0px #00000059;
+}
+
+.cart_description {
+    color: #888888;
+    font-size: 17px;
+    line-height: 30px;
+    margin-bottom: 15px;
+    max-width: 600px;
+}
+
+.cart_content{
+    display: flex;
+    flex-direction: column;
+}
+
+.cart_content > p {
+    width: 500px;
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.cart_counter{
+    display: flex;
+    gap: 10px;
+}
+
+.cart_counter > button{
+    border-image-source: linear-gradient(123.5deg, #FFFFFF 38.36%, rgba(219, 230, 242, 0) 69.31%, #8F9FAE 131.91%);
+    border: 1px solid #fff;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: transparent;
+    width: 22px;
+    height: 18px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart_price{
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    margin-top: 20px;
+}
+
+.discount_price{
+    font-size: 26px;
+    font-weight: 600;
+}
+.default_price {
+    font-size: 14px;
+    color: rgba(82, 82, 82, 1);
+    text-decoration-line: line-through;
+    font-weight: 400;
+}
+
+.cart_rate{
+    margin-top: 20px;
+}
+
+.cart_button{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.btn{
+    width: 225px;
+    height: 46px;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+    background-color: transparent;
+    font-weight: 300;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 1);
+    cursor: pointer;
+}
+
+
+.empty_cart {
+    margin-top: 30px;
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(210.55deg, #EBF2F9 19.14%, #C6D7EB 154.68%);
+    border-radius: 24px;
+    border: 1px solid #FFFFFF;
+    box-shadow: 16px 4px 64px 0px #123D6533;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.total_block {
+    margin-top: 30px;
+    text-align: right;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+
+.order_history__date {
+    display: block;
+    margin: 30px 0px;
+    width: max-content;
+    padding: 15px 30px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 16px 4px 64px 0px #123D6533;
+    border: 1px solid #FFFFFF;
+}
+
+
+@media screen and (max-width: 520px) {
+    .cart {
+        flex-direction: column;
+        padding: 15px;
+    }
+    .cart_image {
+        width: 100%;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .cart_image img {
+        width: 200px;
+        height: 200px;
+    }
+    .cart_content > p {
+        font-size: 14px;
+        width: max-content;
+    }
+    .cart_description {
+        font-size: 14px;
+        width: 300px;
+    }
+    .order {
+        flex-direction: column;
+        row-gap: 20px;
+    }
+    .order_wrapper__left {
+        width: auto;
+    }
+    .inputs {
+        justify-content: space-between;
+    }
+    .order_inputs {
+        flex-direction: column;
+        row-gap: 15px;
+    }
+    .order_inputs input {
+        width: auto;
+    }
+    .cart_counter {
+        width: 100px;
+    }
+}

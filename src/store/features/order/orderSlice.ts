@@ -36,6 +36,7 @@ export const fetchRegions = (): AppThunk => async (dispatch) => {
 export const fetchCities = (id: number): AppThunk => async (dispatch) => {
     try {
         const response = await $axios.get(`${API_URL}/regions/${id}`);
+        console.log(response)
         dispatch(orderSlice.actions.setCities(response.data));
     } catch (error) {
         console.log(error);
