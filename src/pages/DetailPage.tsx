@@ -371,12 +371,16 @@ function DetailPage() {
                                             </div>
                                         ) : visibleDiv === "div2" ? (
                                             <div className={styles.description}>
+                                                <div>Описание</div>
                                                 <p>
-                                                    {expanded ? product?.description : `${product?.description?.slice(0, 100)}...`}
+                                                    {expanded ? 
+                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(product?.description) }}></div> :
+                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(product?.description?.slice(0, 100)) + '...' }}></div>
+                                                    }
                                                     <span className={styles.open_des_func} onClick={toggleDescription}>
                                                         {expanded ? "Свернуть" : "Развернуть"}
                                                     </span>
-                                                </p> 
+                                                </p>
                                             </div>
                                         ) : visibleDiv === "div3" ? (
                                             <>
@@ -516,7 +520,6 @@ function DetailPage() {
                                                     </span>
                                                 </p>
                                             </div>
-
                                         </div>
                                         <div></div>
                                         <div className={styles.detail_wrapper__right}>
