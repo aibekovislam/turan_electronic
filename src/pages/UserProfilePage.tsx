@@ -181,7 +181,7 @@ function UserProfilePage() {
                             )}
                           </div>
                           <div className={styles.cart_content}>
-                            <p>{`${product.product_details?.name}`}</p>
+                            <p style={{ wordBreak: 'break-word', maxWidth: "300px" }} >{`${product.product_details?.name}`}</p>
                             <div className={styles.cart_description} >{product.product_details.description?.slice(0, 120)}...</div>
                             <div className={styles.colors}> Цвета:
                               {getColorHashCode(product.color, product.product_details).length !== 0 ? (

@@ -185,6 +185,14 @@ function DetailPage() {
         setFavoriteLoad(false);
     }, [favorites])
 
+    function insertLineBreaks(text: string) {
+        if (!text) return '';
+    
+        const lines = text.split('$');
+        const formattedText = lines.join('<br/><br/>');
+        return formattedText;
+    }    
+
     useEffect(() => {
         if (activeItem) {
             if(product?.prices) {
@@ -499,12 +507,16 @@ function DetailPage() {
                                             <div className={styles.description}>
                                                 <div>Описание</div>
                                                 <p>
-                                                    {expanded ? product?.description : `${product?.description?.slice(0, 100)}...`}
+                                                    {expanded ? 
+                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(product?.description) }}></div> :
+                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(product?.description?.slice(0, 100)) + '...' }}></div>
+                                                    }
                                                     <span className={styles.open_des_func} onClick={toggleDescription}>
                                                         {expanded ? "Свернуть" : "Развернуть"}
                                                     </span>
                                                 </p>
                                             </div>
+
                                         </div>
                                         <div></div>
                                         <div className={styles.detail_wrapper__right}>

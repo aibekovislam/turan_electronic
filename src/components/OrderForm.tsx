@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import styles from "../styles/cart.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { addOrder, fetchCities, fetchRegions } from "../store/features/order/orderSlice";
 import { notify, notifyError } from "./Toastify";
+import '../styles/homepage.scss'
 
 function OrderForm({ products }: any) {
   const regions = useSelector((state: RootStates) => state.orders.regions);
@@ -36,6 +37,45 @@ function OrderForm({ products }: any) {
       price: item.price
     }))  
   })
+
+  const handleDeliveryTypeChange = (type: SetStateAction<string>) => {
+    setSelectedType(type);
+    if (type === "pickup") {
+      setOrderFormValue({
+        name: "",
+        email: "samovyzov@gmail.com",
+        phone: "",
+        region: 1,
+        city: 1,
+        street: "Ибраимова",
+        house: "108Б",
+        items: products.map((item: any) => ({
+          product: item.product.id,
+          color: item.color,
+          memory: item.memory,
+          count: item.count,
+          price: item.price
+        }))  
+      });
+    } else if (type === "delivery") {
+      setOrderFormValue({
+        name: "",
+        email: "",
+        phone: "",
+        region: 0,
+        city: 0,
+        street: "",
+        house: "",
+        items: products.map((item: any) => ({
+          product: item.product.id,
+          color: item.color,
+          memory: item.memory,
+          count: item.count,
+          price: item.price
+        }))  
+      });
+    }
+  };  
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -104,7 +144,7 @@ function OrderForm({ products }: any) {
               name="deliveryType"
               checked={selectedType === "pickup"}
               className={styles.type_radio}
-              onChange={() => setSelectedType("pickup")}
+              onChange={() => handleDeliveryTypeChange("pickup")}
             />
             <label htmlFor="pickup" style={{ height: "16px" }}>Самовывоз</label>
           </div>
@@ -115,7 +155,7 @@ function OrderForm({ products }: any) {
               name="deliveryType"
               className={styles.type_radio}
               checked={selectedType === "delivery"}
-              onChange={() => setSelectedType("delivery")}
+              onChange={() => handleDeliveryTypeChange("delivery")}
             />
             <label htmlFor="delivery" style={{ height: "16px" }}>Доставка</label>
           </div>
