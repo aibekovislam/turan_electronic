@@ -225,7 +225,8 @@ export type ChatType = {
     client_email: string,
     created_at: string,
     id: number,
-    updated_at: string
+    updated_at: string,
+    unreaded_count: number
 }
 
 export type RegionType = {

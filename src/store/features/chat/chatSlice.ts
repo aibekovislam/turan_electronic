@@ -183,10 +183,22 @@ export const chatOperator = (client_id: number): AppThunk => async (dispatch) =>
     }
 }
 
+
+export const messeagesRead = (chat_id: number): AppThunk => async (dispatch) => {
+    try {
+        const response = await $axios.post(`${API_URL}/chat/chats/${chat_id}/mark-read/`);
+        console.log(response);
+        dispatch(allChats())
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const allChats = (): AppThunk => async (dispatch) => {
     try {
         const response = await $axios.get(`${API_URL}/chat/chats/`);
-        dispatch(chatSlice.actions.setChat({ chats: response.data }))
+        const sortedChats = response.data.sort((a: any, b: any) => b.unreaded_count - a.unreaded_count);
+        dispatch(chatSlice.actions.setChat({ chats: sortedChats }));
     } catch (error) {
         console.log(error);
     }

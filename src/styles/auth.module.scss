@@ -284,6 +284,9 @@
     }
 
     .user_title {
+        display: flex;
+        column-gap: 20px;
+        align-items: center;
         div {
             font-size: 24px;
             font-weight: 500;
@@ -594,6 +597,19 @@
     cursor: pointer;
 }
 
+.logOut button {
+    width: max-content;
+    padding: 10px 30px;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    box-shadow: 16px 36px 64px 0px #6f88a07a;
+    background-color: red;
+    font-weight: 300;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+}
 
 .empty_cart {
     margin-top: 30px;
