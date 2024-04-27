@@ -165,6 +165,21 @@
     background: linear-gradient(210.55deg, #EBF2F9 -27%, #EBF2F9 7.42%, #E0EBF9 69.57%, #E4EEF9 79.07%, #C6D7EB 154.68%);
     box-shadow: 16px 4px 64px 0px #123D6533;
     margin-top: 30px;
+    overflow-y: scroll;
+}
+
+.unreaded_messages_count {
+    width: 35px;
+    height: 35px;
+    background-color: #FF7300;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 5%;
+    bottom: 20%;
 }
 
 .chat_admin_details {

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles/chat.module.scss';
 import { useEffect, useRef, useState } from 'react';
-import { allChats, chatOperator, sendMessageOperator } from '../store/features/chat/chatSlice';
+import { allChats, chatOperator, messeagesRead, sendMessageOperator } from '../store/features/chat/chatSlice';
 import { RootStates } from '../store/store';
 import sendSVG from '../assets/svgs/Frame.svg';
 import { useNavigate } from 'react-router-dom';
@@ -53,7 +53,7 @@ export default function AdminChatPage() {
         return "";
     };
 
-    console.log(messages);
+    console.log(chats);
     
     return (
         <>
@@ -68,10 +68,11 @@ export default function AdminChatPage() {
                 </div>
                 <div className={styles.d_f_chat_admin}>
                     <div className={styles.all_chats}>
-                        { chats.slice(2).map((chat, index) => (
+                        { chats.map((chat, index) => (
                             <div key={index} onClick={() => {
                                     setPickedChat(chat.id);
                                     dispatch(chatOperator(chat.client))
+                                    dispatch(messeagesRead(chat.id))
                                 }} className={styles.main_chats_detail} style={{ width: "100%", position: "relative" }}>
                                 <div className={styles.chat_admin_details}>
                                     <span className={styles.chat_updated}>{ new Date(chat.updated_at).toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'}) }</span>
@@ -79,6 +80,11 @@ export default function AdminChatPage() {
                                         <span className={styles.client_name}>{ chat.client_email !== "admin@admin.com" ? chat.client_email : null }</span>
                                         <p className={styles.last_message}>{getLastMessageText(messages[chat.id])}...</p>
                                     </div>
+                                    { chat.unreaded_count !== 0 ? (
+                                        <div className={styles.unreaded_messages_count}>{ chat.unreaded_count }</div>
+                                    ) : (
+                                        null
+                                    ) }
                                 </div>
                                 <hr />
                             </div>

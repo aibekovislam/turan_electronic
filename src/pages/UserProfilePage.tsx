@@ -16,7 +16,7 @@ function UserProfilePage() {
   const user = userString ? JSON.parse(userString) : null;
   const navigate = useNavigate();
   const [ modifiedName, setModifiedName ] = useState(user.name);
-  const [ modifiedPhone, setModifiedPhone ] = useState(user.phone);
+  const [ modifiedPhone, setModifiedPhone ] = useState(user.phone_number);
   const [ editUser, setEditUser ] = useState(false);
   const [ loading, setLoading ] = useState(false);
   const dispatch = useDispatch<any>();
@@ -35,6 +35,8 @@ function UserProfilePage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  console.log(user)
+
   useEffect(() => {
     dispatch(fetchOrderHistory())
   }, [dispatch])
@@ -52,8 +54,6 @@ function UserProfilePage() {
     const { value } = e.target;
     setModifiedPhone(value);
   }
-
-  // const currentUser = useSelector((state: RootStates) => state.auth.user);
 
   const handleSave = () => {
     setLoading(true);
@@ -75,6 +75,12 @@ function UserProfilePage() {
     return colorHash;
   }
 
+  function logOut() {
+    localStorage.removeItem("tokens");
+    localStorage.removeItem("userInfo");
+    navigate("/auth")
+  }
+
   return (
     <>
       <Helmet>
@@ -92,6 +98,9 @@ function UserProfilePage() {
             </div>
             <div className={styles.user_title}>
               <div>Мой профиль</div>
+              <div className={styles.logOut} onClick={() => logOut()}>
+                <button>Выйти из аккаунта</button>
+              </div>
             </div>
             <div className={styles.user_container}>
               <div className={styles.user}>
@@ -122,7 +131,7 @@ function UserProfilePage() {
                                 { !loading ? (
                                     <div className={styles.mobile_d_f}>
                                       <input type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} />
-                                      <input type="text" name="phone" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} style={{ marginTop: "15px" }}  />
+                                      <input type="text" name="phone_number" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} style={{ marginTop: "15px" }}  />
                                       <div className={styles.user_button_mobile} style={{ marginTop: "20px" }}>
                                         <button onClick={handleSave}>Сохранить</button>
                                       </div>
@@ -135,12 +144,12 @@ function UserProfilePage() {
                     </div>
                   ) }
                   <li>{user?.email}</li>
-                  { !user.name ? <li onClick={() => setEditUser(true)}>Заполните поля</li> : <li>{user.phone}</li> }
+                  { !user.name ? <li onClick={() => setEditUser(true)}>Заполните поля</li> : <li>{user.phone_number}</li> }
                 </div>
               </div>        
-                <div className={styles.user_button} onClick={() => setEditUser(true)}>
-                  <button>Редактировать</button>
-                </div>
+                  <div className={styles.user_button} onClick={() => setEditUser(true)}>
+                    <button>Редактировать</button>
+                  </div>
             </div>
             { isMobile && editUser ? (
               <div className={styles.modal}>
@@ -149,7 +158,7 @@ function UserProfilePage() {
                         <div className={styles.mobile_d_f}>
                           <span className={styles.close_edit} onClick={() => setEditUser(false)}>X</span>
                           <input style={{ width: "max-content", height: "45px" }} type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} placeholder="Имя" />
-                          <input style={{ width: "max-content", height: "45px", marginTop: "10px" }} type="text" name="phone" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} placeholder="Номер телефона" />
+                          <input style={{ width: "max-content", height: "45px", marginTop: "10px" }} type="text" name="phone_number" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} placeholder="Номер телефона" />
                           <div className={styles.user_button_mobile} style={{ marginTop: "20px" }}>
                             <button onClick={handleSave}>Сохранить</button>
                           </div>
@@ -216,9 +225,9 @@ function UserProfilePage() {
                           </div>
                         </div>
                       </div>
-                      <hr/>
                     </>
                   )) }
+                  <hr/>
                   <div className={styles.total_block}>
                     Итого: { item.items.map((product: any) => {
                       return product.count * product.price
