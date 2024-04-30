@@ -27,35 +27,35 @@ function CategoryMobile() {
       navigate(`/products/brands/${id}`)
     }
 
-  return (
-    <div className={styles.category_main}>
-        <div className={styles.category_title}>
-            <div>Бренды</div>
-            <span onClick={() => handleShowAllBrands()}>Смотреть все</span>
-        </div>
-        <div className={styles.category_container}>
-            {!click ? (
-                brands.slice(0, 6).map((item: BrandsType, index: number) => (
-                    <div onClick={() => handleNavigate(item?.id)} key={index} className={styles.category}>
-                        <div className={styles.category_image}>
-                            <img src={`${API_URL}/${item?.image.slice(16)}`}  />
+    return (
+        <div className={styles.category_main}>
+            <div className={styles.category_title}>
+                <div>Бренды</div>
+                <span onClick={() => handleShowAllBrands()}>Смотреть все</span>
+            </div>
+            <div className={styles.category_container}>
+                {!click ? (
+                    brands.slice(0, 6).map((item: BrandsType, index: number) => (
+                        <div onClick={() => handleNavigate(item?.id)} key={index} className={styles.category}>
+                            <div className={styles.category_image}>
+                                <img src={`${API_URL}/${item?.logo_field.slice(16)}`}  />
+                            </div>
+                            <span>{item.title}</span>
                         </div>
-                        <span>{item.title}</span>
-                    </div>
-                ))
-            ) : (
-                brands.map((item: BrandsType, index: number) => (
-                    <div onClick={() => handleNavigate(item?.id)} key={index} className={styles.category}>
-                        <div className={styles.category_image}>
-                            <img src={`${API_URL}/${item?.image.slice(16)}`}  />
+                    ))
+                ) : (
+                    brands.map((item: BrandsType, index: number) => (
+                        <div onClick={() => handleNavigate(item?.id)} key={index} className={styles.category}>
+                            <div className={styles.category_image}>
+                                <img src={`${API_URL}/${item?.image.slice(16)}`}  />
+                            </div>
+                            <span>{item.title}</span>
                         </div>
-                        <span>{item.title}</span>
-                    </div>
-                ))
-            )}
+                    ))
+                )}
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default CategoryMobile

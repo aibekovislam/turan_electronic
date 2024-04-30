@@ -69,7 +69,6 @@ export const signIn = (obj: UserT): AppThunk => async (dispatch) => {
         dispatch(authSlice.actions.setUser(response.data));
         localStorage.setItem("userInfo", JSON.stringify({
             ...response.data,
-            phone_number: "+996..."
         }));
         return response.data;
         
