@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet-async";
 import { fetchOrderHistory } from "../store/features/order/orderHistory";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import { API_URL } from "../utils/consts";
+import { notifyError } from "../components/Toastify";
 
 function UserProfilePage() {
   const userString = localStorage.getItem("userInfo");
@@ -78,7 +79,9 @@ function UserProfilePage() {
   function logOut() {
     localStorage.removeItem("tokens");
     localStorage.removeItem("userInfo");
-    navigate("/auth")
+    localStorage.removeItem("chatID");
+    navigate("/");
+    notifyError("Вы вышли из аккаунта")
   }
 
   return (

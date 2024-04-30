@@ -13,6 +13,8 @@ import { notify } from "./Toastify";
 
 function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   const user = useSelector((state: RootStates) => state.auth.user);
+  const userString = localStorage.getItem("userInfo");
+  const userLocal = userString ? JSON.parse(userString) : null;
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
 
@@ -52,10 +54,12 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   };
 
 
-  if (user) {
-    navigate("/")
-    notify('Вы успешно вошли в аккаунт')
-  }
+  useEffect(() => {
+    if (userLocal) {
+      navigate("/")
+      notify('Вы успешно вошли в аккаунт')
+    }
+  }, [userLocal])
 
   return (
     <div className={styles.auth_main}>
