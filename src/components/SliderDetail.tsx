@@ -6,32 +6,42 @@ import { SliderDetailProps } from '../utils/interfacesAndTypes';
 import { API_URL } from '../utils/consts';
 import { getFilteredFirstImage } from '../functions/filterFunction';
 import 'ldrs/ring';
-import { ping } from 'ldrs'
+import { ping } from 'ldrs';
+
 
 function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailProps) {
   const [wordData, setWordData] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [touchStartX, setTouchStartX] = useState(0);
 
-  const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
-    setTouchStartX(e.touches[0].clientX);
-  };
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [actionTaken, setActionTaken] = useState(false);
 
   const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
-    const touchMoveX = e.touches[0].clientX;
-    const diff = touchMoveX - touchStartX;
-    const threshold = 40;
+    if (!actionTaken) {
+      const touchMoveX = e.touches[0].clientX;
+      const diff = touchMoveX - touchStartX;
+      const threshold = 40;
 
-    if (diff > threshold) {
-      handlePrevious();
-    } else if (diff < -threshold) {
-      handleNext();
+      if (diff > threshold) {
+        // Свайп вправо
+        handlePrevious();
+        setActionTaken(true);
+      } else if (diff < -threshold) {
+        // Свайп влево
+        handleNext();
+        setActionTaken(true);
+      }
     }
   };
 
   const handleTouchEnd: React.TouchEventHandler<HTMLDivElement> = () => {
     setTouchStartX(0);
+    setActionTaken(false);
+  };
+
+  const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    setTouchStartX(e.touches[0].clientX);
   };
 
   ping.register();
@@ -83,11 +93,9 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
 
   return (
     <div className={styles.main}>
-      <div className={styles.carousel_detail}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-      >
+      <div className={styles.carousel_detail} onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}>
         { filteredFirstImage ? (
           <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} />
         ) : (null) }
@@ -98,7 +106,10 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
               color="black" 
             ></l-ping>
         ) : (
-          <img src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : `${API_URL}/${default_image.slice(16)}`} className={styles.detail_img} />
+          <img 
+              src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : `${API_URL}/${default_image.slice(16)}`} 
+              className={styles.detail_img} 
+          />
         )}
         { filteredFirstImage ? (
           <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} />

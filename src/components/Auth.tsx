@@ -15,6 +15,8 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   const user = useSelector((state: RootStates) => state.auth.user);
   const userString = localStorage.getItem("userInfo");
   const userLocal = userString ? JSON.parse(userString) : null;
+  const tokenString = localStorage.getItem("tokens");
+  const token = tokenString ? JSON.parse(tokenString) : null;
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
 
@@ -55,7 +57,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
 
 
   useEffect(() => {
-    if (userLocal) {
+    if (userLocal && token) {
       navigate("/")
       notify('Вы успешно вошли в аккаунт')
     }
