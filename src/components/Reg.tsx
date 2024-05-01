@@ -16,6 +16,7 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
     const [ errorWithPassWord, setErrorWithPassword ] = useState(false);
     const [ showPassword, setShowPassword ] = useState(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState(false);
+    const [isAgreed, setIsAgreed] = useState(false);
 
     const [authFormData, setAuthFormData] = useState({
         email: "",
@@ -25,6 +26,10 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
     });
 
     const navigate = useNavigate();
+
+    const handleAgreementChange = () => {
+        setIsAgreed(!isAgreed);
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -50,6 +55,11 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                 return;
             }    
 
+            if (!isAgreed) {
+                notifyError("Необходимо согласиться с условиями обработки персональных данных");
+                return;
+            }
+
             const { confirmPassword, ...requestData } = authFormData;
 
             const response = await axios.post(`${API_URL}/users/`, requestData);
@@ -58,7 +68,10 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
             if (response.data) {
                 navigate("/activate");
             }
-        } catch (error) {
+        } catch (error: any) {
+            if (error.response && error.response.data.email[0] === "custom user with this email already exists.") {
+                notifyError("Пользователь уже существует");
+            }
             console.log(error);
         } finally {
             setLoadedAuth(false);
@@ -91,7 +104,7 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                             <input onChange={handleInputChange} type="text" value={authFormData.email} name="email" placeholder="Ваш Email"/>
                         </div>
                         <div className={styles.conditions}>
-                            <input type="checkbox" className={styles.checkbox_custom} />
+                            <input type="checkbox" checked={isAgreed} onChange={handleAgreementChange} className={styles.checkbox_custom} />
                             <p>Я согласен с <a href="#">условиями обработки</a> <br/> персональных данных</p>
                         </div>
                     </div>
