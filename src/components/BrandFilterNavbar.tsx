@@ -9,6 +9,7 @@ import SidebarMenu from "./SidebarMenu.tsx";
 import { useNavigate } from "react-router-dom";
 import { RenderDropdownContent } from "../functions/RenderDropdownContent.tsx";
 import { API_URL } from "../utils/consts.ts";
+import { useTranslation } from "react-i18next";
 
 function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCategory }: BrandsProps) {
     const [pickedColor, setPickedColor] = useState<string | null>(null);
@@ -101,11 +102,13 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
 
     const navigate = useNavigate();
 
+    const { t } = useTranslation();
+
     return (
         isMobile ? (
             <div className={styles.brands_navbar} style={{ marginTop: "30px" }}>
                 <div className={styles.brands_navbar__item} >
-                    <div className={styles.brands__info}><span style={{ cursor: "pointer", userSelect: "none" }} onClick={() => navigate('/')}>Главная</span> / {brand.title}</div>
+                    <div className={styles.brands__info}><span style={{ cursor: "pointer", userSelect: "none" }} onClick={() => navigate('/')}>{ t("home") }</span> / {brand.title}</div>
                 </div>
                 <div className={styles.brands_navbar__item} onClick={() => handleMobileFilterClick()} >
                     <div className={styles.brands_navigation} style={{ height: "40px", borderRadius: "10px", alignItems: "center", justifyContent: "space-between" }}>
@@ -114,7 +117,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                                 <img src={`${API_URL}/${brand.logo_field.slice(16)}`} style={{ width: "50px", height: "50px" }} alt="brand" className={styles.brandLogo} />
                             </div>
                         </div>
-                        <div>Фильтры</div>
+                        <div>{ t("filters") }</div>
                         <div className={styles.brands__block_arrow_down} style={{ display: "block", width: "18px", height: "18px", marginRight: "15px" }} onClick={handleFilterUp}>
                             <ArrowDown isUp={false} style={{ width: "18px", height: "18px", objectFit: "contain" }} />
                         </div>
@@ -126,7 +129,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
             <div className={styles.brands_navbar}>
                 <div className={styles.brands_navbar__item}>
                     <div className={styles.path}>
-                        <a href="/">Главная</a> | {brand.title}
+                        <a href="/">{ t("home") }</a> | {brand.title}
                     </div>
                 </div>
                 <div className={styles.brands_navbar__item}>
@@ -138,7 +141,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                                         <img src={`${API_URL}/${brand.logo_field.slice(16)}`} alt="brand" className={styles.brandLogo} />
                                     ) : (
                                         <div className={styles.brands__title_filter}>
-                                            {index === 1 ? 'Модель' : index === 2 ? 'Объем' : index === 3 ? 'Цена' : index === 4 ? 'Цвет' : 'Все фильтры'}
+                                            {index === 1 ? `${t("model")}` : index === 2 ? `${t("memory")}` : index === 3 ? `${t("price")}` : index === 4 ? `${t("color")}` : `${t("all_filters")}`}
                                         </div>
                                     )}
                                 </div>
@@ -153,7 +156,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                             </div>
                         ))}
                         <div onClick={toggleSidebar} className={styles.brands_navigation__item} >
-                            <div>Все фильтры</div>
+                            <div>{ t("all_filters") }</div>
                             <img alt="filter svg" src={FilterSVG} className={styles.filter__svg} />
                         </div>
                         <SidebarMenu isOpen={isOpen} brand={brand} products={products} toggleSidebar={toggleSidebar} sidebarRef={sidebarRef} dataForDropDown={dataForDropDown} productsByBrandCategory={productsByBrandCategory} />

@@ -7,6 +7,7 @@ import { RootStates } from "../store/store";
 import { clearFavorites, fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
+import { useTranslation } from "react-i18next";
 
 function FavoriteList() {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ function FavoriteList() {
     const user = userString ? JSON.parse(userString) : null;
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const [ loaded, setLoaded ] = useState(false);
+    const { t } = useTranslation();
 
     ping.register();
 
@@ -57,7 +59,7 @@ function FavoriteList() {
        
         <div className="favorite">
             <div className="favorite_title">
-                Избранное
+                { t("favorite") }
             </div>
             { favoritesProducts?.length !== 0 ? (
                 !loaded ? (
@@ -65,7 +67,7 @@ function FavoriteList() {
                         setLoaded(true)
                         dispatch(clearFavorites())
                     }}>
-                        <span>Очистить список</span>
+                        <span>{ t("clear_favorite") }</span>
                     </div>
                 ) : (
                     <div style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}>
@@ -86,7 +88,7 @@ function FavoriteList() {
             </>
         ) : (
             <div className="empty_favorites" >
-                Пусто
+                { t("empty") }
             </div>
         ) }
     </>

@@ -2,9 +2,12 @@ import { useNavigate } from "react-router-dom";
 import styles from "../styles/category.module.scss";
 import { CategoryProps } from "../utils/interfacesAndTypes";
 import { API_URL } from "../utils/consts";
+import { useTranslation } from "react-i18next";
 
 function Category({ type, brand }: CategoryProps) {
-  
+  const { i18n } = useTranslation();
+  const currentLanguage = i18n.language;
+
   const navigate = useNavigate();
 
   const handleNavigate = (id: number | undefined) => {
@@ -19,7 +22,7 @@ function Category({ type, brand }: CategoryProps) {
         </div>
         <div className={`${type === "big" ? styles.big_category_item_btn : styles.category__item_btn}`}>
           <div className={styles.brand__category}>
-            { brand?.title } 
+            { currentLanguage === "Русский" ? brand?.title : brand?.title_en } 
           </div>
         </div>
       </div>

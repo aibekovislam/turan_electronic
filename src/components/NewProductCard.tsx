@@ -14,6 +14,7 @@ import { API_URL } from "../utils/consts";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
 import { calculateDiscountedPrice } from "../functions/calculateDiscounte";
+import { useTranslation } from "react-i18next";
 
 function NewProductsCard({ product, onClick }: { product: ProductsType, onClick: (func: any) => void }) {
     const navigate = useNavigate();
@@ -24,9 +25,10 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
     const tokenString = localStorage.getItem("tokens");
     const token = tokenString ? JSON.parse(tokenString) : null;
     const [colorPicked, setColorPicked] = useState("");
-
     const [imgLoaded, setImgLoaded] = useState(false);
     const [favoriteLoaded, setFavoriteLoad] = useState(false);
+    const { t, i18n } = useTranslation();
+    const currentLanguage = i18n.language;
 
     ping.register();
 
@@ -85,7 +87,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         <div className={styles.cardMobile_rate}>
                             {product.is_arrived ? (
                                 <div className={styles.new_productCard_label}>
-                                    Новое
+                                    { t("new_label") }
                                 </div>
                             ) : null}
                             <div className={styles.rating_mobile}>
@@ -110,10 +112,10 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                             </div>
                             <div className={styles.cardMobile_wrapper__right}>
                                 <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>
-                                    {product.name}
+                                    {currentLanguage === "Русский" ? product.name : product.name_en}
                                 </div>
                                 <div className={styles.cardMobile_colors}>
-                                    <span>Цвет</span>
+                                    <span>{ t("color") }</span>
                                     {product?.color !== undefined ? product?.color.map((item: any, index: number) => (
                                         <div key={index} className={styles.mobile_color_block} style={{ background: item.hash_code }}></div>
                                     )) : (
@@ -126,7 +128,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                             {product.in_stock ? (
                                 <div className={styles.isAvilableProduct}>
                                     <img src={checked} />
-                                    <span>В наличии</span>
+                                    <span>{ t("in_stock") }</span>
                                 </div>
                             ) : (
                                 <div style={{ color: "brown" }}>Нет в наличии</div>
@@ -148,7 +150,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         <div className={styles.star_container}>
                             {product.is_arrived ? (
                                 <div className={styles.new_productCard_label}>
-                                    Новое
+                                    { t("new_label") }
                                 </div>
                             ) : null}
                             <div>
@@ -202,19 +204,19 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                                 }
                             </div>
                             <div onClick={() => onClick(product.id)} className={styles.title}>
-                                <h2>{product.name}</h2>
-                                <p>{product?.description !== undefined ? product?.description.slice(0, 35) + "..." : ""}</p>
+                                <h2>{currentLanguage === "Русский" ? product.name : product.name_en}</h2>
+                                <p>{currentLanguage === "Русский" ? (product?.description !== undefined ? product?.description.slice(0, 35) + "..." : "") : (product?.description_en ? product?.description_en.slice(0, 35) + "..." : "")}</p>
                             </div>
                         </div>
                         <div className={styles.btn_and_options}>
                             <div className={styles.btn_container}>
                                 <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
-                                    <a href="#">Быстрый заказ</a>
+                                    <a href="#">{ t("fast_order_btn") }</a>
                                 </button>
                                 <img src={shop} alt="" onClick={() => navigate(`/product/${product.id}`)} />
                             </div>
                             <div className={styles.options_container}>
-                                <h2>Цвет</h2>
+                                <h2>{ t("color") }</h2>
                                 {product?.color !== undefined ? product?.color.slice(0, 6).map((item: any, index: number) => (
                                     <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
                                 )) : (

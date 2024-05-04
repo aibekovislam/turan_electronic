@@ -8,6 +8,7 @@ import { fetchProducts } from "../store/features/products/productSlice";
 import { ProductsType, default_filters } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
 import { fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
+import { useTranslation } from "react-i18next";
 
 function NewProductsList() {
   const dispatch = useDispatch<any>();
@@ -70,15 +71,17 @@ function NewProductsList() {
   const handleNavigate = (id: number) => {
     navigate(`/product/${id}`);
   };
+
+  const { t } = useTranslation();
   
   return (
     <>
       <div className={"accessories"} style={{ marginBottom: "30px" }}>
         <div className="accessories__item">
-          Новое поступление
+          { t("new_products") }
         </div>
         <div className="accessories__item">
-          <span onClick={() => navigate("/new/products")} style={{ fontSize: "2vw", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
+          <span onClick={() => navigate("/new/products")} style={{ fontSize: "2vw", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>{ t("see_all") }</span>
           <div onClick={() => navigate("/new/products")} className="accessories__item_img" style={{ position: "initial" }}>
             <img src={nextArrow} />
           </div>

@@ -6,10 +6,12 @@ import { fetchNews } from "../store/features/news/newsSlice";
 import { NewsType } from "../utils/interfacesAndTypes";
 import NewsCard from "../components/NewsCard";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 function NewsPage() {
   const dispatch = useDispatch<any>();
   const news = useSelector((state: RootStates) => state.news.news);
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchNews());
@@ -27,7 +29,7 @@ function NewsPage() {
         <div className={styles.path} style={{ marginTop: "30px" }}>
           <a href="/" onClick={() => {
                       localStorage.setItem("activeItem", JSON.stringify(`home`))
-          }}>Главная</a> / <a href="/news">Новости</a>
+          }}>{ t("home") }</a> / <a href="/news">{ t("news") }</a>
         </div>
         {news?.map((item: NewsType, index: number) => (
           <NewsCard key={index} item={item}/>

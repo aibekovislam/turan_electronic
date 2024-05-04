@@ -195,7 +195,9 @@ export type ProductsType = {
     },
     in_favorite: boolean,
     prices: PriceType[],
-    reviews: any[]
+    reviews: any[],
+    name_en: string | null,
+    description_en: string | null
 }
 
 export type PriceType = {
@@ -273,6 +275,7 @@ export type AccessoriesType = {
     brand: number;
     brand_category: number;
     color: number[];
+    name_en: string | null
 }
 
 export type BrandsType = {
@@ -280,6 +283,7 @@ export type BrandsType = {
     title: string;
     logo_field: string;
     image: string;
+    title_en: string | null
 }
 
 export type FootersType = {

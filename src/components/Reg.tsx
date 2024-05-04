@@ -9,6 +9,7 @@ import axios from "axios"
 import { API_URL } from "../utils/consts"
 import { useNavigate } from "react-router-dom"
 import { notifyError } from "./Toastify";
+import { useTranslation } from "react-i18next";
 
 function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
     const [loadedAuth, setLoadedAuth] = useState(false);
@@ -17,6 +18,7 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
     const [ showPassword, setShowPassword ] = useState(false);
     const [ showConfirmPassword, setShowConfirmPassword ] = useState(false);
     const [isAgreed, setIsAgreed] = useState(false);
+    const { t } = useTranslation();
 
     const [authFormData, setAuthFormData] = useState({
         email: "",
@@ -51,12 +53,12 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
 
             if (authFormData.password.length < 8 || /^\D+$/.test(authFormData.password)) {
                 setErrorWithPassword(true);
-                notifyError("Слишком простой пароль")
+                notifyError(t("auth_error1"))
                 return;
             }    
 
             if (!isAgreed) {
-                notifyError("Необходимо согласиться с условиями обработки персональных данных");
+                notifyError(t("auth_error2"));
                 return;
             }
 
@@ -70,7 +72,7 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
             }
         } catch (error: any) {
             if (error.response && error.response.data.email[0] === "custom user with this email already exists.") {
-                notifyError("Пользователь уже существует");
+                notifyError(t("auth_error3"));
             }
             console.log(error);
         } finally {
@@ -82,43 +84,43 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
     <div className={styles.auth_main}>     
         <div className={styles.auth_container}>
             <div className={styles.auth}>
-                <div className={styles.auth_text}>
-                    <p>
-                        Авторизуйтесь, указав свои контактные данные, или <br/> воспользовавшись перечисленными сервисами
+                <div className={styles.auth_text} style={{ display: "flex", justifyContent: "center" }}>
+                    <p style={{maxWidth: "500px"}}>
+                        { t("auth_text") }
                     </p>
                 </div>
                 <form onSubmit={handleRegister} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                     <div className={styles.auth_form}>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} value={authFormData.name} type="text" name="name" placeholder="Имя"/>
+                            <input onChange={handleInputChange} value={authFormData.name} type="text" name="name" placeholder={t("input_name")}/>
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type={showPassword ? "text" : "password"} value={authFormData.password} name="password"  placeholder="Пароль" className={`${errorWithPassWord ? styles.error_password : ""}`}/>
+                            <input onChange={handleInputChange} type={showPassword ? "text" : "password"} value={authFormData.password} name="password"  placeholder={t("input_password")} className={`${errorWithPassWord ? styles.error_password : ""}`}/>
                             <img src={showPassword ? showedEye : eye}  className={styles.eye_svg} onClick={() => setShowPassword(!showPassword)} />
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type={showConfirmPassword ? "text" : "password"} value={authFormData.confirmPassword} name="confirmPassword" placeholder="Потвердить пароль" className={`${errorWithPassWord ? styles.error_password : ""}`}/>
+                            <input onChange={handleInputChange} type={showConfirmPassword ? "text" : "password"} value={authFormData.confirmPassword} name="confirmPassword" placeholder={t("input_confirm_password")} className={`${errorWithPassWord ? styles.error_password : ""}`}/>
                             <img src={showConfirmPassword ? showedEye : eye} className={styles.eye_svg} onClick={() => setShowConfirmPassword(!showConfirmPassword)} />
                         </div>
                         <div className={styles.auth_input}>
-                            <input onChange={handleInputChange} type="text" value={authFormData.email} name="email" placeholder="Ваш Email"/>
+                            <input onChange={handleInputChange} type="text" value={authFormData.email} name="email" placeholder={t("input_email")}/>
                         </div>
                         <div className={styles.conditions}>
                             <input type="checkbox" checked={isAgreed} onChange={handleAgreementChange} className={styles.checkbox_custom} />
-                            <p>Я согласен с <a href="#">условиями обработки</a> <br/> персональных данных</p>
+                            <p style={{ maxWidth: "300px" }}>{ t("policy") }</p>
                         </div>
                     </div>
                     { errorAuth && (
                         <div className={styles.errors}>
-                            Проверьте ваши данные пожалуйста
+                            { t("auth_check") }
                         </div>
                     ) }
                     <div className={styles.auth_button}>
                         { loadedAuth ? (
-                            <div>Обработка данных...</div>
+                            <div>{ t("auth_loading") }...</div>
                         ) : (
                             <button className={`${styles.reg_button}`} disabled={loadedAuth}>
-                                Регистрация
+                                { t("reg") }
                             </button>
                         ) }
                     </div>
@@ -127,11 +129,11 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                     <img src={pattern}  />
                 </div>
                 <div className={styles.auth_title}>
-                    <span>Уже регистрировались?</span>
-                    <a href="#" onClick={() => handleRegisterOrAuth(true)}>Войти</a>
+                    <span>{ t("in_reg") }</span>
+                    <a href="#" onClick={() => handleRegisterOrAuth(true)}>{ t("sign_in") }</a>
                 </div>
                 <div className={styles.reg_sign}>
-                    <span>Войти через</span>
+                    <span>{ t("sign_through") }</span>
                     <a href="https://turan-backend.online/google/login/">
                         <img src={google} className={styles.sign_icon} />
                     </a>

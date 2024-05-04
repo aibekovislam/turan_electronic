@@ -4,6 +4,7 @@ import RangeSlider from "./RangeSlider";
 import { compareByVolume, extractBrandCategoryAndTitle, extractPropertyArray, filterMemory, returnColorsForFilter, sortData } from "./filterFunction";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPickedOption, setPickedOption } from "../store/features/dropdown/dropdownSlice";
+import { useTranslation } from "react-i18next";
 
 export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, dataForDropdown, fetchFilterDropdown, productsByBrandCategory, dropdownId }: RenderDropdownTypes) => {
     const pickedOption = useSelector(selectPickedOption(dropdownId));
@@ -50,6 +51,8 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
         fetchProductsAndLog(updatedFilters);
     };
 
+    const { t } = useTranslation();
+
         switch (index) {
             case 0:
                 return (
@@ -83,7 +86,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                     })
                                 }}
                                 />
-                            <span className={styles.dropdown_text}>Все</span>
+                            <span className={styles.dropdown_text}>{ t("all") }</span>
                         </label>
                         {sortData(brandTitles).map((item: any, innerIndex: number) => (
                             <div key={innerIndex} className={styles.dropdown__item} style={{ alignItems: "normal" }}>
@@ -150,7 +153,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                     fetchProductsAndLog(obj);
                                 }}
                                 />
-                            <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                            <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>{ t("all") }</label>
                         </label>
                         {sortData(brandModels).map((item: any, index: number) => (
                             <div key={index} className={styles.dropdown__item} style={{ alignItems: "normal" }}>
@@ -210,7 +213,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                     fetchProductsAndLog(obj)
                                 }}
                             />
-                            <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>Все</label>
+                            <label htmlFor={`radio_${index}_all`} className={styles.dropdown_text}>{ t("all") }</label>
                         </div>
                         {productMemory
                             .sort(compareByVolume)
@@ -231,7 +234,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                     }}  
                                 />
                                 <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>
-                                    {item.volume} ГБ
+                                    {item.volume} { t("gb") }
                                 </label>
                                 </div>
                             ))}
@@ -264,7 +267,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                 }}
                                 checked={pickedColor === null}
                                 />
-                            <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>Все</label>
+                            <label htmlFor={`radio_${index}`} className={styles.dropdown_text}>{ t("all") }</label>
                         </label>
                         <div className={`${styles.d_f_colors}`}>
                         {colorsArray?.map((item: any, index: number) => (
@@ -287,7 +290,7 @@ export const RenderDropdownContent = ({ index, pickedColor, setPickedColor, bran
                                         name={groupName}
                                         defaultChecked={false}
                                     />
-                                    <span className={styles.dropdown_text}>Все</span>
+                                    <span className={styles.dropdown_text}>{ t("all") }</span>
                                 </div>
                             ))}
                         </div>
