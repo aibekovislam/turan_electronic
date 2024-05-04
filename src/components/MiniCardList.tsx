@@ -10,6 +10,7 @@ import { fetchAccessories } from "../store/features/accessories/accessoriesSlice
 import { AccessoriesType } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
 import MiniCardMobile from "./MiniCardMobile";
+import { useTranslation } from "react-i18next";
 
 function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
@@ -33,7 +34,7 @@ function MiniCardList() {
   const dispatch = useDispatch<any>()
   const accessories = useSelector((state: RootStates) => state.accessories.accessories)
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
-
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(fetchAccessories())
@@ -96,7 +97,7 @@ function MiniCardList() {
     <>
       <div className={"accessories"}>
         <div className="accessories__item">
-          Аксессуары
+          { t("accessories") }
         </div>
       </div>
       <div className={isMobile ? `slider-container ${styles.mini_card_list} ${styles.miniCardMobileList_container}` : `slider-container ${styles.mini_card_list} `}>

@@ -14,6 +14,7 @@ import { API_URL } from "../utils/consts"
 import checked from "../assets/svgs/card/Vector (9).svg";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
+import { useTranslation } from "react-i18next"
 
 
 const Card: React.FC<CardProps> = ({ product, onClick }) => {
@@ -29,6 +30,8 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
     const token = tokenString ? JSON.parse(tokenString) : null;
     const dispatch = useDispatch<any>();
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+    const { t, i18n } = useTranslation();
+    const currentLanguage = i18n.language;
 
     ping.register();
 
@@ -90,7 +93,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                             <div className={styles.cardMobile_rate}>
                                 {product.is_arrived ? (
                                     <div className={styles.new_productCard_label}>
-                                        Новое
+                                        { t("new_label") }
                                     </div>
                                 ) : null}
                                 <div className={styles.rating_mobile}>
@@ -115,7 +118,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                 </div>
                                 <div className={styles.cardMobile_wrapper__right}>
                                     <div className={styles.cardMobile_title} onClick={() => onClick(product.id)}>
-                                        {product.name}
+                                        {currentLanguage === "Русский" ? product.name : product.name_en}
                                     </div>
                                     <div className={styles.cardMobile_colors}>
                                         <span>Цвет</span>
@@ -131,7 +134,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                 {product.in_stock && product.price !== 0 ? (
                                     <div className={styles.isAvilableProduct}>
                                         <img alt={product.name} src={checked} />
-                                        <span>В наличии</span>
+                                        <span>{ t("in_stock") }</span>
                                     </div>
                                 ) : (
                                     null
@@ -140,7 +143,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     {product.price !== 0 ? (
                                         <>{product.price} сом</>
                                     ) : (
-                                        <div style={{ color: 'red' }}>Нет в наличии</div>
+                                        <div style={{ color: 'red' }}>{ t("not_stock") }</div>
                                     )}
                                     <div className={styles.bag__mobile}>
                                         <img alt={product.name} src={shop} />
@@ -157,7 +160,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                             <div className={styles.star_container}>
                                 {product.is_arrived ? (
                                     <div className={styles.new_productCard_label}>
-                                        Новое
+                                        { t("new_label") }
                                     </div>
                                 ) : null}
                                 <div>
@@ -202,7 +205,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                                  {product.discount !== 0 && <h3>{product.price} сом</h3>}
                                              </>
                                         ) : (
-                                            <h2 style={{ color: 'red' }}>Нет в наличии</h2>
+                                            <h2 style={{ color: 'red' }}>{ t("not_stock") }</h2>
                                         )
                                     }
                                 </div>
@@ -220,19 +223,19 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                     }
                                 </div>
                                 <div onClick={() => onClick(product.id)} className={styles.title}>
-                                    <h2>{product.name}</h2>
-                                    <p>{product?.description !== undefined ? product?.description.slice(0, 35) + "..." : ""}</p>
+                                    <h2>{currentLanguage === "Русский" ? product.name : product.name_en}</h2>
+                                    <p>{currentLanguage === "Русский" ? (product?.description !== undefined ? product?.description.slice(0, 35) + "..." : "") : (product?.description_en ? product?.description_en.slice(0, 35) + "..." : "")}</p>
                                 </div>
                             </div>
                             <div className={styles.btn_and_options}>
                                 <div className={styles.btn_container}>
                                     <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
-                                        <a href="#">Быстрый заказ</a>
+                                        <a href="#">{ t("fast_order_btn") }</a>
                                     </button>
                                     <img alt={product.brand_title} src={shop} onClick={() => navigate(`/product/${product.id}`)} />
                                 </div>
                                 <div className={styles.options_container}>
-                                    <h2>Цвет</h2>
+                                    <h2>{ t("color") }</h2>
                                     {product?.color !== undefined ? product?.color.slice(0, 6).map((item: any, index: number) => (
                                         <div key={index} className={styles.color_block} style={{ background: item.hash_code }} onClick={() => handleColorPick(item.hash_code)}></div>
                                     )) : (

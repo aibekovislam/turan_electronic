@@ -5,6 +5,7 @@ import { fetchFilterProducts } from '../store/features/products/productSlice';
 import ArrowDown from '../assets/svgs/ArrowDown';
 import { fetchBrands } from '../store/features/brands/brandsSlice';
 import { RenderSidebarDrop } from '../functions/RenderSidebarDrop';
+import { useTranslation } from 'react-i18next';
 
 function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef, dataForDropDown, productsByBrandCategory }: any) {
   const [pickedColor, setPickedColor] = useState<string | null>(null);
@@ -39,11 +40,13 @@ function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef, dataF
         console.log(updatedFilters);
     };
 
+    const { t } = useTranslation();
+
   return (
     <>
       <div ref={sidebarRef} className={`${styles.sidebar} ${isOpen ? styles.open : ''}`} id='sidebar' >
         <div className={styles.d_f_filters}>
-          <span className={styles.main_title_filters}>Фильтры</span>
+          <span className={styles.main_title_filters}>{ t("filters") }</span>
           <button className={styles.closeBtn} onClick={toggleSidebar}>
             X
           </button>
@@ -54,7 +57,7 @@ function SidebarMenu({ isOpen, brand, products, toggleSidebar, sidebarRef, dataF
             <div key={index} className={styles.sidebar__items}>
               <div className={styles.sidebar_title} onClick={() => handleDropdownList(index)}>
                   <span>
-                    {index === 1 ? 'Цвет' : index === 2 ? 'Модель' : index === 3 ? 'Объем' : 'Цена'}
+                    {index === 1 ? `${t("color")}` : index === 2 ? `${t("model")}` : index === 3 ? `${t("memory")}` : `${t("price")}`}
                   </span>
                   <div className={styles.brands__block_arrow_down}>
                     <ArrowDown isUp={dropdownStates[index]} />

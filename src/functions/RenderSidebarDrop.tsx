@@ -4,10 +4,12 @@ import { ProductsType, RenderSidebarTypes } from "../utils/interfacesAndTypes";
 import RangeSlider from "./RangeSlider";
 import { compareByVolume, extractPropertyArray, filterMemory, returnColorsForFilter, sortData } from "./filterFunction";
 import { selectPickedOption, setPickedOption, setPickedOptionSidebar } from "../store/features/dropdown/dropdownSlice";
+import { useTranslation } from "react-i18next";
 
 export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fetchProductsAndLog, filters, showAllColors, setShowAllColors, dataForDropDown, productsByBrandCategory, products, dropdownID}: RenderSidebarTypes) => {
     const pickedOption = useSelector(selectPickedOption(dropdownID));
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     console.log(products)
 
@@ -202,7 +204,7 @@ export const RenderSidebarDrop = ({index, pickedColor, setPickedColor, brand, fe
                         ))}
                     </div>
                     <div className={styles.sidebar_all} onClick={() => setShowAllColors(!showAllColors)}>
-                        <span>{ showAllColors ? "Вернуться" : "Показать все" }</span>
+                        <span>{ showAllColors ? "Вернуться" : `${t("see_all")}` }</span>
                     </div>
                 </div>
             )

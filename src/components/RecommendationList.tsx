@@ -7,6 +7,7 @@ import { fetchRecProducts } from "../store/features/products/productRecommeneded
 import { RootStates } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { fetchFavorites } from "../store/features/favorite_and_cart/favoriteSlice";
+import { useTranslation } from "react-i18next";
 
 function RecommendationList() {
     const navigate = useNavigate();
@@ -77,14 +78,16 @@ function RecommendationList() {
         event.preventDefault();
     };
 
+    const { t } = useTranslation();
+
     return (
         <>
             <div className={"accessories"} style={{ margin: "50px 0px" }}>
                 <div className="accessories__item">
-                    Рекомендуемые
+                    { t("reccomended") }
                 </div>
                 <div className="accessories__item">
-                    <span onClick={() => navigate("/recommendation/products")} style={{ fontSize: "25px", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>Смотреть все</span>
+                    <span onClick={() => navigate("/recommendation/products")} style={{ fontSize: "25px", marginRight: "10px", display: "flex", justifyItems: "center", alignItems: "center" }}>{ t("see_all") }</span>
                     <div onClick={() => navigate("/recommendation/products")} className="accessories__item_img" style={{ position: "initial" }}>
                         <img src={nextArrow} />
                     </div>

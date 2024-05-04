@@ -9,6 +9,7 @@ import OrderForm from './OrderForm';
 import { API_URL } from '../utils/consts';
 import 'ldrs/ring';
 import { ping } from 'ldrs'
+import { useTranslation } from 'react-i18next';
 
 function CartCardList() {
   const dispatch = useDispatch<any>();
@@ -16,7 +17,8 @@ function CartCardList() {
   const userString = localStorage.getItem("userInfo");
   const user = userString ? JSON.parse(userString) : null;
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
-
+  const { t } = useTranslation();
+  
   ping.register()
 
   useEffect(() => {
@@ -118,8 +120,6 @@ function CartCardList() {
       return null;
     }
   }
-
-  console.log(carts)
 
   return (
     isMobile ? (
@@ -225,11 +225,11 @@ function CartCardList() {
     ) : (
       <div className={styles.cart_main}>
         <div className={styles.cart_path}>
-          <span>Главная | Каталог | Корзина</span>
+          <span>{ t("home") } | { t("cart") }</span>
         </div>
         <div className={styles.cart_header}>
-          <div>Корзина</div>
-          <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
+          <div>{ t("cart") }</div>
+          <span onClick={() => dispatch(clearCart())}>{ t("clear_cart") }</span>
         </div>
         {carts?.map((cart: any, index: number) => (
           <div className={styles.cart_container} key={index}>
@@ -280,7 +280,7 @@ function CartCardList() {
 
                   dispatch(fetchCarts())
                 }}>
-                  Удалить
+                  { t("delete") }
                 </div>
               </div>
               <div className={styles.cart_price}>
@@ -313,13 +313,13 @@ function CartCardList() {
           </div>
         ))}
         <div className={styles.total_block}>
-          Итого: {carts
+          { t("end_price") }: {carts
             .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart.product.memory_price !== null ? filterPriceToMemory(cart?.product, cart?.memory_name) : cart?.product.price, cart?.product.discount))
             .reduce((acc, price) => acc + price, 0)
             .toLocaleString("ru-RU")} сом
         </div>
         <div className={styles.cart_button}>
-          <button className={styles.btn} onClick={handleOrderButtonClick}>Оформить заказ</button>
+          <button className={styles.btn} onClick={handleOrderButtonClick}>{ t("order_add") }</button>
         </div>
         {showOrderForm && <OrderForm user={user} products={carts} />}
       </div>

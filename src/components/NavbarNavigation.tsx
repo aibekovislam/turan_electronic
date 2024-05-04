@@ -3,25 +3,27 @@ import police_car from "../assets/svgs/ri_police-car-fill.svg";
 import service from "../assets/svgs/Vector (4).svg";
 import gurantee from "../assets/svgs/lets-icons_check-fill.svg";
 import discont from "../assets/svgs/ph_percent-fill.svg";
+import { useTranslation } from "react-i18next";
 
 function NavbarNavigation() {
+    const { t } = useTranslation();
   return (
     <div className={styles.navigation__block}>
         <div className={styles.navigation__block_item}>
             <img src={police_car} />
-            <div>Удобная доставка</div>
+            <div>{ t("delivery") }</div>
         </div>
         <div className={styles.navigation__block_item}>
             <img src={service} />
-            <div>Быстросервис</div>
+            <div>{ t("services") }</div>
         </div>
         <div className={styles.navigation__block_item}>
             <img src={gurantee} />
-            <div>Гарантия лучшей цены</div>
+            <div>{ t("gurantee") }</div>
         </div>
         <div className={styles.navigation__block_item}>
             <img src={discont} />
-            <div>Рассрочка и кредит</div>
+            <div>{ t("credit") }</div>
         </div>
     </div>
   )

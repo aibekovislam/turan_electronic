@@ -10,6 +10,7 @@ import { signIn } from "../store/features/auth/authSlice";
 import { RootStates } from "../store/store";
 import { useNavigate } from "react-router-dom";
 import { notify } from "./Toastify";
+import { useTranslation } from "react-i18next";
 
 function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   const user = useSelector((state: RootStates) => state.auth.user);
@@ -19,6 +20,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   const token = tokenString ? JSON.parse(tokenString) : null;
   const dispatch = useDispatch<any>();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [authFormData, setAuthFormData] = useState({
     email: "",
@@ -59,7 +61,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
   useEffect(() => {
     if (userLocal && token) {
       navigate("/")
-      notify('Вы успешно вошли в аккаунт')
+      notify(t("sign_message"))
     }
   }, [userLocal])
 
@@ -67,9 +69,9 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
     <div className={styles.auth_main}>
       <div className={styles.auth_container}>
         <div className={styles.auth}>
-          <div className={styles.auth_text}>
-            <p>
-              Авторизуйтесь, указав свои контактные данные, или <br /> воспользовавшись перечисленными сервисами
+          <div className={styles.auth_text} style={{ display: "flex", justifyContent: "center" }}>
+            <p style={{ maxWidth: "500px" }}>
+              { t("auth_text") }
             </p>
           </div>
           <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -77,7 +79,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
               <div className={styles.auth_input}>
                 <input
                   type="text"
-                  placeholder="Ваш email"
+                  placeholder={t("input_email")}
                   name="email"
                   value={authFormData.email}
                   onChange={handleInputChange}
@@ -86,7 +88,7 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
               <div className={styles.auth_input}>
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="Пароль"
+                  placeholder={t("input_password")}
                   name="password"
                   value={authFormData.password}
                   onChange={handleInputChange}
@@ -94,35 +96,35 @@ function Auth({ handleRegisterOrAuth }: AuthAndRegProps): JSX.Element {
                 <img alt="eye" src={showPassword ? showedEye : eye} onClick={() => setShowPassword(!showPassword)} className={styles.eye_svg} />
               </div>
               <div className={styles.forgotten_password} onClick={() => navigate("/resend/auth")}>
-                <span>Забыли пароль?</span>
+                <span>{t("forgot_password")}</span>
               </div>
             </div>
             {errorAuth && (
               <div className={styles.errors} style={{ marginTop: "10px" }}>
-                Проверьте ваши данные пожалуйста
+                { t("auth_check") }
               </div>
             )}
             <div className={styles.auth_button}>
               {loadedAuth ? (
-                <div>Обработка данных...</div>
+                <div>{ t("auth_loading") }...</div>
               ) : (
                 <button className={`${styles.reg_button}`} disabled={loadedAuth}>
-                  Войти
+                  { t("sign_in") }
                 </button>
               )}
             </div>
           </form>
           <div className={styles.auth_title}>
-            <span>Впервые у нас?</span>
+            <span>{ t("new_in_site") }</span>
             <a href="#" onClick={() => handleRegisterOrAuth(false)}>
-              Регистрация
+              { t("reg") }
             </a>
           </div>
           <div className={styles.auth_pattern}>
             <img alt="pattern" src={pattern} />
           </div>
           <div className={styles.auth_sign}>
-            <span>Войти через</span>
+            <span>{ t("sign_through") }</span>
             <a href="https://turan-backend.online/google/login/">
               <img alt="google svg" src={google} className={styles.sign_icon} />
             </a>

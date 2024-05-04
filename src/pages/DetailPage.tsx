@@ -20,6 +20,7 @@ import { ping } from 'ldrs'
 import { Rating } from 'react-simple-star-rating'
 import { Helmet } from "react-helmet-async";
 import { API_URL } from "../utils/consts";
+import { useTranslation } from "react-i18next";
 
 function DetailPage() {
     const { id } = useParams();
@@ -33,6 +34,8 @@ function DetailPage() {
     const token = tokenString ? JSON.parse(tokenString) : null;
     const favorites = useSelector((state: RootStates) => state.favorites.favorites);
     const pickedColor = useSelector((state: RootStates) => state.oneProduct.pickedColor);
+    const { t, i18n } = useTranslation();
+    const currentLanguage = i18n.language
 
     const [favoriteLoaded, setFavoriteLoad] = useState(false);
     const [activeItem, setActiveItem] = useState<any>("");
@@ -78,16 +81,6 @@ function DetailPage() {
             setProductPrice(product.price)
         }
     }, [product])
-
-    // useEffect(() => {
-    //     if (product?.memory && product?.memory.length <= 0) {
-    //         setActiveItem({ volume: "0" });
-    //     }
-    // }, [product]);    
-
-    console.log(activeItem)
-
-    console.log(product)
 
     const handleColorPick = (color: any) => {
         setColorPicked(color.hash_code);
@@ -250,7 +243,7 @@ function DetailPage() {
                                     </div>
                                     <div className={styles.mobile_detail__title}>
                                         <div>
-                                            {product?.name}
+                                            {currentLanguage === "Русский" ? product.name : product.name_en}
                                         </div>
                                         <div className={styles.stars}>
                                             {product?.rating != undefined ? (
@@ -371,11 +364,11 @@ function DetailPage() {
                                             </div>
                                         ) : visibleDiv === "div2" ? (
                                             <div className={styles.description}>
-                                                <div>Описание</div>
+                                                <div>{ t("detail") }</div>
                                                 <p>
                                                     {expanded ? 
-                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(product?.description) }}></div> :
-                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(product?.description?.slice(0, 100)) + '...' }}></div>
+                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description : (product.description_en ? (product?.description_en) : "")) }}></div> :
+                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description?.slice(0, 100) : (product.description_en ? product.description_en : "")) + '...' }}></div>
                                                     }
                                                     <span className={styles.open_des_func} onClick={toggleDescription}>
                                                         {expanded ? "Свернуть" : "Развернуть"}
@@ -388,11 +381,11 @@ function DetailPage() {
                                                     <div className={styles.modal}>
                                                         <div className={styles.modalContent}>
                                                             <div className={styles.modal_text}>
-                                                                Написать отзыв
+                                                                { t("write_review") }
                                                                 <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
                                                             </div>
                                                             <div className={styles.user_info}>
-                                                                <span>Ваше имя</span>
+                                                                <span>{ t("input_name") }</span>
                                                                 <div>{user.name}</div>
                                                             </div>
                                                             <form className={styles.add_review} onSubmit={handleSubmit}>
@@ -411,7 +404,7 @@ function DetailPage() {
                                                                     />
                                                                 </div>
                                                                 <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }}>
-                                                                    <button className={styles.add_review_btn} type="submit">Отправить</button>
+                                                                    <button className={styles.add_review_btn} type="submit">{ t("send") }</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -485,7 +478,7 @@ function DetailPage() {
                                 <div className={styles.detail_main}>
                                     <div className={styles.section_title}>
                                         <div className={styles.path}>
-                                            <a href="/">Главная</a> | <a href={`/products/brands/${product.brand}`}>{ product.brand_title }</a> | <a href={`/products/filter/${product.brand_category}/${product.brand}`}>{product?.brand_category_title}</a> | {product?.name}
+                                            <a href="/">{ t("home") }</a> | <a href={`/products/brands/${product.brand}`}>{ product.brand_title }</a> | <a href={`/products/filter/${product.brand_category}/${product.brand}`}>{product?.brand_category_title}</a> | {product?.name}
                                         </div>
                                     </div>
                                     <div className={styles.detail_container}>
@@ -509,11 +502,11 @@ function DetailPage() {
                                                 )}
                                             </div>
                                             <div className={styles.description}>
-                                                <div>Описание</div>
+                                                <div>{ t("detail") }</div>
                                                 <p>
                                                     {expanded ? 
-                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(product?.description) }}></div> :
-                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(product?.description?.slice(0, 100)) + '...' }}></div>
+                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description : (product.description_en ? (product?.description_en) : "")) }}></div> :
+                                                        <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description?.slice(0, 100) : (product.description_en ? product.description_en : "")) + '...' }}></div>
                                                     }
                                                     <span className={styles.open_des_func} onClick={toggleDescription}>
                                                         {expanded ? "Свернуть" : "Развернуть"}
@@ -542,11 +535,11 @@ function DetailPage() {
                                                 )}
                                             </div>
                                             <div className={styles.title}>
-                                                <h1>{product?.name}</h1>
+                                                <h1>{ currentLanguage === "Русский" ? product.name : product.name_en }</h1>
                                             </div>
                                             <div className={styles.storage}>
                                                 {product.memory_price ? (
-                                                    <div>Память</div>
+                                                    <div>{ t("memory") }</div>
                                                 ) : (
                                                     null
                                                 )}
@@ -561,7 +554,7 @@ function DetailPage() {
                                                                 setMemoryID(item.id)
                                                             }}
                                                         >
-                                                            {item.volume}ГБ
+                                                            {item.volume} {t("gb")}
                                                         </li>
                                                     ))}
                                                 </ul>

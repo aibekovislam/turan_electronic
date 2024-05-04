@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import Toastify from "./components/Toastify.tsx";
 import { HelmetProvider } from 'react-helmet-async';
+import './i18n';
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>

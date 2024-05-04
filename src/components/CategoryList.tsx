@@ -11,7 +11,7 @@ function CategoryList() {
   const dispatch = useDispatch<any>();
   const brands = useSelector((state: RootStates) => state.brands.brands);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
-
+  
   useEffect(() => {
     dispatch(fetchBrands());
   }, [dispatch]);

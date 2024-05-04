@@ -9,11 +9,14 @@ import burger__menu from "../assets/svgs/Vector (16).svg";
 import home_mobile from "../assets/svgs/navbarMobile/home.svg"
 import heart_mobile from "../assets/svgs/navbarMobile/heart.svg"
 import user_mobile from "../assets/svgs/navbarMobile/user.svg"
+import Russia from '../assets/svgs/navbarMobile/russian.svg';
+import English from '../assets/svgs/navbarMobile/english.svg';
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { searchProducts } from "../store/features/products/productSlice";
+import { useTranslation } from "react-i18next";
 
 function Navbar() {
   const [activeItem, setActiveItem] = useState<string>(() => {
@@ -26,7 +29,22 @@ function Navbar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
   const [ isMobileSearch, setIsMobileSearch ] = useState(false);
   const dispatch = useDispatch<any>();
-  const [searchText, setSearchText] = useState<string>(""); 
+  const [searchText, setSearchText] = useState<string>("");
+  const { t, i18n } = useTranslation();
+  const [language, setLanguage] = useState('Русский');
+  const [languageDropdown, setLanguageDropdown] = useState(false);
+  const currentLanguage = i18n.language;
+
+  const toggleLanguageDropdown = () => {
+    setLanguageDropdown(!languageDropdown);
+  };
+
+  const handleLanguageChange = (selectedLanguage: string) => {
+      setLanguage(selectedLanguage);
+      setLanguageDropdown(false);
+
+      i18n.changeLanguage(selectedLanguage);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -102,7 +120,7 @@ function Navbar() {
                 }`}
             >
               <a href="#">
-                Главная
+                { t("home") }
               </a>
             </li>
             <li
@@ -111,7 +129,7 @@ function Navbar() {
                 }`}
             >
               <a href="#">
-                Категории
+                { t("category") }
               </a>
             </li>
             <li
@@ -120,7 +138,7 @@ function Navbar() {
                 }`}
             >
               <a href="#">
-                Новости
+                { t("news") }
               </a>
             </li>
             <li
@@ -129,7 +147,7 @@ function Navbar() {
                 }`}
             >
               <a href="#">
-                О нас
+                { t("about") }
               </a>
             </li>
           </ul>
@@ -160,10 +178,24 @@ function Navbar() {
             className={`${styles.search__block} ${activeItem === "search__block" ? "active__navbar" : ""}`}
           // onClick={() => handleItemClick("search__block")}
           >
-            <input type="text" placeholder="Поиск..." name="search" onChange={handleChangeSearch} onClick={() => {
+            <input type="text" placeholder={`${t("search")}...`} name="search" onChange={handleChangeSearch} onClick={() => {
                 navigate("/search");
               }} />
             <img src={search_svg} alt="search_svg" className={styles.search__svg} />
+          </div>
+          <div className={styles.lng}>
+            <div className={styles.language_dropdown} onClick={toggleLanguageDropdown} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <div className={styles.selected_lng}>
+                <span>{ languageDropdown ? t("choose_language") : i18n.language}</span>
+                <img src={i18n.language === "Русский" ? Russia : English} alt="selected language" />
+              </div>
+              {languageDropdown && (
+                <ul className={`${styles.language_list} animate__animated animate__fadeInDown`}>
+                  <li onClick={() => handleLanguageChange('Русский')} style={{ textAlign: "center" }}>Русский<img src={Russia} alt="russian language" /></li>
+                  <li onClick={() => handleLanguageChange('English')} style={{ textAlign: "center" }}>English<img src={English} alt="english language" /></li>
+                </ul>
+              )}
+            </div>
           </div>
         </div>
         { isMobile ? (
@@ -180,6 +212,15 @@ function Navbar() {
             <div className={styles.bottomNavItem}>
               <img onClick={() => navigate(`/${user && token ? "profile" : "auth"}`)} src={user_mobile} alt="Auth" style={{ width: "20px" }} />
             </div>
+            <div className={styles.lng_mobile}>
+            <div className={styles.language_dropdown} onClick={() => {
+              handleLanguageChange(currentLanguage === "Русский" ? "English" : "Русский")
+            }} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+              <div className={styles.selected_lng}>
+                <img src={i18n.language === "Русский" ? Russia : English} alt="selected language" />
+              </div>
+            </div>
+          </div>
           </div>
         ) : (null) }
       </nav>

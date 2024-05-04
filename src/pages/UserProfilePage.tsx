@@ -11,6 +11,7 @@ import { fetchOrderHistory } from "../store/features/order/orderHistory";
 import { ProductsType } from "../utils/interfacesAndTypes";
 import { API_URL } from "../utils/consts";
 import { notifyError } from "../components/Toastify";
+import { useTranslation } from "react-i18next";
 
 function UserProfilePage() {
   const userString = localStorage.getItem("userInfo");
@@ -24,7 +25,8 @@ function UserProfilePage() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
   const tokenString = localStorage.getItem("tokens");
   const token = tokenString ? JSON.parse(tokenString) : null;
-  const userOrderHistoryList = useSelector((state: RootStates) => state.orderHistory.orderHistory)
+  const userOrderHistoryList = useSelector((state: RootStates) => state.orderHistory.orderHistory);
+  const { t } = useTranslation();
   
   useEffect(() => {
     const handleResize = () => {
@@ -81,7 +83,7 @@ function UserProfilePage() {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("chatID");
     navigate("/");
-    notifyError("Вы вышли из аккаунта")
+    notifyError(t("left_message"))
   }
 
   return (
@@ -100,22 +102,22 @@ function UserProfilePage() {
               </div>
             </div>
             <div className={styles.user_title}>
-              <div>Мой профиль</div>
+              <div>{ t("my_profile") }</div>
               <div className={styles.logOut} onClick={() => logOut()}>
-                <button>Выйти из аккаунта</button>
+                <button>{ t("logout") }</button>
               </div>
             </div>
             <div className={styles.user_container}>
               <div className={styles.user}>
                 <div className={styles.user_wrapper__left}>
-                  <li>Имя</li>
+                  <li>{t("input_name")}</li>
                   <li>Email</li>
-                  <li>Телефон</li>
+                  <li>{ t("phone") }</li>
                 </div>
                 <div className={styles.user_wrapper__right}>
                   { !editUser ? (
                     !user.name ? (
-                      <li onClick={() => setEditUser(true)}>Заполните поля</li>
+                      <li onClick={() => setEditUser(true)}>{ t("fill_input") }</li>
                     ) : (
                       <li>{user?.name}</li>
                     )
@@ -136,7 +138,7 @@ function UserProfilePage() {
                                       <input type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} />
                                       <input type="text" name="phone_number" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} style={{ marginTop: "15px" }}  />
                                       <div className={styles.user_button_mobile} style={{ marginTop: "20px" }}>
-                                        <button onClick={handleSave}>Сохранить</button>
+                                        <button onClick={handleSave}>{ t("save") }</button>
                                       </div>
                                     </div>
                                 ) : null }
@@ -147,11 +149,11 @@ function UserProfilePage() {
                     </div>
                   ) }
                   <li>{user?.email}</li>
-                  { !user.name ? <li onClick={() => setEditUser(true)}>Заполните поля</li> : <li>{user.phone_number}</li> }
+                  { !user.name ? <li onClick={() => setEditUser(true)}>{ t("fill_input") }</li> : <li>{user.phone_number}</li> }
                 </div>
               </div>        
                   <div className={styles.user_button} onClick={() => setEditUser(true)}>
-                    <button>Редактировать</button>
+                    <button>{ t("edit") }</button>
                   </div>
             </div>
             { isMobile && editUser ? (
@@ -160,10 +162,10 @@ function UserProfilePage() {
                     { !loading ? (
                         <div className={styles.mobile_d_f}>
                           <span className={styles.close_edit} onClick={() => setEditUser(false)}>X</span>
-                          <input style={{ width: "max-content", height: "45px" }} type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} placeholder="Имя" />
-                          <input style={{ width: "max-content", height: "45px", marginTop: "10px" }} type="text" name="phone_number" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} placeholder="Номер телефона" />
+                          <input style={{ width: "max-content", height: "45px" }} type="text" name="name" onChange={handleChangeName} value={modifiedName} className={styles.edit_name} placeholder={`${t("input_name")}`} />
+                          <input style={{ width: "max-content", height: "45px", marginTop: "10px" }} type="text" name="phone_number" onChange={handleChangePhone} value={modifiedPhone} className={styles.edit_name} placeholder={`${t("phone")}`} />
                           <div className={styles.user_button_mobile} style={{ marginTop: "20px" }}>
-                            <button onClick={handleSave}>Сохранить</button>
+                            <button onClick={handleSave}>{ t("save") }</button>
                           </div>
                         </div>
                     ) : null }
@@ -172,7 +174,7 @@ function UserProfilePage() {
             ) : null } 
           </div>
           <div className={styles.order_history}>
-            <h2 className={styles.order_history__title}>История заказов:</h2>
+            <h2 className={styles.order_history__title}>{ t("history_orders") }:</h2>
             <div className={styles.order_history_blocks}>
               { userOrderHistoryList?.map((item: any, index: number) => (
                 <div key={index}>
@@ -195,7 +197,7 @@ function UserProfilePage() {
                           <div className={styles.cart_content}>
                             <p style={{ wordBreak: 'break-word', maxWidth: "300px" }} >{`${product.product_details?.name}`}</p>
                             <div className={styles.cart_description} >{product.product_details.description?.slice(0, 120)}...</div>
-                            <div className={styles.colors}> Цвета:
+                            <div className={styles.colors}> { t("color") }:
                               {getColorHashCode(product.color, product.product_details).length !== 0 ? (
                                 <div key={index} className={styles.color_block} style={{ background: getColorHashCode(product.color, product.product_details) }}></div>
                               ) : (
@@ -232,7 +234,7 @@ function UserProfilePage() {
                   )) }
                   <hr/>
                   <div className={styles.total_block}>
-                    Итого: { item.items.map((product: any) => {
+                    { t("end_price") }: { item.items.map((product: any) => {
                       return product.count * product.price
                     }).reduce((acc: any, price: any) => acc + price, 0)
                     .toLocaleString("ru-RU")} сом 

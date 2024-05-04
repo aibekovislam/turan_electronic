@@ -6,6 +6,7 @@ import { fetchBrands } from "../store/features/brands/brandsSlice";
 import { BrandsType } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../utils/consts";
+import { useTranslation } from "react-i18next";
 
 function Brands() {
     const dispatch = useDispatch<any>()
@@ -21,10 +22,12 @@ function Brands() {
         navigate(`/products/brands/${brand}`)
     }
 
+    const { t } = useTranslation();
+
     return (
         <div className={styles.brands}>
             <div className={styles.brands__item}>
-                <div className={styles.brands__title}>Бренды</div>
+                <div className={styles.brands__title}>{ t("brands") }</div>
             </div>
             <div className={styles.brands__item}>
                 {brands?.map((brand: BrandsType, index: number) => (

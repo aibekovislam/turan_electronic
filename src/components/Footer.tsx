@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Footer() {
     const dispatch = useDispatch<any>()
@@ -22,6 +23,7 @@ function Footer() {
     }, [dispatch])
 
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <div className={styles.footer} style={{ marginBottom: "100px" }}>
@@ -29,7 +31,7 @@ function Footer() {
                 <div className={styles.footer__item}>
                     <div className={styles.footer__logo_and_info}>
                         <img src={logo} />
-                        <div className={styles.info}>Turan Electronics - ваш идеальный магазин для шопинга. Обнаружьте последние тренды, выбирайте изысканные товары, оформляйте заказы с легкостью. Элегантный дизайн, безопасные платежи и быстрая доставка - все, что вам нужно для приятного онлайн-шопинга. <br /><br /><br />Превратите свои желания в реальность с нами!</div>
+                        <div className={styles.info}>{ t("footer_text1") }<br /><br /><br />{ t("footer_text2") }</div>
                     </div>
                 </div>
                 <div className={styles.footer__item}>
@@ -48,7 +50,7 @@ function Footer() {
                 <div className={styles.footer__item}>
                     <div className={styles.footer__navigaiton}>
                         <div className={styles.footer__navigaiton__item}>
-                            <div className={styles.footer__navigaiton__item_title}>Контакты</div>
+                            <div className={styles.footer__navigaiton__item_title}>{ t("contacts") }</div>
                             <ul className={styles.footer__navigation__item_list}>
                                 <li className={styles.list__item} style={{ marginTop: "20px" }}>
                                     <img src={img1} />
@@ -69,17 +71,17 @@ function Footer() {
                             </ul>
                         </div>
                         <div className={styles.footer__navigaiton__item}>
-                            <div className={styles.footer__navigaiton__item_title}>Информация</div>
+                            <div className={styles.footer__navigaiton__item_title}>{ t("Info") }</div>
                             <ul className={styles.footer__navigation__item_list}>
-                                <li className={styles.list__item} style={{ marginTop: "20px" }} onClick={() => navigate('/about')}>О Нас</li>
-                                <li className={styles.list__item} style={{ cursor: 'default' }}>Контакты</li>
+                                <li className={styles.list__item} style={{ marginTop: "20px" }} onClick={() => navigate('/about')}>{ t("about") }</li>
+                                <li className={styles.list__item} style={{ cursor: 'default' }}>{ t("contacts") }</li>
                             </ul>
                         </div>
                         <div className={styles.footer__navigaiton__item}>
-                            <div className={styles.footer__navigaiton__item_title}>Личный кабинет</div>
+                            <div className={styles.footer__navigaiton__item_title}>{ t("personal_cabinet") }</div>
                             <ul className={styles.footer__navigation__item_list}>
-                                <li className={styles.list__item} style={{ marginTop: "20px" }} onClick={() => navigate("/auth")}>Личный Кабинет</li>
-                                <li className={styles.list__item} onClick={() => navigate("/categories")}>Производители</li>
+                                <li className={styles.list__item} style={{ marginTop: "20px" }} onClick={() => navigate("/auth")}>{ t("personal_cabinet") }</li>
+                                <li className={styles.list__item} onClick={() => navigate("/categories")}>{ t("Production") }</li>
                             </ul>
                         </div>
                     </div>

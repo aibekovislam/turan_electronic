@@ -5,11 +5,13 @@ import { RootStates } from "../store/store";
 import { addOrder, fetchCities, fetchRegions } from "../store/features/order/orderSlice";
 import { notify, notifyError } from "./Toastify";
 import '../styles/homepage.scss'
+import { useTranslation } from "react-i18next";
 
 function OrderForm({ products }: any) {
   const regions = useSelector((state: RootStates) => state.orders.regions);
   const cities = useSelector((state: RootStates) => state.orders.cities);
   const [selectedType, setSelectedType] = useState("pickup");
+  const { t } = useTranslation();
 
   const dispatch = useDispatch<any>();
   const [loading, setLoading] = useState(true);
@@ -134,7 +136,7 @@ function OrderForm({ products }: any) {
   return (
     <div className={styles.order_block}>
       <div className={styles.order_title}>
-        <span>{!sendedForm ? "Способ получения" : ""}</span>
+        <span>{!sendedForm ? `${t("different_get")}` : ""}</span>
         { !sendedForm ? (
           <div className={styles.order_type}>
           <div className={styles.type_1}>
@@ -146,7 +148,7 @@ function OrderForm({ products }: any) {
               className={styles.type_radio}
               onChange={() => handleDeliveryTypeChange("pickup")}
             />
-            <label htmlFor="pickup" style={{ height: "16px" }}>Самовывоз</label>
+            <label htmlFor="pickup" style={{ height: "16px" }}>{ t("self_order") }</label>
           </div>
           <div className={styles.type_2}>
             <input
@@ -157,7 +159,7 @@ function OrderForm({ products }: any) {
               checked={selectedType === "delivery"}
               onChange={() => handleDeliveryTypeChange("delivery")}
             />
-            <label htmlFor="delivery" style={{ height: "16px" }}>Доставка</label>
+            <label htmlFor="delivery" style={{ height: "16px" }}>{ t("deliver") }</label>
           </div>
         </div>
         ) : (null) }
@@ -166,9 +168,9 @@ function OrderForm({ products }: any) {
         {!sendedForm ? (
           <>
             <div className={styles.order_form}>
-              <input onChange={handleInputChange} value={orderFormValue.name} type="text" placeholder="Фамилия и имя*" name="name" />
+              <input onChange={handleInputChange} value={orderFormValue.name} type="text" placeholder={`${t("name_and_surname")}*`} name="name" />
               <div className={styles.inputs}>
-                <input onChange={handleInputChange} value={orderFormValue.phone} type="number" placeholder="Телефон *" name="phone" />
+                <input onChange={handleInputChange} value={orderFormValue.phone} type="number" placeholder={`${t("phone")}*`} name="phone" />
                 { selectedType !== "pickup" ? (
                   <input onChange={handleInputChange} value={orderFormValue.email} type="text" placeholder="Email" name="email" />
                 ) : (null) }
@@ -178,26 +180,26 @@ function OrderForm({ products }: any) {
               {selectedType === "pickup" ? (
                 <div className={styles.order_wrapper__left}>
                   <div className={styles.order_call}>
-                    <span>Самовывоз</span>
+                    <span>{ t("self_order") }</span>
                   </div>
                   <div className={styles.order_adress}>
-                    <p>г.Бишкек, ул.Ибраимова 108Б</p>
+                    <p>{ t("address") }</p>
                     <p>пн-вс 09:00-20:00</p>
                   </div>
                   <div className={styles.order_free}>
-                    <span>Бесплатно</span>
+                    <span>{ t("free") }</span>
                   </div>
-                  <button className={styles.btn_send_form} style={{ width: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>Отправить</button>
+                  <button className={styles.btn_send_form} style={{ width: "50%", display: "flex", justifyContent: "center", alignItems: "center" }}>{ t("send") }</button>
                 </div>
               ) : (
                 <div className={styles.order_wrapper__right}>
                   <div className={styles.order_right__title}>
-                    <span>Доставка</span>
+                    <span>{ t("deliver") }</span>
                   </div>
                   <div className={styles.order__form}>
                     <div className={styles.order_select}>
                       <select onChange={handleInputChange} value={regionsChange} className={styles.mySelect} name="regions">
-                        <option value={0}>Выбрать регион</option>
+                        <option value={0}>{ t("choose_region") }</option>
                         {regions.map(region => (
                           <option key={region.id} value={region.id}>{region.name}</option>
                         ))}
@@ -208,7 +210,7 @@ function OrderForm({ products }: any) {
                         className={styles.mySelect}
                         name="city"
                       >
-                        <option value={0}>Выбрать город</option>
+                        <option value={0}>{ t("choose_city") }</option>
                         {regions.length !== 0 ? (
                           cities.map(city => (
                             <option key={city.id} value={city.id}>{city.name}</option>
@@ -219,27 +221,27 @@ function OrderForm({ products }: any) {
                       </select>
                     </div>
                     <div className={styles.order_inputs}>
-                      <input onChange={handleInputChange} value={orderFormValue.street} type="text" placeholder="Улица" name="street" />
-                      <input onChange={handleInputChange} value={orderFormValue.house} type="text" placeholder="Дом/кв" name="house" />
+                      <input onChange={handleInputChange} value={orderFormValue.street} type="text" placeholder={`${t("street")}`} name="street" />
+                      <input onChange={handleInputChange} value={orderFormValue.house} type="text" placeholder={`${t("home_order")}`} name="house" />
                     </div>
                   </div>
                   <div className={styles.order_setTime}>
                   <span>
                     {regions && regions.length !== 0 ? 
                       (cities.find((item) => item.id === orderFormValue.city)?.delivery_price !== 0 && cities.find((item) => item.id === orderFormValue.city)?.delivery_price ? 
-                        (cities.find((item) => item.id === orderFormValue.city)?.delivery_price + ' сом ' || "Бесплатно") 
-                        : "Бесплатно")
-                      : "Бесплатно"
-                    } (1-3 дня)
+                        (cities.find((item) => item.id === orderFormValue.city)?.delivery_price + ' сом ' || `${t("free")}`) 
+                        : `${t("free")}`)
+                      : `${t("free")}`
+                    } { " " } 1-3 { t("day") }
                   </span>
                   </div>
-                  <button className={styles.btn_send_form}>Отправить</button>
+                  <button className={styles.btn_send_form}>{ t("send") }</button>
                 </div>
               )}
             </div>
           </>
         ) : (
-          <div>Отправлено, мы скоро с вами свяжемся.</div>
+          <div>{ t("sended") }</div>
         )}
       </form>
     </div>
