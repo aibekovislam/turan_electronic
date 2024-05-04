@@ -136,7 +136,7 @@ function CartCardList() {
             <div className={styles.cart}>
               <div className={styles.cart_image}>
                 {cart.product.product_images ? (
-                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : `${API_URL}/${cart.product.default_image.slice(16)}`} alt="phone" />
+                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : `${API_URL}/${cart.product.default_image.slice(16)}`} alt={cart.product.name} />
                 ) : (
                   <l-ping
                     size="45"
@@ -236,7 +236,7 @@ function CartCardList() {
             <div className={styles.cart}>
               <div className={styles.cart_image}>
                 {cart.product.product_images ? (
-                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : cart.product.default_image} alt="phone" />
+                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : `${API_URL}/${cart.product.default_image.slice(16)}`} alt={`image ${cart.product.name}`} />
                 ) : (
                   <l-ping
                     size="45"
