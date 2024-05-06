@@ -217,11 +217,13 @@ function DetailPage() {
         }
     }, [activeItem, pickedColor])
 
+    console.log(product)
+
     return (
         <>
             <Helmet>
                 <title>{`${product?.name}`} - Turan electronics интернет магазин электроники</title>
-                <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+                <meta name="description" content="Turan Electronics - ваш источник качественной электроники по лучшим ценам! Мы предлагаем широкий ассортимент товаров, включая смартфоны, ноутбуки, планшеты, компьютеры, аудио- и видеотехнику, аксессуары и многое другое. У нас вы найдете только оригинальную продукцию от ведущих мировых брендов с гарантией качества. Будьте в курсе последних технологических новинок и современных решений в мире электроники с Turan Electronics. Покупайте онлайн с уверенностью, что ваше удовлетворение - наш приоритет. Откройте для себя удобство и безопасность онлайн-шопинга с нами прямо сейчас!"></meta>
                 <link rel="canonical" href={`https://turanelectronics.kg/product/${product?.id}`} />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content={`https://turanelectronics.kg/product/${product?.id}`} />
@@ -474,7 +476,7 @@ function DetailPage() {
                 ) : (
                     <>
                         {product && product?.id === numberedId ? (
-                            <div>
+                            <div itemScope itemType="https://schema.org/Product">
                                 <div className={styles.detail_main}>
                                     <div className={styles.section_title}>
                                         <div className={styles.path}>
@@ -503,7 +505,7 @@ function DetailPage() {
                                             </div>
                                             <div className={styles.description}>
                                                 <div>{ t("detail") }</div>
-                                                <p>
+                                                <p itemProp="description">
                                                     {expanded ? 
                                                         <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description : (product.description_en ? (product?.description_en) : "")) }}></div> :
                                                         <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description?.slice(0, 100) : (product.description_en ? product.description_en : "")) + '...' }}></div>
@@ -535,7 +537,7 @@ function DetailPage() {
                                                 )}
                                             </div>
                                             <div className={styles.title}>
-                                                <h1>{ currentLanguage === "Русский" ? product.name : product.name_en }</h1>
+                                                <h1 itemProp="name">{ currentLanguage === "Русский" ? product.name : product.name_en }</h1>
                                             </div>
                                             <div className={styles.storage}>
                                                 {product.memory_price ? (
@@ -559,10 +561,10 @@ function DetailPage() {
                                                     ))}
                                                 </ul>
                                             </div>
-                                            <div className={styles.price}>
+                                            <div className={styles.price} itemScope itemType="https://schema.org/Offer" itemProp="offers">
                                                 {
                                                     productPrice !== 0 ? (
-                                                        <div>{calculateDiscountedPrice(productPrice ? productPrice : product.price, product.discount)} сом</div>
+                                                        <div itemProp="price">{calculateDiscountedPrice(productPrice ? productPrice : product.price, product.discount)} <span itemProp="priceCurrency">сом</span></div>
                                                     ) : (
                                                         <div style={{ color: "red" }} >Нет в наличии</div>
                                                     )

@@ -128,9 +128,9 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
         ) : (
             <div className={styles.brands_navbar}>
                 <div className={styles.brands_navbar__item}>
-                    <div className={styles.path}>
+                    {/* <div className={styles.path}>
                         <a href="/">{ t("home") }</a> | {brand.title}
-                    </div>
+                    </div> */}
                 </div>
                 <div className={styles.brands_navbar__item}>
                     <div className={styles.brands_navigation}>
@@ -138,7 +138,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                             <div key={index} className={styles.brands_navigation__item}>
                                 <div className={styles.brands_info_block} onClick={() => handleDropdownList(index)}>
                                     {index === 0 ? (
-                                        <img src={`${API_URL}/${brand.logo_field.slice(16)}`} alt="brand" className={styles.brandLogo} />
+                                        <img itemProp="image" src={`${API_URL}/${brand.logo_field.slice(16)}`} alt="brand" className={styles.brandLogo} />
                                     ) : (
                                         <div className={styles.brands__title_filter}>
                                             {index === 1 ? `${t("model")}` : index === 2 ? `${t("memory")}` : index === 3 ? `${t("price")}` : index === 4 ? `${t("color")}` : `${t("all_filters")}`}
