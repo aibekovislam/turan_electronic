@@ -5,13 +5,14 @@ import { fetchBrands } from "../store/features/brands/brandsSlice";
 import { RootStates } from "../store/store";
 import { BrandsType } from "../utils/interfacesAndTypes";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../utils/consts";
+import { useTranslation } from "react-i18next";
 
 function CategoryMobile() {
     const dispatch = useDispatch<any>();
     const brands = useSelector((state: RootStates) => state.brands.brands);
     const navigate = useNavigate();
     const [click, setClick] = useState<any>(false)
+    const { t } = useTranslation();
 
     const handleShowAllBrands = () => {
         setClick(true);
@@ -30,15 +31,15 @@ function CategoryMobile() {
     return (
         <div className={styles.category_main}>
             <div className={styles.category_title}>
-                <div>Бренды</div>
-                <span onClick={() => handleShowAllBrands()}>Смотреть все</span>
+                <div>{ t("brands") }</div>
+                <span onClick={() => handleShowAllBrands()}>{ t("see_all") }</span>
             </div>
             <div className={styles.category_container}>
                 {!click ? (
                     brands.slice(0, 6).map((item: BrandsType, index: number) => (
                         <div onClick={() => handleNavigate(item?.id)} key={index} className={styles.category}>
                             <div className={styles.category_image}>
-                                <img src={`${API_URL}/${item?.logo_field.slice(16)}`}  />
+                                <img src={`${item?.logo_field}`}  />
                             </div>
                             <span>{item.title}</span>
                         </div>
@@ -47,7 +48,7 @@ function CategoryMobile() {
                     brands.map((item: BrandsType, index: number) => (
                         <div onClick={() => handleNavigate(item?.id)} key={index} className={styles.category}>
                             <div className={styles.category_image}>
-                                <img src={`${API_URL}/${item?.image.slice(16)}`}  />
+                                <img src={`${item?.image}`}  />
                             </div>
                             <span>{item.title}</span>
                         </div>

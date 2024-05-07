@@ -8,7 +8,6 @@ import { fetchFilterProducts, getProductsByBrandCategory } from "../store/featur
 import SidebarMenu from "./SidebarMenu.tsx";
 import { useNavigate } from "react-router-dom";
 import { RenderDropdownContent } from "../functions/RenderDropdownContent.tsx";
-import { API_URL } from "../utils/consts.ts";
 import { useTranslation } from "react-i18next";
 
 function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCategory }: BrandsProps) {
@@ -114,7 +113,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                     <div className={styles.brands_navigation} style={{ height: "40px", borderRadius: "10px", alignItems: "center", justifyContent: "space-between" }}>
                         <div className={styles.brands_navigation__item} style={{ height: "37px" }}>
                             <div className={styles.brands_info_block} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                <img src={`${API_URL}/${brand.logo_field.slice(16)}`} style={{ width: "50px", height: "50px" }} alt="brand" className={styles.brandLogo} />
+                                <img src={`${brand.logo_field}`} style={{ width: "50px", height: "50px" }} alt="brand" className={styles.brandLogo} />
                             </div>
                         </div>
                         <div>{ t("filters") }</div>
@@ -138,7 +137,7 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
                             <div key={index} className={styles.brands_navigation__item}>
                                 <div className={styles.brands_info_block} onClick={() => handleDropdownList(index)}>
                                     {index === 0 ? (
-                                        <img itemProp="image" src={`${API_URL}/${brand.logo_field.slice(16)}`} alt="brand" className={styles.brandLogo} />
+                                        <img itemProp="image" src={`${brand.logo_field}`} alt="brand" className={styles.brandLogo} />
                                     ) : (
                                         <div className={styles.brands__title_filter}>
                                             {index === 1 ? `${t("model")}` : index === 2 ? `${t("memory")}` : index === 3 ? `${t("price")}` : index === 4 ? `${t("color")}` : `${t("all_filters")}`}

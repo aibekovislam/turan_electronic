@@ -229,7 +229,7 @@ function OrderForm({ products }: any) {
                   <span>
                     {regions && regions.length !== 0 ? 
                       (cities.find((item) => item.id === orderFormValue.city)?.delivery_price !== 0 && cities.find((item) => item.id === orderFormValue.city)?.delivery_price ? 
-                        (cities.find((item) => item.id === orderFormValue.city)?.delivery_price + ' сом ' || `${t("free")}`) 
+                        (cities.find((item) => item.id === orderFormValue.city)?.delivery_price + ` ${t("sum")} ` || `${t("free")}`) 
                         : `${t("free")}`)
                       : `${t("free")}`
                     } { " " } 1-3 { t("day") }
