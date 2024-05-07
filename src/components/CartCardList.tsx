@@ -17,7 +17,8 @@ function CartCardList() {
   const userString = localStorage.getItem("userInfo");
   const user = userString ? JSON.parse(userString) : null;
   const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language
   
   ping.register()
 
@@ -103,7 +104,7 @@ function CartCardList() {
     return (
       <>
         <div className={styles.empty_cart}>
-          Ваша корзина пуста
+          { t("empty_cart") }
         </div>
         <RecommendationList />
       </>
@@ -125,11 +126,11 @@ function CartCardList() {
     isMobile ? (
       <div className={styles.cart_main}>
         <div className={styles.cart_path}>
-          <span>Главная | Каталог | Корзина</span>
+          <span>{ t("home") } | { t("cart") }</span>
         </div>
         <div className={styles.cart_header}>
-          <div>Корзина</div>
-          <span onClick={() => dispatch(clearCart())}>Очистить корзину</span>
+          <div>{ t("cart") }</div>
+          <span onClick={() => dispatch(clearCart())}>{ t("clear_cart") }</span>
         </div>
         {carts?.map((cart: any, index: number) => (
           <div className={styles.cart_container} key={index}>
@@ -146,9 +147,9 @@ function CartCardList() {
                 )}
               </div>
               <div className={styles.cart_content}>
-                <p>{`${cart?.product.name} ${cart.memory_name !== "0" ? cart.memory_name + " ГБ" : ""} `}</p>
-                <div className={styles.cart_description} >{cart?.product.description.slice(0, 120)}...</div>
-                <div className={styles.colors}> Цвета:
+                <p>{currentLanguage === "Русский" ? cart?.product.name : cart?.product.name_en}</p>
+                <div className={styles.cart_description} >{ cart?.product.description_en && (currentLanguage === "Русский" ? cart?.product.description.slice(0, 120) : cart?.product.description_en.slice(0, 120))}...</div>
+                <div className={styles.colors}> { t("color") }:
                   {getColorHashCode(cart.color, cart.product).length !== 0 ? (
                     <div key={index} className={styles.color_block} style={{ background: getColorHashCode(cart.color, cart.product) }}></div>
                   ) : (
@@ -179,7 +180,7 @@ function CartCardList() {
                   dispatch(deleteCart(cart.id));
                   dispatch(fetchCarts())
                 }}>
-                  Удалить
+                  { t("delete") }
                 </div>
               </div>
               <div className={styles.cart_price}>
@@ -212,13 +213,13 @@ function CartCardList() {
           </div>
         ))}
         <div className={styles.total_block}>
-          Итого: {carts
+          { t("end_price") }: {carts
             .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart.product.memory_price !== null ? filterPriceToMemory(cart?.product, cart?.memory_name) : cart?.product.price, cart?.product.discount))
             .reduce((acc, price) => acc + price, 0)
             .toLocaleString("ru-RU")} { t("sum") }
         </div>
         <div className={styles.cart_button}>
-          <button className={styles.btn} onClick={handleOrderButtonClick}>Оформить заказ</button>
+          <button className={styles.btn} onClick={handleOrderButtonClick}>{ t("order_add") }</button>
         </div>
         {showOrderForm && <OrderForm user={user} products={carts} />}
       </div>
@@ -246,9 +247,9 @@ function CartCardList() {
                 )}
               </div>
               <div className={styles.cart_content}>
-                <p>{`${cart?.product.name} ${cart.memory_name !== "0" ? cart.memory_name + " ГБ" : ""} `}</p>
+                <p>{`${cart?.product.name} ${cart.memory_name !== "0" ? cart.memory_name + ` ${t("gb")}` : ""} `}</p>
                 <div className={styles.cart_description} >{cart?.product.description.slice(0, 120)}...</div>
-                <div className={styles.colors}> Цвета:
+                <div className={styles.colors}> { t("color") }:
                   {getColorHashCode(cart.color, cart.product).length !== 0 ? (
                     <div key={index} className={styles.color_block} style={{ background: getColorHashCode(cart.color, cart.product) }}></div>
                   ) : (

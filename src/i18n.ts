@@ -94,7 +94,10 @@ const resources = {
             "toCart": "Add to cart",
             "inCart": "Added to cart",
             "charecther": "Characteristic",
-            "review": "Review"
+            "review": "Review",
+            "color_pick": "Select color",
+            "not_auth": "You are not authorized",
+            "you_add": "You added",
         }
     },    
     "Русский": {
@@ -189,7 +192,10 @@ const resources = {
             "toCart": "В корзину",
             "inCart": "Добавлено в корзину",
             "charecther": "Характеристика",
-            "review": "Отзыв"
+            "review": "Отзыв",
+            "color_pick": "Выбрать цвет",
+            "not_auth": "Вы не авторизованы",
+            "you_add": "Вы добавили",
         }
     }
 };
