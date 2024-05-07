@@ -26,8 +26,9 @@ function UserProfilePage() {
   const tokenString = localStorage.getItem("tokens");
   const token = tokenString ? JSON.parse(tokenString) : null;
   const userOrderHistoryList = useSelector((state: RootStates) => state.orderHistory.orderHistory);
-  const { t } = useTranslation();
-  
+  const { t, i18n } = useTranslation();
+  const currentLanguage = i18n.language
+
   useEffect(() => {
     const handleResize = () => {
         setIsMobile(window.innerWidth < 520);
@@ -98,7 +99,7 @@ function UserProfilePage() {
           <div className={styles.user_main}>
             <div className={styles.section_title}>
               <div className={styles.path}>
-                <span onClick={() => navigate("/")}>Главная /</span> <span onClick={() => navigate("/profile")} >Мой профиль</span>
+                <span onClick={() => navigate("/")}>{ t("home") } /</span> <span onClick={() => navigate("/profile")} >{ t("my_profile") }</span>
               </div>
             </div>
             <div className={styles.user_title}>
@@ -195,8 +196,8 @@ function UserProfilePage() {
                             )}
                           </div>
                           <div className={styles.cart_content}>
-                            <p style={{ wordBreak: 'break-word', maxWidth: "300px" }} >{`${product.product_details?.name}`}</p>
-                            <div className={styles.cart_description} >{product.product_details.description?.slice(0, 120)}...</div>
+                            <p style={{ wordBreak: 'break-word', maxWidth: "300px" }} >{ currentLanguage === "Русский" ? product.product_details?.name : product.product_details?.name_en}</p>
+                            <div className={styles.cart_description} >{currentLanguage === "Русский" ? product.product_details.description?.slice(0, 120) : product.product_details.description_en?.slice(0, 120)}...</div>
                             <div className={styles.colors}> { t("color") }:
                               {getColorHashCode(product.color, product.product_details).length !== 0 ? (
                                 <div key={index} className={styles.color_block} style={{ background: getColorHashCode(product.color, product.product_details) }}></div>

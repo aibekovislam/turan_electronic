@@ -37,9 +37,9 @@ function FavoriteList() {
 
     if(!user) {
         return (
-            <div className="not_auth">
-                Вы не авторизованы
-                <button onClick={() => navigate("/auth")}>Авторизоваться</button>
+            <div className="not_auth" style={{ textAlign: "center" }}>
+                { t("not_auth") }
+                <button onClick={() => navigate("/auth")}>{ t("auth") }</button>
             </div>
         )
     }

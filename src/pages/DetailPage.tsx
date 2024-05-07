@@ -115,11 +115,11 @@ function DetailPage() {
             const updatedProducts = [...addedProducts, id];
             localStorage.setItem('addedProducts', JSON.stringify(updatedProducts));
 
-            notify(`Вы добавили ${product?.name} в корзину`)
+            notify(`${t("you_add")} ${product?.name}`)
         } else if (!user || !token) {
             setAddedToCart(false);
             navigate("/auth");
-            notifyError('Вы не авторизованы');
+            notifyError(t("not_auth"));
         }
     };
 
@@ -135,7 +135,7 @@ function DetailPage() {
             dispatch(addFavorites(product_id))
         } else if (!user || !token) {
             navigate("/auth");
-            notifyError('Вы не авторизованы');
+            notifyError(t("not_auth"));
         }
     }
 
@@ -239,7 +239,7 @@ function DetailPage() {
                                 <div className={styles.mobile_detail}>
                                     <div className={styles.section_title}>
                                         <div className={styles.path}>
-                                            <a href="/">{ t("home") }</a> | <a href={`/products/brands/${product.brand}`}>{product?.brand_category_title}</a> | <a>{product?.name}</a>
+                                            <a href="/">{ t("home") }</a> | <a href={`/products/brands/${product.brand}`}>{product?.brand_category_title}</a> | <a>{ currentLanguage === "Русский" ? product?.name : product?.name_en }</a>
                                         </div>
                                     </div>
                                     <div className={styles.mobile_detail__title}>
@@ -271,7 +271,7 @@ function DetailPage() {
                                     </div>
                                     <div className={styles.mobile_detail__util}>
                                         <div className={styles.options}>
-                                            <div>{ product?.color.length !== 0 ? "Выбрать цвет" : "" }</div>
+                                            <div>{ product?.color.length !== 0 ? `${t("color_pick")}` : "" }</div>
                                             {product?.color ? (
                                                 product?.color.map((item: any, index: number) => (
                                                     <div
@@ -415,7 +415,7 @@ function DetailPage() {
                                                         {user && token ? (
                                                             <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
                                                                 <img src={reviews} className={styles.reviews__svg} alt="" />
-                                                                <input type="button" value="Написать отзыв" />
+                                                                <input type="button" value={t("write_review")} />
                                                             </div>
                                                         ) : null}
                                                     </>
@@ -488,7 +488,7 @@ function DetailPage() {
                                                 <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
                                             </div>
                                             <div className={styles.options}>
-                                                <div>{ product?.color.length !== 0 ? "Выбрать цвет" : "" }</div>
+                                                <div>{ product?.color.length !== 0 ? `${t("color_pick")}` : "" }</div>
                                                 {product?.color ? (
                                                     product?.color.map((item: any, index: number) => (
                                                         <div
@@ -619,7 +619,7 @@ function DetailPage() {
                                             <div className={styles.modal}>
                                                 <div className={styles.modalContent}>
                                                     <div className={styles.modal_text}>
-                                                        Написать отзыв
+                                                        { t("write_review") }
                                                         <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
                                                     </div>
                                                     <div className={styles.user_info}>
