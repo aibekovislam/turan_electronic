@@ -185,7 +185,7 @@ function UserProfilePage() {
                         <div className={styles.cart}>
                           <div className={styles.cart_image}>
                             {product.product_details.product_images ? (
-                              <img src={getImagesByColor(product.color, product.product_details).length !== 0 ? `${API_URL}${getImagesByColor(product.color, product.product_details)}` : `${API_URL}/${product.product_details.default_image}`} alt="phone" />
+                              <img src={getImagesByColor(product.color, product.product_details).length !== 0 ? `${API_URL}${getImagesByColor(product.color, product.product_details)}` : `${product.product_details.default_image}`} alt="phone" />
                             ) : (
                               <l-ping
                                 size="45"
@@ -210,7 +210,7 @@ function UserProfilePage() {
                             </div>
                           </div>
                           <div className={styles.cart_price}>
-                            <div className={styles.discount_price}>{(product.count || 1) * product.price} сом</div>
+                            <div className={styles.discount_price}>{(product.count || 1) * product.price} { t("sum") }</div>
                           </div>
                           <div className={styles.cart_rate}>
                             {
@@ -237,7 +237,7 @@ function UserProfilePage() {
                     { t("end_price") }: { item.items.map((product: any) => {
                       return product.count * product.price
                     }).reduce((acc: any, price: any) => acc + price, 0)
-                    .toLocaleString("ru-RU")} сом 
+                    .toLocaleString("ru-RU")} { t("sum") } 
                   </div>
                 </div>
               )) }

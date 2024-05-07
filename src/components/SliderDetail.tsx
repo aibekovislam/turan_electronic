@@ -107,7 +107,7 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
             ></l-ping>
         ) : (
           <img 
-              src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : `${API_URL}/${default_image.slice(16)}`} 
+              src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : `${default_image}`} 
               className={styles.detail_img} 
           />
         )}

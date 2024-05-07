@@ -89,7 +89,12 @@ const resources = {
             "fill_input": "Fill in the fields",
             "choose_language": "Select language",
             "not_stock": "Not available",
-            "detail": "Description"
+            "detail": "Description",
+            "sum": "sum",
+            "toCart": "Add to cart",
+            "inCart": "Added to cart",
+            "charecther": "Characteristic",
+            "review": "Review"
         }
     },    
     "Русский": {
@@ -179,7 +184,12 @@ const resources = {
             "fill_input": "Заполните поля",
             "choose_language": "Выбрать язык",
             "not_stock": "Нет в наличии",
-            "detail": "Описание"
+            "detail": "Описание",
+            "sum": "сом",
+            "toCart": "В корзину",
+            "inCart": "Добавлено в корзину",
+            "charecther": "Характеристика",
+            "review": "Отзыв"
         }
     }
 };

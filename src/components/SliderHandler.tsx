@@ -9,7 +9,6 @@ import { fetchCarousel, fetchCarouselMobile } from "../store/features/carousel/c
 import {  CarouselType } from "../utils/interfacesAndTypes";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
-import { API_URL } from "../utils/consts";
 
 function SampleNextArrow(props: any) {
     const { className, style, onClick } = props;
@@ -81,7 +80,7 @@ export default function SimpleSlider() {
                 <Slider {...settings}>
                     {carouselMobile?.map((carousel: CarouselType, index: number) => (
                         <div className={styles.carousel__item} key={index}>
-                            <img src={`${API_URL}/${carousel.images.slice(16)}`} className={styles.carousel__img} />
+                            <img src={`${carousel.images}`} className={styles.carousel__img} />
                             <div className={styles.text__carousel}>{carousel.description}</div>
                         </div>
                     ))}
@@ -97,7 +96,7 @@ export default function SimpleSlider() {
                 <Slider {...settings}>
                     {carousel?.map((carousel: CarouselType, index: number) => (
                         <div className={styles.carousel__item} key={index}>
-                            <img src={`${API_URL}/${carousel.images.slice(16)}`} className={styles.carousel__img} />
+                            <img src={`${carousel.images}`} className={styles.carousel__img} />
                             <div className={styles.text__carousel}>{carousel.description}</div>
                         </div>
                     ))}

@@ -1,9 +1,9 @@
 import styles from "../styles/card.module.scss"
 import shop from "../assets/svgs/card/shop.svg"
-import { API_URL } from "../utils/consts"
-
+import { useTranslation } from "react-i18next"
 
 function MiniCardMobile({ accessories, onClick, }: any) {
+    const { t } = useTranslation();
   return (
     <div className={styles.mini_mobile__main}>
         <div className={styles.mini_mobile__container}>
@@ -19,11 +19,11 @@ function MiniCardMobile({ accessories, onClick, }: any) {
                     ))}
                 </div>
                 <div className={styles.mini_mobile__content} onClick={onClick}>
-                    <img src={`${API_URL}/${accessories.default_image.slice(16)}`} alt="" />
+                    <img src={`${accessories.default_image}`} alt="" />
                     <span>{accessories.name.slice(0, 15)}{ accessories.name.length > 15 ? "..." : "" }</span>
                 </div>
                 <div className={styles.mini_mobile__utils}>
-                    <span>{accessories.price} сом</span>
+                    <span>{accessories.price} { t("sum") }</span>
                     <div>
                         <img src={shop} alt="" className={styles.cart} />
                     </div>

@@ -19,7 +19,6 @@ import 'ldrs/ring';
 import { ping } from 'ldrs'
 import { Rating } from 'react-simple-star-rating'
 import { Helmet } from "react-helmet-async";
-import { API_URL } from "../utils/consts";
 import { useTranslation } from "react-i18next";
 
 function DetailPage() {
@@ -217,17 +216,19 @@ function DetailPage() {
         }
     }, [activeItem, pickedColor])
 
+    console.log(product)
+
     return (
         <>
             <Helmet>
                 <title>{`${product?.name}`} - Turan electronics интернет магазин электроники</title>
-                <meta name="description" content="Интернет магазин Turan Electronics KG, интернет магазин для электроники в Кыргызстане, вы можете купить любой товар начиная Google Pixel заканчивая Apple Iphone и Dyson"></meta>
+                <meta name="description" content="Turan Electronics - ваш источник качественной электроники по лучшим ценам! Мы предлагаем широкий ассортимент товаров, включая смартфоны, ноутбуки, планшеты, компьютеры, аудио- и видеотехнику, аксессуары и многое другое. У нас вы найдете только оригинальную продукцию от ведущих мировых брендов с гарантией качества. Будьте в курсе последних технологических новинок и современных решений в мире электроники с Turan Electronics. Покупайте онлайн с уверенностью, что ваше удовлетворение - наш приоритет. Откройте для себя удобство и безопасность онлайн-шопинга с нами прямо сейчас!"></meta>
                 <link rel="canonical" href={`https://turanelectronics.kg/product/${product?.id}`} />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content={`https://turanelectronics.kg/product/${product?.id}`} />
                 <meta property="og:title" content={`${product?.name} - купить по выгодной цене в интернет-магазине Turan electronics`}/>
                 <meta property="og:description" content={`✅ ${product?.name} - в наличии в интернет-магазине Turan electronics! Самые выгодные цены на смартфоны! ✔ Характеристики ✔ Фото ✔ Ассортимент ✔ Отзывы ✔ Гарантия ✔ Рассрочка! Доставка 🚚`}/>
-                <meta property="og:image" content={`${API_URL}/${product?.default_image?.slice(16)}`} />
+                <meta property="og:image" content={`${product?.default_image}`} />
                 <meta data-hid="property::og:site_name" property="og:site_name" content="TuranElectronics"/>
             </Helmet>
             <section>
@@ -238,7 +239,7 @@ function DetailPage() {
                                 <div className={styles.mobile_detail}>
                                     <div className={styles.section_title}>
                                         <div className={styles.path}>
-                                            <a href="/">Главная</a> | <a href="/recommendation/products">Каталог</a> | <a href={`/products/brands/${product.brand}`}>{product?.brand_category_title}</a> | <a>{product?.name}</a>
+                                            <a href="/">{ t("home") }</a> | <a href={`/products/brands/${product.brand}`}>{product?.brand_category_title}</a> | <a>{product?.name}</a>
                                         </div>
                                     </div>
                                     <div className={styles.mobile_detail__title}>
@@ -310,7 +311,7 @@ function DetailPage() {
                                                         setMemoryID(item.id)
                                                     }}
                                                 >
-                                                    {item.volume}ГБ
+                                                    {item.volume} { t("gb") }
                                                 </li>
                                             ))}
                                         </ul>
@@ -318,25 +319,25 @@ function DetailPage() {
                                     <div className={styles.price}>
                                         {
                                             productPrice !== 0 ? (
-                                                <div>{calculateDiscountedPrice(productPrice ? productPrice : product.price, product.discount)} сом</div>
+                                                <div>{calculateDiscountedPrice(productPrice ? productPrice : product.price, product.discount)} { t("sum") }</div>
                                             ) : (
-                                                <div style={{ color: "red" }}>Нет в наличии</div>
+                                                <div style={{ color: "red" }}>{ t("not_stock") }</div>
                                             )
                                         }
                                     </div>
                                     <div className={styles.mobile_detail__button}>
                                         { productPrice !== 0 ? (
                                             <button className={`${styles.btn} ${addedToCart ? styles.added_btn : ""}`} onClick={() => handleAddToCart(product?.id)} style={{ cursor: "pointer" }}>
-                                                <a href="#">{addedToCart ? "Добавлено в корзину" : "В корзину"}</a>
+                                                <a href="#">{addedToCart ? `${t("inCart")}` : `${t("toCart")}`}</a>
                                             </button>
                                         ) : (
                                             null
                                         ) }
                                     </div>
                                     <div className={styles.mobile_detail_info}>
-                                        <button onClick={() => setVisibleDiv("div1")} className={visibleDiv === "div1" ? styles.selected_btn : styles.option_btn}>Характеристика</button>
-                                        <button onClick={() => setVisibleDiv("div2")} className={visibleDiv === "div2" ? styles.selected_btn : styles.option_btn}>Описание</button>
-                                        <button onClick={() => setVisibleDiv("div3")} className={visibleDiv === "div3" ? styles.selected_btn : styles.option_btn}>Отзыв</button>
+                                        <button onClick={() => setVisibleDiv("div1")} className={visibleDiv === "div1" ? styles.selected_btn : styles.option_btn}>{ t("charecther") }</button>
+                                        <button onClick={() => setVisibleDiv("div2")} className={visibleDiv === "div2" ? styles.selected_btn : styles.option_btn}>{ t("description") }</button>
+                                        <button onClick={() => setVisibleDiv("div3")} className={visibleDiv === "div3" ? styles.selected_btn : styles.option_btn}>{ t("review") }</button>
                                     </div>
                                     <div>
                                         {visibleDiv === "div1" ? (
@@ -474,7 +475,7 @@ function DetailPage() {
                 ) : (
                     <>
                         {product && product?.id === numberedId ? (
-                            <div>
+                            <div itemScope itemType="https://schema.org/Product">
                                 <div className={styles.detail_main}>
                                     <div className={styles.section_title}>
                                         <div className={styles.path}>
@@ -503,7 +504,7 @@ function DetailPage() {
                                             </div>
                                             <div className={styles.description}>
                                                 <div>{ t("detail") }</div>
-                                                <p>
+                                                <p itemProp="description">
                                                     {expanded ? 
                                                         <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description : (product.description_en ? (product?.description_en) : "")) }}></div> :
                                                         <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description?.slice(0, 100) : (product.description_en ? product.description_en : "")) + '...' }}></div>
@@ -535,7 +536,7 @@ function DetailPage() {
                                                 )}
                                             </div>
                                             <div className={styles.title}>
-                                                <h1>{ currentLanguage === "Русский" ? product.name : product.name_en }</h1>
+                                                <h1 itemProp="name">{ currentLanguage === "Русский" ? product.name : product.name_en }</h1>
                                             </div>
                                             <div className={styles.storage}>
                                                 {product.memory_price ? (
@@ -559,10 +560,10 @@ function DetailPage() {
                                                     ))}
                                                 </ul>
                                             </div>
-                                            <div className={styles.price}>
+                                            <div className={styles.price} itemScope itemType="https://schema.org/Offer" itemProp="offers">
                                                 {
                                                     productPrice !== 0 ? (
-                                                        <div>{calculateDiscountedPrice(productPrice ? productPrice : product.price, product.discount)} сом</div>
+                                                        <div itemProp="price">{calculateDiscountedPrice(productPrice ? productPrice : product.price, product.discount)} <span itemProp="priceCurrency">{ t("sum") }</span></div>
                                                     ) : (
                                                         <div style={{ color: "red" }} >Нет в наличии</div>
                                                     )

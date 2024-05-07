@@ -103,7 +103,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         </div>
                         <div className={styles.cardMobile_info}>
                             <div className={styles.cardMobile_wrapper__left}>
-                                <img src={`${API_URL}/${product.default_image?.slice(16)}`} onClick={() => onClick(product.id)} />
+                                <img src={`${product.default_image}`} onClick={() => onClick(product.id)} />
                                 {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
                                     <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
                                         e.stopPropagation();
@@ -134,7 +134,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                                 <div style={{ color: "brown" }}>Нет в наличии</div>
                             )}
                             <div className={styles.price_mobile}>
-                                {product.price} сом
+                                {product.price} { t("sum") }
                                 <div className={styles.bag__mobile}>
                                     <img src={shop} />
                                 </div>
@@ -172,7 +172,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                             {filteredImages ? (
                                 <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
                             ) : (
-                                <img src={`${API_URL}/${product.default_image?.slice(16)}`} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
+                                <img src={`${product.default_image}`} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
                             )}
                         </div>
                         <div className={styles.heart_container}>
@@ -187,8 +187,8 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         </div>
                         <div className={styles.title_container}>
                             <div className={styles.price}>
-                                <h2>{product.discount ? calculateDiscountedPrice(product.price, product.discount) : product.price} сом</h2>
-                                {product.discount !== 0 && <h3>{product.price} сом</h3>}
+                                <h2>{product.discount ? calculateDiscountedPrice(product.price, product.discount) : product.price} { t("sum") }</h2>
+                                {product.discount !== 0 && <h3>{product.price} { t("sum") }</h3>}
                             </div>
                             <div className={styles.discount}>
                                 {product?.discount !== 0 && (
@@ -197,7 +197,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                                             -{product.discount}%
                                         </div>
                                         <div>
-                                            экономия {product.price - calculateDiscountedPrice(product.price, product.discount)} сом
+                                            экономия {product.price - calculateDiscountedPrice(product.price, product.discount)} { t("sum") }
                                         </div>
                                     </>
                                 )

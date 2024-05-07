@@ -136,7 +136,7 @@ function CartCardList() {
             <div className={styles.cart}>
               <div className={styles.cart_image}>
                 {cart.product.product_images ? (
-                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : `${API_URL}/${cart.product.default_image.slice(16)}`} alt={cart.product.name} />
+                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : `${cart.product.default_image}`} alt={cart.product.name} />
                 ) : (
                   <l-ping
                     size="45"
@@ -185,11 +185,11 @@ function CartCardList() {
               <div className={styles.cart_price}>
                 {cart.product.discount !== 0 ? (
                   <>
-                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} сом</div>
-                    <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name)} сом</div>
+                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} { t("sum") }</div>
+                    <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name)} { t("sum") }</div>
                   </>
                 ) : (
-                  <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} сом</div>
+                  <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} { t("sum") }</div>
                 )}
               </div>
               <div className={styles.cart_rate}>
@@ -215,7 +215,7 @@ function CartCardList() {
           Итого: {carts
             .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart.product.memory_price !== null ? filterPriceToMemory(cart?.product, cart?.memory_name) : cart?.product.price, cart?.product.discount))
             .reduce((acc, price) => acc + price, 0)
-            .toLocaleString("ru-RU")} сом
+            .toLocaleString("ru-RU")} { t("sum") }
         </div>
         <div className={styles.cart_button}>
           <button className={styles.btn} onClick={handleOrderButtonClick}>Оформить заказ</button>
@@ -236,7 +236,7 @@ function CartCardList() {
             <div className={styles.cart}>
               <div className={styles.cart_image}>
                 {cart.product.product_images ? (
-                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : `${API_URL}/${cart.product.default_image.slice(16)}`} alt={`image ${cart.product.name}`} />
+                  <img src={getImagesByColor(cart.color, cart.product).length !== 0 ? `${API_URL}${getImagesByColor(cart.color, cart.product)}` : `${cart.product.default_image}`} alt={`image ${cart.product.name}`} />
                 ) : (
                   <l-ping
                     size="45"
@@ -286,11 +286,11 @@ function CartCardList() {
               <div className={styles.cart_price}>
                 {cart.product.discount !== 0 ? (
                   <>
-                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} сом</div>
-                    <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name)} сом</div>
+                    <div className={styles.discount_price}>{(counts[cart.id] || 1) * calculateDiscountedPrice(filterPriceToMemory(cart?.product, cart?.memory_name), cart?.product.discount)} { t("sum") }</div>
+                    <div className={styles.default_price}>{(counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name)} { t("sum") }</div>
                   </>
                 ) : (
-                  <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} сом</div>
+                  <div className={styles.discount_price}>{cart.product.memory_price !== null ? (counts[cart.id] || 1) * filterPriceToMemory(cart?.product, cart?.memory_name) : (counts[cart.id] || 1) * cart.product.price} { t("sum") }</div>
                 )}
               </div>
               <div className={styles.cart_rate}>
@@ -316,7 +316,7 @@ function CartCardList() {
           { t("end_price") }: {carts
             .map((cart) => (counts[cart.id] || 1) * calculateDiscountedPrice(cart.product.memory_price !== null ? filterPriceToMemory(cart?.product, cart?.memory_name) : cart?.product.price, cart?.product.discount))
             .reduce((acc, price) => acc + price, 0)
-            .toLocaleString("ru-RU")} сом
+            .toLocaleString("ru-RU")} { t("sum") }
         </div>
         <div className={styles.cart_button}>
           <button className={styles.btn} onClick={handleOrderButtonClick}>{ t("order_add") }</button>

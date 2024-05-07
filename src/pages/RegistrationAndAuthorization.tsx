@@ -5,6 +5,7 @@ import Reg from "../components/Reg";
 import styles from "../styles/auth.module.scss";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function RegistrationAndAuthorization() {
     const [ registered, setRegistered ] = useState(true);
@@ -13,6 +14,7 @@ function RegistrationAndAuthorization() {
     const tokenString = localStorage.getItem("tokens");
     const token = tokenString ? JSON.parse(tokenString) : null;
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const handleRegisterOrAuth = async (registeredType: boolean) => {
         if(registeredType === true) {
@@ -37,7 +39,7 @@ function RegistrationAndAuthorization() {
             </Helmet>
             <NavbarNavigation/>
             <div className={styles.auth__hero}>
-                <div className={styles.auth__hero_title}>{ registered ? "Авторизация" : "Регистрация" }</div>
+                <div className={styles.auth__hero_title}>{ registered ? `${t("auth")}` : `${t("reg")}` }</div>
                 { registered ? (
                     <Auth handleRegisterOrAuth={handleRegisterOrAuth} />
                 ) : (
