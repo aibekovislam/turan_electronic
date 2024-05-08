@@ -105,10 +105,10 @@ function BrandsPage() {
                 <Helmet>
                     <title>{`${oneBrand.title} каталог - Turan electronics интернет магазин`}</title>
                     <meta name="description" content={`Ищете продукцию от бренда ${oneBrand.title}? У нас широкий ассортимент товаров высокого качества по выгодным ценам. Посетите наш интернет-магазин и выберите лучшие товары для себя. Доставка по всей стране!`}></meta>
-                    <link rel="canonical" href={`https://turanelectronics.kg/products/${oneBrand.id}`} />
+                    <link rel="canonical" href={`https://turanelectronics.kg/products/${oneBrand.id}/`} />
                 </Helmet>
-                <div style={{ marginTop: "30px" }}>
-                    <a href='/' style={{ color: "gray", textDecoration: "none", fontSize: "18px" }}>Главная | </a><h1 style={{ color: "gray", fontWeight: "400", fontSize: "18px", display: "inline" }}>Каталог { oneBrand.title }:</h1>
+                <div style={{ marginTop: "30px" }} itemScope itemType="https://schema.org/Product">
+                    <a href='/' style={{ color: "gray", textDecoration: "none", fontSize: "18px" }}>Главная | </a><h1 style={{ color: "gray", fontWeight: "400", fontSize: "18px", display: "inline" }} itemProp='category'>{ oneBrand.title }:</h1>
                 </div>
                 <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} productsByBrandCategory={productsByBrandCategory} />
                 <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ marginTop: "30px" }}>
