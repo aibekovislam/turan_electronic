@@ -7,6 +7,7 @@ export interface SliderDetailProps {
     img_array?: any;
     default_image?: any;
     selectedColor: any;
+    product: ProductsType
 }  
 
 export interface CardProps {

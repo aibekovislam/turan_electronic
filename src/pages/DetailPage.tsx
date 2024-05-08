@@ -216,20 +216,40 @@ function DetailPage() {
         }
     }, [activeItem, pickedColor])
 
-    console.log(product)
-
     return (
         <>
             <Helmet>
-                <title>{`${product?.name}`} - Turan electronics интернет магазин электроники</title>
-                <meta name="description" content="Turan Electronics - ваш источник качественной электроники по лучшим ценам! Мы предлагаем широкий ассортимент товаров, включая смартфоны, ноутбуки, планшеты, компьютеры, аудио- и видеотехнику, аксессуары и многое другое. У нас вы найдете только оригинальную продукцию от ведущих мировых брендов с гарантией качества. Будьте в курсе последних технологических новинок и современных решений в мире электроники с Turan Electronics. Покупайте онлайн с уверенностью, что ваше удовлетворение - наш приоритет. Откройте для себя удобство и безопасность онлайн-шопинга с нами прямо сейчас!"></meta>
-                <link rel="canonical" href={`https://turanelectronics.kg/product/${product?.id}`} />
+                <title>Купить {`${product?.name}`} - Turan electronics интернет магазин электроники</title>
+                <meta name="description" content={`Купить ${product?.name} в Бишкеке. ✔ Доставка по всему Кыргызстану. ✔ Гарантия качества. ✔ Лучшие цены. Только оригинальные товары. От Turan Electronics`}></meta>
+                <link rel="canonical" href={`https://turanelectronics.kg/product/${product?.id}/`} />
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content={`https://turanelectronics.kg/product/${product?.id}`} />
                 <meta property="og:title" content={`${product?.name} - купить по выгодной цене в интернет-магазине Turan electronics`}/>
                 <meta property="og:description" content={`✅ ${product?.name} - в наличии в интернет-магазине Turan electronics! Самые выгодные цены на смартфоны! ✔ Характеристики ✔ Фото ✔ Ассортимент ✔ Отзывы ✔ Гарантия ✔ Рассрочка! Доставка 🚚`}/>
                 <meta property="og:image" content={`${product?.default_image}`} />
                 <meta data-hid="property::og:site_name" property="og:site_name" content="TuranElectronics"/>
+                <script className="structured-data-list" type="application/ld+json">{ `
+                    "@context": "https://schema.org/", 
+                    "@type": "Product", 
+                    "name": "${product?.name}",
+                    "image": "${product?.default_image}",
+                    "description": "${product?.description}",
+                    "brand": {
+                      "@type": "Brand",
+                      "name": "${product?.brand_title}"
+                    },
+                    "offers": {
+                      "@type": "Offer",
+                      "url": "",
+                      "priceCurrency": "KGS",
+                      "price": "${product?.price}"
+                    },
+                    "aggregateRating": {
+                      "@type": "AggregateRating",
+                      "ratingValue": "5",
+                      "ratingCount": "5"
+                    }
+                ` }</script>
             </Helmet>
             <section>
                 {isMobile ? (
@@ -267,7 +287,7 @@ function DetailPage() {
 
                                     </div>
                                     <div className={styles.slider_main}>
-                                        <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
+                                        <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} product={product} />
                                     </div>
                                     <div className={styles.mobile_detail__util}>
                                         <div className={styles.options}>
@@ -485,7 +505,7 @@ function DetailPage() {
                                     <div className={styles.detail_container}>
                                         <div className={styles.detail_wrapper__left}>
                                             <div className={styles.slider_main}>
-                                                <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} />
+                                                <SldierDetail img_array={product?.product_images} default_image={product?.default_image} selectedColor={colorPicked} product={product} />
                                             </div>
                                             <div className={styles.options}>
                                                 <div>{ product?.color.length !== 0 ? `${t("color_pick")}` : "" }</div>
