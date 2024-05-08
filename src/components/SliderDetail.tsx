@@ -9,7 +9,7 @@ import 'ldrs/ring';
 import { ping } from 'ldrs';
 
 
-function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailProps) {
+function SliderDetail({ img_array, default_image, selectedColor, product }: SliderDetailProps) {
   const [wordData, setWordData] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -109,6 +109,8 @@ function SliderDetail({ img_array, default_image, selectedColor }: SliderDetailP
           <img 
               src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : `${default_image}`} 
               className={styles.detail_img} 
+              alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
+              title={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
           />
         )}
         { filteredFirstImage ? (
