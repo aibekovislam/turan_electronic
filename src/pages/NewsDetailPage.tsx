@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootStates } from "../store/store";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 function NewsDetailPage() {
     const { id } = useParams();
     const dispatch = useDispatch<any>();
     const news = useSelector((state: RootStates) => state.oneNews.news);
+    const { t } = useTranslation();
 
     const numberedId = Number(id);
 
@@ -29,7 +31,7 @@ function NewsDetailPage() {
                 <div className={styles.path}>
                     <a href="/" onClick={() => {
                         localStorage.setItem("activeItem", JSON.stringify(`home`))
-                    }}>Главная</a> / <a href="/news">Новости</a> / { news?.title }
+                    }}>{ t("home") }</a> / <a href="/news">{ t("news") }</a> / { news?.title }
                 </div>
                 <div className={styles.news_detail}>
                     <div className={styles.news_detail__image}>

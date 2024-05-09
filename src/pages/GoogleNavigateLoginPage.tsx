@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { userMe } from "../store/features/auth/authSlice";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 function GoogleNavigateLoginPage() {
     const [ searchParams ] = useSearchParams();
     const dispatch = useDispatch<any>(); 
+    const { t } = useTranslation();
 
     const obj = {
         access: searchParams.get("token"),
@@ -30,7 +32,7 @@ function GoogleNavigateLoginPage() {
                 <link rel="canonical" href={`https://turanelectronics.kg/login`} />
             </Helmet>
             <h1>
-                Авторизация прошла, можете перейти на главную страницу
+                { t("google_success") }
             </h1>
         </>
     )

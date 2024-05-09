@@ -101,7 +101,7 @@ function DetailPage() {
     const handleAddToCart = (id: number | undefined) => {
         if (product?.memory_price) {
             if (memoryID === 0) {
-                notifyError("Выберите объем памяти");
+                notifyError(`${t("select_memory")}`);
                 return;
             }
         }
@@ -317,7 +317,7 @@ function DetailPage() {
                                     </div>
                                     <div className={styles.storage}>
                                         {product.memory_price ? (
-                                            <div>Память</div>
+                                            <div>{ t("memory") }</div>
                                         ) : (
                                             null
                                         )}
@@ -356,7 +356,7 @@ function DetailPage() {
                                     </div>
                                     <div className={styles.mobile_detail_info}>
                                         <button onClick={() => setVisibleDiv("div1")} className={visibleDiv === "div1" ? styles.selected_btn : styles.option_btn}>{ t("charecther") }</button>
-                                        <button onClick={() => setVisibleDiv("div2")} className={visibleDiv === "div2" ? styles.selected_btn : styles.option_btn}>{ t("description") }</button>
+                                        <button onClick={() => setVisibleDiv("div2")} className={visibleDiv === "div2" ? styles.selected_btn : styles.option_btn}>{ t("detail") }</button>
                                         <button onClick={() => setVisibleDiv("div3")} className={visibleDiv === "div3" ? styles.selected_btn : styles.option_btn}>{ t("review") }</button>
                                     </div>
                                     <div>
@@ -364,8 +364,8 @@ function DetailPage() {
                                             <div className={styles.сharacteristics}>
                                                 <table>
                                                     <tbody>
-                                                        {product?.characteristics ? (
-                                                            Object.entries(product.characteristics).map(([key, value], index) => (
+                                                        { product?.characteristics ? (
+                                                            Object.entries( currentLanguage === "Русский" ? product.characteristics : (product.characteristics_en ? product.characteristics_en : "") ).map(([key, value], index) => (
                                                                 <tr key={index}>
                                                                     <th>
                                                                         <span className={styles.dots__details_span}>
@@ -609,12 +609,12 @@ function DetailPage() {
                                             </div>
                                             <div className={styles.сharacteristics}>
                                                 <div className={styles.сharacteristics_title}>
-                                                    <div>Характеристики:</div>
+                                                    <div>{ t("charecther") }:</div>
                                                 </div>
                                                 <table>
                                                     <tbody>
                                                         {product?.characteristics ? (
-                                                            Object.entries(product.characteristics).map(([key, value], index) => (
+                                                            Object.entries(currentLanguage === "Русский" ? product.characteristics : (product.characteristics_en ? product.characteristics_en : "")).map(([key, value], index) => (
                                                                 <tr key={index}>
                                                                     <th>
                                                                         <span className={styles.dots__details_span}>

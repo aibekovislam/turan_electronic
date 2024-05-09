@@ -6,7 +6,6 @@ import ArrowDown from "../assets/svgs/ArrowDown";
 import { useDispatch } from "react-redux";
 import { fetchFilterProducts, getProductsByBrandCategory } from "../store/features/products/productSlice.ts";
 import SidebarMenu from "./SidebarMenu.tsx";
-import { useNavigate } from "react-router-dom";
 import { RenderDropdownContent } from "../functions/RenderDropdownContent.tsx";
 import { useTranslation } from "react-i18next";
 
@@ -18,6 +17,8 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const [filterUp, setFilterUp] = useState(false);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         const handleResize = () => {
@@ -99,16 +100,12 @@ function BrandFilterNavbar({ brand, products, dataForDropDown, productsByBrandCa
         toggleSidebar();
     }
 
-    const navigate = useNavigate();
-
-    const { t } = useTranslation();
-
     return (
         isMobile ? (
             <div className={styles.brands_navbar} style={{ marginTop: "30px" }}>
-                <div className={styles.brands_navbar__item} >
+                {/* <div className={styles.brands_navbar__item} >
                     <div className={styles.brands__info}><span style={{ cursor: "pointer", userSelect: "none" }} onClick={() => navigate('/')}>{ t("home") }</span> / {brand.title}</div>
-                </div>
+                </div> */}
                 <div className={styles.brands_navbar__item} onClick={() => handleMobileFilterClick()} >
                     <div className={styles.brands_navigation} style={{ height: "40px", borderRadius: "10px", alignItems: "center", justifyContent: "space-between" }}>
                         <div className={styles.brands_navigation__item} style={{ height: "37px" }}>
