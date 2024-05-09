@@ -121,7 +121,7 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                                         {currentLanguage === "Русский" ? product.name : product.name_en}
                                     </div>
                                     <div className={styles.cardMobile_colors}>
-                                        <span>Цвет</span>
+                                        <span>{ t("color") }</span>
                                         {product?.color !== undefined ? product?.color.map((item: any, index: number) => (
                                             <div key={index} className={styles.mobile_color_block} style={{ background: item.hash_code }}></div>
                                         )) : (

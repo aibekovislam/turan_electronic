@@ -9,11 +9,13 @@ import { notify } from "../components/Toastify";
 import eye from "../assets/svgs/auth/eye.svg";
 import showedEye from "../assets/svgs/auth/eye-svgrepo-com.svg";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "react-i18next";
 
 function ConfirmWithPassword() {
     const [ searchParams ] = useSearchParams();
     const dispatch = useDispatch<any>();
     const urlParams = new URLSearchParams(window.location.search);
+    const { t } = useTranslation();
 
     const obj = {
       uid: urlParams.get('uid'),
@@ -81,7 +83,7 @@ function ConfirmWithPassword() {
                         <div className={styles.auth}>
                             <div className={styles.auth_text}>
                             <p>
-                                Введите новый пароль
+                                { t("new_password") }
                             </p>
                             </div>
                             <form onSubmit={handleResendLogin} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -89,7 +91,7 @@ function ConfirmWithPassword() {
                                     <div className={styles.auth_input}>
                                         <input
                                             type={showPassword ? "text" : "password"}
-                                            placeholder="Ваш новый пароль"
+                                            placeholder={`${t("your_new_password")}`}
                                             name="new_password"
                                             value={authFormData.new_password}
                                             onChange={handleInputChange}
@@ -99,15 +101,15 @@ function ConfirmWithPassword() {
                                 </div>
                                 { errorAuth && (
                                     <div className={styles.errors} style={{ marginTop: "10px" }}>
-                                        Введите валидные данные!
+                                        { t("error_password") }
                                     </div>
                                 ) }
                                 <div className={styles.auth_button}>
                                 { loadedAuth ? (
-                                    <div>Обработка данных...</div>
+                                    <div>{ t("auth_loading") }...</div>
                                 ) : (
                                     <button className={`${styles.reg_button}`} disabled={loadedAuth}>
-                                        Далее
+                                        { t("next") }
                                     </button>
                                 ) }
                                 </div>

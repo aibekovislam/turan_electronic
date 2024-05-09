@@ -23,7 +23,7 @@ function MiniCardMobile({ accessories, onClick, }: any) {
                     <span>{accessories.name.slice(0, 15)}{ accessories.name.length > 15 ? "..." : "" }</span>
                 </div>
                 <div className={styles.mini_mobile__utils}>
-                    <span>{accessories.price} { t("sum") }</span>
+                    <span>{accessories.price} <br/> { t("sum") }</span>
                     <div>
                         <img src={shop} alt="" className={styles.cart} />
                     </div>

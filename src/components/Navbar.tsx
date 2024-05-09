@@ -96,7 +96,7 @@ function Navbar() {
             setIsMobileSearch(true)
             }}>
             { isMobileSearch ? (
-              <input type="text" value={searchText} placeholder="Поиск..." name="search" onChange={handleChangeSearch} onClick={() => {
+              <input type="text" value={searchText} placeholder={`${t("search")}...`} name="search" onChange={handleChangeSearch} onClick={() => {
                 navigate("/search");
               }} />
               ) : (
@@ -104,7 +104,7 @@ function Navbar() {
             ) }
           </div>
           { isMobileSearch ? (
-            <span className={styles.close_search} onClick={() => setIsMobileSearch(false)}>Закрыть</span>
+            <span className={styles.close_search} onClick={() => setIsMobileSearch(false)}>{ t("close") }</span>
           ) : null }
         </div>
         <div className={styles.block_2}>

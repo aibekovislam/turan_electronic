@@ -5,6 +5,7 @@ import { RootStates } from "../store/store";
 import { useEffect, useState } from "react";
 import pattern from "../assets/svgs/auth/pattern.svg";
 import { resendAuth } from "../store/features/auth/authSlice";
+import { useTranslation } from "react-i18next";
 
 function ResendAuth() {
     const dispatch = useDispatch<any>();
@@ -17,6 +18,8 @@ function ResendAuth() {
     const [authFormData, setAuthFormData] = useState({
         email: "",
     });
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         console.log("User changed:", user);
@@ -50,7 +53,7 @@ function ResendAuth() {
                 <div className={styles.auth}>
                     <div className={styles.auth_text}>
                     <p>
-                        Введите ваш email, для подтверждение аккаунта
+                        { t("input_email") }
                     </p>
                     </div>
                     <form onSubmit={handleResendLogin} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -58,7 +61,7 @@ function ResendAuth() {
                             <div className={styles.auth_input}>
                                 <input
                                     type="text"
-                                    placeholder="Ваш email"
+                                    placeholder={t("input_email")}
                                     name="email"
                                     value={authFormData.email}
                                     onChange={handleInputChange}
@@ -67,15 +70,15 @@ function ResendAuth() {
                         </div>
                         { errorAuth && (
                             <div className={styles.errors} style={{ marginTop: "10px" }}>
-                                Введите валидные данные!
+                                { t("error_password") }
                             </div>
                         ) }
                         <div className={styles.auth_button}>
                         { loadedAuth ? (
-                            <div>Обработка данных...</div>
+                            <div>{ t("auth_loading") }...</div>
                         ) : (
                             <button className={`${styles.reg_button}`} disabled={loadedAuth}>
-                                Далее
+                                { t("next") }
                             </button>
                         ) }
                         </div>

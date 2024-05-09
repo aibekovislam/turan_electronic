@@ -106,16 +106,16 @@ function OrderForm({ products }: any) {
 
     if(selectedType !== "pickup") {
       if (!name || !email || !phone || !region || !city || !street || !house) {
-        notifyError("Заполните все поля формы");
+        notifyError(`${t("order_warn1")}`);
         return;
       }
       if (!emailRegex.test(email)) {
-        notifyError("Пожалуйста, введите корректный email");
+        notifyError(`${t("order_warn2")}`);
         return;
       }
     } else {
       if (!name || !phone) {
-        notifyError("Заполните все поля формы");
+        notifyError(`${t("order_warn1")}`);
         return;
       }
     }
@@ -123,7 +123,7 @@ function OrderForm({ products }: any) {
       dispatch(addOrder(orderFormValue));
       setSendedForm(true);
       localStorage.removeItem("addedProducts");
-      notify("Спасибо за покупку, мы скоро свяжемся с вами")
+      notify(`${t("order_warn3")}`)
     } catch (error) {
       console.log(error);
     }

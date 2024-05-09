@@ -198,7 +198,10 @@ export type ProductsType = {
     prices: PriceType[],
     reviews: any[],
     name_en: string | null,
-    description_en: string | null
+    description_en: string | null,
+    characteristics_en: {
+        [key: string]: any
+    } | null;
 }
 
 export type PriceType = {

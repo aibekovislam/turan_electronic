@@ -1,6 +1,9 @@
 import { Helmet } from "react-helmet-async"
+import { useTranslation } from "react-i18next"
 
 function Sender() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Helmet>
@@ -9,7 +12,7 @@ function Sender() {
         <link rel="canonical" href={`https://turanelectronics.kg/activating/load`} />
       </Helmet>
       <h1>
-          Пожалуйста подвердите ваш email, мы отправили письмо на вашу почту
+          { t("email_confirm") }
       </h1>
     </>
   )

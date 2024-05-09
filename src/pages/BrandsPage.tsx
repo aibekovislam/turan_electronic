@@ -12,6 +12,7 @@ import 'ldrs/ring';
 import { ping } from 'ldrs'
 import '../styles/homepage.scss'
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 
 function BrandsPage() {
     const { brand } = useParams();
@@ -21,6 +22,8 @@ function BrandsPage() {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const products = useSelector((state: RootStates) => state.products.filterByBrand);
     const productsByBrandCategory = useSelector((state: RootStates) => state.products.filterByBrandCategory);
+
+    const { t } = useTranslation();
 
     ping.register();
 
@@ -108,7 +111,7 @@ function BrandsPage() {
                     <link rel="canonical" href={`https://turanelectronics.kg/products/${oneBrand.id}/`} />
                 </Helmet>
                 <div style={{ marginTop: "30px" }} itemScope itemType="https://schema.org/Product">
-                    <a href='/' style={{ color: "gray", textDecoration: "none", fontSize: "18px" }}>Главная | </a><h1 style={{ color: "gray", fontWeight: "400", fontSize: "18px", display: "inline" }} itemProp='category'>{ oneBrand.title }:</h1>
+                    <a href='/' style={{ color: "gray", textDecoration: "none", fontSize: "18px" }}>{ t("home") } | </a><h1 style={{ color: "gray", fontWeight: "400", fontSize: "18px", display: "inline" }} itemProp='category'>{ oneBrand.title }:</h1>
                 </div>
                 <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} productsByBrandCategory={productsByBrandCategory} />
                 <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ marginTop: "30px" }}>
