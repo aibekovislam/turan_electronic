@@ -111,6 +111,9 @@ const resources = {
             "error_password": "Type a correct data",
             "next": "Next",
             "google_success": "Auth completed, you can move to main page",
+            "rate_product": "Rate the product",
+            "review_not_valid": "You forgot to rate"
+
         }
     },    
     "Русский": {
@@ -191,6 +194,7 @@ const resources = {
             "day": "дня",
             "clear_favorite": "Очистить список",
             "chat_input": "Введите сообщение оператору:",
+            "operator": "Оператор",
             "sended": "Отправлено, мы скоро с вами свяжемся.",
             "auth_check": "Проверьте ваши данные пожалуйста",
             "auth_loading": "Обработка данных",
@@ -223,6 +227,8 @@ const resources = {
             "next": "Далее",
             "google_success": "Авторизация прошла, можете перейти на главную страницу",
             "email_confirm": "Пожалуйста подвердите ваш email, мы отправили письмо на вашу почту",
+            "rate_product": "Оцените товар",
+            "review_not_valid": "Вы забыли поставить оценку"
         }
     }
 };

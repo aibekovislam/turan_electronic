@@ -5,6 +5,7 @@ import { RootStates } from '../store/store';
 import { useState, useEffect, useRef } from 'react';
 import { chatIDStart, chatStart, sendMessage } from '../store/features/chat/chatSlice';
 import sendSVG from '../assets/svgs/Frame.svg';
+import { useTranslation } from 'react-i18next';
 
 export default function Chat() {
     const messages = useSelector((state: RootStates) => state.chat.messages);
@@ -16,6 +17,7 @@ export default function Chat() {
     const chatIDJson = localStorage.getItem("chatID");
     const chatID = chatIDJson ? parseInt(chatIDJson) : null;
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+    const { t } = useTranslation();
 
     useEffect(() => {
         const handleResize = () => {
@@ -91,7 +93,7 @@ export default function Chat() {
                                         </div>
                                     ) : (
                                         <div className={styles.message_from_operator}>
-                                            <span className={styles.operator__name}>Оператор</span>
+                                            <span className={styles.operator__name}>{ t("operator") }</span>
                                             <p className={styles.message_text}>{message.text}</p>
                                             <span className={styles.date_message}>{ new Date(message.sent_at).toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'}) }</span>
                                         </div>
@@ -102,7 +104,7 @@ export default function Chat() {
                         </div>
                     </div>
                     <form className={styles.form_chat} onSubmit={handleSendMessage}>
-                        <input value={messageText} onChange={(e: any) => setMessageText(e.target.value)} type='text' placeholder='Введите сообщение оператору:' name='content' className={styles.sender_input} />
+                        <input value={messageText} onChange={(e: any) => setMessageText(e.target.value)} type='text' placeholder={`${t("chat_input")}`} name='content' className={styles.sender_input} />
                         <button className={styles.sender_btn}><img src={sendSVG} /></button>
                     </form>
                 </>

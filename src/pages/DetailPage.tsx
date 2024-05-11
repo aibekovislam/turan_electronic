@@ -44,6 +44,7 @@ function DetailPage() {
     const [productPrice, setProductPrice] = useState(0);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
     const [visibleDiv, setVisibleDiv] = useState<null | 'div1' | 'div2' | 'div3'>('div1');
+    const [ ratingClicked, setRatingClicked ] = useState(false);
 
     ping.register()
 
@@ -58,7 +59,8 @@ function DetailPage() {
     const numberedId = Number(id);
 
     const handleRating = (rate: number) => {
-        setReviewData({ ...reviewData, rating: rate })
+        setReviewData({ ...reviewData, rating: rate });
+        setRatingClicked(true)
     }
 
     useEffect(() => {
@@ -115,7 +117,7 @@ function DetailPage() {
             const updatedProducts = [...addedProducts, id];
             localStorage.setItem('addedProducts', JSON.stringify(updatedProducts));
 
-            notify(`${t("you_add")} ${product?.name}`)
+            notify(`${t("you_add")} ${currentLanguage === "Русский" ? product?.name : product?.name_en}`)
         } else if (!user || !token) {
             setAddedToCart(false);
             navigate("/auth");
@@ -167,10 +169,14 @@ function DetailPage() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        dispatch(addReview({ ...reviewData, product: product?.id }));
+        if(ratingClicked) {
+            dispatch(addReview({ ...reviewData, product: product?.id }));
+            setOpenReviewInput(false);
+        } else {
+            notifyError(`${t("review_not_valid")}`)
+        }
 
         setReviewData(reviewData);
-        setOpenReviewInput(false);
     };
 
     useEffect(() => {
@@ -259,7 +265,7 @@ function DetailPage() {
                                 <div className={styles.mobile_detail}>
                                     <div className={styles.section_title}>
                                         <div className={styles.path}>
-                                            <a href="/">{ t("home") }</a> | <a href={`/products/brands/${product.brand}`}>{product?.brand_category_title}</a> | <a>{ currentLanguage === "Русский" ? product?.name : product?.name_en }</a>
+                                            <a href="/">{ t("home") }</a> | <a>{ currentLanguage === "Русский" ? product?.name : product?.name_en }</a>
                                         </div>
                                     </div>
                                     <div className={styles.mobile_detail__title}>
@@ -411,11 +417,11 @@ function DetailPage() {
                                                             </div>
                                                             <form className={styles.add_review} onSubmit={handleSubmit}>
                                                                 <div className={styles.rating_block}>
-                                                                    Оцените товар
+                                                                    { t("rate_product") }
                                                                     <Rating onClick={handleRating} initialValue={reviewStar} SVGclassName={styles.svg_rating} />
                                                                 </div>
                                                                 <div className={styles.review_input_block}>
-                                                                    <span>Отзыв</span>
+                                                                    <span>{ t("review") }</span>
                                                                     <input
                                                                         type="text"
                                                                         name="text"
@@ -499,7 +505,7 @@ function DetailPage() {
                                 <div className={styles.detail_main}>
                                     <div className={styles.section_title}>
                                         <div className={styles.path}>
-                                            <a href="/">{ t("home") }</a> | <a href={`/products/brands/${product.brand}`}>{ product.brand_title }</a> | <a href={`/products/filter/${product.brand_category}/${product.brand}`}>{product?.brand_category_title}</a> | {product?.name}
+                                            <a href="/">{ t("home") }</a> | <a href={`/products/brands/${product.brand}`}>{ product.brand_title }</a> | { currentLanguage === "Русский" ? product?.name : product?.name_en }
                                         </div>
                                     </div>
                                     <div className={styles.detail_container}>
@@ -643,16 +649,16 @@ function DetailPage() {
                                                         <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
                                                     </div>
                                                     <div className={styles.user_info}>
-                                                        <span>Ваше имя</span>
+                                                        <span>{ t("input_name") }</span>
                                                         <div>{user.name}</div>
                                                     </div>
                                                     <form className={styles.add_review} onSubmit={handleSubmit}>
                                                         <div className={styles.rating_block}>
-                                                            Оцените товар
+                                                            { t("rate_product") }
                                                             <Rating onClick={handleRating} initialValue={reviewStar} SVGclassName={styles.svg_rating} />
                                                         </div>
                                                         <div className={styles.review_input_block}>
-                                                            <span>Отзыв</span>
+                                                            <span>{ t("review") }</span>
                                                             <input
                                                                 type="text"
                                                                 name="text"
@@ -662,7 +668,7 @@ function DetailPage() {
                                                             />
                                                         </div>
                                                         <div style={{ display: "flex", justifyContent: 'center', alignItems: 'center', width: "100%" }}>
-                                                            <button className={styles.add_review_btn} type="submit">Отправить</button>
+                                                            <button className={styles.add_review_btn} type="submit">{ t("send") }</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -672,7 +678,7 @@ function DetailPage() {
                                                 {user && token ? (
                                                     <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
                                                         <img src={reviews} className={styles.reviews__svg} alt="" />
-                                                        <input type="button" value="Написать отзыв" />
+                                                        <input type="button" value={`${t("write_review")}`} />
                                                     </div>
                                                 ) : null}
                                             </>
