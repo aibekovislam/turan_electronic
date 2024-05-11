@@ -40,12 +40,19 @@ function Navbar() {
   };
 
   const handleLanguageChange = (selectedLanguage: string) => {
-      setLanguage(selectedLanguage);
-      setLanguageDropdown(false);
-
-      i18n.changeLanguage(selectedLanguage);
-      localStorage.setItem("lng", JSON.stringify(i18n.language))
+    setLanguage(selectedLanguage);
+    setLanguageDropdown(false);
+    i18n.changeLanguage(selectedLanguage);
+    localStorage.setItem("selectedLanguage", selectedLanguage);
   };
+
+  useEffect(() => {
+    const selectedLanguage = localStorage.getItem("selectedLanguage");
+    if (selectedLanguage) {
+        setLanguage(selectedLanguage);
+        i18n.changeLanguage(selectedLanguage);
+    }
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
