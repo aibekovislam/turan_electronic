@@ -119,3 +119,31 @@ export const compareByVolume = (a: any, b: any) => {
     return a.volume - b.volume;
 };
   
+
+export const structuredDataSingle = () => {
+
+    let data = {
+            "@context": "https://schema.org/Product",
+            "@type": "Product", 
+            "name": "${product?.name}",
+            "image": "${product?.default_image}",
+            "description": "${product?.description}",
+            "brand": {
+            "@type": "Brand",
+            "name": "${product?.brand_title}"
+            },
+            "offers": {
+            "@type": "Offer",
+            "url": "",
+            "priceCurrency": "KGS",
+            "price": "${product?.price}"
+            },
+            "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "ratingCount": "5"
+            }
+    }
+
+    return JSON.stringify(data);
+};
