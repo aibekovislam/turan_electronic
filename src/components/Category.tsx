@@ -15,12 +15,12 @@ function Category({ type, brand }: CategoryProps) {
 
   if (brand) {
     return (
-      <div onClick={() => handleNavigate(brand?.id)} className={`${type === "big" ? styles.big_category : styles.category}`}>
+      <div itemScope itemType="https://schema.org/Product" onClick={() => handleNavigate(brand?.id)} className={`${type === "big" ? styles.big_category : styles.category}`}>
         <div className={`${type === "big" ? styles.big_category_item : styles.category__item}`}>
           <img src={`${brand?.image}`} alt='brand_img' className={`${type === "big" ? styles.big_img : styles.brand__img}`} />
         </div>
         <div className={`${type === "big" ? styles.big_category_item_btn : styles.category__item_btn}`}>
-          <div className={styles.brand__category}>
+          <div className={styles.brand__category} itemProp="brand">
             { currentLanguage === "Русский" ? brand?.title : brand?.title_en } 
           </div>
         </div>

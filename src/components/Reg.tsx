@@ -107,7 +107,7 @@ function Reg({ handleRegisterOrAuth }: AuthAndRegProps) {
                         </div>
                         <div className={styles.conditions}>
                             <input type="checkbox" checked={isAgreed} onChange={handleAgreementChange} className={styles.checkbox_custom} />
-                            <p style={{ maxWidth: "300px" }}>{ t("policy") }</p>
+                            <p style={{ maxWidth: "300px", width: "200px" }}>{ t("policy") }</p>
                         </div>
                     </div>
                     { errorAuth && (

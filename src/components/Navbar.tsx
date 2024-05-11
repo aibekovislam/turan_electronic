@@ -44,6 +44,7 @@ function Navbar() {
       setLanguageDropdown(false);
 
       i18n.changeLanguage(selectedLanguage);
+      localStorage.setItem("lng", JSON.stringify(i18n.language))
   };
 
   useEffect(() => {
