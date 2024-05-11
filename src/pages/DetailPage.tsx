@@ -20,6 +20,7 @@ import { ping } from 'ldrs'
 import { Rating } from 'react-simple-star-rating'
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
+import { structuredDataSingle } from "../functions/filterFunction";
 
 function DetailPage() {
     const { id } = useParams();
@@ -234,28 +235,7 @@ function DetailPage() {
                 <meta property="og:description" content={`✅ ${product?.name} - в наличии в интернет-магазине Turan electronics! Самые выгодные цены на смартфоны! ✔ Характеристики ✔ Фото ✔ Ассортимент ✔ Отзывы ✔ Гарантия ✔ Рассрочка! Доставка 🚚`}/>
                 <meta property="og:image" content={`${product?.default_image}`} />
                 <meta data-hid="property::og:site_name" property="og:site_name" content="TuranElectronics"/>
-                <script className="structured-data-list" type="application/ld+json">{ `
-                    "@context": "https://schema.org/Product",
-                    "@type": "Product", 
-                    "name": "${product?.name}",
-                    "image": "${product?.default_image}",
-                    "description": "${product?.description}",
-                    "brand": {
-                      "@type": "Brand",
-                      "name": "${product?.brand_title}"
-                    },
-                    "offers": {
-                      "@type": "Offer",
-                      "url": "",
-                      "priceCurrency": "KGS",
-                      "price": "${product?.price}"
-                    },
-                    "aggregateRating": {
-                      "@type": "AggregateRating",
-                      "ratingValue": "5",
-                      "ratingCount": "5"
-                    }
-                ` }</script>
+                <script className="structured-data-list" type="application/ld+json">{ structuredDataSingle() }</script>
             </Helmet>
             <section>
                 {isMobile ? (
