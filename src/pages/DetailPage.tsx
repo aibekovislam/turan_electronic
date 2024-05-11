@@ -235,7 +235,7 @@ function DetailPage() {
                 <meta property="og:image" content={`${product?.default_image}`} />
                 <meta data-hid="property::og:site_name" property="og:site_name" content="TuranElectronics"/>
                 <script className="structured-data-list" type="application/ld+json">{ `
-                    "@context": "https://schema.org/", 
+                    "@context": "https://schema.org/Product",
                     "@type": "Product", 
                     "name": "${product?.name}",
                     "image": "${product?.default_image}",
