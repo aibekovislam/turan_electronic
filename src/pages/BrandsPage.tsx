@@ -106,12 +106,13 @@ function BrandsPage() {
         return (
             <>
                 <Helmet>
-                    <title>{`${oneBrand.title} каталог - Turan electronics интернет магазин`}</title>
-                    <meta name="description" content={`Ищете продукцию от бренда ${oneBrand.title}? У нас широкий ассортимент товаров высокого качества по выгодным ценам. Посетите наш интернет-магазин и выберите лучшие товары для себя. Доставка по всей стране!`}></meta>
+                    <title>{`Купить ${oneBrand.title} - Turan electronics интернет магазин`}</title>
+                    <meta name="description" content={`Купить широкий ассортимент товаров от бренда ${oneBrand.title} в интернет-магазине Turan Electronics KG. Наши товары высокого качества по доступным ценам – идеальный выбор для вашей электроники. Не упустите возможность приобрести продукцию {название бренда} с доставкой по всей стране и гарантией качества от нашего магазина.`}></meta>
+                    <meta name="keywords" content={`купить ${oneBrand.title}, ${oneBrand.title}, электроника, интернет-магазин, ${oneBrand.title} в Кыргызстане, доставка, цены, акции, каталог, скидки, гарантия, ${oneBrand.title}`} />
                     <link rel="canonical" href={`https://turanelectronics.kg/products/${oneBrand.id}/`} />
                 </Helmet>
                 <div style={{ marginTop: "30px" }} itemScope itemType="https://schema.org/Product">
-                    <a href='/' style={{ color: "gray", textDecoration: "none", fontSize: "18px" }}>{ t("home") } | </a><h1 style={{ color: "gray", fontWeight: "400", fontSize: "18px", display: "inline" }} itemProp='category'>{ oneBrand.title }:</h1>
+                    <a href='/' style={{ color: "gray", textDecoration: "none", fontSize: "18px" }}>{ t("home") } | </a><h1 style={{ color: "gray", fontWeight: "400", fontSize: "18px", display: "inline" }} itemProp='name'>{ oneBrand.title }:</h1>
                 </div>
                 <BrandFilterNavbar brand={oneBrand} products={filteredProducts} dataForDropDown={products} productsByBrandCategory={productsByBrandCategory} />
                 <div className={isMobile ? "d-f__rec-product__mobile" : "d-f__rec-product"} style={{ marginTop: "30px" }}>
