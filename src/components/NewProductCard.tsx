@@ -103,7 +103,7 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         </div>
                         <div className={styles.cardMobile_info}>
                             <div className={styles.cardMobile_wrapper__left}>
-                                <img src={`${product.default_image}`} onClick={() => onClick(product.id)} />
+                                <img src={`${product.default_image}`} onClick={() => onClick(product.id)} alt={`Купить ${product.name} в Бишкеке!`} title={`Купить ${product.name} в Бишкеке!`} />
                                 {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
                                     <img style={{ display: favoriteLoaded ? "none" : "block", cursor: "pointer" }} src={isProductInFavorites ? fillHeart : heart} onClick={(e) => {
                                         e.stopPropagation();
@@ -170,9 +170,9 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                                 Загрузка...
                             </div>}
                             {filteredImages ? (
-                                <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
+                                <img src={API_URL + filteredImages} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} alt={`Купить ${product.name} в Бишкеке!`} title={`Купить ${product.name} в Бишкеке!`} />
                             ) : (
-                                <img src={`${product.default_image}`} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} />
+                                <img src={`${product.default_image}`} onLoad={() => setImgLoaded(false)} style={{ display: imgLoaded ? "none" : "block" }} alt={`Купить ${product.name} в Бишкеке!`} title={`Купить ${product.name} в Бишкеке!`} />
                             )}
                         </div>
                         <div className={styles.heart_container}>

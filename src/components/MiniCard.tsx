@@ -23,7 +23,7 @@ function MiniCard({ accessories, onClick, style }: any) {
                         ))}
                     </div>
                     <div className={styles.img_container}>
-                        <img style={{ maxWidth: "133px", maxHeight: "133px", objectFit: "contain" }} src={`${accessories.default_image}`}  />
+                        <img style={{ maxWidth: "133px", maxHeight: "133px", objectFit: "contain" }} src={`${accessories.default_image}`} alt={`Купить ${accessories.name} в Бишкеке!`} title={`Купить ${accessories.name} в Бишкеке!`}  />
                     </div>
                     <div className={styles.title_container}>
                         <div className={styles.title}>
