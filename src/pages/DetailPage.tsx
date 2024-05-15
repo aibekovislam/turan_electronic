@@ -226,7 +226,7 @@ function DetailPage() {
     return (
         <>
             <Helmet>
-                <title>Купить {`${product?.name}`} - Turan electronics интернет магазин электроники</title>
+                <title>Купить {`${product?.name}`} - Turan electronics интернет магазин</title>
                 <meta name="description" content={`Купить ${product?.name} в Бишкеке. ✔ Доставка по всему Кыргызстану. ✔ Гарантия качества. ✔ Лучшие цены. Только оригинальные товары. От Turan Electronics`}></meta>
                 <link rel="canonical" href={`https://turanelectronics.kg/products/${product?.id}/`} />
                 <meta property="og:type" content="website" />
@@ -245,7 +245,7 @@ function DetailPage() {
                                 <div className={styles.mobile_detail}>
                                     <div className={styles.section_title}>
                                         <div className={styles.path}>
-                                            <a href="/">{ t("home") }</a> | <a>{ currentLanguage === "Русский" ? product?.name : product?.name_en }</a>
+                                            <a href="/">{ t("home") }</a> | { currentLanguage === "Русский" ? product?.name : product?.name_en }
                                         </div>
                                     </div>
                                     <div className={styles.mobile_detail__title}>
