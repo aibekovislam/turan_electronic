@@ -30,20 +30,20 @@ function Footer() {
             <div className={styles.footer__items}>
                 <div className={styles.footer__item}>
                     <div className={styles.footer__logo_and_info}>
-                        <img src={logo} />
+                        <img src={logo} alt="Логотип Turan electronics" title="Логотип Turan electronics" />
                         <div className={styles.info}>{ t("footer_text1") }<br /><br /><br />{ t("footer_text2") }</div>
                     </div>
                 </div>
                 <div className={styles.footer__item}>
                     <div className={styles.footer__social_media}>
                         <div className={styles.social_media__block}>
-                            <img src={facebook} />
+                            <img src={facebook} alt="Facebook Turan electronics" title="Facebook Turan electronics" />
                         </div>
                         <div className={styles.social_media__block}>
-                            <img src={twitter} />
+                            <img src={twitter} alt="Twitter Turan electronics" title="Twitter Turan electronics" />
                         </div>
                         <div className={styles.social_media__block}>
-                            <img src={instagram} />
+                            <img src={instagram} alt="Instagram Turan electronics" title="Instagram Turan electronics" />
                         </div>
                     </div>
                 </div>
@@ -53,19 +53,19 @@ function Footer() {
                             <div className={styles.footer__navigaiton__item_title}>{ t("contacts") }</div>
                             <ul className={styles.footer__navigation__item_list}>
                                 <li className={styles.list__item} style={{ marginTop: "20px" }}>
-                                    <img src={img1} />
+                                    <img src={img1} alt="Место Turan electronics" title="Место Turan electronics" />
                                     <div className={styles.list__item_text}>{footers?.location}</div>
                                 </li>
                                 <li className={styles.list__item}>
-                                    <img src={img2} />
+                                    <img src={img2} alt="График работы Turan electronics" title="График работы Turan electronics" />
                                     <div className={styles.list__item_text}>{footers?.schedule}</div>
                                 </li>
                                 <li className={styles.list__item}>
-                                    <img src={img3} />
+                                    <img src={img3} alt="Контакты Turan electronics" title="Контакты Turan electronics" />
                                     <div className={styles.list__item_text}>{footers?.phone}</div>
                                 </li>
                                 <li className={styles.list__item}>
-                                    <img src={img4} />
+                                    <img src={img4} alt="Email Turan electronics" title="Email Turan electronics" />
                                     <div className={styles.list__item_text}>{footers?.email}</div>
                                 </li>
                             </ul>
