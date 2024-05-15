@@ -93,7 +93,7 @@ function Navbar() {
     <header className={styles.navbar}>
       <nav className={styles.navbar__items}>
         <div className={styles.block_1}>
-          <img src={border__img} alt="img" />
+          <img src={border__img} alt="border image" />
         </div>
         <div className={styles.block_1_mobile}>
           <div className={styles.burgerMenu}>
@@ -108,7 +108,7 @@ function Navbar() {
                 navigate("/search");
               }} />
               ) : (
-              <img src={search_svg} />
+              <img src={search_svg} alt="Поиск" title="Поиск" />
             ) }
           </div>
           { isMobileSearch ? (
@@ -118,7 +118,7 @@ function Navbar() {
         <div className={styles.block_2}>
           <div className={styles.logo}>
               { !isMobileSearch ? (
-                <img src={logo_svg} alt="logo" style={{ cursor: "pointer" }} onClick={() => handleItemClick("home")} />
+                <img src={logo_svg} alt="Логотип Turan electronics" title="Логотип Turan electronics интернет магазин для электроники в Бишкеке!" style={{ cursor: "pointer" }} onClick={() => handleItemClick("home")} />
               ) : (null) }
           </div>
           <ul className={styles.navigation}>
@@ -162,24 +162,24 @@ function Navbar() {
         </div>
         <div className={styles.block_3_mobile}>
           <div className={styles.personalOffice}>
-            <img src={personal__office_svg} />
+            <img src={personal__office_svg} alt="Личный кабинет" title="Личный кабинет Turan electronics" />
           </div>
           <div className={styles.cartMobile}>
             { !isMobileSearch ? (
-              <img src={cart_svg} onClick={() => navigate("/cart")} />
+              <img src={cart_svg} onClick={() => navigate("/cart")} alt="Корзина" title="Корзина Turan electronics" />
             ) : null }
           </div>
         </div>
         <div className={styles.block_3}>
           <div className={styles.tools__navbar}>
             <div className={`${styles.favorite} ${activeItem === "favorite" ? "active__navbar" : ""}`} onClick={() => handleItemClick("favorite")}>
-              <img src={favorite_svg} alt="Favorite svg" />
+              <img src={favorite_svg} alt="Избранное" title="Избранное Turan electronics" />
             </div>
             <div className={`${styles.cart} ${activeItem === "cart" ? "active__navbar" : ""}`} onClick={() => handleItemClick("cart")}>
-              <img src={cart_svg} alt="Cart svg" />
+              <img src={cart_svg} alt="Корзина" title="Корзина Turan electronics" />
             </div>
             <div className={`${styles.personal_office} ${activeItem === `${user ? "profile" : "auth"}` ? "active__navbar" : ""}`} onClick={() => handleItemClick("profile")}>
-              <img src={personal__office_svg} alt="Personal svg" />
+              <img src={personal__office_svg} alt="Личный кабинет" title="Личный кабинет Turan electronics" />
             </div>
           </div>
           <div
@@ -189,18 +189,18 @@ function Navbar() {
             <input type="text" placeholder={`${t("search")}...`} name="search" onChange={handleChangeSearch} onClick={() => {
                 navigate("/search");
               }} />
-            <img src={search_svg} alt="search_svg" className={styles.search__svg} />
+            <img src={search_svg} className={styles.search__svg} alt="Поиск" title="Поиск Turan electronics" />
           </div>
           <div className={styles.lng}>
             <div className={styles.language_dropdown} onClick={toggleLanguageDropdown} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
               <div className={styles.selected_lng}>
                 <span>{ languageDropdown ? t("choose_language") : i18n.language}</span>
-                <img src={i18n.language === "Русский" ? Russia : English} alt="selected language" />
+                <img src={i18n.language === "Русский" ? Russia : English} alt="Выбрать язык" title="Выбрать язык Turan electronics" />
               </div>
               {languageDropdown && (
                 <ul className={`${styles.language_list} animate__animated animate__fadeInDown`}>
-                  <li onClick={() => handleLanguageChange('Русский')} style={{ textAlign: "center" }}>Русский<img src={Russia} alt="russian language" /></li>
-                  <li onClick={() => handleLanguageChange('English')} style={{ textAlign: "center" }}>English<img src={English} alt="english language" /></li>
+                  <li onClick={() => handleLanguageChange('Русский')} style={{ textAlign: "center" }}>Русский<img src={Russia} alt="Русский язык" title="Русский язык Turan electronics" /></li>
+                  <li onClick={() => handleLanguageChange('English')} style={{ textAlign: "center" }}>English<img src={English} alt="Английский язык" title="Английский язык Turan electronics" /></li>
                 </ul>
               )}
             </div>
@@ -209,23 +209,23 @@ function Navbar() {
         { isMobile ? (
           <div className={styles.bottomNavbar}>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/")} src={home_mobile} alt="Home" style={{ width: "20px" }} />
+              <img onClick={() => navigate("/")} src={home_mobile} alt="Главная" title="Главная Turan electronics" style={{ width: "20px" }} />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Categories" style={{ width: "20px" }} />
+              <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Категории" title="Категории (каталог) Turan electronics" style={{ width: "20px" }} />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/cart")} src={cart_svg} alt="Cart" />
+              <img onClick={() => navigate("/cart")} src={cart_svg} alt="Корзина" title="Корзина Turan electronics" />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate(`/${user && token ? "profile" : "auth"}`)} src={user_mobile} alt="Auth" style={{ width: "20px" }} />
+              <img onClick={() => navigate(`/${user && token ? "profile" : "auth"}`)} src={user_mobile} alt="Профиль" title="Профиль Turan electronics" style={{ width: "20px" }} />
             </div>
             <div className={styles.lng_mobile}>
             <div className={styles.language_dropdown} onClick={() => {
               handleLanguageChange(currentLanguage === "Русский" ? "English" : "Русский")
             }} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
               <div className={styles.selected_lng}>
-                <img src={i18n.language === "Русский" ? Russia : English} alt="selected language" />
+                <img src={i18n.language === "Русский" ? Russia : English} alt="Выбрать язык" title="Выбрать язык Turan electronics" />
               </div>
             </div>
           </div>
