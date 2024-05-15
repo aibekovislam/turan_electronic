@@ -210,10 +210,10 @@ function NewProductsCard({ product, onClick }: { product: ProductsType, onClick:
                         </div>
                         <div className={styles.btn_and_options}>
                             <div className={styles.btn_container}>
-                                <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
+                                <button className={styles.btn} onClick={() => navigate(`/products/${product.id}`)}>
                                     <a href="#">{ t("fast_order_btn") }</a>
                                 </button>
-                                <img src={shop} alt="" onClick={() => navigate(`/product/${product.id}`)} />
+                                <img src={shop} alt="" onClick={() => navigate(`/products/${product.id}`)} />
                             </div>
                             <div className={styles.options_container}>
                                 <h2>{ t("color") }</h2>

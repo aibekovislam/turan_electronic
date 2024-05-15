@@ -22,7 +22,7 @@ export default defineConfig({
         try {
           const response = await axios.get(`https://turan-backend.online/products/`, { params: queryParams });
           const products = response.data;
-          const dynamicRoutes = products.map((product: any) => `/product/${product.id}`);
+          const dynamicRoutes = products.map((product: any) => `/products/${product.id}`);
           generateSitemap({ routes: [...routes, ...dynamicRoutes], changefreq: 'daily' });
         } catch (error) {
           console.error("Error fetching products:", error);

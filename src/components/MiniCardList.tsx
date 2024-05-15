@@ -90,7 +90,7 @@ function MiniCardList() {
   const navigate = useNavigate();
 
   const handleNavigate = (id: number) => {
-    navigate(`/product/${id}`)
+    navigate(`/products/${id}`)
   }
 
   return (

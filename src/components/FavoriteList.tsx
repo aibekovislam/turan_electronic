@@ -45,7 +45,7 @@ function FavoriteList() {
     }
 
     const handleNavigate = (id: number) => {
-        navigate(`/product/${id}`)
+        navigate(`/products/${id}`)
     }
 
     useEffect(() => {

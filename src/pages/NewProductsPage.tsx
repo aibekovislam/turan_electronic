@@ -71,7 +71,7 @@ function NewProductsPage() {
     const navigate = useNavigate();
 
     const handleNavigate = (id: number) => {
-        navigate(`/product/${id}`)
+        navigate(`/products/${id}`)
     }
 
     const preventDefault = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
