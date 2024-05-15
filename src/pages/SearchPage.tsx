@@ -35,7 +35,7 @@ export default function SearchPage() {
     const navigate = useNavigate();
 
     const handleNavigate = (id: number) => {
-        navigate(`/product/${id}`)
+        navigate(`/products/${id}`)
     }
 
     const itemsPerPage = 16;

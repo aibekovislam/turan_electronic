@@ -228,9 +228,9 @@ function DetailPage() {
             <Helmet>
                 <title>Купить {`${product?.name}`} - Turan electronics интернет магазин электроники</title>
                 <meta name="description" content={`Купить ${product?.name} в Бишкеке. ✔ Доставка по всему Кыргызстану. ✔ Гарантия качества. ✔ Лучшие цены. Только оригинальные товары. От Turan Electronics`}></meta>
-                <link rel="canonical" href={`https://turanelectronics.kg/product/${product?.id}/`} />
+                <link rel="canonical" href={`https://turanelectronics.kg/products/${product?.id}/`} />
                 <meta property="og:type" content="website" />
-                <meta property="og:url" content={`https://turanelectronics.kg/product/${product?.id}`} />
+                <meta property="og:url" content={`https://turanelectronics.kg/products/${product?.id}`} />
                 <meta property="og:title" content={`${product?.name} - купить по выгодной цене в интернет-магазине Turan electronics`}/>
                 <meta property="og:description" content={`✅ ${product?.name} - в наличии в интернет-магазине Turan electronics! Самые выгодные цены на смартфоны! ✔ Характеристики ✔ Фото ✔ Ассортимент ✔ Отзывы ✔ Гарантия ✔ Рассрочка! Доставка 🚚`}/>
                 <meta property="og:image" content={`${product?.default_image}`} />

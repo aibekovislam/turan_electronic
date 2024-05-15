@@ -28,7 +28,7 @@ function FilteredRoutePage() {
     const navigate = useNavigate();
 
     const handleNavigate = (id: number) => {
-        navigate(`/product/${id}`)
+        navigate(`/products/${id}`)
     }
 
     ping.register();

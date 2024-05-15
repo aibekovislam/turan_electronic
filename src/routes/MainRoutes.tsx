@@ -29,7 +29,7 @@ function MainRoutes() {
       <Route element={<MainLayout />}>
         <Route element={<HomePage />} path="/" />
         <Route element={<FavoritesPage />} path="/favorite" />
-        <Route element={<DetailPage />} path="/product/:id" />
+        <Route element={<DetailPage />} path="/products/:id" />
         <Route element={<RegistrationAndAuthorization />} path="/auth" />
         <Route element={<UserProfilePage />} path="/profile" />
         <Route element={<ResendPage />} path="/resend/auth" />
