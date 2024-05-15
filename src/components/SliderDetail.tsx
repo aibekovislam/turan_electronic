@@ -88,7 +88,7 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
               color="black" 
           ></l-ping>;
   }  
-
+  const imageSrc = (image: any) => `${API_URL}${image}`;
   const filteredFirstImage = getFilteredFirstImage(img_array[selectedColor], selectedIndex);
 
   return (
@@ -111,6 +111,17 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
               className={styles.detail_img} 
               alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
               title={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
+              loading="lazy"
+              fetchPriority="high"
+              width={300}
+              height={300}
+              // decoding="async"
+              // srcSet={`
+              //   ${imageSrc(filteredFirstImage)} 1024w, 
+              //   ${imageSrc(filteredFirstImage.replace('.jpg', '-medium.jpg'))} 640w, 
+              //   ${imageSrc(filteredFirstImage.replace('.jpg', '-small.jpg'))} 320w
+              // `}
+              // sizes="(max-width: 1024px) 100vw, 1024px"
           />
         )}
         { filteredFirstImage ? (
@@ -129,6 +140,17 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
                 }}
                 alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
                 title={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
+                loading="lazy"
+                fetchPriority="high"
+                decoding="async"
+                width={300}
+                height={300}
+                // srcSet={`
+                //   ${imageSrc(image)} 1024w, 
+                //   ${imageSrc(image.replace('.jpg', '-medium.jpg'))} 640w, 
+                //   ${imageSrc(image.replace('.jpg', '-small.jpg'))} 320w
+                // `}
+                // sizes="(max-width: 1024px) 100vw, 1024px"
               />
             ) : (
               <l-ping

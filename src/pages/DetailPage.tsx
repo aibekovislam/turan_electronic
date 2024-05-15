@@ -235,9 +235,14 @@ function DetailPage() {
                 <meta property="og:description" content={`✅ ${product?.name} - в наличии в интернет-магазине Turan electronics! Самые выгодные цены на смартфоны! ✔ Характеристики ✔ Фото ✔ Ассортимент ✔ Отзывы ✔ Гарантия ✔ Рассрочка! Доставка 🚚`}/>
                 <meta property="og:image" content={`${product?.default_image}`} />
                 <meta data-hid="property::og:site_name" property="og:site_name" content="TuranElectronics"/>
+                <link rel="apple-touch-icon" sizes="76x76" href="./apple-touch-icon.png" />
+                <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png" />
+                <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
+                <link rel="manifest" href="./site.webmanifest" />
+                <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5"/>
                 <script className="structured-data-list" type="application/ld+json">{ structuredDataSingle() }</script>
             </Helmet>
-            <section>
+            <section style={{ height: isMobile ? "1215px" : "auto", width: "100%" }}>
                 {isMobile ? (
                     <div className={styles.mobile_detail__main}>
                         {product && product?.id === numberedId ? (
