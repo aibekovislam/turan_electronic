@@ -1,4 +1,4 @@
 User-agent: *
-Host: turanelectronics.kg
 Disallow:
+
 Sitemap: https://www.turanelectronics.kg/sitemap.xml
