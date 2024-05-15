@@ -97,7 +97,7 @@ function Navbar() {
         </div>
         <div className={styles.block_1_mobile}>
           <div className={styles.burgerMenu}>
-            <img src={burger__menu} />
+            <img src={burger__menu} alt="Бургер меню" title="Меню Turan electronics" />
           </div>
           <div className={`${styles.searchMobile} ${isMobileSearch ? styles.searchMobile__block : ""}`} onClick={() => {
             navigate("/search");
