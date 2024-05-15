@@ -229,10 +229,10 @@ const Card: React.FC<CardProps> = ({ product, onClick }) => {
                             </div>
                             <div className={styles.btn_and_options}>
                                 <div className={styles.btn_container}>
-                                    <button className={styles.btn} onClick={() => navigate(`/product/${product.id}`)}>
+                                    <button className={styles.btn} onClick={() => navigate(`/products/${product.id}`)}>
                                         <a href="#">{ t("fast_order_btn") }</a>
                                     </button>
-                                    <img alt={product.brand_title} src={shop} onClick={() => navigate(`/product/${product.id}`)} />
+                                    <img alt={product.brand_title} src={shop} onClick={() => navigate(`/products/${product.id}`)} />
                                 </div>
                                 <div className={styles.options_container}>
                                     <h2>{ t("color") }</h2>
