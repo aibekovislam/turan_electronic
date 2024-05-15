@@ -293,6 +293,8 @@ function DetailPage() {
                                         </div>
                                         {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
                                         <img
+                                            alt={`Избранное ${product.name}`}
+                                            title={`Избранное ${product.name}`}
                                             className={styles.detail_img}
                                             src={isProductInFavorites ? fillHeart : heart}
                                             onClick={() => {
@@ -389,7 +391,7 @@ function DetailPage() {
                                                         <div className={styles.modalContent}>
                                                             <div className={styles.modal_text}>
                                                                 { t("write_review") }
-                                                                <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
+                                                                <img src={closeSvg} onClick={() => setOpenReviewInput(false)} alt={`Закрыть модальное окно, отзывов ${product.name}`} title={`Закрыть модальное окно, отзывов ${product.name}`} />
                                                             </div>
                                                             <div className={styles.user_info}>
                                                                 <span>{ t("input_name") }</span>
@@ -420,7 +422,7 @@ function DetailPage() {
                                                     <>
                                                         {user && token ? (
                                                             <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
-                                                                <img src={reviews} className={styles.reviews__svg} alt="" />
+                                                                <img src={reviews} className={styles.reviews__svg} alt={`Отзыв ${product.name}`} title={`Отзыв ${product.name}`} />
                                                                 <input type="button" value={t("write_review")} />
                                                             </div>
                                                         ) : null}
@@ -585,6 +587,8 @@ function DetailPage() {
                                                 ) }
                                                 {favoriteLoaded && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "auto" }}><l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping></div>}
                                                 <img
+                                                    alt={`Избранное ${product.name}`}
+                                                    title={`Избранное ${product.name}`}
                                                     className={styles.detail_img}
                                                     src={isProductInFavorites ? fillHeart : heart}
                                                     onClick={() => {
@@ -626,7 +630,7 @@ function DetailPage() {
                                                 <div className={styles.modalContent}>
                                                     <div className={styles.modal_text}>
                                                         { t("write_review") }
-                                                        <img src={closeSvg} onClick={() => setOpenReviewInput(false)} />
+                                                        <img src={closeSvg} onClick={() => setOpenReviewInput(false)} alt={`Закрыть модальное окно, отзывов ${product.name}`} title={`Закрыть модальное окно, отзывов ${product.name}`} />
                                                     </div>
                                                     <div className={styles.user_info}>
                                                         <span>{ t("input_name") }</span>
@@ -657,7 +661,7 @@ function DetailPage() {
                                             <>
                                                 {user && token ? (
                                                     <div className={styles.reviews_button} onClick={() => setOpenReviewInput(true)}>
-                                                        <img src={reviews} className={styles.reviews__svg} alt="" />
+                                                        <img src={reviews} className={styles.reviews__svg} alt={`Отзыв ${product.name} Бишкек`} title={`Отзыв ${product.name} Бишкек`} />
                                                         <input type="button" value={`${t("write_review")}`} />
                                                     </div>
                                                 ) : null}

@@ -97,7 +97,7 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}>
         { filteredFirstImage ? (
-          <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} />
+          <img src={ArrowLeft} className={styles.arrow_detail} onClick={handlePrevious} alt="previus" />
         ) : (null) }
         {loading ? (
             <l-ping
@@ -114,7 +114,7 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
           />
         )}
         { filteredFirstImage ? (
-          <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} />
+          <img src={ArrowRight} className={styles.arrow_detail} onClick={handleNext} alt="next" />
         ) : (null) }
       </div>
       <div className={styles.flex_row}>
@@ -127,6 +127,8 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
                 onClick={() => {
                   handleClick(i);
                 }}
+                alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
+                title={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
               />
             ) : (
               <l-ping
