@@ -108,7 +108,7 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
             ></l-ping>
         ) : (
           <img 
-              loading="lazy"
+              // loading="lazy"
               src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : `${default_image}`} 
               className={styles.detail_img} 
               alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
@@ -130,6 +130,7 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
             index={i}
             handleClick={handleClick}
             isSelected={selectedIndex === i}
+            product={product}
           />
         ))}
       </div>
