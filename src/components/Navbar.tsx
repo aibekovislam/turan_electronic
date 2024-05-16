@@ -108,7 +108,7 @@ function Navbar() {
                 navigate("/search");
               }} />
               ) : (
-              <img src={search_svg} alt="Поиск" title="Поиск" />
+              <img src={search_svg} alt="Поиск" title="Поиск" width={25} height={30} />
             ) }
           </div>
           { isMobileSearch ? (
@@ -118,7 +118,7 @@ function Navbar() {
         <div className={styles.block_2}>
           <div className={styles.logo}>
               { !isMobileSearch ? (
-                <img src={logo_svg} alt="Логотип Turan electronics" title="Логотип Turan electronics интернет магазин для электроники в Бишкеке!" style={{ cursor: "pointer" }} onClick={() => handleItemClick("home")} />
+                <img src={logo_svg} alt="Логотип Turan electronics" width={100} height={isMobile ? 30 : 100} title="Логотип Turan electronics интернет магазин для электроники в Бишкеке!" style={{ cursor: "pointer" }} onClick={() => handleItemClick("home")} />
               ) : (null) }
           </div>
           <ul className={styles.navigation}>
@@ -166,7 +166,7 @@ function Navbar() {
           </div>
           <div className={styles.cartMobile}>
             { !isMobileSearch ? (
-              <img src={cart_svg} onClick={() => navigate("/cart")} alt="Корзина" title="Корзина Turan electronics" />
+              <img src={cart_svg} width={30} height={30} onClick={() => navigate("/cart")} alt="Корзина" title="Корзина Turan electronics" />
             ) : null }
           </div>
         </div>
@@ -176,7 +176,7 @@ function Navbar() {
               <img src={favorite_svg} alt="Избранное" title="Избранное Turan electronics" />
             </div>
             <div className={`${styles.cart} ${activeItem === "cart" ? "active__navbar" : ""}`} onClick={() => handleItemClick("cart")}>
-              <img src={cart_svg} alt="Корзина" title="Корзина Turan electronics" />
+              <img src={cart_svg} width={30} height={30} alt="Корзина" title="Корзина Turan electronics" />
             </div>
             <div className={`${styles.personal_office} ${activeItem === `${user ? "profile" : "auth"}` ? "active__navbar" : ""}`} onClick={() => handleItemClick("profile")}>
               <img src={personal__office_svg} alt="Личный кабинет" title="Личный кабинет Turan electronics" />
@@ -209,23 +209,23 @@ function Navbar() {
         { isMobile ? (
           <div className={styles.bottomNavbar}>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/")} src={home_mobile} alt="Главная" title="Главная Turan electronics" style={{ width: "20px" }} />
+              <img onClick={() => navigate("/")} src={home_mobile} width={30} height={30} alt="Главная" title="Главная Turan electronics" style={{ width: "20px" }} />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/favorite")} src={heart_mobile} alt="Категории" title="Категории (каталог) Turan electronics" style={{ width: "20px" }} />
+              <img onClick={() => navigate("/favorite")} src={heart_mobile} width={30} height={30} alt="Категории" title="Категории (каталог) Turan electronics" style={{ width: "20px" }} />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate("/cart")} src={cart_svg} alt="Корзина" title="Корзина Turan electronics" />
+              <img onClick={() => navigate("/cart")} src={cart_svg} width={30} height={30} alt="Корзина" title="Корзина Turan electronics" />
             </div>
             <div className={styles.bottomNavItem}>
-              <img onClick={() => navigate(`/${user && token ? "profile" : "auth"}`)} src={user_mobile} alt="Профиль" title="Профиль Turan electronics" style={{ width: "20px" }} />
+              <img onClick={() => navigate(`/${user && token ? "profile" : "auth"}`)} src={user_mobile} width={30} height={30} alt="Профиль" title="Профиль Turan electronics" style={{ width: "20px" }} />
             </div>
             <div className={styles.lng_mobile}>
             <div className={styles.language_dropdown} onClick={() => {
               handleLanguageChange(currentLanguage === "Русский" ? "English" : "Русский")
             }} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
               <div className={styles.selected_lng}>
-                <img src={i18n.language === "Русский" ? Russia : English} alt="Выбрать язык" title="Выбрать язык Turan electronics" />
+                <img width={40} height={25} src={i18n.language === "Русский" ? Russia : English} alt="Выбрать язык" title="Выбрать язык Turan electronics" />
               </div>
             </div>
           </div>
