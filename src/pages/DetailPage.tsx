@@ -21,6 +21,7 @@ import { Rating } from 'react-simple-star-rating'
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { structuredDataSingle } from "../functions/filterFunction";
+import { API_URL } from "../utils/consts";
 
 function DetailPage() {
     const { id } = useParams();
@@ -240,6 +241,7 @@ function DetailPage() {
                 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
                 <link rel="manifest" href="./site.webmanifest" />
                 <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5"/>
+                <link rel="preload" as="image" href={`${API_URL}${product?.product_images[colorPicked ? colorPicked : ""]}`} />
                 <script className="structured-data-list" type="application/ld+json">{ structuredDataSingle() }</script>
             </Helmet>
             <section style={{ minHeight: isMobile ? "1215px" : "auto", width: "100%", paddingBottom: "100px" }}>
