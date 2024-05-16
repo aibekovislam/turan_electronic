@@ -241,7 +241,7 @@ function DetailPage() {
                 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png" />
                 <link rel="manifest" href="./site.webmanifest" />
                 <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5"/>
-                <link rel="preload" as="image" href={`${API_URL}${product?.product_images[colorPicked ? colorPicked : ""]}`} fetchPriority="high" />
+                <link rel="preload" as="image" href={`https://turan-backend.online/media/media/products/iPhone_14_Pro_Space_Black_0.webp`} fetchPriority="high" />
                 <script className="structured-data-list" type="application/ld+json">{ structuredDataSingle() }</script>
             </Helmet>
             <section style={{ minHeight: isMobile ? "1215px" : "auto", width: "100%", paddingBottom: "100px" }}>
