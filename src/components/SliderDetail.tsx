@@ -124,30 +124,6 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
       </div>
       <div className={styles.flex_row}>
         {img_array[selectedColor]?.map((image: string, i: number) => (
-          // <div className={styles.thumbnail} key={i}>
-          //   {image ? (
-          //     <img
-          //       loading="lazy"
-          //       className={selectedIndex === i ? styles.clicked : styles.detail_img__item}
-          //       src={`${API_URL}${image}`}
-          //       onClick={() => {
-          //         handleClick(i);
-          //       }}
-          //       alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
-          //       title={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
-          //       fetchPriority={"high"}
-          //       decoding="async"
-          //       width={300}
-          //       height={300}
-          //     />
-          //   ) : (
-          //     <l-ping
-          //         size="45"
-          //         speed="2" 
-          //         color="black" 
-          //     ></l-ping>
-          //   )}
-          // </div>
           <MemoizedImageThumbnail
             key={i}
             image={image}
