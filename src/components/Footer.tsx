@@ -37,11 +37,11 @@ function Footer() {
     const { t } = useTranslation();
 
     return (
-        <footer className={styles.footer} style={{ width: "100%", height: isMobile ? "1000px" : "auto" }}>
+        <footer className={styles.footer} style={{ width: "100%", height: "1000px" }}>
             <div className={styles.footer__items}>
                 <div className={styles.footer__item}>
                     <div className={styles.footer__logo_and_info}>
-                        <img src={logo} alt="Логотип Turan electronics" title="Логотип Turan electronics" />
+                        <img width={150} height={35} src={logo} alt="Логотип Turan electronics" title="Логотип Turan electronics" />
                         <div className={styles.info}>{ t("footer_text1") }<br /><br /><br />{ t("footer_text2") }</div>
                     </div>
                 </div>
@@ -65,19 +65,19 @@ function Footer() {
                             <ul className={styles.footer__navigation__item_list} style={{ height: "225px", margin: "10px 0px" }}>
                                 <li className={styles.list__item} style={{ marginTop: "20px" }}>
                                     <img width={15} height={15} src={img1} alt="Место Turan electronics" title="Место Turan electronics" />
-                                    <div className={styles.list__item_text}>{footers?.location}</div>
+                                    <div className={styles.list__item_text} style={{ width: "235px", height: "40px" }}>{footers?.location}</div>
                                 </li>
                                 <li className={styles.list__item}>
                                     <img width={15} height={15} src={img2} alt="График работы Turan electronics" title="График работы Turan electronics" />
-                                    <div className={styles.list__item_text}>{footers?.schedule}</div>
+                                    <div className={styles.list__item_text} style={{ width: "235px", height: "40px" }}>{footers?.schedule}</div>
                                 </li>
                                 <li className={styles.list__item}>
                                     <img width={15} height={15} src={img3} alt="Контакты Turan electronics" title="Контакты Turan electronics" />
-                                    <div className={styles.list__item_text}>{footers?.phone}</div>
+                                    <div className={styles.list__item_text} style={{ width: "190px", height: "20px" }}>{footers?.phone}</div>
                                 </li>
                                 <li className={styles.list__item}>
                                     <img width={15} height={15} src={img4} alt="Email Turan electronics" title="Email Turan electronics" />
-                                    <div className={styles.list__item_text}>{footers?.email}</div>
+                                    <div className={styles.list__item_text} style={{ width: "235px", height: "40px" }}>{footers?.email}</div>
                                 </li>
                             </ul>
                         </div>

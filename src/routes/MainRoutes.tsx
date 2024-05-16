@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import { lazy } from "react";
+import DetailLayout from "../layouts/DetailLayout";
 const HomePage = lazy(() => import("../pages/HomePage"));
 const FavoritesPage = lazy(() => import("../pages/FavoritesPage"));
 const DetailPage = lazy(() => import("../pages/DetailPage"));
@@ -26,10 +27,12 @@ const AdminChatPage = lazy(() => import("../pages/AdminChatPage"));
 function MainRoutes() {
   return (
     <Routes>
+      <Route element={<DetailLayout />}>
+        <Route element={<DetailPage />} path="/products/:id" />
+      </Route>
       <Route element={<MainLayout />}>
         <Route element={<HomePage />} path="/" />
         <Route element={<FavoritesPage />} path="/favorite" />
-        <Route element={<DetailPage />} path="/products/:id" />
         <Route element={<RegistrationAndAuthorization />} path="/auth" />
         <Route element={<UserProfilePage />} path="/profile" />
         <Route element={<ResendPage />} path="/resend/auth" />

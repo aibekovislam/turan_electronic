@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "../styles/slider.module.scss"
 import ArrowLeft from "../assets/svgs/detail/leftArrow.svg"
 import ArrowRight from "../assets/svgs/detail/rightArrow.svg"
@@ -7,7 +7,7 @@ import { API_URL } from '../utils/consts';
 import { getFilteredFirstImage } from '../functions/filterFunction';
 import 'ldrs/ring';
 import { ping } from 'ldrs';
-
+import { ImageThumbnail } from './Thumbnail';
 
 function SliderDetail({ img_array, default_image, selectedColor, product }: SliderDetailProps) {
   const [wordData, setWordData] = useState<string[]>([]);
@@ -16,6 +16,8 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
 
   const [touchStartX, setTouchStartX] = useState(0);
   const [actionTaken, setActionTaken] = useState(false);
+
+  const MemoizedImageThumbnail = React.memo(ImageThumbnail);
 
   const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
     if (!actionTaken) {
@@ -88,7 +90,6 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
               color="black" 
           ></l-ping>;
   }  
-  const imageSrc = (image: any) => `${API_URL}${image}`;
   const filteredFirstImage = getFilteredFirstImage(img_array[selectedColor], selectedIndex);
 
   return (
@@ -107,21 +108,14 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
             ></l-ping>
         ) : (
           <img 
+              loading="lazy"
               src={wordData.length !== 0 && filteredFirstImage ? `${API_URL}${filteredFirstImage}` : `${default_image}`} 
               className={styles.detail_img} 
               alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
               title={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
-              loading="lazy"
               fetchPriority="high"
               width={300}
               height={300}
-              // decoding="async"
-              // srcSet={`
-              //   ${imageSrc(filteredFirstImage)} 1024w, 
-              //   ${imageSrc(filteredFirstImage.replace('.jpg', '-medium.jpg'))} 640w, 
-              //   ${imageSrc(filteredFirstImage.replace('.jpg', '-small.jpg'))} 320w
-              // `}
-              // sizes="(max-width: 1024px) 100vw, 1024px"
           />
         )}
         { filteredFirstImage ? (
@@ -130,36 +124,37 @@ function SliderDetail({ img_array, default_image, selectedColor, product }: Slid
       </div>
       <div className={styles.flex_row}>
         {img_array[selectedColor]?.map((image: string, i: number) => (
-          <div className={styles.thumbnail} key={i}>
-            {image ? (
-              <img
-                className={selectedIndex === i ? styles.clicked : styles.detail_img__item}
-                src={`${API_URL}${image}`}
-                onClick={() => {
-                  handleClick(i);
-                }}
-                alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
-                title={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
-                loading="lazy"
-                fetchPriority="high"
-                decoding="async"
-                width={300}
-                height={300}
-                // srcSet={`
-                //   ${imageSrc(image)} 1024w, 
-                //   ${imageSrc(image.replace('.jpg', '-medium.jpg'))} 640w, 
-                //   ${imageSrc(image.replace('.jpg', '-small.jpg'))} 320w
-                // `}
-                // sizes="(max-width: 1024px) 100vw, 1024px"
-              />
-            ) : (
-              <l-ping
-                  size="45"
-                  speed="2" 
-                  color="black" 
-              ></l-ping>
-            )}
-          </div>
+          // <div className={styles.thumbnail} key={i}>
+          //   {image ? (
+          //     <img
+          //       loading="lazy"
+          //       className={selectedIndex === i ? styles.clicked : styles.detail_img__item}
+          //       src={`${API_URL}${image}`}
+          //       onClick={() => {
+          //         handleClick(i);
+          //       }}
+          //       alt={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
+          //       title={`Купить ${product.brand_title} ${product.name} в Бишкеке`}
+          //       fetchPriority={"high"}
+          //       decoding="async"
+          //       width={300}
+          //       height={300}
+          //     />
+          //   ) : (
+          //     <l-ping
+          //         size="45"
+          //         speed="2" 
+          //         color="black" 
+          //     ></l-ping>
+          //   )}
+          // </div>
+          <MemoizedImageThumbnail
+            key={i}
+            image={image}
+            index={i}
+            handleClick={handleClick}
+            isSelected={selectedIndex === i}
+          />
         ))}
       </div>
     </div>

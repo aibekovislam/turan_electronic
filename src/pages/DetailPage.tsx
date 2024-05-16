@@ -225,7 +225,7 @@ function DetailPage() {
 
     return (
         <>
-            <Helmet>
+            <Helmet> 
                 <title>Купить {`${product?.name}`} - Turan electronics интернет магазин</title>
                 <meta name="description" content={`Купить ${product?.name} в Бишкеке. ✔ Доставка по всему Кыргызстану. ✔ Гарантия качества. ✔ Лучшие цены. Только оригинальные товары. От Turan Electronics`}></meta>
                 <link rel="canonical" href={`https://turanelectronics.kg/products/${product?.id}/`} />
@@ -242,7 +242,7 @@ function DetailPage() {
                 <link rel="mask-icon" href="./safari-pinned-tab.svg" color="#5bbad5"/>
                 <script className="structured-data-list" type="application/ld+json">{ structuredDataSingle() }</script>
             </Helmet>
-            <section style={{ height: isMobile ? "1215px" : "auto", width: "100%" }}>
+            <section style={{ minHeight: isMobile ? "1215px" : "auto", width: "100%", paddingBottom: "100px" }}>
                 {isMobile ? (
                     <div className={styles.mobile_detail__main}>
                         {product && product?.id === numberedId ? (
