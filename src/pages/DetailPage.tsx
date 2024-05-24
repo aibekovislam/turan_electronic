@@ -227,7 +227,7 @@ function DetailPage() {
     return (
         <>
             <Helmet> 
-                <title>Купить {`${product?.name}`} - Turan electronics интернет магазин</title>
+                <title>Купить {`${product?.name}`} в Бишкеке - Turan electronics интернет магазин</title>
                 <meta name="description" content={`Купить ${product?.name} в Бишкеке. ✔ Доставка по всему Кыргызстану. ✔ Гарантия качества. ✔ Лучшие цены. Только оригинальные товары. От Turan Electronics`}></meta>
                 <link rel="canonical" href={`https://turanelectronics.kg/products/${product?.id}/`} />
                 <meta property="og:type" content="website" />
