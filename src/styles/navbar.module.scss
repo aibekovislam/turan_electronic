@@ -90,8 +90,8 @@
 }
 
 .lng {
-    display: flex;
-    justify-content: center;
+    // display: flex;
+    // justify-content: center;
     margin-top: 20px;
     border: 1px solid #FFFFFF;
     box-shadow: 4px 2px 16px 0px rgba(136, 165, 191, 0.4784313725);
@@ -106,8 +106,8 @@
 .selected_lng {
     display: flex;
     align-items: center;
-    justify-content: center;
-    column-gap: 10px;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
 .selected_lng span {
@@ -202,6 +202,8 @@
     height: 3vw;
     border-radius: 16px;
     border: 1px;
+    display: flex;
+    align-items: center;
     position: relative;
 }
 
@@ -209,7 +211,6 @@
     background-color: initial;
     border: none;
     padding-left: 20px;
-    padding-top: 1vw;
     max-width: 120px;
     font-family: "Montserrat", sans-serif;
 }
@@ -223,9 +224,7 @@
 }
 
 .search__svg {
-    position: absolute;
-    top: 15%;
-    right: 10px;
+    padding-right: 20px;
 }
 
 .bottomNavbar {

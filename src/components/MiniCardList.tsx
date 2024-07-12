@@ -56,7 +56,7 @@ function MiniCardList() {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4.5,
+    slidesToShow: 5,
     slidesToScroll: 1,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,

@@ -37,7 +37,7 @@ function Footer() {
     const { t } = useTranslation();
 
     return (
-        <footer className={styles.footer} style={{ width: "100%", height: "1000px" }}>
+        <footer className={styles.footer} style={{ width: "100%" }}>
             <div className={styles.footer__items}>
                 <div className={styles.footer__item}>
                     <div className={styles.footer__logo_and_info}>
@@ -64,18 +64,20 @@ function Footer() {
                             <div className={styles.footer__navigaiton__item_title}>{ t("contacts") }</div>
                             <ul className={styles.footer__navigation__item_list} style={{ height: "225px", margin: "10px 0px" }}>
                                 <li className={styles.list__item} style={{ marginTop: "20px" }}>
-                                    <img width={15} height={15} src={img1} alt="Место Turan electronics" title="Место Turan electronics" />
-                                    <div className={styles.list__item_text} style={{ width: "235px", height: "40px" }}>{footers?.location}</div>
+                                    <a style={{ textDecoration: "none", color: "black", display: "flex", alignItems: "center", columnGap: "20px" }} target="_blank" href="https://2gis.kg/bishkek/search/%D0%98%D0%B1%D1%80%D0%B0%D0%B8%D0%BC%D0%BE%D0%B2%D0%B0%20108%D0%91/geo/15763234351124097/74.616677%2C42.875813">
+                                        <img width={15} height={15} src={img1} alt="Место Turan electronics" title="Место Turan electronics" />
+                                        <div className={styles.list__item_text} style={{ width: "235px", height: "40px" }}>{footers?.location}</div>
+                                    </a>
                                 </li>
-                                <li className={styles.list__item}>
+                                <li style={{ cursor: "auto" }} className={styles.list__item}>
                                     <img width={15} height={15} src={img2} alt="График работы Turan electronics" title="График работы Turan electronics" />
                                     <div className={styles.list__item_text} style={{ width: "235px", height: "40px" }}>{footers?.schedule}</div>
                                 </li>
-                                <li className={styles.list__item}>
+                                <li style={{ cursor: "auto" }} className={styles.list__item}>
                                     <img width={15} height={15} src={img3} alt="Контакты Turan electronics" title="Контакты Turan electronics" />
                                     <div className={styles.list__item_text} style={{ width: "190px", height: "20px" }}>{footers?.phone}</div>
                                 </li>
-                                <li className={styles.list__item}>
+                                <li style={{ cursor: "auto" }} className={styles.list__item}>
                                     <img width={15} height={15} src={img4} alt="Email Turan electronics" title="Email Turan electronics" />
                                     <div className={styles.list__item_text} style={{ width: "235px", height: "40px" }}>{footers?.email}</div>
                                 </li>

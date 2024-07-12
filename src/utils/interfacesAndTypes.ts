@@ -307,7 +307,8 @@ export type NewsType = {
 export type CarouselType = {
     id? : number;
     images: string;
-    description: string
+    description: string,
+    link?: string
 }
 
 export type Range = {

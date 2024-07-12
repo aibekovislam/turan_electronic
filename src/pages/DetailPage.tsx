@@ -524,7 +524,7 @@ function DetailPage() {
                                                         <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description : (product.description_en ? (product?.description_en) : "")) }}></div> :
                                                         <div dangerouslySetInnerHTML={{ __html: insertLineBreaks(currentLanguage === "Русский" ? product?.description?.slice(0, 100) : (product.description_en ? product.description_en : "")) + '...' }}></div>
                                                     }
-                                                    <span className={styles.open_des_func} onClick={toggleDescription}>
+                                                    <span style={{ marginLeft: 0 }} className={styles.open_des_func} onClick={toggleDescription}>
                                                         {expanded ? "Свернуть" : "Развернуть"}
                                                     </span>
                                                 </p>

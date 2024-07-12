@@ -9,6 +9,7 @@ import { fetchCarousel, fetchCarouselMobile } from "../store/features/carousel/c
 import {  CarouselType } from "../utils/interfacesAndTypes";
 import 'ldrs/ring';
 import { ping } from 'ldrs'
+import { useNavigate } from "react-router-dom";
 
 function SampleNextArrow(props: any) {
     const { className, style, onClick } = props;
@@ -29,6 +30,7 @@ export default function SimpleSlider() {
     const carousel = useSelector((state: RootStates) => state.carousel.carousel);
     const carouselMobile = useSelector((state: RootStates) => state.carousel.carouselMobile);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 520);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleResize = () => {
@@ -70,44 +72,43 @@ export default function SimpleSlider() {
         autoplay: true,
         autoplaySpeed: 3500,
     };    
-
-    console.log(carouselMobile)
     
-  return (
-    <div className={styles.carousel} >
-        { isMobile ? (
-            carouselMobile?.length !== 0 ? (
-                <Slider {...settings}>
-                    {carouselMobile?.map((carousel: CarouselType, index: number) => (
-                        <div className={styles.carousel__item} key={index}>
-                            <img src={`${carousel.images}`} className={styles.carousel__img} />
-                            <div className={styles.text__carousel}>{carousel.description}</div>
-                        </div>
-                    ))}
-                </Slider>
+    
+    return (
+        <div className={styles.carousel} >
+            { isMobile ? (
+                carouselMobile?.length !== 0 ? (
+                    <Slider {...settings}>
+                        {carouselMobile?.map((carousel: CarouselType, index: number) => (
+                            <div onClick={() => navigate(`${carousel.link}`)} className={styles.carousel__item} key={index}>
+                                <img src={`${carousel.images}`} className={styles.carousel__img} />
+                                <div className={styles.text__carousel}>{carousel.description}</div>
+                            </div>
+                        ))}
+                    </Slider>
+                ) : (
+                    <div className={styles.loading}>
+                        <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                        <div>Загрузка...</div>
+                    </div>
+                )
             ) : (
-                <div className={styles.loading}>
-                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                    <div>Загрузка...</div>
-                </div>
-            )
-        ) : (
-            carousel?.length !== 0 ? (
-                <Slider {...settings}>
-                    {carousel?.map((carousel: CarouselType, index: number) => (
-                        <div className={styles.carousel__item} key={index}>
-                            <img src={`${carousel.images}`} className={styles.carousel__img} />
-                            <div className={styles.text__carousel}>{carousel.description}</div>
-                        </div>
-                    ))}
-                </Slider>
-            ) : (
-                <div className={styles.loading}>
-                    <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
-                    <div>Загрузка...</div>
-                </div>
-            )
-        ) }
-    </div>
-  );
+                carousel?.length !== 0 ? (
+                    <Slider {...settings}>
+                        {carousel?.map((carousel: CarouselType, index: number) => (
+                            <div onClick={() => navigate(`${carousel.link}`)} className={styles.carousel__item} key={index}>
+                                <img src={`${carousel.images}`} className={styles.carousel__img} />
+                                <div className={styles.text__carousel}>{carousel.description}</div>
+                            </div>
+                        ))}
+                    </Slider>
+                ) : (
+                    <div className={styles.loading}>
+                        <l-ping size="45" speed="2" color="rgba(255, 115, 0, 0.847)"></l-ping>
+                        <div>Загрузка...</div>
+                    </div>
+                )
+            ) }
+        </div>
+    );
 }
