@@ -52,17 +52,29 @@
     cursor: pointer;
 }
 
+.big_category:hover .big_img {
+    transform: scale(1.01);
+    transition: transform 0.3s ease;
+}
+
 .brand__img {
     width: 100%;
-    height: 15vw;
+    height: 13vw;
     object-fit: contain;
     transition: transform 0.3s ease;
 }
 
+.big_category_item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .big_img {
-    width: 100%;
+    width: 90%;
     height: 40vw;
     object-fit: contain;
+    transition: transform 0.3s ease;
 }
 
 .category__item {
