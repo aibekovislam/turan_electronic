@@ -326,7 +326,7 @@ function DetailPage() {
                                                         setMemoryID(item.id)
                                                     }}
                                                 >
-                                                    {item.volume} { t("gb") }
+                                                    { item.volume >= 1000 ? Math.floor(item.volume / 1000) + "TB" : item.volume + t("gb") }
                                                 </li>
                                             ))}
                                         </ul>
@@ -570,7 +570,7 @@ function DetailPage() {
                                                                 setMemoryID(item.id)
                                                             }}
                                                         >
-                                                            {item.volume} {t("gb")}
+                                                            { item.volume >= 1000 ? Math.floor(item.volume / 1000) + "TB" : item.volume + t("gb") }
                                                         </li>
                                                     ))}
                                                 </ul>
